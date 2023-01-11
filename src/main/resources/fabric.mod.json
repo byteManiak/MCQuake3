@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "mcuake",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "MCuake",
+  "description": "Quake3 mod for Minecraft",
   "authors": [
     "Me!"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/bytemaniak",
+    "sources": "https://github.com/bytemaniak/MCuake"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/mcuake/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "com.bytemaniak.mcuake.MCuake"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "mcuake.mixins.json"
   ],
 
   "depends": {

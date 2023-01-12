@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "mcuake:block/jumppad", "y": 0},
+    "facing=east": {"model": "mcuake:block/jumppad", "y": 90},
+    "facing=south": {"model": "mcuake:block/jumppad", "y": 180},
+    "facing=west": {"model": "mcuake:block/jumppad", "y": 270}
+  }
+}

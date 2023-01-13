@@ -4,14 +4,11 @@ import com.bytemaniak.mcuake.blocks.MCuakeJumppad;
 import com.bytemaniak.mcuake.items.MCuakeTool;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.MusicDiscItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +23,7 @@ public class MCuake implements ModInitializer {
 		Registry.register(Registries.BLOCK, new Identifier("mcuake", "jumppad"), JUMPPAD_BLOCK);
 		Registry.register(Registries.ITEM, new Identifier("mcuake", "jumppad"), new BlockItem(JUMPPAD_BLOCK, new Item.Settings()));
 		Registry.register(Registries.ITEM, new Identifier("mcuake", "tool"), new MCuakeTool());
+		Registry.register(Registries.ITEM, new Identifier("mcuake", "machinegun"), new Item(new Item.Settings()));
 
 		MusicDiscRegistry.LoadDiscs();
 	}

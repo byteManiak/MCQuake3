@@ -1,6 +1,9 @@
 {
   "item.mcuake.jumppad": "Jump Pad",
+  "item.mcuake.spikes": "Spikes",
   "item.mcuake.thru_the_mirror": "Music Disc",
   "item.mcuake.thru_the_mirror.desc": "Elysis - Thru The Mirror",
-  "block.mcuake.jumppad": "Jump Pad"
+  "block.mcuake.jumppad": "Jump Pad",
+  "block.mcuake.spikes": "Spikes",
+  "death.attack.test": "%1$s was impaled to death."
 }

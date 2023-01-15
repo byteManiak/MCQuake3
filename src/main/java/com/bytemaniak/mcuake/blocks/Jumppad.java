@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.blocks;
 
-import com.bytemaniak.mcuake.MCuake;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -17,10 +16,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class MCuakeJumppad extends HorizontalFacingBlock {
+public class Jumppad extends HorizontalFacingBlock {
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 
-	public MCuakeJumppad() {
+	public Jumppad() {
 		super(FabricBlockSettings.of(Material.METAL));
 	}
 

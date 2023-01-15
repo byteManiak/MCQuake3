@@ -1,10 +1,9 @@
 package com.bytemaniak.mcuake.items;
 
-import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 
-public class MCuakeTool extends Item{
-    public MCuakeTool() {
+public class Tool extends Item{
+    public Tool() {
         super(new Item.Settings().maxCount(1));
     }
 }

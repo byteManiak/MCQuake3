@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(PlayerEntity.class)
-public abstract class MCuakePlayer extends LivingEntity {
+public abstract class Player extends LivingEntity {
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
-    protected MCuakePlayer(EntityType<? extends LivingEntity> entityType, World world) {
+    protected Player(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 

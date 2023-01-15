@@ -17,7 +17,7 @@ public class Spikes extends Block {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque());
     }
 
-    private final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 14, 12, 14);
+    private final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 12, 15);
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -29,7 +29,7 @@ public class Spikes extends Block {
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (fallDistance > 1)
         {
-            entity.damage(new DamageSource("test"), fallDistance * SPIKES_DAMAGE_MULTIPLIER);
+            entity.damage(new DamageSource("mcuake.spikes"), fallDistance * SPIKES_DAMAGE_MULTIPLIER);
         }
     }
 }

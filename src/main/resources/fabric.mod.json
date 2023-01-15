@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "com.bytemaniak.mcuake.MCuake"
+    ],
+    "client": [
+      "com.bytemaniak.mcuake.MCuakeClient"
     ]
   },
   "mixins": [

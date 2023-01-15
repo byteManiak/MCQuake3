@@ -16,6 +16,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class Jumppad extends HorizontalFacingBlock {
+	private static final float JUMPPAD_BOOST_VALUE = 3.f;
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 
 	public Jumppad() {
@@ -42,7 +43,6 @@ public class Jumppad extends HorizontalFacingBlock {
 		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 
-	private static final float JUMPPAD_BOOST_VALUE = 3.f;
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity)
 	{

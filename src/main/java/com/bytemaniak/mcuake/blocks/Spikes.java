@@ -14,18 +14,18 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class Spikes extends Block {
+    private static final int SPIKES_DAMAGE_MULTIPLIER = 5;
+    private final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 12, 15);
+
     public Spikes() {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque());
     }
-
-    private final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 12, 15);
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
 
-    private static final int SPIKES_DAMAGE_MULTIPLIER = 5;
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (entity instanceof LivingEntity && fallDistance > 1)

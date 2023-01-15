@@ -13,9 +13,9 @@ import net.minecraft.util.Identifier;
 public class MusicDiscRegistry {
     private static final Identifier THRU_THE_MIRROR_IDENT = new Identifier("mcuake", "thru_the_mirror");
 
-    private static void LoadDisc(Identifier id)
+    private static void LoadDisc(Identifier id, int comparatorOutput)
     {
-        MusicDiscItem musicDisc = new MusicDiscItem(0, SoundEvent.of(id), new Item.Settings().maxCount(1), 0);
+        MusicDiscItem musicDisc = new MusicDiscItem(comparatorOutput, SoundEvent.of(id), new Item.Settings().maxCount(1), 0);
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {content.add(musicDisc);});
@@ -24,6 +24,7 @@ public class MusicDiscRegistry {
 
     public static void LoadDiscs()
     {
-        LoadDisc(THRU_THE_MIRROR_IDENT);
+        LoadDisc(THRU_THE_MIRROR_IDENT, 1);
     }
+
 }

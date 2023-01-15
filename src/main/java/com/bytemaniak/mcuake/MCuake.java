@@ -47,10 +47,7 @@ public class MCuake implements ModInitializer {
 	{
 		BlockItem blockItem = new BlockItem(block, new Item.Settings());
 		Registry.register(Registries.BLOCK, id, block);
-		Registry.register(Registries.ITEM, id, blockItem);
-		ItemGroupEvents.modifyEntriesEvent(MCUAKE_GROUP).register(content -> {
-			content.add(blockItem);
-		});
+		loadItem(blockItem, id);
 	}
 
 	private void loadItem(Item item, Identifier id)

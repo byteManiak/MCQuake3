@@ -18,12 +18,11 @@ import net.minecraft.world.World;
 public class Jumppad extends HorizontalFacingBlock {
 	private static final float JUMPPAD_BOOST_VALUE = 3.f;
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+	private static VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
 
 	public Jumppad() {
 		super(FabricBlockSettings.of(Material.METAL));
 	}
-
-	private static VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)

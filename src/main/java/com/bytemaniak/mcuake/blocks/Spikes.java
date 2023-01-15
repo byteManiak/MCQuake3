@@ -25,7 +25,7 @@ public class Spikes extends Block {
         return SHAPE;
     }
 
-    private int SPIKES_DAMAGE_MULTIPLIER = 5;
+    private static final int SPIKES_DAMAGE_MULTIPLIER = 5;
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (entity instanceof LivingEntity && fallDistance > 1)

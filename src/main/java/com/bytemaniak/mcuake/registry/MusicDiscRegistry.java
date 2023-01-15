@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.registry;
 
+import com.bytemaniak.mcuake.MCuake;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -18,6 +19,7 @@ public class MusicDiscRegistry {
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {content.add(musicDisc);});
+        ItemGroupEvents.modifyEntriesEvent(MCuake.MCUAKE_GROUP).register(content -> {content.add(musicDisc);});
     }
 
     public static void LoadDiscs()

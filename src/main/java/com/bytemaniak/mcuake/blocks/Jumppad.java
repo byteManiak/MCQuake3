@@ -3,7 +3,6 @@ package com.bytemaniak.mcuake.blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -47,11 +46,15 @@ public class Jumppad extends HorizontalFacingBlock {
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity)
 	{
-		if (entity instanceof LivingEntity)
 		{
 			Direction direction = state.get(FACING);
 			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(JUMPPAD_BOOST_VALUE).add(0.f, 1.5f, 0.f));
 		}
+	}
+
+	@Override
+	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+		// Do nothing, so entity does not take fall damage if landing on the jumppad
 	}
 
 	@Override

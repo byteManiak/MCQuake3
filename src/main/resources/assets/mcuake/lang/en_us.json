@@ -1,9 +1,12 @@
 {
   "item.mcuake.jumppad": "Jump Pad",
   "item.mcuake.machinegun": "Machinegun",
+  "item.mcuake.player_settings": "MCuake Player Settings",
   "item.mcuake.spikes": "Spikes",
   "item.mcuake.thru_the_mirror": "Music Disc",
   "item.mcuake.thru_the_mirror.desc": "Elysis - Thru The Mirror",
+  "item.mcuake.tool": "MCuake Tool",
+  "itemGroup.mcuake.player_settings": "MCuake",
   "block.mcuake.jumppad": "Jump Pad",
   "block.mcuake.spikes": "Spikes",
   "death.attack.mcuake.spikes": "%1$s was impaled to death."

@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -27,7 +28,7 @@ public class Spikes extends Block {
     private int SPIKES_DAMAGE_MULTIPLIER = 5;
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance > 1)
+        if (entity instanceof LivingEntity && fallDistance > 1)
         {
             entity.damage(new DamageSource("mcuake.spikes"), fallDistance * SPIKES_DAMAGE_MULTIPLIER);
         }

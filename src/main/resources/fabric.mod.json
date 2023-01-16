@@ -23,6 +23,9 @@
     ],
     "client": [
       "com.bytemaniak.mcuake.MCuakeClient"
+    ],
+    "server": [
+      "com.bytemaniak.mcuake.MCuakeServer"
     ]
   },
   "mixins": [

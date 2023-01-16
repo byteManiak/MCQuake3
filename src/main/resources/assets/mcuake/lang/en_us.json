@@ -9,5 +9,6 @@
   "itemGroup.mcuake.player_settings": "MCuake",
   "block.mcuake.jumppad": "Jump Pad",
   "block.mcuake.spikes": "Spikes",
-  "death.attack.mcuake.spikes": "%1$s was impaled to death."
+  "death.attack.mcuake.spikes": "%1$s was impaled to death.",
+  "death.attack.mcuake.spikes.player": "%2$s did a \"This is Sparta\" on %1$s."
 }

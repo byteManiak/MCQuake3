@@ -79,7 +79,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
 
 			Direction direction = state.get(FACING);
-			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 3.f, 0.f));
+			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power / 3.f).add(0.f, ent.up_power / 3.f, 0.f));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.bytemaniak.mcuake.blocks;
+package com.bytemaniak.mcuake.blocks.jumppad;
 
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.mojang.blaze3d.systems.RenderSystem;

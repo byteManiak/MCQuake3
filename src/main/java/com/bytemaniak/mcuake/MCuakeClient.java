@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake;
 
-import com.bytemaniak.mcuake.blocks.JumppadScreen;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreen;
 import com.bytemaniak.mcuake.cs.ClientReceivers;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;

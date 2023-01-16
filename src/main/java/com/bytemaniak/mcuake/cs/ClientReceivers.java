@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.cs;
 
-import com.bytemaniak.mcuake.blocks.JumppadEntity;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;

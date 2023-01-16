@@ -1,8 +1,8 @@
 package com.bytemaniak.mcuake;
 
-import com.bytemaniak.mcuake.blocks.Jumppad;
-import com.bytemaniak.mcuake.blocks.JumppadEntity;
-import com.bytemaniak.mcuake.blocks.JumppadScreenHandler;
+import com.bytemaniak.mcuake.blocks.jumppad.Jumppad;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreenHandler;
 import com.bytemaniak.mcuake.blocks.Spikes;
 import com.bytemaniak.mcuake.cs.ServerReceivers;
 import com.bytemaniak.mcuake.items.Tool;

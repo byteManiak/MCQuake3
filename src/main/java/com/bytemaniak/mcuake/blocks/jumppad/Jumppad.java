@@ -1,4 +1,4 @@
-package com.bytemaniak.mcuake.blocks;
+package com.bytemaniak.mcuake.blocks.jumppad;
 
 import com.bytemaniak.mcuake.MCuake;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;

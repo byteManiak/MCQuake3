@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.cs;
 
-import com.bytemaniak.mcuake.blocks.JumppadEntity;
-import com.bytemaniak.mcuake.blocks.JumppadScreenHandler;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
+import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

@@ -7,6 +7,7 @@
     "Player"
   ],
   "client": [
+    "ClientPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

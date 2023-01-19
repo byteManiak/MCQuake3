@@ -5,15 +5,23 @@ import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
 import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreenHandler;
 import com.bytemaniak.mcuake.blocks.Spikes;
 import com.bytemaniak.mcuake.cs.ServerReceivers;
+import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
+import com.bytemaniak.mcuake.items.Machinegun;
+import com.bytemaniak.mcuake.items.Plasmagun;
 import com.bytemaniak.mcuake.items.Tool;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
+import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -37,6 +45,16 @@ public class MCuake implements ModInitializer {
 
 	public static final Item PLAYER_SETTINGS = new Item(new Item.Settings());
 	public static final Item TOOL = new Tool();
+	public static final Item MACHINEGUN = new Machinegun();
+	public static final Item PLASMAGUN = new Plasmagun();
+
+	public static final EntityType<PlasmaBall> PLASMA_BALL = Registry.register(
+			Registries.ENTITY_TYPE,
+			new Identifier("mcuake", "plasmaball"),
+			FabricEntityTypeBuilder.<PlasmaBall>create(SpawnGroup.MISC, PlasmaBall::new)
+					.dimensions(EntityDimensions.fixed(0.175f, 0.175f))
+					.trackRangeBlocks(128).trackedUpdateRate(10)
+					.build());
 
 	public static final ItemGroup MCUAKE_GROUP = FabricItemGroup.builder(new Identifier("mcuake", "player_settings"))
 			.icon(() -> new ItemStack(PLAYER_SETTINGS))
@@ -49,11 +67,13 @@ public class MCuake implements ModInitializer {
 	public void onInitialize() {
 		loadItem(PLAYER_SETTINGS, new Identifier("mcuake", "player_settings"));
 		loadItem(TOOL, new Identifier("mcuake", "tool"));
-		loadItem(new Item(new Item.Settings()), new Identifier("mcuake", "machinegun"));
+		loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));
+		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
 
 		loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcuake", "spikes"));
 		loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcuake", "jumppad"));
 
+		Sounds.loadSounds();
 		MusicDiscRegistry.LoadDiscs();
 
 		ServerReceivers.init();

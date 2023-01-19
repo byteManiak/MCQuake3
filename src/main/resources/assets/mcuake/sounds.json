@@ -3,5 +3,10 @@
     "sounds": [
       "mcuake:thru_the_mirror"
     ]
+  },
+  "plasmagun": {
+    "sounds": [
+      "mcuake:plasmagun"
+    ]
   }
 }

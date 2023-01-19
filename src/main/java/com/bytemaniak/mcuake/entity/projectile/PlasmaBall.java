@@ -39,11 +39,13 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
 
     @Override
     public boolean canHit() {
+        // Player cannot hit the projectile to return to sender
         return false;
     }
 
     @Override
     public boolean isTouchingWater() {
+        // Don't slow the projectile if in water
         return false;
     }
 
@@ -54,6 +56,7 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
 
     @Override
     protected float getDrag() {
+        // Don't slow down the projectile gradually
         return 1;
     }
 }

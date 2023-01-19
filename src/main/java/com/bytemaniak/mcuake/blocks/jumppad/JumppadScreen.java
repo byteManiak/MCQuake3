@@ -65,6 +65,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         titleY = backgroundHeight / 2 - 48;
 
         updatePower = ButtonWidget.builder(Text.of("Apply"), (button) -> {
+            // Request the server to update the jump pad's stats when pressing the apply button
             PacketByteBuf msg = PacketByteBufs.create();
             msg.writeFloat(forward_power);
             msg.writeFloat(up_power);

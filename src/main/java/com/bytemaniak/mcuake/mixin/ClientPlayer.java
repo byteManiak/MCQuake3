@@ -30,9 +30,11 @@ public abstract class ClientPlayer extends AbstractClientPlayerEntity {
             (this.activeItemStack.isOf(MCuake.MACHINEGUN) ||
              this.activeItemStack.isOf(MCuake.PLASMAGUN)))
         {
+            // Compensate vanilla's speed reduction when using an item
+            // TODO: This however doesn't compensate the inability to sprint while using an item due
+            //to this.isUsingItem() being used in a lot of places in tickMovement()
             this.input.movementForward *= 5;
             this.input.movementSideways *= 5;
-            this.ticksLeftToDoubleTapSprint = 7;
         }
     }
 }

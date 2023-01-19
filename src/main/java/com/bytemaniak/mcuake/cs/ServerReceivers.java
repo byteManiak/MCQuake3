@@ -11,10 +11,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class ServerReceivers {
     public static void init()
     {
-
         ServerPlayNetworking.registerGlobalReceiver(CSMessages.JUMPPAD_UPDATE_POWER, (server, player, handler, buf, responseSender) -> {
             if (player.currentScreenHandler instanceof JumppadScreenHandler)
             {
+                // Update the jump pad stats with the ones received from the GUI user
+                // and broadcast back to all players
                 JumppadEntity entity = ((JumppadScreenHandler)player.currentScreenHandler).entity;
                 PacketByteBuf retBuf = PacketByteBufs.create();
                 entity.updatePower(buf.readFloat(), buf.readFloat());

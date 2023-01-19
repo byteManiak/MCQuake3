@@ -75,12 +75,10 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity)
 	{
-		{
-			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
+		JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
 
-			Direction direction = state.get(FACING);
-			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power / 3.f).add(0.f, ent.up_power / 3.f, 0.f));
-		}
+		Direction direction = state.get(FACING);
+		entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power / 3.f).add(0.f, ent.up_power / 3.f, 0.f));
 	}
 
 	@Override
@@ -100,6 +98,8 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 				{
 					player.openHandledScreen(screenFactory);
 				}
+				// Ensure the jump pad's settings menu can only be accessed by one player
+				// since the data in the GUI isn't properly synced in real time.
 				lastPlayerUser = player.getUuid();
 			}
 		}

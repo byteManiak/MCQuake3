@@ -22,19 +22,21 @@ public abstract class Weapon extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        // By calling this function, the weapon continues to stay used until the player stops pressing the use key
         user.setCurrentHand(hand);
         return TypedActionResult.consume(user.getStackInHand(hand));
     }
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
+        // Mimick the animation used to shoot bows. It works pretty well with the weapon models made so far
         return UseAction.BOW;
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
         // Player can shoot weapon indefinitely
-        return 500;
+        return 1000000;
     }
 
     @Override

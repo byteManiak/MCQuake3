@@ -102,8 +102,9 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 				// since the data in the GUI isn't properly synced in real time.
 				lastPlayerUser = player.getUuid();
 			}
-		}
 
-		return ActionResult.SUCCESS;
+			return ActionResult.SUCCESS;
+		}
+		return ActionResult.PASS;
 	}
 }

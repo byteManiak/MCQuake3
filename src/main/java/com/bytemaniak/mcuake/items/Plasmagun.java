@@ -22,6 +22,7 @@ public class Plasmagun extends Weapon {
         // Spawn a new plasma ball in front of the player
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         PlasmaBall plasmaBall = new PlasmaBall(world);
+        plasmaBall.setOwner(user);
         plasmaBall.setPosition(user.getEyePos().add(new Vec3d(1.5f, 1.5f, 1.5f).multiply(lookDir)));
         plasmaBall.setVelocity(user, user.getPitch(), user.getYaw(), 0, 1.5f, 0);
         world.spawnEntity(plasmaBall);

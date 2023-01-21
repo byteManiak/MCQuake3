@@ -4,7 +4,7 @@ import com.bytemaniak.mcuake.blocks.jumppad.Jumppad;
 import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
 import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreenHandler;
 import com.bytemaniak.mcuake.blocks.Spikes;
-import com.bytemaniak.mcuake.cs.ServerReceivers;
+import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.items.Machinegun;
 import com.bytemaniak.mcuake.items.Plasmagun;
@@ -94,7 +94,7 @@ public class MCuake implements ModInitializer {
 		Registry.register(Registries.ATTRIBUTE, new Identifier("mcuake", "player_armor"), MCUAKE_ARMOR);
 		FabricDefaultAttributeRegistry.register(EntityType.PLAYER, createPlayerAttributes());
 
-		ServerReceivers.init();
+		CSMessages.registerServerPackets();
 	}
 
 	// Load a block into the block registry and create a default item for it

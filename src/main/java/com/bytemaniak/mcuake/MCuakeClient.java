@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake;
 
 import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreen;
-import com.bytemaniak.mcuake.cs.ClientReceivers;
+import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBallRenderer;
 import com.bytemaniak.mcuake.gui.MCuakeGuiRenderer;
 import net.fabricmc.api.ClientModInitializer;
@@ -13,7 +13,7 @@ public class MCuakeClient implements ClientModInitializer {
     @Override
     public void onInitializeClient()
     {
-        ClientReceivers.init();
+        CSMessages.registerClientPackets();
         HandledScreens.register(MCuake.JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
         EntityRendererRegistry.register(MCuake.PLASMA_BALL, (ctx) -> new PlasmaBallRenderer(ctx));
         HudRenderCallback.EVENT.register(new MCuakeGuiRenderer());

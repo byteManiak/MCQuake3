@@ -24,6 +24,6 @@ public class Plasmagun extends Weapon {
         plasmaBall.setPosition(user.getEyePos().add(new Vec3d(1.5f, 1.5f, 1.5f).multiply(lookDir)));
         plasmaBall.setVelocity(user, user.getPitch(), user.getYaw(), 0, 1.5f, 0);
         world.spawnEntity(plasmaBall);
-        world.playSound(null, user.getBlockPos(), Sounds.PLASMAGUN_FIRE, SoundCategory.PLAYERS);
+        world.playSound(null, user.getBlockPos(), Sounds.PLASMAGUN_FIRE, SoundCategory.PLAYERS, .65f, 1);
     }
 }

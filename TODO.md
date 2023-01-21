@@ -3,7 +3,7 @@
 #### Weapons
 - [ ] Prevent weapons from working in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
-- [ ] Make plasmagun less loud
+- [x] Make plasmagun less loud
 - [ ] Make dropped item models for weapons smaller.
 
 #### Projectiles
@@ -25,7 +25,7 @@
 
 #### Spikes
 - [ ] Fix spikes collisions
-- [ ] Reduce the start fall height of spikes so that falling from a spike 1 block above another actually deals damage.
+- [x] Reduce the start fall height of spikes so that falling from a spike 1 block above another actually deals damage.
 - [ ] Implement upside-down variant of spikes.
 
 #### Misc

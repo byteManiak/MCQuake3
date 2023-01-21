@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayer extends AbstractClientPlayerEntity {
+public abstract class ClientPlayerMixin extends AbstractClientPlayerEntity {
     @Shadow public Input input;
     @Shadow protected int ticksLeftToDoubleTapSprint;
 
     @Shadow public abstract boolean isUsingItem();
 
-    public ClientPlayer(ClientWorld world, GameProfile profile) {
+    public ClientPlayerMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
     }
 

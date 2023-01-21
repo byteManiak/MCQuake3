@@ -30,21 +30,16 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	private UUID lastPlayerUser;
 
-	public Jumppad()
-	{
+	public Jumppad() {
 		super(FabricBlockSettings.of(Material.METAL));
 		lastPlayerUser = UUID.randomUUID();
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
-	{
-		return SHAPE;
-	}
+	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
 
 	@Override
-	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos)
-	{
+	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
 	}
@@ -55,14 +50,12 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	}
 
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext context)
-	{
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		return this.getDefaultState().with(FACING, context.getPlayerFacing());
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation)
-	{
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
 		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 
@@ -73,8 +66,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	}
 
 	@Override
-	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity)
-	{
+	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
 		JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
 
 		Direction direction = state.get(FACING);

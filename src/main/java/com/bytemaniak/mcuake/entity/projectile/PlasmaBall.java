@@ -42,8 +42,7 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
     @Override
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!this.world.isClient)
-        {
+        if (!this.world.isClient) {
            this.kill();
         }
     }

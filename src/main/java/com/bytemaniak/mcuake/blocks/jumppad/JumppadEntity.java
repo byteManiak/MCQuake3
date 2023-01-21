@@ -69,8 +69,7 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
         buf.writeFloat(up_power);
     }
 
-    public void updatePower(float forward_power, float up_power)
-    {
+    public void updatePower(float forward_power, float up_power) {
         this.forward_power = forward_power;
         this.up_power = up_power;
     }

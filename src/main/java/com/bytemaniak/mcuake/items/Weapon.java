@@ -14,8 +14,7 @@ public abstract class Weapon extends Item {
 
     private long startTick = 0;
 
-    protected Weapon(long refireRateInTicks)
-    {
+    protected Weapon(long refireRateInTicks) {
         super(new Item.Settings().maxCount(1));
         this.refireRate = refireRateInTicks;
     }
@@ -28,24 +27,18 @@ public abstract class Weapon extends Item {
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        // Mimick the animation used to shoot bows. It works pretty well with the weapon models made so far
-        return UseAction.BOW;
-    }
+    // Mimick the animation used to shoot bows. It works pretty well with the weapon models made so far
+    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        // Player can shoot weapon indefinitely
-        return 1000000;
-    }
+    // Player can shoot weapon indefinitely
+    public int getMaxUseTime(ItemStack stack) { return 1000000; }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (!world.isClient)
-        {
+        if (!world.isClient) {
             long currentTick = world.getTime();
-            if (currentTick - startTick >= refireRate)
-            {
+            if (currentTick - startTick >= refireRate) {
                 this.onWeaponRefire(world, user, stack);
                 startTick = currentTick;
             }

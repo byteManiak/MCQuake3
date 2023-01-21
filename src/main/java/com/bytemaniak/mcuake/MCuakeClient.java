@@ -11,8 +11,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 public class MCuakeClient implements ClientModInitializer {
     @Override
-    public void onInitializeClient()
-    {
+    public void onInitializeClient() {
         CSMessages.registerClientPackets();
         HandledScreens.register(MCuake.JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
         EntityRendererRegistry.register(MCuake.PLASMA_BALL, (ctx) -> new PlasmaBallRenderer(ctx));

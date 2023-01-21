@@ -23,22 +23,19 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
 
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/gui/settings.png");
 
-    public JumppadScreen(JumppadScreenHandler handler, PlayerInventory inventory, Text title)
-    {
+    public JumppadScreen(JumppadScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, Text.of("Jump Pad Settings"));
         forward_power = handler.forward_power;
         up_power = handler.up_power;
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY)
-    {
+    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
         this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
-    {
+    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
@@ -46,16 +43,14 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
-    {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
 
     @Override
-    protected void init()
-    {
+    protected void init() {
         super.init();
 
         int baseX = width/2 - 28;

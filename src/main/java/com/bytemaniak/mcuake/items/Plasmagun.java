@@ -10,15 +10,13 @@ import net.minecraft.world.World;
 
 public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
-    private long startTick = 0;
 
     public Plasmagun() {
         super(PLASMAGUN_REFIRE_TICK_RATE);
     }
 
     @Override
-    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack)
-    {
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
         // Spawn a new plasma ball in front of the player
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         PlasmaBall plasmaBall = new PlasmaBall(world);

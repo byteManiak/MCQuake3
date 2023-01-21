@@ -81,16 +81,14 @@ public class MCuake implements ModInitializer {
 	}
 
 	// Load a block into the block registry and create a default item for it
-	private void loadDefaultBlock(Block block, Identifier id)
-	{
+	private void loadDefaultBlock(Block block, Identifier id) {
 		BlockItem blockItem = new BlockItem(block, new Item.Settings());
 		Registry.register(Registries.BLOCK, id, block);
 		loadItem(blockItem, id);
 	}
 
 	// Load an item into the item registry and add it to the MCuake creative tab
-	private void loadItem(Item item, Identifier id)
-	{
+	private void loadItem(Item item, Identifier id) {
 		Registry.register(Registries.ITEM, id, item);
 		ItemGroupEvents.modifyEntriesEvent(MCUAKE_GROUP).register(content -> {
 			content.add(item);

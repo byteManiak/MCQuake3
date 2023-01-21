@@ -24,12 +24,10 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayerEntity {
     }
 
     @Inject(method = "tickMovement()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick(ZF)V", shift = At.Shift.AFTER))
-    private void cancelWeaponSlowdown(CallbackInfo ci)
-    {
+    private void cancelWeaponSlowdown(CallbackInfo ci) {
         if (this.isUsingItem() && !this.hasVehicle() &&
             (this.activeItemStack.isOf(MCuake.MACHINEGUN) ||
-             this.activeItemStack.isOf(MCuake.PLASMAGUN)))
-        {
+             this.activeItemStack.isOf(MCuake.PLASMAGUN))) {
             // Compensate vanilla's speed reduction when using an item
             // TODO: This however doesn't compensate the inability to sprint while using an item due
             //to this.isUsingItem() being used in a lot of places in tickMovement()

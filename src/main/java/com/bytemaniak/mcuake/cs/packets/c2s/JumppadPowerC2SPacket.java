@@ -13,10 +13,8 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class JumppadPowerC2SPacket {
-    public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender)
-    {
-        if (player.currentScreenHandler instanceof JumppadScreenHandler)
-        {
+    public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
+        if (player.currentScreenHandler instanceof JumppadScreenHandler) {
             // Update the jump pad stats with the ones received from the GUI user
             // and broadcast back to all players
             JumppadEntity entity = ((JumppadScreenHandler)player.currentScreenHandler).entity;

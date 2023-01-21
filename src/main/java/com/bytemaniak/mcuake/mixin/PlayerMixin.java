@@ -23,8 +23,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
 
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    public float reduceFallDistance(float fallDistance)
-    {
+    public float reduceFallDistance(float fallDistance) {
         return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
     }
 }

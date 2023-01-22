@@ -4,7 +4,7 @@
 - [ ] Prevent weapons from working in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [x] Make plasmagun less loud
-- [ ] Make dropped item models for weapons smaller.
+- [x] Make dropped item models for weapons smaller.
 
 #### Projectiles
 - [ ] Find a way to override the invincibility window on non-player mobs, without mixins

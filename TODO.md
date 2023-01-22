@@ -31,7 +31,7 @@
 #### Misc
 - [ ] Show the Quake health to the player
 - [ ] Certain sounds should only be heard by a single player
-- [ ] Add the ability to sprint while firing a weapon
+- [x] Add the ability to sprint while firing a weapon
 - [ ] Make physics more Quakey
 - [ ] When collisions for the blocks are fixed, establish if falling between 2 blocks counts as 1 or 2 blocks.
 

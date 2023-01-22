@@ -14,14 +14,9 @@ import net.minecraft.world.World;
 public class PlasmaBall extends ExplosiveProjectileEntity {
     private float PLASMABALL_DAMAGE = 10;
 
-    public PlasmaBall(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
-        super(entityType, world);
-    }
+    public PlasmaBall(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) { super(entityType, world); }
 
-    public PlasmaBall(World world)
-    {
-        super(MCuake.PLASMA_BALL, world);
-    }
+    public PlasmaBall(World world) { super(MCuake.PLASMA_BALL, world); }
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
@@ -36,6 +31,8 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
             }
 
             this.kill();
+        } else {
+
         }
     }
 
@@ -48,25 +45,17 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
     }
 
     @Override
-    public boolean canHit() {
-        // Player cannot hit the projectile to return to sender
-        return false;
-    }
+    // Player cannot hit the projectile to return to sender
+    public boolean canHit() { return false; }
 
     @Override
-    public boolean isTouchingWater() {
-        // Don't slow the projectile if in water
-        return false;
-    }
+    // Don't slow the projectile if in water
+    public boolean isTouchingWater() { return false; }
 
     @Override
-    protected boolean isBurning() {
-        return false;
-    }
+    protected boolean isBurning() { return false; }
 
     @Override
-    protected float getDrag() {
-        // Don't slow down the projectile gradually
-        return 1;
-    }
+    // Don't slow down the projectile gradually
+    protected float getDrag() { return 1; }
 }

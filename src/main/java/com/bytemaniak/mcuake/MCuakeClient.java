@@ -14,7 +14,7 @@ public class MCuakeClient implements ClientModInitializer {
     public void onInitializeClient() {
         CSMessages.registerClientPackets();
         HandledScreens.register(MCuake.JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
-        EntityRendererRegistry.register(MCuake.PLASMA_BALL, (ctx) -> new PlasmaBallRenderer(ctx));
+        EntityRendererRegistry.register(MCuake.PLASMA_BALL, PlasmaBallRenderer::new);
         HudRenderCallback.EVENT.register(new MCuakeGuiRenderer());
     }
 }

@@ -52,7 +52,7 @@ public class MCuake implements ModInitializer {
 			Registries.ENTITY_TYPE,
 			new Identifier("mcuake", "plasmaball"),
 			FabricEntityTypeBuilder.<PlasmaBall>create(SpawnGroup.MISC, PlasmaBall::new)
-					.dimensions(EntityDimensions.fixed(0.175f, 0.175f))
+					.dimensions(EntityDimensions.fixed(0.3f, 0.3f))
 					.trackRangeBlocks(128).trackedUpdateRate(10)
 					.build());
 

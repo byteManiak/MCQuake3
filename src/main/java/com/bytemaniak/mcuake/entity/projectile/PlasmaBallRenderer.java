@@ -29,6 +29,7 @@ public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
     public void render(PlasmaBall entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
+        matrices.scale(.875f, .875f, .875f);
         matrices.multiply(this.dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();

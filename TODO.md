@@ -8,9 +8,9 @@
 
 #### Projectiles
 - [ ] Find a way to override the invincibility window on non-player mobs, without mixins
-- [ ] Make plasmagun projectile smaller
+- [x] Make plasmagun projectile smaller
 - [ ] Fix plasmagun projectile collision box
-- [ ] Change the position from which the plasmagun balls spawn. Set it lower and more inwards
+- [x] Change the position from which the plasmagun balls spawn. Set it lower and more inwards
 - [ ] Figure out why plasmagun shoots through players if close enough. Look through bow code as a start.
 - [ ] To be able to spawn projectiles from wherever around the player, set the destination of the projectile to e.g. 50 blocks ahead of the player's crosshair, and make the projectile entity head that way.
 

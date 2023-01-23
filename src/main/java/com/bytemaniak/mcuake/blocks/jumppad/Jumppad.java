@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -22,17 +23,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.UUID;
-
 public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvider {
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
 
-	private UUID lastPlayerUser;
-
 	public Jumppad() {
 		super(FabricBlockSettings.of(Material.METAL));
-		lastPlayerUser = UUID.randomUUID();
 	}
 
 	@Override
@@ -80,10 +76,12 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (!world.isClient && player.getMainHandStack().isOf(MCuake.TOOL))
+		ItemStack mainHandStack = player.getMainHandStack();
+		if (!world.isClient && mainHandStack.isOf(MCuake.TOOL))
 		{
-			PlayerEntity lastPlayer = world.getPlayerByUuid(lastPlayerUser);
-			if (lastPlayer == null || !(lastPlayer.currentScreenHandler instanceof JumppadScreenHandler))
+			JumppadEntity jumppad = (JumppadEntity)world.getBlockEntity(pos);
+			PlayerEntity lastPlayer = jumppad.getLastPlayerUser();
+			if (lastPlayer == null || lastPlayer.currentScreenHandler != jumppad.getLastScreen())
 			{
 				NamedScreenHandlerFactory screenFactory = state.createScreenHandlerFactory(world, pos);
 				if (screenFactory != null)
@@ -92,11 +90,11 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 				}
 				// Ensure the jump pad's settings menu can only be accessed by one player
 				// since the data in the GUI isn't properly synced in real time.
-				lastPlayerUser = player.getUuid();
+				jumppad.setLastPlayerUser(player);
 			}
-
-			return ActionResult.SUCCESS;
 		}
-		return ActionResult.PASS;
+
+		if (mainHandStack.isOf(MCuake.MACHINEGUN) || mainHandStack.isOf(MCuake.PLASMAGUN)) return ActionResult.PASS;
+		else return ActionResult.SUCCESS;
 	}
 }

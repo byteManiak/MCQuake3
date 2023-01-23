@@ -17,7 +17,7 @@
 #### Jumppad
 - [ ] Limit max power of jumppads as it's excessive
 - [ ] Add 0.1/0.5/1.0 precision buttons for the jumppad power screen
-- [ ] Fix only being able to use one jumppad on the whole server
+- [x] Fix only being able to use one jumppad on the whole server
 - [ ] Fix jumppad collisions
 - [ ] Add NBT tags to jumppad BlockItem so it can be duplicated with its settings by middle click
 - [ ] Stop showing the jumppad config screen if that jumppad was destroyed

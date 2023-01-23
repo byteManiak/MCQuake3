@@ -17,13 +17,19 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
     public static final int JUMPPAD_ENTITY_POWER_MAX = 32;
 
     public float forward_power = 0, up_power = 0;
 
+    private UUID lastPlayerUser;
+    private JumppadScreenHandler lastScreen;
+
     public JumppadEntity(BlockPos pos, BlockState state) {
         super(MCuake.JUMPPAD_BLOCK_ENTITY, pos, state);
+        lastPlayerUser = UUID.randomUUID();
     }
 
     @Override
@@ -34,7 +40,8 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new JumppadScreenHandler(syncId, inv, this);
+        lastScreen = new JumppadScreenHandler(syncId, inv, this);
+        return lastScreen;
     }
 
     @Override
@@ -52,16 +59,10 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
     }
 
     @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket()
-    {
-        return BlockEntityUpdateS2CPacket.create(this);
-    }
+    public Packet<ClientPlayPacketListener> toUpdatePacket() { return BlockEntityUpdateS2CPacket.create(this); }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt()
-    {
-        return createNbt();
-    }
+    public NbtCompound toInitialChunkDataNbt() { return createNbt(); }
 
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
@@ -73,4 +74,10 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
         this.forward_power = forward_power;
         this.up_power = up_power;
     }
+
+    public PlayerEntity getLastPlayerUser() { return world.getPlayerByUuid(lastPlayerUser); }
+
+    public void setLastPlayerUser(PlayerEntity playerUser) { lastPlayerUser = playerUser.getUuid(); }
+
+    public JumppadScreenHandler getLastScreen() { return lastScreen; }
 }

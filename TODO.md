@@ -15,13 +15,13 @@
 - [ ] To be able to spawn projectiles from wherever around the player, set the destination of the projectile to e.g. 50 blocks ahead of the player's crosshair, and make the projectile entity head that way.
 
 #### Jumppad
-- [ ] Limit max power of jumppads as it's excessive
-- [ ] Add 0.1/0.5/1.0 precision buttons for the jumppad power screen
+- [x] Limit max power of jumppads as it's excessive
+- [x] Add 0.1/0.5/1.0 precision buttons for the jumppad power screen
 - [x] Fix only being able to use one jumppad on the whole server
 - [ ] Fix jumppad collisions
 - [ ] Add NBT tags to jumppad BlockItem so it can be duplicated with its settings by middle click
 - [ ] Stop showing the jumppad config screen if that jumppad was destroyed
-- [ ] Figure out how to make sliders in the jumppad GUI actually slide, not just click
+- [x] Figure out how to make sliders in the jumppad GUI actually slide, not just click
 
 #### Spikes
 - [ ] Fix spikes collisions

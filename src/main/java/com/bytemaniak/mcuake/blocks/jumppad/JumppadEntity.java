@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
-    public static final int JUMPPAD_ENTITY_POWER_MAX = 32;
+    public static final int JUMPPAD_ENTITY_POWER_MAX = 10;
 
     public float forward_power = 0, up_power = 0;
 

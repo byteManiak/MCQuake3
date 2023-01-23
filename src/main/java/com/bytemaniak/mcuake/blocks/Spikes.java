@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class Spikes extends Block {
     private static final int SPIKES_DAMAGE_MULTIPLIER = 5;
-    private static final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 12, 15);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 12, 16);
 
     public Spikes() {
         super(FabricBlockSettings.of(Material.STONE).nonOpaque());

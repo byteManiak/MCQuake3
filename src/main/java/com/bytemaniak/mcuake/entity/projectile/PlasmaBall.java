@@ -23,11 +23,12 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
 
     public PlasmaBall(World world) { super(MCuake.PLASMA_BALL, world); }
 
-    @Environment(EnvType.SERVER)
     private void doDamage(Entity entity)
     {
         if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
-            ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+            if (this.getOwner() != null) {
+                ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+            }
         } else {
             entity.damage(DamageSources.PLASMAGUN_DAMAGE, PLASMABALL_DAMAGE / 4);
         }

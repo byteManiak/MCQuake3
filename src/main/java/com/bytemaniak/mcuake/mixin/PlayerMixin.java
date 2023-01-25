@@ -3,11 +3,12 @@ package com.bytemaniak.mcuake.mixin;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -15,7 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
+
     private static final float FALL_DISTANCE_MODIFIER = 4;
+
+    private int quakeHealth = 100;
+    private int quakeArmor = 0;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -25,5 +31,46 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {
         return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
+    private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
+        nbt.putInt("quake_health", quakeHealth);
+        nbt.putInt("quake_armor", quakeArmor);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
+    private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
+        quakeHealth = nbt.getInt("quake_health");
+        quakeArmor = nbt.getInt("quake_armor");
+    }
+
+    @Override
+    public int getQuakeHealth() {
+        return quakeHealth;
+    }
+
+    @Override
+    public int getQuakeArmor() {
+        return quakeArmor;
+    }
+
+    @Override
+    public void setQuakeHealth(int amount) {
+        quakeHealth = amount;
+    }
+
+    @Override
+    public void setQuakeArmor(int amount) {
+        quakeArmor = amount;
+    }
+
+    @Override
+    public void takeDamage(int amount, DamageSource damageSource) {
+        quakeHealth -= amount;
+        if (quakeHealth <= 0) {
+            this.damage(damageSource, Integer.MAX_VALUE);
+            quakeHealth = 100;
+        }
     }
 }

@@ -1,16 +1,17 @@
 package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.MCuake;
+import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.*;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -26,21 +27,12 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
     private void doDamage(Entity entity)
     {
         if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
+            ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
         } else {
             entity.damage(DamageSources.PLASMAGUN_DAMAGE, PLASMABALL_DAMAGE / 4);
         }
 
         this.kill();
-    }
-
-    @Environment(EnvType.CLIENT)
-    private void playDingLocal(Entity entity)
-    {
-        if (this.getOwner().getUuid() == MinecraftClient.getInstance().player.getUuid() &&
-                entity instanceof PlayerEntity playerEntity &&
-                playerEntity.isAlive()) {
-            MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.f, .75f));
-        }
     }
 
     @Override
@@ -49,8 +41,6 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
         Entity entity = entityHitResult.getEntity();
         if (!this.world.isClient) {
             doDamage(entity);
-        } else {
-            playDingLocal(entity);
         }
     }
 

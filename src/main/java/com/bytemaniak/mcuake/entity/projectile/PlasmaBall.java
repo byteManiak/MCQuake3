@@ -25,15 +25,17 @@ public class PlasmaBall extends ExplosiveProjectileEntity {
 
     private void doDamage(Entity entity)
     {
-        if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
-            if (this.getOwner() != null) {
-                ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+        if (!world.isClient) {
+            if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
+                if (this.getOwner() != null) {
+                    ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                }
+            } else {
+                entity.damage(DamageSources.PLASMAGUN_DAMAGE, PLASMABALL_DAMAGE / 4);
             }
-        } else {
-            entity.damage(DamageSources.PLASMAGUN_DAMAGE, PLASMABALL_DAMAGE / 4);
-        }
 
-        this.kill();
+            this.kill();
+        }
     }
 
     @Override

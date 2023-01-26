@@ -18,14 +18,29 @@ import net.minecraft.world.World;
 public class SimpleProjectile extends ExplosiveProjectileEntity {
     private int damageAmount;
     private String projectileName;
+    private long lifetimeInTicks;
+    private long initTick;
 
     protected void initDataTracker() {}
-    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) { super(entityType, world); }
+    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
+        super(entityType, world);
+        initTick = world.getTime();
+    }
 
-    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world, int damageAmount, String projectileName) {
+    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world, int damageAmount, String projectileName, int lifetimeInTicks) {
         this(entityType, world);
         this.damageAmount = damageAmount;
         this.projectileName = projectileName;
+        this.lifetimeInTicks = lifetimeInTicks;
+        this.initTick = world.getTime();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.world.getTime() - initTick > lifetimeInTicks) {
+            this.discard();
+        }
     }
 
     private void doDamage(Entity entity) {

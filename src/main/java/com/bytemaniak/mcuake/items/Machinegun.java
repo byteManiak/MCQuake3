@@ -17,16 +17,11 @@ public class Machinegun extends Weapon {
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
         // Spawn a new bullet in front of the player
-        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
-        Vec3d rightVec = lookDir.crossProduct(new Vec3d(0, 1, 0));
-        Vec3d upVec = lookDir.crossProduct(rightVec).normalize();
-        Vec3d tempVec = lookDir.add(upVec.negate().multiply(0.f, 0.15f, 0.f));
-        Vec3d offsetVec = upVec.add(tempVec);
+        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw())
         Bullet bullet = new Bullet(world);
         bullet.setOwner(user);
-        bullet.setPosition(user.getEyePos().add(offsetVec));
-        bullet.setVelocity(user.getPitch(), user.getYaw(), 10.f);
-        bullet.setVelocity(lookDir.x, lookDir.y, lookDir.z, 15f, 0);
+        bullet.setPosition(user.getEyePos());
+        bullet.setVelocity(lookDir.x, lookDir.y, lookDir.z, 200f, 0);
         world.spawnEntity(bullet);
         world.playSound(null, user.getBlockPos(), Sounds.MACHINEGUN_FIRE, SoundCategory.PLAYERS, .65f, 1);
     }

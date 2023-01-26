@@ -17,7 +17,7 @@ public class Machinegun extends Weapon {
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
         // Spawn a new bullet in front of the player
-        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw())
+        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         Bullet bullet = new Bullet(world);
         bullet.setOwner(user);
         bullet.setPosition(user.getEyePos());

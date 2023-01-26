@@ -9,6 +9,14 @@
       "mcuake:thru_the_mirror"
     ]
   },
+  "machinegun": {
+    "sounds": [
+      "mcuake:machinegun1",
+      "mcuake:machinegun2",
+      "mcuake:machinegun3",
+      "mcuake:machinegun4"
+    ]
+  },
   "plasmagun": {
     "sounds": [
       "mcuake:plasmagun"

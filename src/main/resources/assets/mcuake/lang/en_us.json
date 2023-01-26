@@ -15,7 +15,7 @@
   "death.attack.mcuake.gauntlet": "",
   "death.attack.mcuake.grenade": "",
   "death.attack.mcuake.lightning": "",
-  "death.attack.mcuake.machinegun": "",
+  "death.attack.mcuake.machinegun": "%1$s was mowed down by %2$s.",
   "death.attack.mcuake.plasmagun": "%1$s was turned to plasma by %2$s.",
   "death.attack.mcuake.railgun": "",
   "death.attack.mcuake.rocket": "",

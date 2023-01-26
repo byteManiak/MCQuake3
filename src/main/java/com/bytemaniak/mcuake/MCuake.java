@@ -9,6 +9,7 @@ import com.bytemaniak.mcuake.entity.projectile.Bullet;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.items.Machinegun;
 import com.bytemaniak.mcuake.items.Plasmagun;
+import com.bytemaniak.mcuake.items.Railgun;
 import com.bytemaniak.mcuake.items.Tool;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
 import com.bytemaniak.mcuake.registry.Sounds;
@@ -17,6 +18,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
@@ -27,6 +29,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandlerType;
@@ -48,6 +51,7 @@ public class MCuake implements ModInitializer {
 	public static final Item TOOL = new Tool();
 	public static final Item MACHINEGUN = new Machinegun();
 	public static final Item PLASMAGUN = new Plasmagun();
+	public static final Item RAILGUN = new Railgun();
 
 	public static final EntityType<PlasmaBall> PLASMA_BALL = Registry.register(
 			Registries.ENTITY_TYPE,
@@ -68,6 +72,8 @@ public class MCuake implements ModInitializer {
 			.icon(() -> new ItemStack(PLAYER_SETTINGS))
 			.build();
 
+	public static final DefaultParticleType NO_PARTICLE = FabricParticleTypes.simple();
+
 	static {
 		Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcuake", "jumppad_power"), JUMPPAD_SCREEN_HANDLER);
 	}
@@ -78,6 +84,7 @@ public class MCuake implements ModInitializer {
 		loadItem(TOOL, new Identifier("mcuake", "tool"));
 		loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));
 		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
+		loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
 
 		loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcuake", "spikes"));
 		loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcuake", "jumppad"));

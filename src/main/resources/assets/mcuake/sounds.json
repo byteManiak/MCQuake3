@@ -21,5 +21,10 @@
     "sounds": [
       "mcuake:plasmagun"
     ]
+  },
+  "railgun": {
+    "sounds": [
+      "mcuake:railgun"
+    ]
   }
 }

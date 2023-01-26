@@ -19,7 +19,8 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayerEntity {
     @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
     private boolean cancelWeaponSlowdown(ClientPlayerEntity instance) {
         if (instance.getActiveItem().isOf(MCuake.MACHINEGUN) ||
-            instance.getActiveItem().isOf(MCuake.PLASMAGUN)) return false;
+            instance.getActiveItem().isOf(MCuake.PLASMAGUN) ||
+            instance.getActiveItem().isOf(MCuake.RAILGUN)) return false;
         else return instance.isUsingItem();
     }
 }

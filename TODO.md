@@ -5,6 +5,10 @@
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [x] Make plasmagun less loud
 - [x] Make dropped item models for weapons smaller.
+- [ ] Add spread to machinegun
+- [ ] Fix fast projectile lag
+- [ ] Despawn projectiles entering unloaded chunk.
+- [ ] Fix railgun only shooting for one player
 
 #### Projectiles
 - [ ] Find a way to override the invincibility window on non-player mobs, without mixins
@@ -21,6 +25,7 @@
 - [x] Figure out how to make sliders in the jumppad GUI actually slide, not just click
 
 #### Spikes
+- [ ] Add tool ability to make spikes invisible
 - [ ] Fix spikes collisions
 - [x] Reduce the start fall height of spikes so that falling from a spike 1 block above another actually deals damage.
 - [ ] Implement upside-down variant of spikes.
@@ -38,4 +43,4 @@
 - [ ] Implement all other weapons
 - [ ] Implement ammo/pickup entities/spawners
 - [ ] Add new blocks
-
+- [?] Add gun with bouncy projectiles

@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 public class SimpleProjectile extends ExplosiveProjectileEntity {
     private int damageAmount;
     private String projectileName;
-    private long lifetimeInTicks;
-    private long initTick;
+    protected long lifetimeInTicks;
+    protected long initTick;
 
     protected void initDataTracker() {}
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {

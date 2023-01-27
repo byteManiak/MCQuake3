@@ -12,7 +12,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
+public class PlasmaBallRenderer extends SimpleProjectileRenderer {
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/plasmaball.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityCutoutNoCull(TEXTURE);
 
@@ -21,12 +21,12 @@ public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
     }
 
     @Override
-    public Identifier getTexture(PlasmaBall entity) {
+    public Identifier getTexture(SimpleProjectile entity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(PlasmaBall entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(SimpleProjectile entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
         matrices.scale(.875f, .875f, .875f);

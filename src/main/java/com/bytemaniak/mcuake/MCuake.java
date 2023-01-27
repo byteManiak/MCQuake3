@@ -7,6 +7,7 @@ import com.bytemaniak.mcuake.blocks.Spikes;
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.projectile.Bullet;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
+import com.bytemaniak.mcuake.entity.projectile.Rail;
 import com.bytemaniak.mcuake.items.Machinegun;
 import com.bytemaniak.mcuake.items.Plasmagun;
 import com.bytemaniak.mcuake.items.Railgun;
@@ -64,6 +65,13 @@ public class MCuake implements ModInitializer {
 			Registries.ENTITY_TYPE,
 			new Identifier("mcuake", "bullet"),
 			FabricEntityTypeBuilder.<Bullet>create(SpawnGroup.MISC, Bullet::new)
+					.dimensions(EntityDimensions.fixed(0.05f, 0.05f))
+					.trackRangeBlocks(128).trackedUpdateRate(10)
+					.build());
+	public static final EntityType<Rail> RAIL = Registry.register(
+			Registries.ENTITY_TYPE,
+			new Identifier("mcuake", "rail"),
+			FabricEntityTypeBuilder.<Rail>create(SpawnGroup.MISC, Rail::new)
 					.dimensions(EntityDimensions.fixed(0.05f, 0.05f))
 					.trackRangeBlocks(128).trackedUpdateRate(10)
 					.build());

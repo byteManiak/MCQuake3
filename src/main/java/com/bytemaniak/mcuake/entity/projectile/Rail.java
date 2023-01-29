@@ -2,6 +2,8 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.cs.CSMessages;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -23,21 +25,22 @@ public class Rail extends SimpleProjectile {
 
     public Rail(World world) { this(MCuake.RAIL, world); }
 
+    private void sendRailgunTrail(Vec3d endPos) {
+        Vec3d playerPos = this.getOwner().getPos();
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeDouble(playerPos.x);
+        buf.writeDouble(playerPos.y);
+        buf.writeDouble(playerPos.z);
+        buf.writeDouble(endPos.x);
+        buf.writeDouble(endPos.y);
+        buf.writeDouble(endPos.z);
+        for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) this.getOwner().getWorld()))
+            ServerPlayNetworking.send(plr, CSMessages.SHOW_RAILGUN_TRAIL, buf);
+    }
+
     @Override
     protected void onCollision(HitResult hitResult) {
-        if (!world.isClient) {
-            Vec3d playerPos = this.getOwner().getPos();
-            Vec3d endPos = hitResult.getPos();
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeDouble(playerPos.x);
-            buf.writeDouble(playerPos.y);
-            buf.writeDouble(playerPos.z);
-            buf.writeDouble(endPos.x);
-            buf.writeDouble(endPos.y);
-            buf.writeDouble(endPos.z);
-            for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-                ServerPlayNetworking.send(plr, CSMessages.SHOW_RAILGUN_TRAIL, buf);
-        }
+        if (!world.isClient) sendRailgunTrail(hitResult.getPos());
 
         super.onCollision(hitResult);
     }
@@ -45,17 +48,7 @@ public class Rail extends SimpleProjectile {
     @Override
     public void tick() {
         if (!world.isClient && this.world.getTime() - initTick > lifetimeInTicks) {
-            Vec3d playerPos = this.getOwner().getPos();
-            Vec3d endPos = this.getPos();
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeDouble(playerPos.x);
-            buf.writeDouble(playerPos.y);
-            buf.writeDouble(playerPos.z);
-            buf.writeDouble(endPos.x);
-            buf.writeDouble(endPos.y);
-            buf.writeDouble(endPos.z);
-            for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-                ServerPlayNetworking.send(plr, CSMessages.SHOW_RAILGUN_TRAIL, buf);
+            sendRailgunTrail(this.getPos());
         }
         super.tick();
     }

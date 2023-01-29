@@ -3,31 +3,23 @@
 #### Weapons
 - [ ] Prevent weapons from working in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
-- [x] Make plasmagun less loud
-- [x] Make dropped item models for weapons smaller.
 - [ ] Add spread to machinegun
-- [ ] Fix fast projectile lag
-- [ ] Despawn projectiles entering unloaded chunk.
-- [ ] Fix railgun only shooting for one player
+- [ ] Fix weapons only shooting for one player
 
 #### Projectiles
 - [ ] Find a way to override the invincibility window on non-player mobs, without mixins
-- [x] Make plasmagun projectile smaller
-- [x] Change the position from which the plasmagun balls spawn. Set it lower and more inwards
+- [ ] Fix fast projectile lag
+- [ ] Despawn projectiles entering unloaded chunk
+- [ ] Push back players when hit by projectiles
 
 #### Jumppad
-- [x] Limit max power of jumppads as it's excessive
-- [x] Add 0.1/0.5/1.0 precision buttons for the jumppad power screen
-- [x] Fix only being able to use one jumppad on the whole server
 - [ ] Fix jumppad collisions
 - [ ] Add NBT tags to jumppad BlockItem so it can be duplicated with its settings by middle click
 - [ ] Stop showing the jumppad config screen if that jumppad was destroyed
-- [x] Figure out how to make sliders in the jumppad GUI actually slide, not just click
 
 #### Spikes
 - [ ] Add tool ability to make spikes invisible
 - [ ] Fix spikes collisions
-- [x] Reduce the start fall height of spikes so that falling from a spike 1 block above another actually deals damage.
 - [ ] Implement upside-down variant of spikes.
 
 #### Misc

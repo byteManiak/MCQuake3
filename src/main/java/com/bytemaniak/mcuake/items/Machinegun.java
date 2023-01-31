@@ -4,14 +4,13 @@ import com.bytemaniak.mcuake.entity.projectile.Bullet;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class Machinegun extends Weapon {
     private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
     public Machinegun() {
-        super(MACHINEGUN_REFIRE_TICK_RATE);
+        super(MACHINEGUN_REFIRE_TICK_RATE, Sounds.MACHINEGUN_FIRE);
     }
 
     @Override
@@ -23,6 +22,5 @@ public class Machinegun extends Weapon {
         bullet.setPosition(user.getEyePos());
         bullet.setVelocity(lookDir.x, lookDir.y, lookDir.z, 200f, 0);
         world.spawnEntity(bullet);
-        world.playSound(null, user.getBlockPos(), Sounds.MACHINEGUN_FIRE, SoundCategory.PLAYERS, .65f, 1);
     }
 }

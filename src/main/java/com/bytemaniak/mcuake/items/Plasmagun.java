@@ -4,7 +4,6 @@ import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -12,7 +11,7 @@ public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
 
     public Plasmagun() {
-        super(PLASMAGUN_REFIRE_TICK_RATE);
+        super(PLASMAGUN_REFIRE_TICK_RATE, Sounds.PLASMAGUN_FIRE);
     }
 
     @Override
@@ -28,6 +27,5 @@ public class Plasmagun extends Weapon {
         plasmaBall.setPosition(user.getEyePos().add(offsetVec));
         plasmaBall.setVelocity(lookDir.x, lookDir.y, lookDir.z, 1.5f, 0);
         world.spawnEntity(plasmaBall);
-        world.playSound(null, user.getBlockPos(), Sounds.PLASMAGUN_FIRE, SoundCategory.PLAYERS, .65f, 1);
     }
 }

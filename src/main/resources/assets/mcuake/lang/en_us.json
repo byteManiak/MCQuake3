@@ -18,7 +18,7 @@
   "death.attack.mcuake.lightning": "",
   "death.attack.mcuake.machinegun": "%1$s was mowed down by %2$s.",
   "death.attack.mcuake.plasmagun": "%1$s was turned to plasma by %2$s.",
-  "death.attack.mcuake.railgun": "",
+  "death.attack.mcuake.railgun": "%2$s voided %1$s's life insurance.",
   "death.attack.mcuake.rocket": "",
   "death.attack.mcuake.shotgun": "",
   "death.attack.mcuake.spikes": "%1$s was impaled to death.",

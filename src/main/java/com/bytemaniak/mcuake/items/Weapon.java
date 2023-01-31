@@ -1,8 +1,7 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.utils.ClientUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -18,11 +17,11 @@ public abstract class Weapon extends Item {
     private final long refireRate;
     private final SoundEvent firingSound;
 
-    private long startTick = 0;
-    private long clientStartTick = 0;
+    MCuakePlayer.WeaponSlot weaponSlot;
 
-    protected Weapon(long refireRateInTicks, SoundEvent firingSound) {
+    protected Weapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks, SoundEvent firingSound) {
         super(new Item.Settings().maxCount(1));
+        this.weaponSlot = weaponSlot;
         this.refireRate = refireRateInTicks;
         this.firingSound = firingSound;
     }
@@ -45,16 +44,17 @@ public abstract class Weapon extends Item {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         long currentTick = world.getTime();
+        MCuakePlayer player = (MCuakePlayer) user;
         if (!world.isClient) {
-            if (currentTick - startTick >= refireRate) {
+            if (currentTick - player.getWeaponTick(weaponSlot, false) >= refireRate) {
                 this.onWeaponRefire(world, user, stack);
                 world.playSound(user, user.getBlockPos(), firingSound, SoundCategory.PLAYERS, .65f, 1.f);
-                startTick = currentTick;
+                player.setWeaponTick(weaponSlot, currentTick, false);
             }
         } else {
-            if (currentTick - clientStartTick >= refireRate) {
+            if (currentTick - player.getWeaponTick(weaponSlot, true) >= refireRate) {
                 ClientUtils.playSoundPositioned(user, firingSound);
-                clientStartTick = currentTick;
+                player.setWeaponTick(weaponSlot, currentTick, true);
             }
         }
     }

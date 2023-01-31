@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.Bullet;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
 public class Machinegun extends Weapon {
     private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
     public Machinegun() {
-        super(MACHINEGUN_REFIRE_TICK_RATE, Sounds.MACHINEGUN_FIRE);
+        super(MCuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, Sounds.MACHINEGUN_FIRE);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.Rail;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
 public class Railgun extends Weapon{
     private static final int RAILGUN_REFIRE_TICK_RATE = 50;
 
-    public Railgun() { super(RAILGUN_REFIRE_TICK_RATE, Sounds.RAILGUN_FIRE); }
+    public Railgun() { super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, Sounds.RAILGUN_FIRE); }
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {

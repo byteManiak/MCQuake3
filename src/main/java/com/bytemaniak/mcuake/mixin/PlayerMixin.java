@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.mixin;
 
+import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -22,6 +23,9 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
 
     private int quakeHealth = 100;
     private int quakeArmor = 0;
+
+    private long weaponTicks[] = new long[9];
+    private long clientWeaponTicks[] = new long[9];
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -70,7 +74,21 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         quakeHealth -= amount;
         if (quakeHealth <= 0) {
             this.damage(damageSource, Integer.MAX_VALUE);
+            // Reset weapon ticks so weapon delay doesn't apply to the newly-spawned player
+            weaponTicks = new long[9];
+            clientWeaponTicks = new long[9];
             quakeHealth = 100;
         }
+    }
+
+    @Override
+    public long getWeaponTick(WeaponSlot slot, boolean clientside) {
+        return clientside ? clientWeaponTicks[slot.slot()] : weaponTicks[slot.slot()];
+    }
+
+    @Override
+    public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside) {
+        if (clientside) clientWeaponTicks[slot.slot()] = tick;
+        else weaponTicks[slot.slot()] = tick;
     }
 }

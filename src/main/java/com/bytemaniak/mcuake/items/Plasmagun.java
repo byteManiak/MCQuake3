@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
@@ -11,7 +12,7 @@ public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
 
     public Plasmagun() {
-        super(PLASMAGUN_REFIRE_TICK_RATE, Sounds.PLASMAGUN_FIRE);
+        super(MCuakePlayer.WeaponSlot.PLASMA_GUN, PLASMAGUN_REFIRE_TICK_RATE, Sounds.PLASMAGUN_FIRE);
     }
 
     @Override

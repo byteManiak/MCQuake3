@@ -4,7 +4,6 @@
 - [ ] Prevent weapons from working in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [ ] Add spread to machinegun
-- [ ] Fix weapons only shooting for one player
 
 #### Projectiles
 - [ ] Find a way to override the invincibility window on non-player mobs, without mixins
@@ -23,9 +22,6 @@
 - [ ] Implement upside-down variant of spikes.
 
 #### Misc
-- [ ] Show the Quake health to the player
-- [x] Certain sounds should only be heard by a single player
-- [x] Add the ability to sprint while firing a weapon
 - [ ] Make physics more Quakey
 - [ ] When collisions for the blocks are fixed, establish if falling between 2 blocks counts as 1 or 2 blocks.
 

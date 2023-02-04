@@ -2,8 +2,6 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.cs.CSMessages;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

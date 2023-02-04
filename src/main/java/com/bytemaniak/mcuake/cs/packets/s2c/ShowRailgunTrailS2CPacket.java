@@ -15,7 +15,7 @@ public class ShowRailgunTrailS2CPacket {
         Vec3d difference = endPos.subtract(playerPos).multiply(1.f / distance);
         for (int i = 0; i < distance; i++) {
             Vec3d particlePos = playerPos.add(difference.multiply(i));
-            MinecraftClient.getInstance().world.addParticle(ParticleTypes.DAMAGE_INDICATOR, particlePos.x, particlePos.y, particlePos.z, 0, 0, 0);
+            MinecraftClient.getInstance().world.addParticle(ParticleTypes.POOF, particlePos.x, particlePos.y, particlePos.z, 0, 0, 0);
         }
     }
 }

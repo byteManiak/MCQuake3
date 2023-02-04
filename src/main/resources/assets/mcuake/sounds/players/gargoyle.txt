@@ -1,0 +1,52 @@
+  "gargoyle_death": {
+    "sounds": [
+      "mcuake:players/gargoyle/death1",
+      "mcuake:players/gargoyle/death2",
+      "mcuake:players/gargoyle/death3"
+    ]
+  },
+  "gargoyle_drown": {
+    "sounds": [
+      "mcuake:players/gargoyle/drown"
+    ]
+  },
+  "gargoyle_fall": {
+    "sounds": [
+      "mcuake:players/gargoyle/fall1"
+    ]
+  },
+  "gargoyle_gasp": {
+    "sounds": [
+      "mcuake:players/gargoyle/gasp"
+    ]
+  },
+  "gargoyle_jump": {
+    "sounds": [
+      "mcuake:players/gargoyle/jump1"
+    ]
+  },
+  "gargoyle_hurt100": {
+    "sounds": [
+      "mcuake:players/gargoyle/pain100_1"
+    ]
+  },
+  "gargoyle_hurt75": {
+    "sounds": [
+      "mcuake:players/gargoyle/pain75_1"
+    ]
+  },
+  "gargoyle_hurt50": {
+    "sounds": [
+      "mcuake:players/gargoyle/pain50_1"
+    ]
+  },
+  "gargoyle_hurt25": {
+    "sounds": [
+      "mcuake:players/gargoyle/pain25_1"
+    ]
+  },
+  "gargoyle_taunt": {
+    "sounds": [
+      "mcuake:players/gargoyle/taunt"
+    ]
+  }

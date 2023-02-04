@@ -1,0 +1,52 @@
+  "sarge_death": {
+    "sounds": [
+      "mcuake:players/sarge/death1",
+      "mcuake:players/sarge/death2",
+      "mcuake:players/sarge/death3"
+    ]
+  },
+  "sarge_drown": {
+    "sounds": [
+      "mcuake:players/sarge/drown"
+    ]
+  },
+  "sarge_fall": {
+    "sounds": [
+      "mcuake:players/sarge/fall1"
+    ]
+  },
+  "sarge_gasp": {
+    "sounds": [
+      "mcuake:players/sarge/gasp"
+    ]
+  },
+  "sarge_jump": {
+    "sounds": [
+      "mcuake:players/sarge/jump1"
+    ]
+  },
+  "sarge_hurt100": {
+    "sounds": [
+      "mcuake:players/sarge/pain100_1"
+    ]
+  },
+  "sarge_hurt75": {
+    "sounds": [
+      "mcuake:players/sarge/pain75_1"
+    ]
+  },
+  "sarge_hurt50": {
+    "sounds": [
+      "mcuake:players/sarge/pain50_1"
+    ]
+  },
+  "sarge_hurt25": {
+    "sounds": [
+      "mcuake:players/sarge/pain25_1"
+    ]
+  },
+  "sarge_taunt": {
+    "sounds": [
+      "mcuake:players/sarge/taunt"
+    ]
+  }

@@ -1,0 +1,52 @@
+  "merman_death": {
+    "sounds": [
+      "mcuake:players/merman/death1",
+      "mcuake:players/merman/death2",
+      "mcuake:players/merman/death3"
+    ]
+  },
+  "merman_drown": {
+    "sounds": [
+      "mcuake:players/merman/drown"
+    ]
+  },
+  "merman_fall": {
+    "sounds": [
+      "mcuake:players/merman/fall1"
+    ]
+  },
+  "merman_gasp": {
+    "sounds": [
+      "mcuake:players/merman/gasp"
+    ]
+  },
+  "merman_jump": {
+    "sounds": [
+      "mcuake:players/merman/jump1"
+    ]
+  },
+  "merman_hurt100": {
+    "sounds": [
+      "mcuake:players/merman/pain100_1"
+    ]
+  },
+  "merman_hurt75": {
+    "sounds": [
+      "mcuake:players/merman/pain75_1"
+    ]
+  },
+  "merman_hurt50": {
+    "sounds": [
+      "mcuake:players/merman/pain50_1"
+    ]
+  },
+  "merman_hurt25": {
+    "sounds": [
+      "mcuake:players/merman/pain25_1"
+    ]
+  },
+  "merman_taunt": {
+    "sounds": [
+      "mcuake:players/merman/taunt"
+    ]
+  }

@@ -1,0 +1,52 @@
+  "neko_death": {
+    "sounds": [
+      "mcuake:players/neko/death1",
+      "mcuake:players/neko/death2",
+      "mcuake:players/neko/death3"
+    ]
+  },
+  "neko_drown": {
+    "sounds": [
+      "mcuake:players/neko/drown"
+    ]
+  },
+  "neko_fall": {
+    "sounds": [
+      "mcuake:players/neko/fall1"
+    ]
+  },
+  "neko_gasp": {
+    "sounds": [
+      "mcuake:players/neko/gasp"
+    ]
+  },
+  "neko_jump": {
+    "sounds": [
+      "mcuake:players/neko/jump1"
+    ]
+  },
+  "neko_hurt100": {
+    "sounds": [
+      "mcuake:players/neko/pain100_1"
+    ]
+  },
+  "neko_hurt75": {
+    "sounds": [
+      "mcuake:players/neko/pain75_1"
+    ]
+  },
+  "neko_hurt50": {
+    "sounds": [
+      "mcuake:players/neko/pain50_1"
+    ]
+  },
+  "neko_hurt25": {
+    "sounds": [
+      "mcuake:players/neko/pain25_1"
+    ]
+  },
+  "neko_taunt": {
+    "sounds": [
+      "mcuake:players/neko/taunt"
+    ]
+  }

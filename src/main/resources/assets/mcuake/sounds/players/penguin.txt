@@ -1,0 +1,52 @@
+  "penguin_death": {
+    "sounds": [
+      "mcuake:players/penguin/death1",
+      "mcuake:players/penguin/death2",
+      "mcuake:players/penguin/death3"
+    ]
+  },
+  "penguin_drown": {
+    "sounds": [
+      "mcuake:players/penguin/drown"
+    ]
+  },
+  "penguin_fall": {
+    "sounds": [
+      "mcuake:players/penguin/fall1"
+    ]
+  },
+  "penguin_gasp": {
+    "sounds": [
+      "mcuake:players/penguin/gasp"
+    ]
+  },
+  "penguin_jump": {
+    "sounds": [
+      "mcuake:players/penguin/jump1"
+    ]
+  },
+  "penguin_hurt100": {
+    "sounds": [
+      "mcuake:players/penguin/pain100_1"
+    ]
+  },
+  "penguin_hurt75": {
+    "sounds": [
+      "mcuake:players/penguin/pain75_1"
+    ]
+  },
+  "penguin_hurt50": {
+    "sounds": [
+      "mcuake:players/penguin/pain50_1"
+    ]
+  },
+  "penguin_hurt25": {
+    "sounds": [
+      "mcuake:players/penguin/pain25_1"
+    ]
+  },
+  "penguin_taunt": {
+    "sounds": [
+      "mcuake:players/penguin/taunt"
+    ]
+  }

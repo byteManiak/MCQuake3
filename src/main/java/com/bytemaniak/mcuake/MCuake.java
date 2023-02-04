@@ -8,10 +8,8 @@ import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.projectile.Bullet;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.entity.projectile.Rail;
-import com.bytemaniak.mcuake.items.Machinegun;
-import com.bytemaniak.mcuake.items.Plasmagun;
-import com.bytemaniak.mcuake.items.Railgun;
-import com.bytemaniak.mcuake.items.Tool;
+import com.bytemaniak.mcuake.items.*;
+import com.bytemaniak.mcuake.items.playersettings.PlayerSettings;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.api.ModInitializer;
@@ -48,7 +46,7 @@ public class MCuake implements ModInitializer {
 
 	public static final Block SPIKES_BLOCK = new Spikes();
 
-	public static final Item PLAYER_SETTINGS = new Item(new Item.Settings());
+	public static final Item PLAYER_SETTINGS = new PlayerSettings();
 	public static final Item TOOL = new Tool();
 	public static final Item MACHINEGUN = new Machinegun();
 	public static final Item PLASMAGUN = new Plasmagun();

@@ -18,11 +18,91 @@ public class Sounds {
     private static final Identifier RAILGUN_FIRE_IDENT = new Identifier("mcuake", "railgun");
     public static final SoundEvent RAILGUN_FIRE = SoundEvent.of(RAILGUN_FIRE_IDENT);
 
+    public static class PlayerSounds {
+        public Identifier DEATH;
+        public Identifier DROWN;
+        public Identifier FALL;
+        public Identifier GASP;
+        public Identifier JUMP;
+        public Identifier HURT100;
+        public Identifier HURT75;
+        public Identifier HURT50;
+        public Identifier HURT25;
+        public Identifier TAUNT;
+
+        public String playerClass;
+
+        public PlayerSounds(String playerClass) {
+            this.playerClass = playerClass;
+            String ident = playerClass.toLowerCase();
+            DEATH = new Identifier("mcuake", ident + "_death");
+            DROWN = new Identifier("mcuake", ident + "_drown");
+            FALL = new Identifier("mcuake", ident + "_fall");
+            GASP = new Identifier("mcuake", ident + "_gasp");
+            JUMP = new Identifier("mcuake", ident + "_jump");
+            HURT100 = new Identifier("mcuake", ident + "_hurt100");
+            HURT75 = new Identifier("mcuake", ident + "_hurt75");
+            HURT50 = new Identifier("mcuake", ident + "_hurt50");
+            HURT25 = new Identifier("mcuake", ident + "_hurt25");
+            TAUNT = new Identifier("mcuake", ident + "_taunt");
+        }
+    }
+
+    public static PlayerSounds ANGELYSS = new PlayerSounds("Angelyss");
+    public static PlayerSounds ARACHNA = new PlayerSounds("Arachna");
+    public static PlayerSounds ASSASSIN = new PlayerSounds("Assassin");
+    public static PlayerSounds AYUMI = new PlayerSounds("Ayumi");
+    public static PlayerSounds BERET = new PlayerSounds("Beret");
+    public static PlayerSounds GARGOYLE = new PlayerSounds("Gargoyle");
+    public static PlayerSounds KYONSHI = new PlayerSounds("Kyonshi");
+    public static PlayerSounds LIZ = new PlayerSounds("Liz");
+    public static PlayerSounds MAJOR = new PlayerSounds("Major");
+    public static PlayerSounds MERMAN = new PlayerSounds("Merman");
+    public static PlayerSounds NEKO = new PlayerSounds("Neko");
+    public static PlayerSounds PENGUIN = new PlayerSounds("Penguin");
+    public static PlayerSounds SARGE = new PlayerSounds("Sarge");
+    public static PlayerSounds SERGEI = new PlayerSounds("Sergei");
+    public static PlayerSounds SKELEBOT = new PlayerSounds("Skelebot");
+    public static PlayerSounds SMARINE = new PlayerSounds("Smarine");
+    public static PlayerSounds SORCERESS = new PlayerSounds("Sorceress");
+    public static PlayerSounds TONY = new PlayerSounds("Tony");
+
+    private static void loadPlayerSounds(PlayerSounds playerSounds) {
+        Registry.register(Registries.SOUND_EVENT, playerSounds.DEATH, SoundEvent.of(playerSounds.DEATH));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.DROWN, SoundEvent.of(playerSounds.DROWN));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.FALL, SoundEvent.of(playerSounds.FALL));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.GASP, SoundEvent.of(playerSounds.GASP));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.JUMP, SoundEvent.of(playerSounds.JUMP));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.HURT100, SoundEvent.of(playerSounds.HURT100));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.HURT75, SoundEvent.of(playerSounds.HURT75));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.HURT50, SoundEvent.of(playerSounds.HURT50));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.HURT25, SoundEvent.of(playerSounds.HURT25));
+        Registry.register(Registries.SOUND_EVENT, playerSounds.TAUNT, SoundEvent.of(playerSounds.TAUNT));
+    }
+
     public static void loadSounds()
     {
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, MACHINEGUN_FIRE_IDENT, MACHINEGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, PLASMAGUN_FIRE_IDENT, PLASMAGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, RAILGUN_FIRE_IDENT, RAILGUN_FIRE);
+        loadPlayerSounds(ANGELYSS);
+        loadPlayerSounds(ARACHNA);
+        loadPlayerSounds(ASSASSIN);
+        loadPlayerSounds(AYUMI);
+        loadPlayerSounds(BERET);
+        loadPlayerSounds(GARGOYLE);
+        loadPlayerSounds(KYONSHI);
+        loadPlayerSounds(LIZ);
+        loadPlayerSounds(MAJOR);
+        loadPlayerSounds(MERMAN);
+        loadPlayerSounds(NEKO);
+        loadPlayerSounds(PENGUIN);
+        loadPlayerSounds(SARGE);
+        loadPlayerSounds(SERGEI);
+        loadPlayerSounds(SKELEBOT);
+        loadPlayerSounds(SMARINE);
+        loadPlayerSounds(SORCERESS);
+        loadPlayerSounds(TONY);
     }
 }

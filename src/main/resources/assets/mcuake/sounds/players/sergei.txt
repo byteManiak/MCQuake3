@@ -1,0 +1,52 @@
+  "sergei_death": {
+    "sounds": [
+      "mcuake:players/sergei/death1",
+      "mcuake:players/sergei/death2",
+      "mcuake:players/sergei/death3"
+    ]
+  },
+  "sergei_drown": {
+    "sounds": [
+      "mcuake:players/sergei/drown"
+    ]
+  },
+  "sergei_fall": {
+    "sounds": [
+      "mcuake:players/sergei/fall1"
+    ]
+  },
+  "sergei_gasp": {
+    "sounds": [
+      "mcuake:players/sergei/gasp"
+    ]
+  },
+  "sergei_jump": {
+    "sounds": [
+      "mcuake:players/sergei/jump1"
+    ]
+  },
+  "sergei_hurt100": {
+    "sounds": [
+      "mcuake:players/sergei/pain100_1"
+    ]
+  },
+  "sergei_hurt75": {
+    "sounds": [
+      "mcuake:players/sergei/pain75_1"
+    ]
+  },
+  "sergei_hurt50": {
+    "sounds": [
+      "mcuake:players/sergei/pain50_1"
+    ]
+  },
+  "sergei_hurt25": {
+    "sounds": [
+      "mcuake:players/sergei/pain25_1"
+    ]
+  },
+  "sergei_taunt": {
+    "sounds": [
+      "mcuake:players/sergei/taunt"
+    ]
+  }

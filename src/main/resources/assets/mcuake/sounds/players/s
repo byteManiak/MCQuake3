@@ -1,85 +1,3 @@
-{
-  "hit": {
-    "sounds": [
-      "mcuake:hit"
-    ]
-  },
-  "thru_the_mirror": {
-    "sounds": [
-      "mcuake:thru_the_mirror"
-    ]
-  },
-  "machinegun": {
-    "sounds": [
-      "mcuake:machinegun1",
-      "mcuake:machinegun2",
-      "mcuake:machinegun3",
-      "mcuake:machinegun4"
-    ]
-  },
-  "plasmagun": {
-    "sounds": [
-      "mcuake:plasmagun"
-    ]
-  },
-  "railgun": {
-    "sounds": [
-      "mcuake:railgun"
-    ]
-  },
-
-  "angelyss_death": {
-    "sounds": [
-      "mcuake:players/angelyss/death1",
-      "mcuake:players/angelyss/death2",
-      "mcuake:players/angelyss/death3"
-    ]
-  },
-  "angelyss_drown": {
-    "sounds": [
-      "mcuake:players/angelyss/drown"
-    ]
-  },
-  "angelyss_fall": {
-    "sounds": [
-      "mcuake:players/angelyss/fall1"
-    ]
-  },
-  "angelyss_gasp": {
-    "sounds": [
-      "mcuake:players/angelyss/gasp"
-    ]
-  },
-  "angelyss_jump": {
-    "sounds": [
-      "mcuake:players/angelyss/jump1"
-    ]
-  },
-  "angelyss_hurt100": {
-    "sounds": [
-      "mcuake:players/angelyss/pain100_1"
-    ]
-  },
-  "angelyss_hurt75": {
-    "sounds": [
-      "mcuake:players/angelyss/pain75_1"
-    ]
-  },
-  "angelyss_hurt50": {
-    "sounds": [
-      "mcuake:players/angelyss/pain50_1"
-    ]
-  },
-  "angelyss_hurt25": {
-    "sounds": [
-      "mcuake:players/angelyss/pain25_1"
-    ]
-  },
-  "angelyss_taunt": {
-    "sounds": [
-      "mcuake:players/angelyss/taunt"
-    ]
-  },
   "arachna_death": {
     "sounds": [
       "mcuake:players/arachna/death1",
@@ -131,7 +49,7 @@
     "sounds": [
       "mcuake:players/arachna/taunt"
     ]
-  },
+  }
   "assassin_death": {
     "sounds": [
       "mcuake:players/assassin/death1",
@@ -183,7 +101,7 @@
     "sounds": [
       "mcuake:players/assassin/taunt"
     ]
-  },
+  }
   "ayumi_death": {
     "sounds": [
       "mcuake:players/ayumi/death1",
@@ -235,7 +153,7 @@
     "sounds": [
       "mcuake:players/ayumi/taunt"
     ]
-  },
+  }
   "beret_death": {
     "sounds": [
       "mcuake:players/beret/death1",
@@ -287,7 +205,7 @@
     "sounds": [
       "mcuake:players/beret/taunt"
     ]
-  },
+  }
   "gargoyle_death": {
     "sounds": [
       "mcuake:players/gargoyle/death1",
@@ -339,7 +257,7 @@
     "sounds": [
       "mcuake:players/gargoyle/taunt"
     ]
-  },
+  }
   "kyonshi_death": {
     "sounds": [
       "mcuake:players/kyonshi/death1",
@@ -391,7 +309,7 @@
     "sounds": [
       "mcuake:players/kyonshi/taunt"
     ]
-  },
+  }
   "liz_death": {
     "sounds": [
       "mcuake:players/liz/death1",
@@ -443,7 +361,7 @@
     "sounds": [
       "mcuake:players/liz/taunt"
     ]
-  },
+  }
   "major_death": {
     "sounds": [
       "mcuake:players/major/death1",
@@ -495,7 +413,7 @@
     "sounds": [
       "mcuake:players/major/taunt"
     ]
-  },
+  }
   "merman_death": {
     "sounds": [
       "mcuake:players/merman/death1",
@@ -547,7 +465,7 @@
     "sounds": [
       "mcuake:players/merman/taunt"
     ]
-  },
+  }
   "neko_death": {
     "sounds": [
       "mcuake:players/neko/death1",
@@ -599,7 +517,7 @@
     "sounds": [
       "mcuake:players/neko/taunt"
     ]
-  },
+  }
   "penguin_death": {
     "sounds": [
       "mcuake:players/penguin/death1",
@@ -651,7 +569,7 @@
     "sounds": [
       "mcuake:players/penguin/taunt"
     ]
-  },
+  }
   "sarge_death": {
     "sounds": [
       "mcuake:players/sarge/death1",
@@ -703,7 +621,7 @@
     "sounds": [
       "mcuake:players/sarge/taunt"
     ]
-  },
+  }
   "sergei_death": {
     "sounds": [
       "mcuake:players/sergei/death1",
@@ -755,7 +673,7 @@
     "sounds": [
       "mcuake:players/sergei/taunt"
     ]
-  },
+  }
   "skelebot_death": {
     "sounds": [
       "mcuake:players/skelebot/death1",
@@ -807,7 +725,7 @@
     "sounds": [
       "mcuake:players/skelebot/taunt"
     ]
-  },
+  }
   "smarine_death": {
     "sounds": [
       "mcuake:players/smarine/death1",
@@ -859,7 +777,7 @@
     "sounds": [
       "mcuake:players/smarine/taunt"
     ]
-  },
+  }
   "sorceress_death": {
     "sounds": [
       "mcuake:players/sorceress/death1",
@@ -911,7 +829,7 @@
     "sounds": [
       "mcuake:players/sorceress/taunt"
     ]
-  },
+  }
   "tony_death": {
     "sounds": [
       "mcuake:players/tony/death1",
@@ -964,4 +882,3 @@
       "mcuake:players/tony/taunt"
     ]
   }
-}

@@ -1,0 +1,52 @@
+  "tony_death": {
+    "sounds": [
+      "mcuake:players/tony/death1",
+      "mcuake:players/tony/death2",
+      "mcuake:players/tony/death3"
+    ]
+  },
+  "tony_drown": {
+    "sounds": [
+      "mcuake:players/tony/drown"
+    ]
+  },
+  "tony_fall": {
+    "sounds": [
+      "mcuake:players/tony/fall1"
+    ]
+  },
+  "tony_gasp": {
+    "sounds": [
+      "mcuake:players/tony/gasp"
+    ]
+  },
+  "tony_jump": {
+    "sounds": [
+      "mcuake:players/tony/jump1"
+    ]
+  },
+  "tony_hurt100": {
+    "sounds": [
+      "mcuake:players/tony/pain100_1"
+    ]
+  },
+  "tony_hurt75": {
+    "sounds": [
+      "mcuake:players/tony/pain75_1"
+    ]
+  },
+  "tony_hurt50": {
+    "sounds": [
+      "mcuake:players/tony/pain50_1"
+    ]
+  },
+  "tony_hurt25": {
+    "sounds": [
+      "mcuake:players/tony/pain25_1"
+    ]
+  },
+  "tony_taunt": {
+    "sounds": [
+      "mcuake:players/tony/taunt"
+    ]
+  }

@@ -1,0 +1,52 @@
+  "liz_death": {
+    "sounds": [
+      "mcuake:players/liz/death1",
+      "mcuake:players/liz/death2",
+      "mcuake:players/liz/death3"
+    ]
+  },
+  "liz_drown": {
+    "sounds": [
+      "mcuake:players/liz/drown"
+    ]
+  },
+  "liz_fall": {
+    "sounds": [
+      "mcuake:players/liz/fall1"
+    ]
+  },
+  "liz_gasp": {
+    "sounds": [
+      "mcuake:players/liz/gasp"
+    ]
+  },
+  "liz_jump": {
+    "sounds": [
+      "mcuake:players/liz/jump1"
+    ]
+  },
+  "liz_hurt100": {
+    "sounds": [
+      "mcuake:players/liz/pain100_1"
+    ]
+  },
+  "liz_hurt75": {
+    "sounds": [
+      "mcuake:players/liz/pain75_1"
+    ]
+  },
+  "liz_hurt50": {
+    "sounds": [
+      "mcuake:players/liz/pain50_1"
+    ]
+  },
+  "liz_hurt25": {
+    "sounds": [
+      "mcuake:players/liz/pain25_1"
+    ]
+  },
+  "liz_taunt": {
+    "sounds": [
+      "mcuake:players/liz/taunt"
+    ]
+  }

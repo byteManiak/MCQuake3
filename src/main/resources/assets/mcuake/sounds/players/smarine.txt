@@ -1,0 +1,52 @@
+  "smarine_death": {
+    "sounds": [
+      "mcuake:players/smarine/death1",
+      "mcuake:players/smarine/death2",
+      "mcuake:players/smarine/death3"
+    ]
+  },
+  "smarine_drown": {
+    "sounds": [
+      "mcuake:players/smarine/drown"
+    ]
+  },
+  "smarine_fall": {
+    "sounds": [
+      "mcuake:players/smarine/fall1"
+    ]
+  },
+  "smarine_gasp": {
+    "sounds": [
+      "mcuake:players/smarine/gasp"
+    ]
+  },
+  "smarine_jump": {
+    "sounds": [
+      "mcuake:players/smarine/jump1"
+    ]
+  },
+  "smarine_hurt100": {
+    "sounds": [
+      "mcuake:players/smarine/pain100_1"
+    ]
+  },
+  "smarine_hurt75": {
+    "sounds": [
+      "mcuake:players/smarine/pain75_1"
+    ]
+  },
+  "smarine_hurt50": {
+    "sounds": [
+      "mcuake:players/smarine/pain50_1"
+    ]
+  },
+  "smarine_hurt25": {
+    "sounds": [
+      "mcuake:players/smarine/pain25_1"
+    ]
+  },
+  "smarine_taunt": {
+    "sounds": [
+      "mcuake:players/smarine/taunt"
+    ]
+  }

@@ -23,5 +23,8 @@ public class MCuakeGuiRenderer implements HudRenderCallback {
 
         textRenderer.drawWithShadow(matrixStack, "Armor", 9 * width / 10.f, height - textRenderer.fontHeight * 3.f, 0x00FFFFFF);
         textRenderer.drawWithShadow(matrixStack, String.valueOf(playerArmor), 9 * width / 10.f, height - textRenderer.fontHeight * 2.f, 65280);
+
+        textRenderer.drawWithShadow(matrixStack, player.getCurrentWeapon().name(), width / 10.f, height - textRenderer.fontHeight * 6.f, 0x00FFFFFF);
+        textRenderer.drawWithShadow(matrixStack, String.valueOf(player.getCurrentAmmo()), width / 10.f, height - textRenderer.fontHeight * 5.f, 0x00FFFFFF);
     }
 }

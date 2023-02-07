@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.mixin;
 
-import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.items.Weapon;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -24,8 +24,10 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     private int quakeHealth = 100;
     private int quakeArmor = 0;
 
-    private long weaponTicks[] = new long[9];
-    private long clientWeaponTicks[] = new long[9];
+    private int[] weaponAmmo = new int[10];
+
+    private long[] weaponTicks = new long[9];
+    private long[] clientWeaponTicks = new long[9];
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -74,6 +76,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         quakeHealth -= amount;
         if (quakeHealth <= 0) {
             this.damage(damageSource, Integer.MAX_VALUE);
+            resetAmmo();
             // Reset weapon ticks so weapon delay doesn't apply to the newly-spawned player
             weaponTicks = new long[9];
             clientWeaponTicks = new long[9];
@@ -91,4 +94,34 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         if (clientside) clientWeaponTicks[slot.slot()] = tick;
         else weaponTicks[slot.slot()] = tick;
     }
+
+    @Override
+    public void resetAmmo() {
+        weaponAmmo = new int[10];
+        weaponAmmo[WeaponSlot.MACHINEGUN.slot()] = 100;
+        weaponAmmo[WeaponSlot.PLASMA_GUN.slot()] = 50;
+        weaponAmmo[WeaponSlot.RAILGUN.slot()] = 10;
+    }
+
+    @Override
+    public boolean useAmmo(WeaponSlot slot) {
+        if (weaponAmmo[slot.slot()] > 0) {
+            weaponAmmo[slot.slot()]--;
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public WeaponSlot getCurrentWeapon() {
+        if (getMainHandStack().getItem() instanceof Weapon weapon) {
+            return weapon.weaponSlot;
+        } else {
+            return WeaponSlot.NONE;
+        }
+    }
+
+    @Override
+    public int getCurrentAmmo() { return weaponAmmo[getCurrentWeapon().slot()]; }
 }

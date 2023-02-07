@@ -12,7 +12,8 @@ public interface MCuakePlayer {
         LIGHTNING_GUN(5),
         RAILGUN(6),
         PLASMA_GUN(7),
-        BFG10K(8);
+        BFG10K(8),
+        NONE(9);
 
         private final int slot;
         private WeaponSlot(int val) { this.slot = val; }
@@ -26,6 +27,12 @@ public interface MCuakePlayer {
     public int getQuakeArmor();
 
     public void resetAmmo();
+
+    // Returns true if the player used up all the weapon ammo
+    public boolean useAmmo(WeaponSlot slot);
+    public int getCurrentAmmo();
+
+    public WeaponSlot getCurrentWeapon();
 
     public void takeDamage(int amount, DamageSource damageSource);
 

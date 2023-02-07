@@ -17,7 +17,7 @@ public abstract class Weapon extends Item {
     private final long refireRate;
     private final SoundEvent firingSound;
 
-    MCuakePlayer.WeaponSlot weaponSlot;
+    public MCuakePlayer.WeaponSlot weaponSlot;
 
     protected Weapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks, SoundEvent firingSound) {
         super(new Item.Settings().maxCount(1));
@@ -47,13 +47,17 @@ public abstract class Weapon extends Item {
         MCuakePlayer player = (MCuakePlayer) user;
         if (!world.isClient) {
             if (currentTick - player.getWeaponTick(weaponSlot, false) >= refireRate) {
-                this.onWeaponRefire(world, user, stack);
-                world.playSound(user, user.getBlockPos(), firingSound, SoundCategory.PLAYERS, .65f, 1.f);
+                if (!player.useAmmo(weaponSlot)) {
+                    this.onWeaponRefire(world, user, stack);
+                    world.playSound(user, user.getBlockPos(), firingSound, SoundCategory.PLAYERS, .65f, 1.f);
+                }
                 player.setWeaponTick(weaponSlot, currentTick, false);
             }
         } else {
             if (currentTick - player.getWeaponTick(weaponSlot, true) >= refireRate) {
-                ClientUtils.playSoundPositioned(user, firingSound);
+                if (!player.useAmmo(weaponSlot)) {
+                    ClientUtils.playSoundPositioned(user, firingSound);
+                }
                 player.setWeaponTick(weaponSlot, currentTick, true);
             }
         }

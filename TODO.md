@@ -13,7 +13,6 @@
 #### Jumppad
 - [ ] Fix jumppad collisions
 - [ ] Add NBT tags to jumppad BlockItem so it can be duplicated with its current settings by middle click
-- [ ] Stop showing the jumppad config screen if that jumppad was destroyed
 
 #### Spikes
 - [ ] Add tool ability to make spikes invisible

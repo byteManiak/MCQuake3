@@ -2,7 +2,6 @@ package com.bytemaniak.mcuake;
 
 import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreen;
 import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.projectile.SimpleProjectileRenderer;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBallRenderer;
 import com.bytemaniak.mcuake.gui.MCuakeGuiRenderer;
 import net.fabricmc.api.ClientModInitializer;

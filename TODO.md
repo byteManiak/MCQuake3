@@ -15,7 +15,6 @@
 
 #### Spikes
 - [ ] Add tool ability to make spikes invisible
-- [ ] Fix spikes collisions
 - [ ] Implement upside-down variant of spikes.
 
 #### Misc

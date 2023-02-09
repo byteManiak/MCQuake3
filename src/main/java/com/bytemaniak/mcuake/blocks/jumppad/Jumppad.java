@@ -62,16 +62,18 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	}
 
 	@Override
-	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-		JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
-
-		Direction direction = state.get(FACING);
-		entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+		// Do nothing, so entity does not take fall damage if landing on the jumppad
 	}
 
 	@Override
-	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-		// Do nothing, so entity does not take fall damage if landing on the jumppad
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (world.isClient) {
+			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
+
+			Direction direction = state.get(FACING);
+			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+		}
 	}
 
 	@Override

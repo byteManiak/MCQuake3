@@ -11,7 +11,6 @@
 - [ ] Deal "real" damage to the player when they die, so they won't shoot their weapon for a short while after dying
 
 #### Jumppad
-- [ ] Fix jumppad collisions
 - [ ] Add NBT tags to jumppad BlockItem so it can be duplicated with its current settings by middle click
 
 #### Spikes

@@ -36,7 +36,9 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {
-        return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
+        float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
+        this.takeDamage((int)newFallDistance / 2, DamageSource.FALL);
+        return newFallDistance;
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
@@ -109,6 +111,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             weaponAmmo[slot.slot()]--;
             return false;
         } else {
+            weaponAmmo[slot.slot()] = 50;
             return true;
         }
     }

@@ -4,10 +4,8 @@
 - [ ] Prevent weapons from dealing damage in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [ ] Add spread to machinegun
-- [ ] Improve railgun trail
 
 #### Projectiles
-- [ ] Fix fast projectiles loading new chunks and thus causing lag
 - [ ] Despawn projectiles entering unloaded chunk
 - [ ] Push back players mid-air when hit by projectiles
 - [ ] Deal "real" damage to the player when they die, so they won't shoot their weapon for a short while after dying

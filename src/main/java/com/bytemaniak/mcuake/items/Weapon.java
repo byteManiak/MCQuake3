@@ -30,7 +30,7 @@ public abstract class Weapon extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // By calling this function, the weapon continues to stay used until the player stops pressing the use key
         user.setCurrentHand(hand);
-        return TypedActionResult.consume(user.getStackInHand(hand));
+        return TypedActionResult.pass(user.getStackInHand(hand));
     }
 
     @Override
@@ -56,11 +56,15 @@ public abstract class Weapon extends Item {
         } else {
             if (currentTick - player.getWeaponTick(weaponSlot, true) >= refireRate) {
                 if (!player.useAmmo(weaponSlot)) {
+                    this.onWeaponRefireClient(world, user, stack);
                     ClientUtils.playSoundPositioned(user, firingSound);
                 }
                 player.setWeaponTick(weaponSlot, currentTick, true);
             }
         }
+    }
+
+    protected void onWeaponRefireClient(World world, LivingEntity user, ItemStack stack) {
     }
 
     protected abstract void onWeaponRefire(World world, LivingEntity user, ItemStack stack);

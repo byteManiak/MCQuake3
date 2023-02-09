@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.cs;
 
+import com.bytemaniak.mcuake.cs.packets.c2s.DealtGauntletDamageC2SPacket;
 import com.bytemaniak.mcuake.cs.packets.c2s.JumppadPowerC2SPacket;
 import com.bytemaniak.mcuake.cs.packets.s2c.DealtDamageS2CPacket;
 import com.bytemaniak.mcuake.cs.packets.s2c.JumppadPowerS2CPacket;
@@ -11,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CSMessages {
     public static final Identifier DEALT_DAMAGE = new Identifier("mcuake", "dealt_damage");
+    public static final Identifier GAUNTLET_DAMAGE = new Identifier("mcuake", "gauntlet_damage");
     public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcuake", "jumppad_update_power");
     public static final Identifier JUMPPAD_UPDATED_POWER = new Identifier("mcuake", "jumppad_updated_power");
     public static final Identifier PLAYER_STATS_UPDATE = new Identifier("mcuake", "player_stats_update");
@@ -26,6 +28,7 @@ public class CSMessages {
 
     public static void registerServerPackets()
     {
+        ServerPlayNetworking.registerGlobalReceiver(CSMessages.GAUNTLET_DAMAGE, DealtGauntletDamageC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(CSMessages.JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
     }
 }

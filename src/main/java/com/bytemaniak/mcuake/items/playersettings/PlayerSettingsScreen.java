@@ -1,10 +1,13 @@
 package com.bytemaniak.mcuake.items.playersettings;
 
+import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.Sounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
@@ -131,6 +134,7 @@ public class PlayerSettingsScreen extends Screen {
             }
 
             this.toggleGameMode.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(CSMessages.QUAKE_MODE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 120, height - 24, 100, 20).build();
         addDrawable(voiceList);
         addDrawable(toggleGameMode);

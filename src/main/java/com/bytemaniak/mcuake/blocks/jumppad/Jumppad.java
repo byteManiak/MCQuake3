@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -68,7 +69,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world.isClient) {
+		if (world.isClient && entity instanceof LivingEntity) {
 			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
 
 			Direction direction = state.get(FACING);

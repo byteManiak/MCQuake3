@@ -43,10 +43,11 @@ public class Railgun extends Weapon{
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
         // Spawn a new bullet in front of the player
         Vec3d eyePos = user.getEyePos();
-        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
+        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw()).multiply(.5f);
+        Vec3d pos = eyePos;
         float i;
         for (i = 0; i < 200; i += .5f) {
-            Vec3d pos = eyePos.add(lookDir.multiply(i));
+            pos = pos.add(lookDir);
             Vec3d minPos = pos.add(new Vec3d(-.1f, -.1f, -.1f));
             Vec3d maxPos = pos.add(new Vec3d(.1f, .1f, .1f));
             BlockPos blockPos = new BlockPos(pos);
@@ -81,5 +82,7 @@ public class Railgun extends Weapon{
                 }
             }
         }
+
+        sendRailgunTrail(world, user.getPos(), pos);
     }
 }

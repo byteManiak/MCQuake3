@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -57,10 +58,11 @@ public class Railgun extends Weapon{
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
             if (collided != null) {
+                DamageSource damageSource = new DamageSources.QuakeDamageSource(DamageSources.RAILGUN_DAMAGE, user);
                 if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                     MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
                     if (quakePlayer.isInQuakeMode()) {
-                        quakePlayer.takeDamage(RAILGUN_QUAKE_DAMAGE, DamageSources.RAILGUN_DAMAGE);
+                        quakePlayer.takeDamage(RAILGUN_QUAKE_DAMAGE, damageSource);
 
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
@@ -68,10 +70,10 @@ public class Railgun extends Weapon{
                         ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
                         ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                     } else {
-                        collided.damage(DamageSources.RAILGUN_DAMAGE, RAILGUN_MC_DAMAGE);
+                        collided.damage(damageSource, RAILGUN_MC_DAMAGE);
                     }
                 } else {
-                    collided.damage(DamageSources.RAILGUN_DAMAGE, RAILGUN_MC_DAMAGE);
+                    collided.damage(damageSource, RAILGUN_MC_DAMAGE);
                 }
 
                 sendRailgunTrail(world, user.getPos(), pos);

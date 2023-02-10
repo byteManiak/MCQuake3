@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public class Gauntlet extends Weapon {
     private static final long GAUNTLET_REFIRE_RATE = 2;
 
     public Gauntlet() {
-        super(MCuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, Sounds.DAMAGE_DEALT);
+        super(MCuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, SoundEvents.BLOCK_DEEPSLATE_TILES_BREAK);
     }
 
     @Override

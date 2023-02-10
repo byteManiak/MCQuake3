@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -44,10 +45,11 @@ public class Machinegun extends Weapon {
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
             if (collided != null) {
+                DamageSource damageSource = new DamageSources.QuakeDamageSource(DamageSources.MACHINEGUN_DAMAGE, user);
                 if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                     MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
                     if (quakePlayer.isInQuakeMode()) {
-                        quakePlayer.takeDamage(MACHINEGUN_QUAKE_DAMAGE, DamageSources.MACHINEGUN_DAMAGE);
+                        quakePlayer.takeDamage(MACHINEGUN_QUAKE_DAMAGE, damageSource);
 
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
@@ -55,10 +57,10 @@ public class Machinegun extends Weapon {
                         ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
                         ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                     } else {
-                        collided.damage(DamageSources.RAILGUN_DAMAGE, MACHINEGUN_MC_DAMAGE);
+                        collided.damage(damageSource, MACHINEGUN_MC_DAMAGE);
                     }
                 } else {
-                    collided.damage(DamageSources.RAILGUN_DAMAGE, MACHINEGUN_MC_DAMAGE);
+                    collided.damage(damageSource, MACHINEGUN_MC_DAMAGE);
                 }
 
                 break;

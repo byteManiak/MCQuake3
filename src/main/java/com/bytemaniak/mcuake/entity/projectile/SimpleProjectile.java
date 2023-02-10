@@ -51,13 +51,17 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
             ProjectileDamageSource damageSource = new ProjectileDamageSource("mcuake."+projectileName, this, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                 MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
-                quakePlayer.takeDamage(quakeDamageAmount, damageSource);
-                if (this.getOwner() != null) {
-                    PacketByteBuf buf = PacketByteBufs.create();
-                    buf.writeInt(quakePlayer.getQuakeHealth());
-                    buf.writeInt(quakePlayer.getQuakeArmor());
-                    ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
-                    ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                if (quakePlayer.isInQuakeMode()) {
+                    quakePlayer.takeDamage(quakeDamageAmount, damageSource);
+                    if (this.getOwner() != null) {
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeInt(quakePlayer.getQuakeHealth());
+                        buf.writeInt(quakePlayer.getQuakeArmor());
+                        ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
+                        ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                    }
+                } else {
+                    entity.damage(damageSource, mcDamageAmount);
                 }
             } else {
                 entity.damage(damageSource, mcDamageAmount);

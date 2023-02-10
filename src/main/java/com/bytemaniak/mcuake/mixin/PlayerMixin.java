@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.mixin;
 
-import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.items.Weapon;
 import net.minecraft.entity.Entity;
@@ -16,7 +15,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -25,9 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
-    @Shadow
-    public abstract boolean damage(DamageSource source, float amount);
-
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
@@ -48,7 +43,11 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {
         float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
-        this.takeDamage((int) newFallDistance / 2, DamageSource.FALL);
+        if (isInQuakeMode()) {
+            takeDamage((int) newFallDistance, DamageSource.FALL);
+            // Don't take Minecraft fall damage if in Quake mode
+            return 0;
+        }
         return newFallDistance;
     }
 
@@ -70,17 +69,25 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     public void initQuakeDataTracker(CallbackInfo ci) {
         this.dataTracker.startTracking(QUAKE_HEALTH, 100);
         this.dataTracker.startTracking(QUAKE_ARMOR, 0);
-        this.dataTracker.startTracking(IN_QUAKE_MODE, true);
+        this.dataTracker.startTracking(IN_QUAKE_MODE, false);
     }
 
-    @Override
-    public boolean isInQuakeMode() { return this.dataTracker.get(IN_QUAKE_MODE); }
+    @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
+    private void noDropInventoryInQuakeMode(CallbackInfo ci) {
+        if (this.isInQuakeMode()) ci.cancel();
+    }
 
     @Override
     public void toggleQuakeMode() {
         boolean newMode = !this.dataTracker.get(IN_QUAKE_MODE);
         this.dataTracker.set(IN_QUAKE_MODE, newMode);
     }
+
+    @Override
+    public boolean isInQuakeMode() { return this.dataTracker.get(IN_QUAKE_MODE); }
+
+    @Override
+    public void setQuakeMode(boolean enabled) { this.dataTracker.set(IN_QUAKE_MODE, enabled); }
 
     @Override
     public int getQuakeHealth() { return this.dataTracker.get(QUAKE_HEALTH); }
@@ -159,7 +166,6 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (getMainHandStack().getItem() instanceof Weapon) {
-            MCuake.LOGGER.info("s");
             cir.setReturnValue(ActionResult.PASS);
         }
     }

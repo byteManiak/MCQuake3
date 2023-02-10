@@ -7,6 +7,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
@@ -27,9 +30,11 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
 
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
-    private int quakeHealth = 100;
-    private int quakeArmor = 0;
+    private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> IN_QUAKE_MODE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    // No point syncing ammo (for now?), so using a regular int array
     private int[] weaponAmmo = new int[10];
 
     private long[] weaponTicks = new long[9];
@@ -49,38 +54,51 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putInt("quake_health", quakeHealth);
-        nbt.putInt("quake_armor", quakeArmor);
+        nbt.putInt("quake_health", getQuakeHealth());
+        nbt.putInt("quake_armor", getQuakeArmor());
+        nbt.putBoolean("quake_mode", isInQuakeMode());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        quakeHealth = nbt.getInt("quake_health");
-        quakeArmor = nbt.getInt("quake_armor");
+        this.dataTracker.set(QUAKE_HEALTH, nbt.getInt("quake_health"));
+        this.dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_armor"));
+        this.dataTracker.set(IN_QUAKE_MODE, nbt.getBoolean("quake_mode"));
+    }
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    public void initQuakeDataTracker(CallbackInfo ci) {
+        this.dataTracker.startTracking(QUAKE_HEALTH, 100);
+        this.dataTracker.startTracking(QUAKE_ARMOR, 0);
+        this.dataTracker.startTracking(IN_QUAKE_MODE, true);
     }
 
     @Override
-    public int getQuakeHealth() {
-        return quakeHealth;
+    public boolean isInQuakeMode() { return this.dataTracker.get(IN_QUAKE_MODE); }
+
+    @Override
+    public void toggleQuakeMode() {
+        boolean newMode = !this.dataTracker.get(IN_QUAKE_MODE);
+        this.dataTracker.set(IN_QUAKE_MODE, newMode);
     }
 
     @Override
-    public int getQuakeArmor() {
-        return quakeArmor;
-    }
+    public int getQuakeHealth() { return this.dataTracker.get(QUAKE_HEALTH); }
+
+    @Override
+    public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
 
     @Override
     public void setQuakeHealth(int amount) {
-        quakeHealth = amount;
+        this.dataTracker.set(QUAKE_HEALTH, amount);
     }
 
     @Override
-    public void setQuakeArmor(int amount) {
-        quakeArmor = amount;
-    }
+    public void setQuakeArmor(int amount) { this.dataTracker.set(QUAKE_ARMOR, amount); }
 
     @Override
     public void takeDamage(int amount, DamageSource damageSource) {
+        int quakeHealth = getQuakeHealth();
         quakeHealth -= amount;
         if (quakeHealth <= 0) {
             this.damage(damageSource, Integer.MAX_VALUE);
@@ -88,7 +106,9 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             // Reset weapon ticks so weapon delay doesn't apply to the newly-spawned player
             weaponTicks = new long[9];
             clientWeaponTicks = new long[9];
-            quakeHealth = 100;
+            setQuakeHealth(100);
+        } else {
+            setQuakeHealth(quakeHealth);
         }
     }
 

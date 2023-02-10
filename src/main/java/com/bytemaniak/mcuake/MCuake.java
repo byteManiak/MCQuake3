@@ -49,6 +49,7 @@ public class MCuake implements ModInitializer {
 	public static final Item RAILGUN = new Railgun();
 	public static final Item GAUNTLET = new Gauntlet();
 
+
 	public static final EntityType<PlasmaBall> PLASMA_BALL = Registry.register(
 			Registries.ENTITY_TYPE,
 			new Identifier("mcuake", "plasmaball"),

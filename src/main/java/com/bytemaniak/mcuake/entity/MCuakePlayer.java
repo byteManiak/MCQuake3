@@ -20,6 +20,9 @@ public interface MCuakePlayer {
         public int slot() { return slot; }
     };
 
+    public boolean isInQuakeMode();
+    public void toggleQuakeMode();
+
     public void setQuakeHealth(int amount);
     public void setQuakeArmor(int amount);
 

@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.items.playersettings;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.Sounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -9,11 +10,13 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -21,7 +24,7 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class PlayerSettingsScreen extends Screen {
-    private final LivingEntity user;
+    private final MCuakePlayer user;
 
     private class PlayerVoiceList extends AlwaysSelectedEntryListWidget<PlayerVoiceList.PlayerVoiceEntry> {
         public PlayerVoiceList(MinecraftClient client, int x, int y, int width, int height, int itemHeight) {
@@ -104,16 +107,35 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     private PlayerVoiceList voiceList;
+    private ButtonWidget toggleGameMode;
 
     protected PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
-        this.user = user;
+        this.user = (MCuakePlayer) user;
     }
 
     protected void init() {
         voiceList = new PlayerVoiceList(client, width / 2 - 40, height / 2 - 100, 80, 200, 18);
+        String buttonText = user.isInQuakeMode() ? "Quake mode" : "Minecraft mode";
+        toggleGameMode = ButtonWidget.builder(Text.of(buttonText), (button) -> {
+            user.toggleQuakeMode();
+
+            boolean inQuakeMode = user.isInQuakeMode();
+            String newButtonText;
+            if (inQuakeMode) {
+                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(Sounds.DAMAGE_DEALT, 1));
+                newButtonText = "Quake mode";
+            } else {
+                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1));
+                newButtonText = "Minecraft mode";
+            }
+
+            this.toggleGameMode.setMessage(Text.of(newButtonText));
+        }).dimensions(width - 120, height - 24, 100, 20).build();
         addDrawable(voiceList);
+        addDrawable(toggleGameMode);
         addSelectableChild(voiceList);
+        addSelectableChild(toggleGameMode);
         super.init();
     }
 

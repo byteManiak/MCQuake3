@@ -16,7 +16,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class SimpleProjectile extends ExplosiveProjectileEntity {
-    private int damageAmount;
+    private int quakeDamageAmount, mcDamageAmount;
     private String projectileName;
     protected long lifetimeInTicks;
     protected long initTick;
@@ -27,9 +27,12 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
         initTick = world.getTime();
     }
 
-    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world, int damageAmount, String projectileName, int lifetimeInTicks) {
+    public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
+                            int quakeDamageAmount, int mcDamageAmount,
+                            String projectileName, int lifetimeInTicks) {
         this(entityType, world);
-        this.damageAmount = damageAmount;
+        this.quakeDamageAmount = quakeDamageAmount;
+        this.mcDamageAmount = mcDamageAmount;
         this.projectileName = projectileName;
         this.lifetimeInTicks = lifetimeInTicks;
         this.initTick = world.getTime();
@@ -48,7 +51,7 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
             ProjectileDamageSource damageSource = new ProjectileDamageSource("mcuake."+projectileName, this, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                 MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
-                quakePlayer.takeDamage(damageAmount, damageSource);
+                quakePlayer.takeDamage(quakeDamageAmount, damageSource);
                 if (this.getOwner() != null) {
                     PacketByteBuf buf = PacketByteBufs.create();
                     buf.writeInt(quakePlayer.getQuakeHealth());
@@ -57,7 +60,7 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
                     ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                 }
             } else {
-                entity.damage(damageSource, damageAmount / 4.f);
+                entity.damage(damageSource, mcDamageAmount);
             }
 
             this.kill();

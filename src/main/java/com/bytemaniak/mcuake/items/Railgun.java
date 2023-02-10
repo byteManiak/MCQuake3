@@ -23,7 +23,8 @@ import net.minecraft.world.World;
 
 public class Railgun extends Weapon{
     private static final int RAILGUN_REFIRE_TICK_RATE = 50;
-    private static final int RAILGUN_DAMAGE = 100;
+    private static final int RAILGUN_QUAKE_DAMAGE = 100;
+    private static final int RAILGUN_MC_DAMAGE = 10;
 
     public Railgun() { super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, Sounds.RAILGUN_FIRE); }
 
@@ -58,15 +59,19 @@ public class Railgun extends Weapon{
             if (collided != null) {
                 if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                     MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
-                    quakePlayer.takeDamage(RAILGUN_DAMAGE, DamageSources.RAILGUN_DAMAGE);
+                    if (quakePlayer.isInQuakeMode()) {
+                        quakePlayer.takeDamage(RAILGUN_QUAKE_DAMAGE, DamageSources.RAILGUN_DAMAGE);
 
-                    PacketByteBuf buf = PacketByteBufs.create();
-                    buf.writeInt(quakePlayer.getQuakeHealth());
-                    buf.writeInt(quakePlayer.getQuakeArmor());
-                    ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
-                    ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeInt(quakePlayer.getQuakeHealth());
+                        buf.writeInt(quakePlayer.getQuakeArmor());
+                        ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
+                        ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                    } else {
+                        collided.damage(DamageSources.RAILGUN_DAMAGE, RAILGUN_MC_DAMAGE);
+                    }
                 } else {
-                    collided.damage(DamageSources.RAILGUN_DAMAGE, RAILGUN_DAMAGE / 4.f);
+                    collided.damage(DamageSources.RAILGUN_DAMAGE, RAILGUN_MC_DAMAGE);
                 }
 
                 sendRailgunTrail(world, user.getPos(), pos);

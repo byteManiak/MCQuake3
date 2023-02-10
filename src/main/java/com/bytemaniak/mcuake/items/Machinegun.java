@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 
 public class Machinegun extends Weapon {
     private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
-    private static final int MACHINEGUN_DAMAGE = 5;
+    private static final int MACHINEGUN_QUAKE_DAMAGE = 5;
+    private static final int MACHINEGUN_MC_DAMAGE = 2;
 
     public Machinegun() {
         super(MCuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, Sounds.MACHINEGUN_FIRE);
@@ -45,15 +46,19 @@ public class Machinegun extends Weapon {
             if (collided != null) {
                 if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                     MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
-                    quakePlayer.takeDamage(MACHINEGUN_DAMAGE, DamageSources.MACHINEGUN_DAMAGE);
+                    if (quakePlayer.isInQuakeMode()) {
+                        quakePlayer.takeDamage(MACHINEGUN_QUAKE_DAMAGE, DamageSources.MACHINEGUN_DAMAGE);
 
-                    PacketByteBuf buf = PacketByteBufs.create();
-                    buf.writeInt(quakePlayer.getQuakeHealth());
-                    buf.writeInt(quakePlayer.getQuakeArmor());
-                    ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
-                    ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeInt(quakePlayer.getQuakeHealth());
+                        buf.writeInt(quakePlayer.getQuakeArmor());
+                        ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
+                        ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                    } else {
+                        collided.damage(DamageSources.RAILGUN_DAMAGE, MACHINEGUN_MC_DAMAGE);
+                    }
                 } else {
-                    collided.damage(DamageSources.RAILGUN_DAMAGE, MACHINEGUN_DAMAGE / 4.f);
+                    collided.damage(DamageSources.RAILGUN_DAMAGE, MACHINEGUN_MC_DAMAGE);
                 }
 
                 break;

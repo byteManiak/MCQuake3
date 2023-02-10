@@ -5,10 +5,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 
 public class PlasmaBall extends SimpleProjectile {
-    private static int PLASMAGUN_DAMAGE = 10;
+    private static int PLASMAGUN_QUAKE_DAMAGE = 10;
+    private static int PLASMAGUN_MC_DAMAGE = 4;
 
     public PlasmaBall(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, PLASMAGUN_DAMAGE, "machinegun", 75);
+        super(entityType, world, PLASMAGUN_QUAKE_DAMAGE, PLASMAGUN_MC_DAMAGE, "machinegun", 75);
     }
 
     public PlasmaBall(World world) { this(MCuake.PLASMA_BALL, world); }

@@ -3,15 +3,21 @@ package com.bytemaniak.mcuake.registry;
 import net.minecraft.entity.damage.DamageSource;
 
 public class DamageSources {
-    public static final DamageSource GAUNTLET_DAMAGE = new DamageSource("mcuake.gauntlet");
-    public static final DamageSource MACHINEGUN_DAMAGE = new DamageSource("mcuake.machinegun");
-    public static final DamageSource SHOTGUN_DAMAGE = new DamageSource("mcuake.shotgun");
-    public static final DamageSource GRENADE_DAMAGE = new DamageSource("mcuake.grenade");
-    public static final DamageSource ROCKET_DAMAGE = new DamageSource("mcuake.rocket");
-    public static final DamageSource LIGHTNING_DAMAGE = new DamageSource("mcuake.lightning");
-    public static final DamageSource RAILGUN_DAMAGE = new DamageSource("mcuake.railgun");
-    public static final DamageSource PLASMAGUN_DAMAGE = new DamageSource("mcuake.plasmagun");
-    public static final DamageSource BFG10K_DAMAGE = new DamageSource("mcuake.bfg10k");
+    public static class QuakeDamageSource extends DamageSource {
+        public QuakeDamageSource(String name) {
+            super(name);
+        }
+    }
 
-    public static final DamageSource SPIKES = new DamageSource("mcuake.spikes");
+    public static final QuakeDamageSource GAUNTLET_DAMAGE = new QuakeDamageSource("mcuake.gauntlet");
+    public static final QuakeDamageSource MACHINEGUN_DAMAGE = new QuakeDamageSource("mcuake.machinegun");
+    public static final QuakeDamageSource SHOTGUN_DAMAGE = new QuakeDamageSource("mcuake.shotgun");
+    public static final QuakeDamageSource GRENADE_DAMAGE = new QuakeDamageSource("mcuake.grenade");
+    public static final QuakeDamageSource ROCKET_DAMAGE = new QuakeDamageSource("mcuake.rocket");
+    public static final QuakeDamageSource LIGHTNING_DAMAGE = new QuakeDamageSource("mcuake.lightning");
+    public static final QuakeDamageSource RAILGUN_DAMAGE = new QuakeDamageSource("mcuake.railgun");
+    public static final QuakeDamageSource PLASMAGUN_DAMAGE = new QuakeDamageSource("mcuake.plasmagun");
+    public static final QuakeDamageSource BFG10K_DAMAGE = new QuakeDamageSource("mcuake.bfg10k");
+
+    public static final QuakeDamageSource SPIKES = new QuakeDamageSource("mcuake.spikes");
 }

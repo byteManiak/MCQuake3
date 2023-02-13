@@ -27,16 +27,18 @@ public class Gauntlet extends Weapon {
 
     @Override
     protected void onWeaponRefireClient(World world, LivingEntity user, ItemStack stack) {
-        HitResult hit = MinecraftClient.getInstance().crosshairTarget;
-        switch(hit.getType()) {
-            case ENTITY:
-                EntityHitResult entityHit = (EntityHitResult) hit;
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeInt(entityHit.getEntity().getId());
-                ClientPlayNetworking.send(CSMessages.GAUNTLET_DAMAGE, buf);
-                break;
-            default:
-                break;
+        if (user.getUuid().equals(MinecraftClient.getInstance().player.getUuid())) {
+            HitResult hit = MinecraftClient.getInstance().crosshairTarget;
+            switch (hit.getType()) {
+                case ENTITY:
+                    EntityHitResult entityHit = (EntityHitResult) hit;
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    buf.writeInt(entityHit.getEntity().getId());
+                    ClientPlayNetworking.send(CSMessages.GAUNTLET_DAMAGE, buf);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

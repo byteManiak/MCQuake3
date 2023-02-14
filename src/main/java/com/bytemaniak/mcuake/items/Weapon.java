@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
-import com.bytemaniak.mcuake.utils.ClientUtils;
+import com.bytemaniak.mcuake.utils.SoundUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -45,22 +45,19 @@ public abstract class Weapon extends Item {
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         long currentTick = world.getTime();
         MCuakePlayer player = (MCuakePlayer) user;
-        if (!world.isClient) {
-            if (currentTick - player.getWeaponTick(weaponSlot, false) >= refireRate) {
-                if (!player.useAmmo(weaponSlot)) {
+        boolean clientside = world.isClient;
+
+        if (currentTick - player.getWeaponTick(weaponSlot, clientside) >= refireRate) {
+            if (!player.useAmmo(weaponSlot)) {
+                if (!clientside) {
                     this.onWeaponRefire(world, user, stack);
-                    world.playSound(user, user.getBlockPos(), firingSound, SoundCategory.PLAYERS, .65f, 1.f);
-                }
-                player.setWeaponTick(weaponSlot, currentTick, false);
-            }
-        } else {
-            if (currentTick - player.getWeaponTick(weaponSlot, true) >= refireRate) {
-                if (!player.useAmmo(weaponSlot)) {
+                } else {
                     this.onWeaponRefireClient(world, user, stack);
-                    ClientUtils.playSoundPositioned(user, firingSound);
                 }
-                player.setWeaponTick(weaponSlot, currentTick, true);
+
+                SoundUtils.playSoundAsPlayer(world, user, firingSound);
             }
+            player.setWeaponTick(weaponSlot, currentTick, clientside);
         }
     }
 

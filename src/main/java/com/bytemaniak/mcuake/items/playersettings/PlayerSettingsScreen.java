@@ -3,6 +3,7 @@ package com.bytemaniak.mcuake.items.playersettings;
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.Sounds;
+import com.bytemaniak.mcuake.utils.SoundUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvent;
@@ -94,8 +94,7 @@ public class PlayerSettingsScreen extends Screen {
 
             private void onPressed() {
                 PlayerVoiceList.this.setSelected(this);
-                SoundEvent playerSample = SoundEvent.of(playerSounds.TAUNT);
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(playerSample, 1));
+                SoundUtils.playSoundLocally(SoundEvent.of(playerSounds.TAUNT));
             }
         }
 
@@ -126,10 +125,10 @@ public class PlayerSettingsScreen extends Screen {
             boolean inQuakeMode = user.isInQuakeMode();
             String newButtonText;
             if (inQuakeMode) {
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(Sounds.DAMAGE_DEALT, 1));
+                SoundUtils.playSoundLocally(Sounds.DAMAGE_DEALT);
                 newButtonText = "Quake mode";
             } else {
-                MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1));
+                SoundUtils.playSoundLocally(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
                 newButtonText = "Minecraft mode";
             }
 

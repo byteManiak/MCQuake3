@@ -57,7 +57,6 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
                         buf.writeInt(quakePlayer.getQuakeArmor());
-                        ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
                         ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                     }
                 } else {

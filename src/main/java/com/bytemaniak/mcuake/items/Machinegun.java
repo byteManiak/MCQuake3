@@ -54,7 +54,6 @@ public class Machinegun extends Weapon {
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
                         buf.writeInt(quakePlayer.getQuakeArmor());
-                        ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, CSMessages.PLAYER_STATS_UPDATE, buf);
                         ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                     } else {
                         collided.damage(damageSource, MACHINEGUN_MC_DAMAGE);

@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.entity;
 
+import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.damage.DamageSource;
 
 public interface MCuakePlayer {
@@ -42,4 +43,6 @@ public interface MCuakePlayer {
 
     public long getWeaponTick(WeaponSlot slot, boolean clientside);
     public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside);
+
+    public void setPlayerSounds(String soundsSet);
 }

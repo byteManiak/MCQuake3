@@ -18,6 +18,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -86,6 +87,9 @@ public class PlayerSettingsScreen extends Screen {
             public boolean mouseClicked(double mouseX, double mouseY, int button) {
                 if (button == 0) {
                     this.onPressed();
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    buf.writeString(this.playerSounds.playerClass);
+                    ClientPlayNetworking.send(CSMessages.PLAYER_CLASS_UPDATE, buf);
                     return true;
                 } else {
                     return false;

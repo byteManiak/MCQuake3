@@ -2,6 +2,7 @@ package com.bytemaniak.mcuake.mixin;
 
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.items.Weapon;
+import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +12,8 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -28,12 +31,15 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> IN_QUAKE_MODE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
     private int[] weaponAmmo = new int[10];
 
     private long[] weaponTicks = new long[9];
     private long[] clientWeaponTicks = new long[9];
+
+    private Sounds.PlayerSounds playerSounds = Sounds.TONY;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -43,7 +49,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {
         float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
-        if (isInQuakeMode()) {
+        if (isInQuakeMode() && newFallDistance >= 1) {
             takeDamage((int) newFallDistance, DamageSource.FALL);
             // Don't take Minecraft fall damage if in Quake mode
             return 0;
@@ -56,6 +62,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         nbt.putInt("quake_health", getQuakeHealth());
         nbt.putInt("quake_armor", getQuakeArmor());
         nbt.putBoolean("quake_mode", isInQuakeMode());
+        nbt.putString("quake_player_sounds", playerSounds.playerClass);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -63,6 +70,10 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         this.dataTracker.set(QUAKE_HEALTH, nbt.getInt("quake_health"));
         this.dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_armor"));
         this.dataTracker.set(IN_QUAKE_MODE, nbt.getBoolean("quake_mode"));
+
+        String quakePlayerSounds = nbt.getString("quake_player_sounds");
+        this.dataTracker.set(QUAKE_PLAYER_SOUNDS, quakePlayerSounds);
+        this.playerSounds = new Sounds.PlayerSounds(quakePlayerSounds);
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -70,6 +81,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         this.dataTracker.startTracking(QUAKE_HEALTH, 100);
         this.dataTracker.startTracking(QUAKE_ARMOR, 0);
         this.dataTracker.startTracking(IN_QUAKE_MODE, false);
+        this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -114,8 +126,19 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             weaponTicks = new long[9];
             clientWeaponTicks = new long[9];
             setQuakeHealth(100);
+            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.DEATH), SoundCategory.PLAYERS, 1, 1);
         } else {
+            SoundEvent hurtSound;
             setQuakeHealth(quakeHealth);
+            if (damageSource.isFromFalling()) {
+                hurtSound = SoundEvent.of(playerSounds.FALL);
+            } else {
+                if (quakeHealth > 75) hurtSound = SoundEvent.of(playerSounds.HURT100);
+                else if (quakeHealth > 50) hurtSound = SoundEvent.of(playerSounds.HURT75);
+                else if (quakeHealth > 25) hurtSound = SoundEvent.of(playerSounds.HURT50);
+                else hurtSound = SoundEvent.of(playerSounds.HURT25);
+            }
+            world.playSoundFromEntity(null, this, hurtSound, SoundCategory.PLAYERS, 1, 1);
         }
     }
 
@@ -162,6 +185,9 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     public int getCurrentAmmo() {
         return weaponAmmo[getCurrentWeapon().slot()];
     }
+
+    @Override
+    public void setPlayerSounds(String soundsSet) { this.playerSounds = new Sounds.PlayerSounds(soundsSet); }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {

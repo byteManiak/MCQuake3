@@ -6,7 +6,6 @@
 - [ ] Add spread to machinegun
 
 #### Projectiles
-- [ ] Despawn projectiles entering unloaded chunk
 - [ ] Push back players mid-air when hit by projectiles
 - [ ] Deal "real" damage to the player when they die, so they won't shoot their weapon for a short while after dying
 
@@ -22,7 +21,7 @@
 
 ## NEW FEATURES
 - [ ] Implement MCuake Player Settings item
-- [ ] Implement all other weapons
+- [ ] Implement all weapons
 - [ ] Implement ammo/pickup entities/spawners
 - [ ] Add new blocks
 - [ ] Add player hurt/jump/die sounds

@@ -1,5 +1,6 @@
 package com.bytemaniak.mcuake.blocks;
 
+import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -29,8 +30,14 @@ public class Spikes extends Block {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (entity instanceof LivingEntity && entity.fallDistance > 0.75) {
-            entity.damage(DamageSources.SPIKES, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
+        if (!world.isClient) {
+            if (entity instanceof LivingEntity && entity.fallDistance > 0.75) {
+                if (entity instanceof MCuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
+                    quakePlayer.takeDamage((int) (entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER), DamageSources.SPIKES);
+                } else {
+                    entity.damage(DamageSources.SPIKES, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
+                }
+            }
         }
     }
 }

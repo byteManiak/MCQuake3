@@ -55,7 +55,7 @@ public abstract class Weapon extends Item {
                     this.onWeaponRefireClient(world, user, stack);
                 }
 
-                SoundUtils.playSoundAsPlayer(world, user, firingSound);
+                world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
             }
             player.setWeaponTick(weaponSlot, currentTick, clientside);
         }

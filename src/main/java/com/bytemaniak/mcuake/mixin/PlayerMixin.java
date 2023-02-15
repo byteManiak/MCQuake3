@@ -57,6 +57,11 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         return newFallDistance;
     }
 
+    @Inject(method = "jump", at = @At("HEAD"))
+    private void playQuakeJumpSound(CallbackInfo ci) {
+        if (isInQuakeMode()) world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+    }
+
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putInt("quake_health", getQuakeHealth());

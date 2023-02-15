@@ -18,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -26,6 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
+    @Shadow public abstract boolean isCreative();
+
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
@@ -101,7 +104,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     }
 
     @Override
-    public boolean isInQuakeMode() { return this.dataTracker.get(IN_QUAKE_MODE); }
+    public boolean isInQuakeMode() { return !isCreative() && !isSpectator() && this.dataTracker.get(IN_QUAKE_MODE); }
 
     @Override
     public void setQuakeMode(boolean enabled) { this.dataTracker.set(IN_QUAKE_MODE, enabled); }

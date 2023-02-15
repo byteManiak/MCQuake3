@@ -53,7 +53,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     public float reduceFallDistance(float fallDistance) {
         float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
         if (isInQuakeMode() && newFallDistance >= 1) {
-            takeDamage((int) newFallDistance, DamageSource.FALL);
+            if (!world.isClient) takeDamage((int) newFallDistance, DamageSource.FALL);
             // Don't take Minecraft fall damage if in Quake mode
             return 0;
         }

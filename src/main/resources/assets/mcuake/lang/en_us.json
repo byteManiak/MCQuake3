@@ -15,7 +15,7 @@
   "item.mcuake.tool": "MCuake Tool",
   "itemGroup.mcuake.player_settings": "MCuake",
   "death.attack.mcuake.bfg10k": "",
-  "death.attack.mcuake.gauntlet": "",
+  "death.attack.mcuake.gauntlet": "%1$s was chopped in half by %2$s",
   "death.attack.mcuake.grenade": "",
   "death.attack.mcuake.lightning": "",
   "death.attack.mcuake.machinegun": "%1$s was mowed down by %2$s.",

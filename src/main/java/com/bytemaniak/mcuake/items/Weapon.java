@@ -1,7 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
-import com.bytemaniak.mcuake.utils.SoundUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

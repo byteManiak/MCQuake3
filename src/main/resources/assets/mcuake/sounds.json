@@ -15,6 +15,23 @@
       "mcuake:thru_the_mirror"
     ]
   },
+
+  "gauntlet_idle": {
+    "sounds": [
+      "mcuake:gauntlet_idle"
+    ]
+  },
+  "gauntlet_active": {
+    "sounds": [
+      "mcuake:gauntlet_active"
+    ]
+  },
+  "gauntlet_damage": {
+    "sounds": [
+      "mcuake:gauntlet_damage"
+    ]
+  },
+
   "machinegun": {
     "sounds": [
       "mcuake:machinegun1",

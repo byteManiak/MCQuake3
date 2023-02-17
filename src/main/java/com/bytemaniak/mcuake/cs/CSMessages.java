@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.cs;
 
-import com.bytemaniak.mcuake.cs.packets.c2s.DealtGauntletDamageC2SPacket;
 import com.bytemaniak.mcuake.cs.packets.c2s.JumppadPowerC2SPacket;
 import com.bytemaniak.mcuake.cs.packets.c2s.PlayerClassUpdateC2SPacket;
 import com.bytemaniak.mcuake.cs.packets.c2s.QuakeModeUpdateC2SPacket;
@@ -29,7 +28,6 @@ public class CSMessages {
 
     public static void registerServerPackets()
     {
-        ServerPlayNetworking.registerGlobalReceiver(CSMessages.GAUNTLET_DAMAGE, DealtGauntletDamageC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(CSMessages.JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(CSMessages.QUAKE_MODE_UPDATE, QuakeModeUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(CSMessages.PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);

@@ -4,7 +4,6 @@ import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 
 public class Shotgun extends Weapon {
@@ -14,6 +13,5 @@ public class Shotgun extends Weapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
-
     }
 }

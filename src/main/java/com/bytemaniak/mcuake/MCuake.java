@@ -48,6 +48,7 @@ public class MCuake implements ModInitializer {
 	public static final Item PLASMAGUN = new Plasmagun();
 	public static final Item RAILGUN = new Railgun();
 	public static final Item GAUNTLET = new Gauntlet();
+	public static final Item SHOTGUN = new Shotgun();
 
 
 	public static final EntityType<PlasmaBall> PLASMA_BALL = Registry.register(
@@ -74,6 +75,7 @@ public class MCuake implements ModInitializer {
 		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
 		loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
 		loadItem(GAUNTLET, new Identifier("mcuake", "gauntlet"));
+		loadItem(SHOTGUN, new Identifier("mcuake", "shotgun"));
 
 		loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcuake", "spikes"));
 		loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcuake", "jumppad"));

@@ -1,6 +1,7 @@
 package com.bytemaniak.mcuake.blocks.jumppad;
 
 import com.bytemaniak.mcuake.MCuake;
+import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -67,13 +69,24 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 		// Do nothing, so entity does not take fall damage if landing on the jumppad
 	}
 
+
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world.isClient && entity instanceof LivingEntity) {
+		if (entity instanceof LivingEntity) {
 			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
-
 			Direction direction = state.get(FACING);
-			entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+
+			if (world.isClient) {
+				entity.setPosition(pos.toCenterPos().add(0, .5, 0));
+				entity.setVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+			} else {
+				JumppadEntity jumppad = (JumppadEntity) world.getBlockEntity(pos);
+				entity.setPosition(pos.toCenterPos().add(0, .5, 0));
+				entity.setVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+				if (jumppad != null && (jumppad.forward_power > 0 || jumppad.up_power > 0)) {
+					world.playSound(null, pos, Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
+				}
+			}
 		}
 	}
 

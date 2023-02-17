@@ -1,4 +1,10 @@
 {
+  "jumppad": {
+    "sounds": [
+      "mcuake:jumppad"
+    ]
+  },
+
   "hit": {
     "sounds": [
       "mcuake:hit"
@@ -25,6 +31,11 @@
   "railgun": {
     "sounds": [
       "mcuake:railgun"
+    ]
+  },
+  "shotgun": {
+    "sounds": [
+      "mcuake:shotgun"
     ]
   },
 

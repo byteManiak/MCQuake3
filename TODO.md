@@ -4,6 +4,7 @@
 - [ ] Prevent weapons from dealing damage in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [ ] Add spread to machinegun
+- [ ] Add sounds to gauntlet
 
 #### Projectiles
 - [ ] Push back players mid-air when hit by projectiles
@@ -24,7 +25,6 @@
 - [ ] Implement all weapons
 - [ ] Implement ammo/pickup entities/spawners
 - [ ] Add new blocks
-- [ ] Add player hurt/jump/die sounds
 
 #### STUFF NOT IN QUAKE
 - [ ] Add gun with bouncy projectiles

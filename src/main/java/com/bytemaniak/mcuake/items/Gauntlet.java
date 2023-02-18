@@ -3,7 +3,7 @@ package com.bytemaniak.mcuake.items;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
@@ -21,8 +21,13 @@ public class Gauntlet extends HitscanWeapon {
     }
 
     @Override
-    protected void onQuakeDamage(World world, PlayerEntity attacked) {
+    protected void onQuakeDamage(World world, LivingEntity attacked) {
         world.playSoundFromEntity(null, attacked, Sounds.GAUNTLET_DAMAGE, SoundCategory.PLAYERS, 1, 1);
+    }
+
+    @Override
+    protected void onMcDamage(World world, LivingEntity attacked) {
+        onQuakeDamage(world, attacked);
     }
 
     @Override

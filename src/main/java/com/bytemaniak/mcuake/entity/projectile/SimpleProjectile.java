@@ -2,11 +2,12 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.registry.DamageSources;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.ProjectileDamageSource;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -48,7 +49,7 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
 
     private void doDamage(Entity entity) {
         if (!world.isClient) {
-            ProjectileDamageSource damageSource = new ProjectileDamageSource("mcuake."+projectileName, this, getOwner());
+            DamageSource damageSource = new DamageSources.QuakeDamageSource("mcuake."+projectileName, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                 MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
                 if (quakePlayer.isInQuakeMode()) {

@@ -36,7 +36,8 @@ public abstract class HitscanWeapon extends Weapon {
     }
 
     protected abstract void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos);
-    protected abstract void onQuakeDamage(World world, PlayerEntity attacked);
+    protected abstract void onQuakeDamage(World world, LivingEntity attacked);
+    protected abstract void onMcDamage(World world, LivingEntity attacked);
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
@@ -67,10 +68,12 @@ public abstract class HitscanWeapon extends Weapon {
                         ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
                         onQuakeDamage(world, playerEntity);
                     } else {
+                        onMcDamage(world, collided);
                         collided.damage(damageSource, mcDamageAmount);
                     }
                 } else {
                     collided.damage(damageSource, mcDamageAmount);
+                    onMcDamage(world, collided);
                 }
 
                 onProjectileCollision(world, user.getPos(), pos);

@@ -3,7 +3,7 @@ package com.bytemaniak.mcuake.items;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -19,7 +19,10 @@ public class Machinegun extends HitscanWeapon {
     }
 
     @Override
-    protected void onQuakeDamage(World world, PlayerEntity attacked) {}
+    protected void onQuakeDamage(World world, LivingEntity attacked) {}
+
+    @Override
+    protected void onMcDamage(World world, LivingEntity attacked) {}
 
     @Override
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}

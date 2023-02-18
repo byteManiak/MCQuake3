@@ -6,6 +6,7 @@ import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreenHandler;
 import com.bytemaniak.mcuake.blocks.Spikes;
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
+import com.bytemaniak.mcuake.entity.projectile.Shell;
 import com.bytemaniak.mcuake.items.*;
 import com.bytemaniak.mcuake.items.playersettings.PlayerSettings;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
@@ -57,6 +58,13 @@ public class MCuake implements ModInitializer {
 			FabricEntityTypeBuilder.<PlasmaBall>create(SpawnGroup.MISC, PlasmaBall::new)
 					.dimensions(EntityDimensions.fixed(0.3f, 0.3f))
 					.trackRangeBlocks(128).trackedUpdateRate(10)
+					.build());
+	public static final EntityType<Shell> SHELL = Registry.register(
+			Registries.ENTITY_TYPE,
+			new Identifier("mcuake", "shell"),
+			FabricEntityTypeBuilder.<Shell>create(SpawnGroup.MISC, Shell::new)
+					.dimensions(EntityDimensions.fixed(0.05f, 0.05f))
+					.trackRangeBlocks(64).trackedUpdateRate(10)
 					.build());
 
 	public static final ItemGroup MCUAKE_GROUP = FabricItemGroup.builder(new Identifier("mcuake", "player_settings"))

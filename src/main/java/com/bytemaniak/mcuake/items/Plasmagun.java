@@ -21,7 +21,7 @@ public class Plasmagun extends Weapon {
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         Vec3d rightVec = lookDir.crossProduct(new Vec3d(0, 1, 0));
         Vec3d upVec = lookDir.crossProduct(rightVec).normalize();
-        Vec3d tempVec = lookDir.add(upVec.negate().multiply(-.0125f, 0.15f, -.0125f));
+        Vec3d tempVec = lookDir.add(upVec.negate().multiply(-.0125f, 0.35f, -.0125f));
         Vec3d offsetVec = upVec.add(tempVec);
         PlasmaBall plasmaBall = new PlasmaBall(world);
         plasmaBall.setOwner(user);

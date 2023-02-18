@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class SimpleProjectile extends ExplosiveProjectileEntity {
     private int quakeDamageAmount, mcDamageAmount;
-    private String projectileName;
+    private String damageType;
     protected long lifetimeInTicks;
     protected long initTick;
 
@@ -34,7 +34,7 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
         this(entityType, world);
         this.quakeDamageAmount = quakeDamageAmount;
         this.mcDamageAmount = mcDamageAmount;
-        this.projectileName = projectileName;
+        this.damageType = projectileName;
         this.lifetimeInTicks = lifetimeInTicks;
         this.initTick = world.getTime();
     }
@@ -49,7 +49,7 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
 
     private void doDamage(Entity entity) {
         if (!world.isClient) {
-            DamageSource damageSource = new DamageSources.QuakeDamageSource("mcuake."+projectileName, getOwner());
+            DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
                 MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
                 if (quakePlayer.isInQuakeMode()) {

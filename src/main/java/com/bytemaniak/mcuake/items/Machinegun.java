@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class Machinegun extends HitscanWeapon {
     private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
-    private static final int MACHINEGUN_QUAKE_DAMAGE = 5;
+    private static final int MACHINEGUN_QUAKE_DAMAGE = 7;
     private static final int MACHINEGUN_MC_DAMAGE = 2;
     private static final float MACHINEGUN_RANGE = 200;
 

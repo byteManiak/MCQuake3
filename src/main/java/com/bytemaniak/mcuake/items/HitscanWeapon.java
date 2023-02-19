@@ -80,12 +80,14 @@ public abstract class HitscanWeapon extends Weapon {
                 break;
             }
 
-            VoxelShape collisionShape = world.getBlockState(blockPos).getCollisionShape(world, blockPos);
-            if (collisionShape != VoxelShapes.empty()) {
-                Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
-                if (blockCollisionBox.intersects(collisionBox)) {
-                    onProjectileCollision(world, user.getPos(), pos);
-                    break;
+            if (world.isChunkLoaded(blockPos)) {
+                VoxelShape collisionShape = world.getBlockState(blockPos).getCollisionShape(world, blockPos);
+                if (collisionShape != VoxelShapes.empty()) {
+                    Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
+                    if (blockCollisionBox.intersects(collisionBox)) {
+                        onProjectileCollision(world, user.getPos(), pos);
+                        break;
+                    }
                 }
             }
         }

@@ -77,7 +77,7 @@ public abstract class HitscanWeapon extends Weapon {
                 }
 
                 onProjectileCollision(world, user.getPos(), pos);
-                break;
+                return;
             }
 
             if (world.isChunkLoaded(blockPos)) {
@@ -86,7 +86,7 @@ public abstract class HitscanWeapon extends Weapon {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
                         onProjectileCollision(world, user.getPos(), pos);
-                        break;
+                        return;
                     }
                 }
             }

@@ -50,17 +50,12 @@ public abstract class Weapon extends Item {
             if (!player.useAmmo(weaponSlot)) {
                 if (!clientside) {
                     this.onWeaponRefire(world, user, stack);
-                } else {
-                    this.onWeaponRefireClient(world, user, stack);
                 }
 
                 world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
             }
             player.setWeaponTick(weaponSlot, currentTick, clientside);
         }
-    }
-
-    protected void onWeaponRefireClient(World world, LivingEntity user, ItemStack stack) {
     }
 
     protected abstract void onWeaponRefire(World world, LivingEntity user, ItemStack stack);

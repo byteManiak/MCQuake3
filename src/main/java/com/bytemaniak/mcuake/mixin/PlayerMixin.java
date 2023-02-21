@@ -199,7 +199,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (getMainHandStack().getItem() instanceof Weapon) {
+        if (isInQuakeMode()) {
             cir.setReturnValue(ActionResult.PASS);
         }
     }

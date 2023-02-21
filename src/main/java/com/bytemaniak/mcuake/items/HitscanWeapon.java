@@ -76,7 +76,7 @@ public abstract class HitscanWeapon extends Weapon {
                     onMcDamage(world, collided);
                 }
 
-                onProjectileCollision(world, user.getPos(), pos);
+                onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
                 return;
             }
 
@@ -85,13 +85,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, user.getPos(), pos);
+                        onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, user.getPos(), pos);
+        onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
     }
 }

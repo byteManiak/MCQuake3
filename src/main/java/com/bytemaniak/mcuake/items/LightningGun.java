@@ -3,7 +3,6 @@ package com.bytemaniak.mcuake.items;
 import com.bytemaniak.mcuake.cs.CSMessages;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
-import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -11,18 +10,19 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class Railgun extends HitscanWeapon {
-    private static final int RAILGUN_REFIRE_TICK_RATE = 50;
-    private static final int RAILGUN_QUAKE_DAMAGE = 100;
-    private static final int RAILGUN_MC_DAMAGE = 10;
-    private static final float RAILGUN_RANGE = 200;
+public class LightningGun extends HitscanWeapon {
+    private static final long LIGHTNING_REFIRE_RATE = 1;
+    private static final int LIGHTNING_QUAKE_DAMAGE = 8;
+    private static final int LIGHTNING_MC_DAMAGE = 2;
+    private static final float LIGHTNING_RANGE = 30;
 
-    public Railgun() {
-        super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, Sounds.RAILGUN_FIRE,
-                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, RAILGUN_RANGE, DamageSources.RAILGUN_DAMAGE);
+    public LightningGun() {
+        super(MCuakePlayer.WeaponSlot.LIGHTNING_GUN, LIGHTNING_REFIRE_RATE, SoundEvents.BLOCK_DEEPSLATE_TILES_BREAK,
+                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, LIGHTNING_RANGE, DamageSources.LIGHTNING_DAMAGE);
     }
 
     @Override
@@ -33,10 +33,10 @@ public class Railgun extends HitscanWeapon {
 
     @Override
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {
-        sendRailgunTrail(world, userPos, iterPos);
+        sendLightningGunTrail(world, userPos, iterPos);
     }
 
-    private void sendRailgunTrail(World world, Vec3d startPos, Vec3d endPos) {
+    private void sendLightningGunTrail(World world, Vec3d startPos, Vec3d endPos) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeDouble(startPos.x);
         buf.writeDouble(startPos.y);
@@ -44,7 +44,7 @@ public class Railgun extends HitscanWeapon {
         buf.writeDouble(endPos.x);
         buf.writeDouble(endPos.y);
         buf.writeDouble(endPos.z);
-        buf.writeInt(MCuakePlayer.WeaponSlot.RAILGUN.slot());
+        buf.writeInt(MCuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
         for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
             ServerPlayNetworking.send(plr, CSMessages.SHOW_TRAIL, buf);
     }

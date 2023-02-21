@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.entity;
 
-import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.damage.DamageSource;
 
 public interface MCuakePlayer {

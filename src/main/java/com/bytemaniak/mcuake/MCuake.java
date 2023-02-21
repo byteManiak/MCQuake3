@@ -78,14 +78,15 @@ public class MCuake implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		loadItem(PLAYER_SETTINGS, new Identifier("mcuake", "player_settings"));
-		loadItem(TOOL, new Identifier("mcuake", "tool"));
-		loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));
-		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
-		loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
+
 		loadItem(GAUNTLET, new Identifier("mcuake", "gauntlet"));
+		loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));
 		loadItem(SHOTGUN, new Identifier("mcuake", "shotgun"));
 		loadItem(LIGHTNING_GUN, new Identifier("mcuake", "lightning_gun"));
+		loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
+		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
 
+		loadItem(TOOL, new Identifier("mcuake", "tool"));
 		loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcuake", "spikes"));
 		loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcuake", "jumppad"));
 

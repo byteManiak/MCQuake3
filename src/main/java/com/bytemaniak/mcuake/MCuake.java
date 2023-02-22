@@ -12,6 +12,7 @@ import com.bytemaniak.mcuake.items.playersettings.PlayerSettings;
 import com.bytemaniak.mcuake.registry.MusicDiscRegistry;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -52,6 +53,15 @@ public class MCuake implements ModInitializer {
 	public static final Item SHOTGUN = new Shotgun();
 	public static final Item LIGHTNING_GUN = new LightningGun();
 
+	public static final Item MACHINEGUN_AMMO = new Item(new FabricItemSettings());
+	public static final Item SHOTGUN_AMMO = new Item(new FabricItemSettings());
+	public static final Item GRENADE_AMMO = new Item(new FabricItemSettings());
+	public static final Item ROCKET_AMMO = new Item(new FabricItemSettings());
+	public static final Item PLASMAGUN_AMMO = new Item(new FabricItemSettings());
+	public static final Item LIGHTNING_AMMO = new Item(new FabricItemSettings());
+	public static final Item RAILGUN_AMMO = new Item(new FabricItemSettings());
+	public static final Item BFG_AMMO = new Item(new FabricItemSettings());
+
 	public static final EntityType<PlasmaBall> PLASMA_BALL = Registry.register(
 			Registries.ENTITY_TYPE,
 			new Identifier("mcuake", "plasmaball"),
@@ -85,6 +95,15 @@ public class MCuake implements ModInitializer {
 		loadItem(LIGHTNING_GUN, new Identifier("mcuake", "lightning_gun"));
 		loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
 		loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
+
+		loadItem(MACHINEGUN_AMMO, new Identifier("mcuake", "machinegun_ammo_box"));
+		loadItem(SHOTGUN_AMMO, new Identifier("mcuake", "shotgun_ammo_box"));
+		loadItem(GRENADE_AMMO, new Identifier("mcuake", "grenade_ammo_box"));
+		loadItem(ROCKET_AMMO, new Identifier("mcuake", "rocket_ammo_box"));
+		loadItem(PLASMAGUN_AMMO, new Identifier("mcuake", "plasmagun_ammo_box"));
+		loadItem(LIGHTNING_AMMO, new Identifier("mcuake", "lightning_ammo_box"));
+		loadItem(RAILGUN_AMMO, new Identifier("mcuake", "railgun_ammo_box"));
+		loadItem(BFG_AMMO, new Identifier("mcuake", "bfg_ammo_box"));
 
 		loadItem(TOOL, new Identifier("mcuake", "tool"));
 		loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcuake", "spikes"));

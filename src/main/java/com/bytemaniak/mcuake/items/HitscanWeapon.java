@@ -46,7 +46,7 @@ public abstract class HitscanWeapon extends Weapon {
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         Vec3d pos = eyePos;
 
-        for (float i = 0; i < hitscanRange; i += .5f) {
+        for (float i = 0; i < hitscanRange; i += .4f) {
             pos = pos.add(lookDir);
             Vec3d minPos = pos.add(new Vec3d(-.1f, -.1f, -.1f));
             Vec3d maxPos = pos.add(new Vec3d(.1f, .1f, .1f));

@@ -53,12 +53,11 @@ public class TrailRenderer implements WorldRenderEvents.End {
 
     private final CopyOnWriteArrayList<TrailData> trailList = new CopyOnWriteArrayList<TrailData>();
 
-    private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, float x, float y, float z, Vec3d col, float alpha) {
+    private void genVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d vec, Vec3d col, float alpha) {
+        float x = (float)vec.x;
+        float y = (float)vec.y;
+        float z = (float)vec.z;
         vertexConsumer.vertex(positionMatrix, x, y, z).color((float)col.x, (float)col.y, (float)col.z, 1-alpha).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(1).normal(normalMatrix, 0, 1, 0).next();
-    }
-
-    private void genVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d vec, Vec3d color, float alpha) {
-        produceVertex(vertexConsumer, positionMatrix, normalMatrix, (float)vec.x, (float)vec.y, (float)vec.z, color, alpha);
     }
 
     private void genQuad(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, Vec3d color, float alpha) {

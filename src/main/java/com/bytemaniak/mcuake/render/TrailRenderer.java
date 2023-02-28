@@ -79,8 +79,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        VertexConsumerProvider.Immediate vertexConsumers = VertexConsumerProvider.immediate(new BufferBuilder(24));
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(LAYER);
+        VertexConsumer vertexConsumer = context.consumers().getBuffer(LAYER);
 
         for (Iterator<TrailData> iter = trailList.iterator(); iter.hasNext(); ) {
             TrailData trail = iter.next();
@@ -97,8 +96,6 @@ public class TrailRenderer implements WorldRenderEvents.End {
         }
 
         matrices.pop();
-        if (MinecraftClient.getInstance().cameraEntity.isPlayer())
-            vertexConsumers.draw();
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, int type) {

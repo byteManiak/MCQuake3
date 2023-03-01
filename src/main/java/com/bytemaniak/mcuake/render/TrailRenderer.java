@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TrailRenderer implements WorldRenderEvents.End {
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/misc/white.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
-
+    private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(24));
     private final static long RAILGUN_TRAIL_LIFETIME = 20;
     private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 2;
 
@@ -79,7 +79,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        VertexConsumer vertexConsumer = context.consumers().getBuffer(LAYER);
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
 
         for (Iterator<TrailData> iter = trailList.iterator(); iter.hasNext(); ) {
             TrailData trail = iter.next();
@@ -96,6 +96,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         }
 
         matrices.pop();
+        vertexConsumerProvider.draw();
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, int type) {

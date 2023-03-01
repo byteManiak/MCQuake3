@@ -26,9 +26,10 @@ public abstract class HitscanWeapon extends Weapon {
     private final int mcDamageAmount;
     private final String damageType;
 
-    protected HitscanWeapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks, SoundEvent firingSound,
+    protected HitscanWeapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+                            boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             int quakeDamageAmount, int mcDamageAmount, float hitscanRange, String damageType) {
-        super(weaponSlot, refireRateInTicks, firingSound);
+        super(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
         this.hitscanRange = hitscanRange;
         this.quakeDamageAmount = quakeDamageAmount;
         this.mcDamageAmount = mcDamageAmount;

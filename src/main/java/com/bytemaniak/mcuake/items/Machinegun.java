@@ -14,7 +14,7 @@ public class Machinegun extends HitscanWeapon {
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {
-        super(MCuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, Sounds.MACHINEGUN_FIRE,
+        super(MCuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
                 MACHINEGUN_QUAKE_DAMAGE, MACHINEGUN_MC_DAMAGE, MACHINEGUN_RANGE, DamageSources.MACHINEGUN_DAMAGE);
     }
 

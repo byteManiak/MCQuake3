@@ -14,15 +14,20 @@ import net.minecraft.world.World;
 
 public abstract class Weapon extends Item {
     private final long refireRate;
+    private boolean hasRepeatedFiringSound;
     private final SoundEvent firingSound;
+    public boolean hasActiveLoopSound;
 
     public MCuakePlayer.WeaponSlot weaponSlot;
 
-    protected Weapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks, SoundEvent firingSound) {
+    protected Weapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+                     boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {
         super(new Item.Settings().maxCount(1));
         this.weaponSlot = weaponSlot;
         this.refireRate = refireRateInTicks;
+        this.hasRepeatedFiringSound = hasRepeatedFiringSound;
         this.firingSound = firingSound;
+        this.hasActiveLoopSound = hasActiveLoopSound;
     }
 
     @Override
@@ -52,7 +57,9 @@ public abstract class Weapon extends Item {
                     this.onWeaponRefire(world, user, stack);
                 }
 
-                world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
+                if (hasRepeatedFiringSound) {
+                    world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
+                }
             }
             player.setWeaponTick(weaponSlot, currentTick, clientside);
         }

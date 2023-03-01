@@ -12,7 +12,7 @@ public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
 
     public Plasmagun() {
-        super(MCuakePlayer.WeaponSlot.PLASMA_GUN, PLASMAGUN_REFIRE_TICK_RATE, Sounds.PLASMAGUN_FIRE);
+        super(MCuakePlayer.WeaponSlot.PLASMA_GUN, PLASMAGUN_REFIRE_TICK_RATE, true, Sounds.PLASMAGUN_FIRE, false);
     }
 
     @Override

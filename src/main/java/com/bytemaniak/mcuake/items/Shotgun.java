@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Shotgun extends Weapon {
     private static final long SHOTGUN_REFIRE_TICK_RATE = 20;
 
-    public Shotgun() { super(MCuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, Sounds.SHOTGUN_FIRE); }
+    public Shotgun() { super(MCuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false); }
 
     private void fireProjectile(World world, LivingEntity user, int maxPitchSpread, int maxYawSpread) {
         int pitchSpread = ThreadLocalRandom.current().nextInt(-maxPitchSpread, Math.max(maxPitchSpread, 1));

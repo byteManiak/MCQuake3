@@ -44,4 +44,15 @@ public interface MCuakePlayer {
     public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside);
 
     public void setPlayerSounds(String soundsSet);
+
+    public void playHum(MCuakePlayer.WeaponSlot weaponSlot);
+    public void stopHum();
+
+    public void playAttackSound(MCuakePlayer.WeaponSlot weaponSlot);
+    public void stopAttackSound();
+
+    public void stopSounds();
+
+    public boolean isPlayingHum();
+    public boolean isPlayingAttack();
 }

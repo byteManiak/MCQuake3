@@ -21,7 +21,7 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, Sounds.RAILGUN_FIRE,
+        super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
                 RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, RAILGUN_RANGE, DamageSources.RAILGUN_DAMAGE);
     }
 

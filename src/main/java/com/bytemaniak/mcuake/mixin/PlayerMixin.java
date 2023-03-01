@@ -1,8 +1,15 @@
 package com.bytemaniak.mcuake.mixin;
 
+import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
 import com.bytemaniak.mcuake.items.Weapon;
 import com.bytemaniak.mcuake.registry.Sounds;
+import com.bytemaniak.mcuake.sound.WeaponActive;
+import com.bytemaniak.mcuake.sound.WeaponHum;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +18,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -43,6 +51,13 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     private long[] clientWeaponTicks = new long[9];
 
     private Sounds.PlayerSounds playerSounds = Sounds.TONY;
+
+    private boolean isHoldingGauntlet = false;
+    private boolean isHoldingLightning = false;
+    private boolean isHoldingRailgun = false;
+
+    private boolean playingHumSound = false;
+    private boolean playingAttackSound = false;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -203,4 +218,110 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
             cir.setReturnValue(ActionResult.PASS);
         }
     }
+
+    @Inject(method = "tick", at = @At(value = "RETURN"))
+    private void handleLoopingWeaponSounds(CallbackInfo ci) {
+        if (world.isClient) {
+            ItemStack handStack = getMainHandStack();
+            if (handStack.getItem() instanceof Weapon weapon) {
+                if (handStack.isOf(MCuake.GAUNTLET)) {
+                    if (!isHoldingGauntlet) {
+                        isHoldingGauntlet = true;
+                        playHum(MCuakePlayer.WeaponSlot.GAUNTLET);
+
+                        isHoldingLightning = false;
+                        isHoldingRailgun = false;
+                    }
+                } else if (handStack.isOf(MCuake.LIGHTNING_GUN)) {
+                    if (!isHoldingLightning) {
+                        isHoldingLightning = true;
+                        playHum(MCuakePlayer.WeaponSlot.LIGHTNING_GUN);
+
+                        isHoldingGauntlet = false;
+                        isHoldingRailgun = false;
+                    }
+                } else if (handStack.isOf(MCuake.RAILGUN)) {
+                    if (!isHoldingRailgun) {
+                        isHoldingRailgun = true;
+                        playHum(MCuakePlayer.WeaponSlot.RAILGUN);
+
+                        isHoldingGauntlet = false;
+                        isHoldingLightning = false;
+                    }
+                } else {
+                    isHoldingGauntlet = false;
+                    isHoldingRailgun = false;
+                    isHoldingLightning = false;
+                    stopSounds();
+                }
+
+                if (weapon.hasActiveLoopSound) {
+                    if (!isUsingItem() && playingAttackSound) {
+                        playHum(getCurrentWeapon());
+                    } else if (isUsingItem() && !playingAttackSound) {
+                        playAttackSound(getCurrentWeapon());
+                    }
+                }
+            } else if (playingHumSound || playingAttackSound) {
+                isHoldingGauntlet = false;
+                isHoldingRailgun = false;
+                isHoldingLightning = false;
+                stopSounds();
+            }
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void playHum(MCuakePlayer.WeaponSlot weaponSlot) {
+        stopSounds();
+
+        SoundManager manager = MinecraftClient.getInstance().getSoundManager();
+        WeaponHum humSound;
+        switch (weaponSlot) {
+            case GAUNTLET -> humSound = new WeaponHum(this, Sounds.GAUNTLET_HUM, weaponSlot);
+            case RAILGUN -> humSound = new WeaponHum(this, Sounds.RAILGUN_HUM, weaponSlot);
+            default -> humSound = null;
+        }
+
+        if (humSound != null) {
+            manager.play(humSound);
+            playingHumSound = true;
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void stopHum() { playingHumSound = false; }
+
+    @Environment(EnvType.CLIENT)
+    public void playAttackSound(MCuakePlayer.WeaponSlot weaponSlot) {
+        stopSounds();
+
+        SoundManager manager = MinecraftClient.getInstance().getSoundManager();
+        WeaponActive attackSound;
+        switch (weaponSlot) {
+            case GAUNTLET -> attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, weaponSlot);
+            case LIGHTNING_GUN -> attackSound = new WeaponActive(this, Sounds.LIGHTNING_ACTIVE, weaponSlot);
+            default -> attackSound = null;
+        }
+
+        if (attackSound != null) {
+            manager.play(attackSound);
+            playingAttackSound = true;
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void stopAttackSound() { playingAttackSound = false; }
+
+    @Environment(EnvType.CLIENT)
+    public void stopSounds() {
+        stopHum();
+        stopAttackSound();
+    }
+
+    @Environment(EnvType.CLIENT)
+    public boolean isPlayingHum() { return playingHumSound; }
+
+    @Environment(EnvType.CLIENT)
+    public boolean isPlayingAttack() { return playingAttackSound; }
 }

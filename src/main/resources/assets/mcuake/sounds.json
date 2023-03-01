@@ -45,14 +45,32 @@
       "mcuake:plasmagun"
     ]
   },
+
   "railgun": {
     "sounds": [
       "mcuake:railgun"
     ]
   },
+  "railgun_idle": {
+    "sounds": [
+      "mcuake:railgun_idle"
+    ]
+  },
+
   "shotgun": {
     "sounds": [
       "mcuake:shotgun"
+    ]
+  },
+
+  "lightning_gun": {
+    "sounds": [
+      "mcuake:lightning_gun"
+    ]
+  },
+  "lightning_active": {
+    "sounds": [
+      "mcuake:lightning_active"
     ]
   },
 

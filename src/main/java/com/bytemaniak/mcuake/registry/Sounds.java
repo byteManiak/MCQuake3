@@ -17,14 +17,25 @@ public class Sounds {
     private static final Identifier PLASMAGUN_FIRE_IDENT = new Identifier("mcuake", "plasmagun");
     public static final SoundEvent PLASMAGUN_FIRE = SoundEvent.of(PLASMAGUN_FIRE_IDENT);
 
+    private static final Identifier LIGHTNING_FIRE_IDENT = new Identifier("mcuake", "lightning_gun");
+    public static final SoundEvent LIGHTNING_FIRE = SoundEvent.of(LIGHTNING_FIRE_IDENT);
+    private static final Identifier LIGHTNING_ACTIVE_IDENT = new Identifier("mcuake", "lightning_active");
+    public static final SoundEvent LIGHTNING_ACTIVE = SoundEvent.of(LIGHTNING_ACTIVE_IDENT);
+
     private static final Identifier RAILGUN_FIRE_IDENT = new Identifier("mcuake", "railgun");
     public static final SoundEvent RAILGUN_FIRE = SoundEvent.of(RAILGUN_FIRE_IDENT);
+    private static final Identifier RAILGUN_HUM_IDENT = new Identifier("mcuake", "railgun_idle");
+    public static final SoundEvent RAILGUN_HUM = SoundEvent.of(RAILGUN_HUM_IDENT);
 
     private static final Identifier SHOTGUN_FIRE_IDENT = new Identifier("mcuake", "shotgun");
     public static final SoundEvent SHOTGUN_FIRE = SoundEvent.of(SHOTGUN_FIRE_IDENT);
 
     private static final Identifier GAUNTLET_DAMAGE_IDENT = new Identifier("mcuake", "gauntlet_damage");
     public static final SoundEvent GAUNTLET_DAMAGE = SoundEvent.of(GAUNTLET_DAMAGE_IDENT);
+    private static final Identifier GAUNTLET_ACTIVE_IDENT = new Identifier("mcuake", "gauntlet_active");
+    public static final SoundEvent GAUNTLET_ACTIVE = SoundEvent.of(GAUNTLET_ACTIVE_IDENT);
+    private static final Identifier GAUNTLET_HUM_IDENT = new Identifier("mcuake", "gauntlet_idle");
+    public static final SoundEvent GAUNTLET_HUM = SoundEvent.of(GAUNTLET_HUM_IDENT);
 
     public static class PlayerSounds {
         public Identifier DEATH;
@@ -94,9 +105,14 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, MACHINEGUN_FIRE_IDENT, MACHINEGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, PLASMAGUN_FIRE_IDENT, PLASMAGUN_FIRE);
+        Registry.register(Registries.SOUND_EVENT, LIGHTNING_FIRE_IDENT, LIGHTNING_FIRE);
+        Registry.register(Registries.SOUND_EVENT, LIGHTNING_ACTIVE_IDENT, LIGHTNING_ACTIVE);
         Registry.register(Registries.SOUND_EVENT, RAILGUN_FIRE_IDENT, RAILGUN_FIRE);
+        Registry.register(Registries.SOUND_EVENT, RAILGUN_HUM_IDENT, RAILGUN_HUM);
         Registry.register(Registries.SOUND_EVENT, SHOTGUN_FIRE_IDENT, SHOTGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_DAMAGE_IDENT, GAUNTLET_DAMAGE);
+        Registry.register(Registries.SOUND_EVENT, GAUNTLET_ACTIVE_IDENT, GAUNTLET_ACTIVE);
+        Registry.register(Registries.SOUND_EVENT, GAUNTLET_HUM_IDENT, GAUNTLET_HUM);
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);
         loadPlayerSounds(ASSASSIN);

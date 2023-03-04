@@ -18,10 +18,12 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
     }
 
     @Inject(method = "copyFrom", at = @At("HEAD"))
-    private void noDropInventoryInQuakeMode(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
+    private void copyFromQuakePlayer(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
         QuakePlayer thisQuakePlayer = (QuakePlayer) this;
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
         thisQuakePlayer.setQuakeMode(oldQuakePlayer.isInQuakeMode());
+
+        // Don't remove inventory and XP if in Quake mode
         if (oldQuakePlayer.isInQuakeMode()) {
             this.getInventory().clone(oldPlayer.getInventory());
             this.experienceLevel = oldPlayer.experienceLevel;
@@ -29,5 +31,7 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
             this.experienceProgress = oldPlayer.experienceProgress;
             this.setScore(oldPlayer.getScore());
         }
+
+        thisQuakePlayer.setPlayerSounds(oldQuakePlayer.getPlayerSounds());
     }
 }

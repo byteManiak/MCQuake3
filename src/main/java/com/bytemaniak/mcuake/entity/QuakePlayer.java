@@ -43,6 +43,7 @@ public interface QuakePlayer {
     public long getWeaponTick(WeaponSlot slot, boolean clientside);
     public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside);
 
+    public String getPlayerSounds();
     public void setPlayerSounds(String soundsSet);
 
     public void playHum(QuakePlayer.WeaponSlot weaponSlot);

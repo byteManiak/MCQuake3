@@ -194,8 +194,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return weaponAmmo[getCurrentWeapon().slot()];
     }
 
-    public String getPlayerSounds() { return this.playerSounds.playerClass; }
-    public void setPlayerSounds(String soundsSet) { this.playerSounds = new Sounds.PlayerSounds(soundsSet); }
+    public String getPlayerVoice() { return this.playerSounds.playerClass; }
+    public void setPlayerVoice(String soundsSet) { this.playerSounds = new Sounds.PlayerSounds(soundsSet); }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {

@@ -10,7 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class PlayerClassUpdateC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         if (player instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
-            quakePlayer.setPlayerSounds(buf.readString());
+            quakePlayer.setPlayerVoice(buf.readString());
         }
     }
 }

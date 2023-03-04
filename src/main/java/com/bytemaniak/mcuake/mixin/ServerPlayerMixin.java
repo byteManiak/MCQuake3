@@ -32,6 +32,6 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
             this.setScore(oldPlayer.getScore());
         }
 
-        thisQuakePlayer.setPlayerSounds(oldQuakePlayer.getPlayerSounds());
+        thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
     }
 }

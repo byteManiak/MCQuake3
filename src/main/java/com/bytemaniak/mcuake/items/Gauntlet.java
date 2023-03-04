@@ -11,7 +11,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
@@ -32,13 +31,15 @@ public class Gauntlet extends HitscanWeapon implements GeoItem {
     private static final int GAUNTLET_QUAKE_DAMAGE = 50;
     private static final int GAUNTLET_MC_DAMAGE = 5;
     private static final float GAUNTLET_RANGE = 1.5f;
+    private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
     public Gauntlet() {
         super(QuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, false, null, true,
-                GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, GAUNTLET_RANGE, DamageSources.GAUNTLET_DAMAGE);
+                GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, DamageSources.GAUNTLET_DAMAGE,
+                GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -52,9 +53,6 @@ public class Gauntlet extends HitscanWeapon implements GeoItem {
     protected void onMcDamage(World world, LivingEntity attacked) {
         onQuakeDamage(world, attacked);
     }
-
-    @Override
-    protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

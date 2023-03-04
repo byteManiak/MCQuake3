@@ -1,13 +1,12 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -27,14 +26,8 @@ public class LightningGun extends HitscanWeapon {
 
     public LightningGun() {
         super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, LIGHTNING_REFIRE_RATE, false, null, true,
-                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, LIGHTNING_RANGE, DamageSources.LIGHTNING_DAMAGE);
+                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
     }
-
-    @Override
-    protected void onQuakeDamage(World world, LivingEntity attacked) {}
-
-    @Override
-    protected void onMcDamage(World world, LivingEntity attacked) {}
 
     @Override
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {

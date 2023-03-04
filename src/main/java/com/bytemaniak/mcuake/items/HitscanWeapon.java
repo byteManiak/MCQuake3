@@ -25,20 +25,31 @@ public abstract class HitscanWeapon extends Weapon {
     private final int quakeDamageAmount;
     private final int mcDamageAmount;
     private final String damageType;
+    private final float hitscanStepDistance;
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int quakeDamageAmount, int mcDamageAmount, float hitscanRange, String damageType) {
+                            int quakeDamageAmount, int mcDamageAmount, String damageType,
+                            float hitscanRange, float hitscanStepDistance) {
         super(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
         this.hitscanRange = hitscanRange;
+        this.hitscanStepDistance = hitscanStepDistance;
         this.quakeDamageAmount = quakeDamageAmount;
         this.mcDamageAmount = mcDamageAmount;
         this.damageType = damageType;
     }
 
-    protected abstract void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos);
-    protected abstract void onQuakeDamage(World world, LivingEntity attacked);
-    protected abstract void onMcDamage(World world, LivingEntity attacked);
+    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+                            boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
+                            int quakeDamageAmount, int mcDamageAmount, String damageType,
+                            float hitscanRange) {
+        this(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
+                quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
+    }
+
+    protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}
+    protected void onQuakeDamage(World world, LivingEntity attacked) {}
+    protected void onMcDamage(World world, LivingEntity attacked) {}
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
@@ -47,7 +58,7 @@ public abstract class HitscanWeapon extends Weapon {
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
         Vec3d pos = eyePos;
 
-        for (float i = 0; i < hitscanRange; i += .4f) {
+        for (float i = 0; i < hitscanRange; i += hitscanStepDistance) {
             pos = pos.add(lookDir);
             Vec3d minPos = pos.add(new Vec3d(-.1f, -.1f, -.1f));
             Vec3d maxPos = pos.add(new Vec3d(.1f, .1f, .1f));

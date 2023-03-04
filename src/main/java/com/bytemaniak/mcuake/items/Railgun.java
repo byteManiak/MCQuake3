@@ -1,13 +1,12 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -22,14 +21,8 @@ public class Railgun extends HitscanWeapon {
 
     public Railgun() {
         super(QuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, RAILGUN_RANGE, DamageSources.RAILGUN_DAMAGE);
+                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
     }
-
-    @Override
-    protected void onQuakeDamage(World world, LivingEntity attacked) {}
-
-    @Override
-    protected void onMcDamage(World world, LivingEntity attacked) {}
 
     @Override
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {

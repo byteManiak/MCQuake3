@@ -1,6 +1,7 @@
-package com.bytemaniak.mcuake.blocks.jumppad;
+package com.bytemaniak.mcuake.blocks;
 
-import com.bytemaniak.mcuake.MCuake;
+import com.bytemaniak.mcuake.registry.Blocks;
+import com.bytemaniak.mcuake.screen.JumppadScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,7 +29,7 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
     private JumppadScreenHandler lastScreen;
 
     public JumppadEntity(BlockPos pos, BlockState state) {
-        super(MCuake.JUMPPAD_BLOCK_ENTITY, pos, state);
+        super(Blocks.JUMPPAD_BLOCK_ENTITY, pos, state);
         lastPlayerUser = UUID.randomUUID();
     }
 

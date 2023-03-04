@@ -1,6 +1,7 @@
-package com.bytemaniak.mcuake.blocks.jumppad;
+package com.bytemaniak.mcuake.screen;
 
-import com.bytemaniak.mcuake.MCuake;
+import com.bytemaniak.mcuake.blocks.JumppadEntity;
+import com.bytemaniak.mcuake.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -12,17 +13,17 @@ public class JumppadScreenHandler extends ScreenHandler {
     public JumppadEntity entity;
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(MCuake.JUMPPAD_SCREEN_HANDLER, syncId);
+        super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
     }
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        super(MCuake.JUMPPAD_SCREEN_HANDLER, syncId);
+        super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
         forward_power = buf.readFloat();
         up_power = buf.readFloat();
     }
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, JumppadEntity entity) {
-        super(MCuake.JUMPPAD_SCREEN_HANDLER, syncId);
+        super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
         this.entity = entity;
     }
 

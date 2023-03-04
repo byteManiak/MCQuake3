@@ -1,5 +1,6 @@
-package com.bytemaniak.mcuake.items.playersettings;
+package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.screen.PlayerSettingsScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

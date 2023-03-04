@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -14,13 +14,13 @@ import net.minecraft.world.World;
 
 public abstract class Weapon extends Item {
     private final long refireRate;
-    private boolean hasRepeatedFiringSound;
+    private final boolean hasRepeatedFiringSound;
     private final SoundEvent firingSound;
-    public boolean hasActiveLoopSound;
+    public final boolean hasActiveLoopSound;
 
-    public MCuakePlayer.WeaponSlot weaponSlot;
+    public final QuakePlayer.WeaponSlot weaponSlot;
 
-    protected Weapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+    protected Weapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {
         super(new Item.Settings().maxCount(1));
         this.weaponSlot = weaponSlot;
@@ -48,7 +48,7 @@ public abstract class Weapon extends Item {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         long currentTick = world.getTime();
-        MCuakePlayer player = (MCuakePlayer) user;
+        QuakePlayer player = (QuakePlayer) user;
         boolean clientside = world.isClient;
 
         if (currentTick - player.getWeaponTick(weaponSlot, clientside) >= refireRate) {

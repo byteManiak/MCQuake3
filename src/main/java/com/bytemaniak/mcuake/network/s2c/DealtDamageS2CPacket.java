@@ -1,7 +1,7 @@
-package com.bytemaniak.mcuake.cs.packets.s2c;
+package com.bytemaniak.mcuake.network.s2c;
 
 import com.bytemaniak.mcuake.registry.Sounds;
-import com.bytemaniak.mcuake.utils.SoundUtils;
+import com.bytemaniak.mcuake.sound.SoundUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;

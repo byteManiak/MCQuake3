@@ -1,6 +1,6 @@
-package com.bytemaniak.mcuake.cs.packets.s2c;
+package com.bytemaniak.mcuake.network.s2c;
 
-import com.bytemaniak.mcuake.blocks.jumppad.JumppadEntity;
+import com.bytemaniak.mcuake.blocks.JumppadEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;

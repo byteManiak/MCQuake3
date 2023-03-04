@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.registry;
 
-import com.bytemaniak.mcuake.MCuake;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -10,7 +9,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-public class MusicDiscRegistry {
+public class MusicDiscs {
     private static final Identifier THRU_THE_MIRROR_IDENT = new Identifier("mcuake", "thru_the_mirror");
 
     private static void LoadDisc(Identifier id, int comparatorOutput) {
@@ -18,7 +17,7 @@ public class MusicDiscRegistry {
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {content.add(musicDisc);});
-        ItemGroupEvents.modifyEntriesEvent(MCuake.MCUAKE_GROUP).register(content -> {content.add(musicDisc);});
+        ItemGroupEvents.modifyEntriesEvent(Items.MCUAKE_GROUP).register(content -> {content.add(musicDisc);});
     }
 
     public static void LoadDiscs()

@@ -1,8 +1,8 @@
 package com.bytemaniak.mcuake.mixin;
 
-import com.bytemaniak.mcuake.MCuake;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.items.Weapon;
+import com.bytemaniak.mcuake.registry.Items;
 import com.bytemaniak.mcuake.registry.Sounds;
 import com.bytemaniak.mcuake.sound.WeaponActive;
 import com.bytemaniak.mcuake.sound.WeaponHum;
@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
+public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Shadow public abstract boolean isCreative();
 
     private static final float FALL_DISTANCE_MODIFIER = 4;
@@ -224,26 +224,26 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
         if (world.isClient) {
             ItemStack handStack = getMainHandStack();
             if (handStack.getItem() instanceof Weapon weapon) {
-                if (handStack.isOf(MCuake.GAUNTLET)) {
+                if (handStack.isOf(Items.GAUNTLET)) {
                     if (!isHoldingGauntlet) {
                         isHoldingGauntlet = true;
-                        playHum(MCuakePlayer.WeaponSlot.GAUNTLET);
+                        playHum(QuakePlayer.WeaponSlot.GAUNTLET);
 
                         isHoldingLightning = false;
                         isHoldingRailgun = false;
                     }
-                } else if (handStack.isOf(MCuake.LIGHTNING_GUN)) {
+                } else if (handStack.isOf(Items.LIGHTNING_GUN)) {
                     if (!isHoldingLightning) {
                         isHoldingLightning = true;
-                        playHum(MCuakePlayer.WeaponSlot.LIGHTNING_GUN);
+                        playHum(QuakePlayer.WeaponSlot.LIGHTNING_GUN);
 
                         isHoldingGauntlet = false;
                         isHoldingRailgun = false;
                     }
-                } else if (handStack.isOf(MCuake.RAILGUN)) {
+                } else if (handStack.isOf(Items.RAILGUN)) {
                     if (!isHoldingRailgun) {
                         isHoldingRailgun = true;
-                        playHum(MCuakePlayer.WeaponSlot.RAILGUN);
+                        playHum(QuakePlayer.WeaponSlot.RAILGUN);
 
                         isHoldingGauntlet = false;
                         isHoldingLightning = false;
@@ -272,7 +272,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     }
 
     @Environment(EnvType.CLIENT)
-    public void playHum(MCuakePlayer.WeaponSlot weaponSlot) {
+    public void playHum(QuakePlayer.WeaponSlot weaponSlot) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
@@ -293,7 +293,7 @@ public abstract class PlayerMixin extends LivingEntity implements MCuakePlayer {
     public void stopHum() { playingHumSound = false; }
 
     @Environment(EnvType.CLIENT)
-    public void playAttackSound(MCuakePlayer.WeaponSlot weaponSlot) {
+    public void playAttackSound(QuakePlayer.WeaponSlot weaponSlot) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();

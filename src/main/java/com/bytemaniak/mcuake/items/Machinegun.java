@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
@@ -14,7 +14,7 @@ public class Machinegun extends HitscanWeapon {
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {
-        super(MCuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
+        super(QuakePlayer.WeaponSlot.MACHINEGUN, MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
                 MACHINEGUN_QUAKE_DAMAGE, MACHINEGUN_MC_DAMAGE, MACHINEGUN_RANGE, DamageSources.MACHINEGUN_DAMAGE);
     }
 

@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.registry.Packets;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -21,7 +21,7 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(MCuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
+        super(QuakePlayer.WeaponSlot.RAILGUN, RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
                 RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, RAILGUN_RANGE, DamageSources.RAILGUN_DAMAGE);
     }
 
@@ -44,8 +44,8 @@ public class Railgun extends HitscanWeapon {
         buf.writeDouble(endPos.x);
         buf.writeDouble(endPos.y);
         buf.writeDouble(endPos.z);
-        buf.writeInt(MCuakePlayer.WeaponSlot.RAILGUN.slot());
+        buf.writeInt(QuakePlayer.WeaponSlot.RAILGUN.slot());
         for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-            ServerPlayNetworking.send(plr, CSMessages.SHOW_TRAIL, buf);
+            ServerPlayNetworking.send(plr, Packets.SHOW_TRAIL, buf);
     }
 }

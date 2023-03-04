@@ -1,8 +1,8 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import com.bytemaniak.mcuake.registry.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +26,7 @@ public abstract class HitscanWeapon extends Weapon {
     private final int mcDamageAmount;
     private final String damageType;
 
-    protected HitscanWeapon(MCuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             int quakeDamageAmount, int mcDamageAmount, float hitscanRange, String damageType) {
         super(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
@@ -59,14 +59,14 @@ public abstract class HitscanWeapon extends Weapon {
             if (collided != null) {
                 DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, user);
                 if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
-                    MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
+                    QuakePlayer quakePlayer = (QuakePlayer) playerEntity;
                     if (quakePlayer.isInQuakeMode()) {
                         quakePlayer.takeDamage(quakeDamageAmount, damageSource);
 
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
                         buf.writeInt(quakePlayer.getQuakeArmor());
-                        ServerPlayNetworking.send((ServerPlayerEntity) user, CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                        ServerPlayNetworking.send((ServerPlayerEntity) user, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
                         onQuakeDamage(world, playerEntity);
                     } else {
                         onMcDamage(world, collided);

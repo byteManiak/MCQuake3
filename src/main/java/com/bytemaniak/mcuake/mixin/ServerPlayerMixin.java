@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.mixin;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,8 +19,8 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
 
     @Inject(method = "copyFrom", at = @At("HEAD"))
     private void noDropInventoryInQuakeMode(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
-        MCuakePlayer thisQuakePlayer = (MCuakePlayer) this;
-        MCuakePlayer oldQuakePlayer = (MCuakePlayer) oldPlayer;
+        QuakePlayer thisQuakePlayer = (QuakePlayer) this;
+        QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
         thisQuakePlayer.setQuakeMode(oldQuakePlayer.isInQuakeMode());
         if (oldQuakePlayer.isInQuakeMode()) {
             this.getInventory().clone(oldPlayer.getInventory());

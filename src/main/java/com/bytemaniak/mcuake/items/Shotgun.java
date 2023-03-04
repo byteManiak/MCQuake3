@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.Shell;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Shotgun extends Weapon {
     private static final long SHOTGUN_REFIRE_TICK_RATE = 20;
 
-    public Shotgun() { super(MCuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false); }
+    public Shotgun() { super(QuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false); }
 
     private void fireProjectile(World world, LivingEntity user, int maxPitchSpread, int maxYawSpread) {
         int pitchSpread = ThreadLocalRandom.current().nextInt(-maxPitchSpread, Math.max(maxPitchSpread, 1));

@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.gui;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public class MCuakeGuiRenderer implements HudRenderCallback {
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-        MCuakePlayer player = (MCuakePlayer) MinecraftClient.getInstance().player;
+        QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
         if (player.isInQuakeMode()) {
             Window window = MinecraftClient.getInstance().getWindow();

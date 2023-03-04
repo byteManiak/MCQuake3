@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.sound;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.sound.MovingSoundInstance;
@@ -12,9 +12,9 @@ import net.minecraft.sound.SoundEvent;
 @Environment(EnvType.CLIENT)
 public class TrackedSound extends MovingSoundInstance {
     protected final Entity owner;
-    protected final MCuakePlayer.WeaponSlot slot;
+    protected final QuakePlayer.WeaponSlot slot;
 
-    public TrackedSound(Entity owner, SoundEvent sound, MCuakePlayer.WeaponSlot weaponSlot) {
+    public TrackedSound(Entity owner, SoundEvent sound, QuakePlayer.WeaponSlot weaponSlot) {
         super(sound, SoundCategory.NEUTRAL, SoundInstance.createRandom());
         this.owner = owner;
         this.repeat = true;

@@ -1,6 +1,7 @@
-package com.bytemaniak.mcuake.blocks.jumppad;
+package com.bytemaniak.mcuake.screen;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
+import com.bytemaniak.mcuake.blocks.JumppadEntity;
+import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.gui.SliderWidgetSettable;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -76,7 +77,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
             PacketByteBuf msg = PacketByteBufs.create();
             msg.writeFloat(forward_power);
             msg.writeFloat(up_power);
-            ClientPlayNetworking.send(CSMessages.JUMPPAD_UPDATE_POWER, msg);
+            ClientPlayNetworking.send(Packets.JUMPPAD_UPDATE_POWER, msg);
         }).dimensions(baseX + 6, baseY + 52, 40, 20).build();
 
         incrementForward = ButtonWidget.builder(Text.of("+"), (button) -> {

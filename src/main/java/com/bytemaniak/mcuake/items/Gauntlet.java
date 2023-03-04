@@ -1,6 +1,6 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.items.client.GauntletRenderer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
@@ -37,7 +37,7 @@ public class Gauntlet extends HitscanWeapon implements GeoItem {
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
     public Gauntlet() {
-        super(MCuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, false, null, true,
+        super(QuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, false, null, true,
                 GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, GAUNTLET_RANGE, DamageSources.GAUNTLET_DAMAGE);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);

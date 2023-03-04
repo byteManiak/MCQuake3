@@ -2,7 +2,7 @@ package com.bytemaniak.mcuake.entity;
 
 import net.minecraft.entity.damage.DamageSource;
 
-public interface MCuakePlayer {
+public interface QuakePlayer {
     public enum WeaponSlot {
         GAUNTLET(0),
         MACHINEGUN(1),
@@ -45,10 +45,10 @@ public interface MCuakePlayer {
 
     public void setPlayerSounds(String soundsSet);
 
-    public void playHum(MCuakePlayer.WeaponSlot weaponSlot);
+    public void playHum(QuakePlayer.WeaponSlot weaponSlot);
     public void stopHum();
 
-    public void playAttackSound(MCuakePlayer.WeaponSlot weaponSlot);
+    public void playAttackSound(QuakePlayer.WeaponSlot weaponSlot);
     public void stopAttackSound();
 
     public void stopSounds();

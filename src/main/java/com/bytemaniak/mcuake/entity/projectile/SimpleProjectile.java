@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.entity.projectile;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.registry.Packets;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -51,14 +51,14 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
         if (!world.isClient) {
             DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
-                MCuakePlayer quakePlayer = (MCuakePlayer) playerEntity;
+                QuakePlayer quakePlayer = (QuakePlayer) playerEntity;
                 if (quakePlayer.isInQuakeMode()) {
                     quakePlayer.takeDamage(quakeDamageAmount, damageSource);
                     if (this.getOwner() != null) {
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeInt(quakePlayer.getQuakeHealth());
                         buf.writeInt(quakePlayer.getQuakeArmor());
-                        ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), CSMessages.DEALT_DAMAGE, PacketByteBufs.empty());
+                        ServerPlayNetworking.send((ServerPlayerEntity) this.getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
                     }
                 } else {
                     entity.damage(damageSource, mcDamageAmount);

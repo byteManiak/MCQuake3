@@ -1,7 +1,7 @@
-package com.bytemaniak.mcuake.cs.packets.s2c;
+package com.bytemaniak.mcuake.network.s2c;
 
 import com.bytemaniak.mcuake.MCuakeClient;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -17,7 +17,7 @@ public class ShowTrailS2CPacket {
 
         MCuakeClient.trailRenderer.addTrail(playerPos, endPos, type);
 
-        if (type == MCuakePlayer.WeaponSlot.RAILGUN.slot()) {
+        if (type == QuakePlayer.WeaponSlot.RAILGUN.slot()) {
             double distance = endPos.distanceTo(playerPos);
             Vec3d difference = endPos.subtract(playerPos).multiply(1.f / distance);
             for (int i = 0; i < distance; i++) {

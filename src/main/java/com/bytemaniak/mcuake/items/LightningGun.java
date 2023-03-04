@@ -1,7 +1,7 @@
 package com.bytemaniak.mcuake.items;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.registry.Packets;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -26,7 +26,7 @@ public class LightningGun extends HitscanWeapon {
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {
-        super(MCuakePlayer.WeaponSlot.LIGHTNING_GUN, LIGHTNING_REFIRE_RATE, false, null, true,
+        super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, LIGHTNING_REFIRE_RATE, false, null, true,
                 LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, LIGHTNING_RANGE, DamageSources.LIGHTNING_DAMAGE);
     }
 
@@ -49,9 +49,9 @@ public class LightningGun extends HitscanWeapon {
         buf.writeDouble(endPos.x);
         buf.writeDouble(endPos.y);
         buf.writeDouble(endPos.z);
-        buf.writeInt(MCuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
+        buf.writeInt(QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
         for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-            ServerPlayNetworking.send(plr, CSMessages.SHOW_TRAIL, buf);
+            ServerPlayNetworking.send(plr, Packets.SHOW_TRAIL, buf);
     }
 
     @Override

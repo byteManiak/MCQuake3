@@ -1,10 +1,12 @@
 package com.bytemaniak.mcuake;
 
-import com.bytemaniak.mcuake.blocks.jumppad.JumppadScreen;
-import com.bytemaniak.mcuake.cs.CSMessages;
+import com.bytemaniak.mcuake.screen.JumppadScreen;
+import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBallRenderer;
 import com.bytemaniak.mcuake.entity.projectile.ShellRenderer;
 import com.bytemaniak.mcuake.gui.MCuakeGuiRenderer;
+import com.bytemaniak.mcuake.registry.Entities;
+import com.bytemaniak.mcuake.registry.Screens;
 import com.bytemaniak.mcuake.render.TrailRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -17,12 +19,12 @@ public class MCuakeClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        CSMessages.registerClientPackets();
+        Packets.registerClientPackets();
 
-        HandledScreens.register(MCuake.JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
+        HandledScreens.register(Screens.JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
 
-        EntityRendererRegistry.register(MCuake.PLASMA_BALL, PlasmaBallRenderer::new);
-        EntityRendererRegistry.register(MCuake.SHELL, ShellRenderer::new);
+        EntityRendererRegistry.register(Entities.PLASMA_BALL, PlasmaBallRenderer::new);
+        EntityRendererRegistry.register(Entities.SHELL, ShellRenderer::new);
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

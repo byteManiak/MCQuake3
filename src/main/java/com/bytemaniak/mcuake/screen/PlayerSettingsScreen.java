@@ -1,9 +1,9 @@
-package com.bytemaniak.mcuake.items.playersettings;
+package com.bytemaniak.mcuake.screen;
 
-import com.bytemaniak.mcuake.cs.CSMessages;
-import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.registry.Packets;
+import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.Sounds;
-import com.bytemaniak.mcuake.utils.SoundUtils;
+import com.bytemaniak.mcuake.sound.SoundUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -28,7 +28,7 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class PlayerSettingsScreen extends Screen {
-    private final MCuakePlayer user;
+    private final QuakePlayer user;
 
     private class PlayerVoiceList extends AlwaysSelectedEntryListWidget<PlayerVoiceList.PlayerVoiceEntry> {
         public PlayerVoiceList(MinecraftClient client, int x, int y, int width, int height, int itemHeight) {
@@ -89,7 +89,7 @@ public class PlayerSettingsScreen extends Screen {
                     this.onPressed();
                     PacketByteBuf buf = PacketByteBufs.create();
                     buf.writeString(this.playerSounds.playerClass);
-                    ClientPlayNetworking.send(CSMessages.PLAYER_CLASS_UPDATE, buf);
+                    ClientPlayNetworking.send(Packets.PLAYER_CLASS_UPDATE, buf);
                     return true;
                 } else {
                     return false;
@@ -115,9 +115,9 @@ public class PlayerSettingsScreen extends Screen {
     private PlayerVoiceList voiceList;
     private ButtonWidget toggleGameMode;
 
-    protected PlayerSettingsScreen(Text title, LivingEntity user) {
+    public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
-        this.user = (MCuakePlayer) user;
+        this.user = (QuakePlayer) user;
     }
 
     protected void init() {
@@ -137,7 +137,7 @@ public class PlayerSettingsScreen extends Screen {
             }
 
             this.toggleGameMode.setMessage(Text.of(newButtonText));
-            ClientPlayNetworking.send(CSMessages.QUAKE_MODE_UPDATE, PacketByteBufs.empty());
+            ClientPlayNetworking.send(Packets.QUAKE_MODE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 120, height - 24, 100, 20).build();
         addDrawable(voiceList);
         addDrawable(toggleGameMode);

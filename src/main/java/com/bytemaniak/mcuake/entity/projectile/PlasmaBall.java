@@ -2,6 +2,7 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.MCuake;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import com.bytemaniak.mcuake.registry.Entities;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 
@@ -13,5 +14,5 @@ public class PlasmaBall extends SimpleProjectile {
         super(entityType, world, PLASMAGUN_QUAKE_DAMAGE, PLASMAGUN_MC_DAMAGE, DamageSources.PLASMAGUN_DAMAGE, 75);
     }
 
-    public PlasmaBall(World world) { this(MCuake.PLASMA_BALL, world); }
+    public PlasmaBall(World world) { this(Entities.PLASMA_BALL, world); }
 }

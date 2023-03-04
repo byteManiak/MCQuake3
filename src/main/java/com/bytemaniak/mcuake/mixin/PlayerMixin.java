@@ -33,6 +33,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Arrays;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Shadow public abstract boolean isCreative();
@@ -112,33 +114,22 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (this.isInQuakeMode()) ci.cancel();
     }
 
-    @Override
     public void toggleQuakeMode() {
         boolean newMode = !this.dataTracker.get(IN_QUAKE_MODE);
         this.dataTracker.set(IN_QUAKE_MODE, newMode);
     }
 
-    @Override
     public boolean isInQuakeMode() { return !isCreative() && !isSpectator() && this.dataTracker.get(IN_QUAKE_MODE); }
-
-    @Override
     public void setQuakeMode(boolean enabled) { this.dataTracker.set(IN_QUAKE_MODE, enabled); }
 
-    @Override
     public int getQuakeHealth() { return this.dataTracker.get(QUAKE_HEALTH); }
-
-    @Override
-    public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
-
-    @Override
     public void setQuakeHealth(int amount) {
         this.dataTracker.set(QUAKE_HEALTH, amount);
     }
 
-    @Override
+    public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
     public void setQuakeArmor(int amount) { this.dataTracker.set(QUAKE_ARMOR, amount); }
 
-    @Override
     public void takeDamage(int amount, DamageSource damageSource) {
         int quakeHealth = getQuakeHealth();
         quakeHealth -= amount;
@@ -146,8 +137,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             this.damage(damageSource, Integer.MAX_VALUE);
             resetAmmo();
             // Reset weapon ticks so weapon delay doesn't apply to the newly-spawned player
-            weaponTicks = new long[9];
-            clientWeaponTicks = new long[9];
+            Arrays.fill(weaponTicks, 0);
+            Arrays.fill(clientWeaponTicks, 0);
             setQuakeHealth(100);
             world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.DEATH), SoundCategory.PLAYERS, 1, 1);
         } else {
@@ -165,26 +156,22 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    @Override
     public long getWeaponTick(WeaponSlot slot, boolean clientside) {
         return clientside ? clientWeaponTicks[slot.slot()] : weaponTicks[slot.slot()];
     }
 
-    @Override
     public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside) {
         if (clientside) clientWeaponTicks[slot.slot()] = tick;
         else weaponTicks[slot.slot()] = tick;
     }
 
-    @Override
     public void resetAmmo() {
-        weaponAmmo = new int[10];
+        Arrays.fill(weaponAmmo, 0);
         weaponAmmo[WeaponSlot.MACHINEGUN.slot()] = 100;
         weaponAmmo[WeaponSlot.PLASMA_GUN.slot()] = 50;
         weaponAmmo[WeaponSlot.RAILGUN.slot()] = 10;
     }
 
-    @Override
     public boolean useAmmo(WeaponSlot slot) {
         if (weaponAmmo[slot.slot()] > 0) {
             weaponAmmo[slot.slot()]--;
@@ -195,7 +182,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    @Override
     public WeaponSlot getCurrentWeapon() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) {
             return weapon.weaponSlot;
@@ -204,12 +190,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    @Override
     public int getCurrentAmmo() {
         return weaponAmmo[getCurrentWeapon().slot()];
     }
 
-    @Override
     public void setPlayerSounds(String soundsSet) { this.playerSounds = new Sounds.PlayerSounds(soundsSet); }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)

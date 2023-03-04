@@ -1,22 +1,46 @@
 package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.MCuakePlayer;
+import com.bytemaniak.mcuake.items.client.GauntletRenderer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Gauntlet extends HitscanWeapon {
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+public class Gauntlet extends HitscanWeapon implements GeoItem {
     private static final long GAUNTLET_REFIRE_RATE = 10;
     private static final int GAUNTLET_QUAKE_DAMAGE = 50;
     private static final int GAUNTLET_MC_DAMAGE = 5;
     private static final float GAUNTLET_RANGE = 1.5f;
 
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+
     public Gauntlet() {
         super(MCuakePlayer.WeaponSlot.GAUNTLET, GAUNTLET_REFIRE_RATE, false, null, true,
                 GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, GAUNTLET_RANGE, DamageSources.GAUNTLET_DAMAGE);
+
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
@@ -31,4 +55,52 @@ public class Gauntlet extends HitscanWeapon {
 
     @Override
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", state -> {
+            state.getController().setAnimation(DefaultAnimations.IDLE);
+            return PlayState.CONTINUE;
+        }).triggerableAnim("fire", RawAnimation.begin().thenLoop("firing"))
+                .triggerableAnim("idle", DefaultAnimations.IDLE));
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!world.isClient) {
+            triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "fire");
+        }
+        return super.use(world, user, hand);
+    }
+
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        if (!world.isClient) {
+            triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "idle");
+        }
+        super.onStoppedUsing(stack, world, user, remainingUseTicks);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private final GauntletRenderer renderer = new GauntletRenderer();
+
+            @Override
+            public GauntletRenderer getCustomRenderer() {
+                return this.renderer;
+            }
+        });
+
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return this.renderProvider;
+    }
 }

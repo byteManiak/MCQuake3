@@ -33,6 +33,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.bernie.geckolib.GeckoLib;
 
 public class MCuake implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("mcuake");
@@ -87,6 +88,8 @@ public class MCuake implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		GeckoLib.initialize();
+
 		loadItem(PLAYER_SETTINGS, new Identifier("mcuake", "player_settings"));
 
 		loadItem(GAUNTLET, new Identifier("mcuake", "gauntlet"));

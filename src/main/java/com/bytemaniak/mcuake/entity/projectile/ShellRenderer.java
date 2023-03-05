@@ -13,7 +13,7 @@ import org.joml.Matrix4f;
 @Environment(EnvType.CLIENT)
 public class ShellRenderer extends SimpleProjectileRenderer {
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/shell.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityCutoutNoCull(TEXTURE);
+    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
 
     public ShellRenderer(EntityRendererFactory.Context context) {
         super(context);

@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerMixin extends AbstractClientPlayerEntity {
-
     public ClientPlayerMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
     }

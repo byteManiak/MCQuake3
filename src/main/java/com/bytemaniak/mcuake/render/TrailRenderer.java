@@ -79,7 +79,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
 
         for (Iterator<TrailData> iter = trailList.iterator(); iter.hasNext(); ) {
             TrailData trail = iter.next();

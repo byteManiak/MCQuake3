@@ -47,10 +47,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
-    private int[] weaponAmmo = new int[10];
+    private final int[] weaponAmmo = new int[10];
 
-    private long[] weaponTicks = new long[9];
-    private long[] clientWeaponTicks = new long[9];
+    private final long[] weaponTicks = new long[9];
+    private final long[] clientWeaponTicks = new long[9];
 
     private Sounds.PlayerSounds playerSounds = Sounds.TONY;
 

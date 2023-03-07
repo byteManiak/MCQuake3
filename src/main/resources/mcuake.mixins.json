@@ -8,7 +8,8 @@
     "ServerPlayerMixin"
   ],
   "client": [
-    "ClientPlayerMixin"
+    "ClientPlayerMixin",
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

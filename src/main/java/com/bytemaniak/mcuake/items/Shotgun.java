@@ -2,18 +2,39 @@ package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.Shell;
+import com.bytemaniak.mcuake.items.client.ShotgunRenderer;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class Shotgun extends Weapon {
+public class Shotgun extends Weapon implements GeoItem {
     private static final long SHOTGUN_REFIRE_TICK_RATE = 20;
 
-    public Shotgun() { super(QuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false); }
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+
+    public Shotgun() {
+        super(QuakePlayer.WeaponSlot.SHOTGUN, SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false);
+
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
+    }
 
     private void fireProjectile(World world, LivingEntity user, int maxPitchSpread, int maxYawSpread) {
         int pitchSpread = ThreadLocalRandom.current().nextInt(-maxPitchSpread, Math.max(maxPitchSpread, 1));
@@ -33,8 +54,38 @@ public class Shotgun extends Weapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
+        triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "shoot");
         fireProjectile(world, user, 0, 0);
         for (int i = 0; i < 3; i++) fireProjectile(world, user, 7, 7);
         for (int i = 0; i < 6; i++) fireProjectile(world, user, 12, 15);
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", state -> {
+            state.getController().setAnimation(DefaultAnimations.IDLE);
+            return PlayState.CONTINUE;
+        }).triggerableAnim("shoot", RawAnimation.begin().thenPlay("shoot"))
+                .triggerableAnim("idle", DefaultAnimations.IDLE));
+    }
+
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private final ShotgunRenderer renderer = new ShotgunRenderer();
+
+            @Override
+            public ShotgunRenderer getCustomRenderer() {
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() { return renderProvider; }
 }

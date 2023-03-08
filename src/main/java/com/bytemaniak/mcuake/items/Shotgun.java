@@ -54,7 +54,7 @@ public class Shotgun extends Weapon implements GeoItem {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
-        triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "shoot");
+        triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "shoot");
         fireProjectile(world, user, 0, 0);
         for (int i = 0; i < 3; i++) fireProjectile(world, user, 7, 7);
         for (int i = 0; i < 6; i++) fireProjectile(world, user, 12, 15);

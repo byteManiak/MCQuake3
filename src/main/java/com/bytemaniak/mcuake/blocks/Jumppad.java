@@ -92,7 +92,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemStack mainHandStack = player.getMainHandStack();
+		ItemStack mainHandStack = player.getStackInHand(hand);
 		if (!world.isClient && mainHandStack.isOf(Items.TOOL))
 		{
 			JumppadEntity jumppad = (JumppadEntity)world.getBlockEntity(pos);

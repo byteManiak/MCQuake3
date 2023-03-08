@@ -183,7 +183,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public WeaponSlot getCurrentWeapon() {
-        if (getMainHandStack().getItem() instanceof Weapon weapon) {
+        if (getActiveItem().getItem() instanceof Weapon weapon) {
             return weapon.weaponSlot;
         } else {
             return WeaponSlot.NONE;
@@ -207,7 +207,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "tick", at = @At(value = "RETURN"))
     private void handleLoopingWeaponSounds(CallbackInfo ci) {
         if (world.isClient) {
-            ItemStack handStack = getMainHandStack();
+            ItemStack handStack = getActiveItem();
             if (handStack.getItem() instanceof Weapon weapon) {
                 if (handStack.isOf(Items.GAUNTLET)) {
                     if (!isHoldingGauntlet) {

@@ -66,7 +66,7 @@ public class Gauntlet extends HitscanWeapon implements GeoItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient) {
-            triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "fire");
+            triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "fire");
         }
         return super.use(world, user, hand);
     }
@@ -74,7 +74,7 @@ public class Gauntlet extends HitscanWeapon implements GeoItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (!world.isClient) {
-            triggerAnim(user, GeoItem.getOrAssignId(user.getMainHandStack(), (ServerWorld) world), "controller", "idle");
+            triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "idle");
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
     }

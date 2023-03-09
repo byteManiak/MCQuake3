@@ -4,7 +4,6 @@
 - [ ] Prevent weapons from dealing damage in creative
 - [ ] Prevent weapons from doing the generic "use" action on interactable blocks
 - [ ] Add spread to machinegun
-- [ ] Add sounds to gauntlet
 
 #### Projectiles
 - [ ] Push back players mid-air when hit by projectiles

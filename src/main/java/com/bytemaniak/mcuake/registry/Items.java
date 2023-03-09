@@ -20,6 +20,7 @@ public class Items {
     public static final Item GAUNTLET = new Gauntlet();
     public static final Item MACHINEGUN = new Machinegun();
     public static final Item SHOTGUN = new Shotgun();
+    public static final Item GRENADE_LAUNCHER = new GrenadeLauncher();
     public static final Item LIGHTNING_GUN = new LightningGun();
     public static final Item RAILGUN = new Railgun();
     public static final Item PLASMAGUN = new Plasmagun();
@@ -42,6 +43,7 @@ public class Items {
         loadItem(GAUNTLET, new Identifier("mcuake", "gauntlet"));
         loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));
         loadItem(SHOTGUN, new Identifier("mcuake", "shotgun"));
+        loadItem(GRENADE_LAUNCHER, new Identifier("mcuake", "grenade_launcher"));
         loadItem(LIGHTNING_GUN, new Identifier("mcuake", "lightning_gun"));
         loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
         loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));

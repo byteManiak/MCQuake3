@@ -37,14 +37,20 @@ public class Shotgun extends Weapon implements GeoItem {
     }
 
     private void fireProjectile(World world, LivingEntity user, int maxPitchSpread, int maxYawSpread) {
-        int pitchSpread = ThreadLocalRandom.current().nextInt(-maxPitchSpread, Math.max(maxPitchSpread, 1));
-        int yawSpread = ThreadLocalRandom.current().nextInt(-maxYawSpread, Math.max(maxYawSpread, 1));
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
-        Vec3d spread = Vec3d.fromPolar(user.getPitch() + pitchSpread, user.getYaw() + yawSpread);
-        Vec3d rightVec = lookDir.crossProduct(new Vec3d(0, 1, 0));
-        Vec3d upVec = lookDir.crossProduct(rightVec).normalize();
-        Vec3d tempVec = lookDir.add(upVec.negate().multiply(-.0125f, 0.75f, -.0125f));
-        Vec3d offsetVec = upVec.add(tempVec);
+        Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
+        Vec3d rightVec = lookDir.normalize().crossProduct(upVec).normalize();
+        Vec3d offsetVec = upVec.multiply(.25f);
+        Vec3d spread = lookDir;
+        if (maxYawSpread > 0) {
+            int yawSpread = ThreadLocalRandom.current().nextInt(-maxYawSpread, maxYawSpread);
+            spread = spread.add(rightVec.multiply(yawSpread/(float)maxYawSpread/4.f));
+        }
+        if (maxPitchSpread > 0) {
+            int pitchSpread = ThreadLocalRandom.current().nextInt(-maxPitchSpread, maxPitchSpread);
+            spread = spread.add(upVec.multiply(pitchSpread/(float)maxPitchSpread/6.f));
+        }
+
         Shell shell = new Shell(world);
         shell.setOwner(user);
         shell.setPosition(user.getEyePos().add(offsetVec));

@@ -4,15 +4,19 @@ import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 
 public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
 
     public Plasmagun() {
-        super(QuakePlayer.WeaponSlot.PLASMA_GUN, PLASMAGUN_REFIRE_TICK_RATE, true, Sounds.PLASMAGUN_FIRE, false);
+        super(QuakePlayer.WeaponSlot.PLASMA_GUN, new Identifier("mcuake", "plasmagun"),
+                PLASMAGUN_REFIRE_TICK_RATE, true, Sounds.PLASMAGUN_FIRE, false);
     }
 
     @Override
@@ -26,5 +30,10 @@ public class Plasmagun extends Weapon {
         plasmaBall.setPosition(user.getEyePos().add(offsetVec));
         plasmaBall.setVelocity(lookDir.x, lookDir.y, lookDir.z, 1.5f, 0);
         world.spawnEntity(plasmaBall);
+    }
+
+    @Override
+    protected PlayState handle(AnimationState<Weapon> state) {
+        return null;
     }
 }

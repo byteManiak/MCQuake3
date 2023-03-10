@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -27,11 +28,11 @@ public abstract class HitscanWeapon extends Weapon {
     private final String damageType;
     private final float hitscanStepDistance;
 
-    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             int quakeDamageAmount, int mcDamageAmount, String damageType,
                             float hitscanRange, float hitscanStepDistance) {
-        super(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
+        super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
         this.hitscanRange = hitscanRange;
         this.hitscanStepDistance = hitscanStepDistance;
         this.quakeDamageAmount = quakeDamageAmount;
@@ -39,11 +40,11 @@ public abstract class HitscanWeapon extends Weapon {
         this.damageType = damageType;
     }
 
-    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, long refireRateInTicks,
+    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             int quakeDamageAmount, int mcDamageAmount, String damageType,
                             float hitscanRange) {
-        this(weaponSlot, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
+        this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
     }
 

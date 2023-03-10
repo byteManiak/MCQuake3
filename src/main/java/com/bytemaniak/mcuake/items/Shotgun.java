@@ -16,7 +16,6 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -71,7 +70,7 @@ public class Shotgun extends Weapon implements GeoItem {
         controllers.add(new AnimationController<>(this, "controller", state -> {
             state.getController().setAnimation(DefaultAnimations.IDLE);
             return PlayState.CONTINUE;
-        }).triggerableAnim("shoot", RawAnimation.begin().thenPlay("shoot"))
+        }).triggerableAnim("shoot", DefaultAnimations.ATTACK_SHOOT)
                 .triggerableAnim("idle", DefaultAnimations.IDLE));
     }
 

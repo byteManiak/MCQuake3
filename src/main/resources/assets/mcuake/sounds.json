@@ -74,6 +74,12 @@
     ]
   },
 
+  "grenade_launcher": {
+    "sounds": [
+      "mcuake:grenade_launcher"
+    ]
+  },
+
   "angelyss_death": {
     "sounds": [
       "mcuake:players/angelyss/death1",

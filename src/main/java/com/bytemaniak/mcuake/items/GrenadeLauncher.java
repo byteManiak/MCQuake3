@@ -13,11 +13,11 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 public class GrenadeLauncher extends Weapon {
-    private static final long GRENADE_REFIRE_RATE = 10;
+    private static final long GRENADE_REFIRE_RATE = 15;
 
     public GrenadeLauncher() {
         super(QuakePlayer.WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcuake", "grenade_launcher"),
-                GRENADE_REFIRE_RATE, true, Sounds.PLASMAGUN_FIRE, false);
+                GRENADE_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

@@ -5,9 +5,11 @@ import com.bytemaniak.mcuake.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
@@ -30,6 +32,7 @@ public class Plasmagun extends Weapon {
         plasmaBall.setPosition(user.getEyePos().add(offsetVec));
         plasmaBall.setVelocity(lookDir.x, lookDir.y, lookDir.z, 1.5f, 0);
         world.spawnEntity(plasmaBall);
+        triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
     }
 
     @Override

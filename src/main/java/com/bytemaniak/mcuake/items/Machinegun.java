@@ -26,16 +26,6 @@ public class Machinegun extends HitscanWeapon {
     }
 
     @Override
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        super.usageTick(world, user, stack, remainingUseTicks);
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        super.onStoppedUsing(stack, world, user, remainingUseTicks);
-    }
-
-    @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
         stack.getOrCreateNbt().putDouble("firing_speed", 1.0);
         super.onWeaponRefire(world, user, stack);

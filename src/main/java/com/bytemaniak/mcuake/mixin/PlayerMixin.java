@@ -114,6 +114,14 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (this.isInQuakeMode()) ci.cancel();
     }
 
+    @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
+    private ItemStack stopWeaponAnimation(ItemStack stack) {
+        if (stack.getItem() instanceof Weapon) {
+            stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
+        }
+        return stack;
+    }
+
     public void toggleQuakeMode() {
         boolean newMode = !this.dataTracker.get(IN_QUAKE_MODE);
         this.dataTracker.set(IN_QUAKE_MODE, newMode);

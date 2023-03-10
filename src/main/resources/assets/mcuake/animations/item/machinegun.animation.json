@@ -1,0 +1,36 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"attack.shoot": {
+			"loop": true,
+			"animation_length": 0.16667,
+			"override_previous_animation": true,
+			"bones": {
+				"barrel": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.0833": {
+							"vector": [0, 0, -90]
+						},
+						"0.1667": {
+							"vector": [0, 0, -180]
+						}
+					}
+				}
+			}
+		},
+		"misc.idle": {
+			"loop": true,
+			"bones": {
+				"barrel": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

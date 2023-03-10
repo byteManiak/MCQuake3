@@ -31,6 +31,11 @@ public abstract class Weapon extends Item {
     }
 
     @Override
+    public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
+    }
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // By calling this function, the weapon continues to stay used until the player stops pressing the use key
         user.setCurrentHand(hand);

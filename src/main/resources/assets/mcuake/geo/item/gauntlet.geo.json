@@ -12,7 +12,12 @@
 			},
 			"bones": [
 				{
+					"name": "weapon",
+					"pivot": [0, 0, 0]
+				},
+				{
 					"name": "blade2",
+					"parent": "weapon",
 					"pivot": [-0.1, 1.5, -12.5],
 					"cubes": [
 						{
@@ -415,6 +420,7 @@
 				},
 				{
 					"name": "base",
+					"parent": "weapon",
 					"pivot": [-7.92868, 1.5, -4.5],
 					"cubes": [
 						{

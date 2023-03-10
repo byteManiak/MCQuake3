@@ -3,17 +3,14 @@ package com.bytemaniak.mcuake.items;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Sounds;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.constant.DataTickets;
+import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
@@ -29,8 +26,6 @@ public class Gauntlet extends HitscanWeapon {
                 GAUNTLET_REFIRE_RATE, false, null, true,
                 GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, DamageSources.GAUNTLET_DAMAGE,
                 GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP);
-
-        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
@@ -44,23 +39,34 @@ public class Gauntlet extends HitscanWeapon {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!world.isClient) {
-            triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "fire");
-        }
-        return super.use(world, user, hand);
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
+        stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
+        super.onWeaponRefire(world, user, stack);
     }
 
     @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient) {
-            triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "idle");
+            double speed = stack.getOrCreateNbt().getDouble("firing_speed");
+            speed -= 0.1;
+            if (speed < 0.1) {
+                speed = 0.1;
+            }
+            stack.getNbt().putDouble("firing_speed", speed);
         }
-        super.onStoppedUsing(stack, world, user, remainingUseTicks);
+        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
     protected PlayState handle(AnimationState<Weapon> state) {
-        return null;
+        state.getController().setAnimation(DefaultAnimations.ATTACK_SHOOT);
+        ItemStack stack = state.getData(DataTickets.ITEMSTACK);
+
+        double speed = 0.1;
+        if (stack.getNbt() != null)
+            speed = stack.getNbt().getDouble("firing_speed");
+
+        state.getController().setAnimationSpeed(speed);
+        return PlayState.CONTINUE;
     }
 }

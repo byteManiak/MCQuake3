@@ -18,7 +18,7 @@ public class Gauntlet extends HitscanWeapon {
     private static final long GAUNTLET_REFIRE_RATE = 10;
     private static final int GAUNTLET_QUAKE_DAMAGE = 50;
     private static final int GAUNTLET_MC_DAMAGE = 5;
-    private static final float GAUNTLET_RANGE = 1.5f;
+    private static final float GAUNTLET_RANGE = 2.5f;
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     public Gauntlet() {

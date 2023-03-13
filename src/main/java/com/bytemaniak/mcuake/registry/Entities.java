@@ -11,10 +11,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class Entities {
-    public static final EntityType<PlasmaBall> PLASMA_BALL;
-    public static final EntityType<Shell> SHELL;
+    public static EntityType<PlasmaBall> PLASMA_BALL;
+    public static EntityType<Shell> SHELL;
 
-    static {
+    public static void loadEntities() {
         PLASMA_BALL = Registry.register(
                 Registries.ENTITY_TYPE,
                 new Identifier("mcuake", "plasmaball"),

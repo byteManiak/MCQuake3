@@ -5,6 +5,7 @@ import com.bytemaniak.mcuake.registry.Blocks;
 import com.bytemaniak.mcuake.registry.Items;
 import com.bytemaniak.mcuake.registry.MusicDiscs;
 import com.bytemaniak.mcuake.registry.Sounds;
+import com.bytemaniak.mcuake.registry.Entities;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class MCuake implements ModInitializer {
 
 		Items.loadItems();
 		Blocks.loadBlocks();
+		Entities.loadEntities();
 
 		Sounds.loadSounds();
 		MusicDiscs.LoadDiscs();

@@ -22,22 +22,25 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
 public abstract class HitscanWeapon extends Weapon {
-    private final float hitscanRange;
     private final int quakeDamageAmount;
     private final int mcDamageAmount;
     private final String damageType;
-    private final float hitscanStepDistance;
+
+    private final float hitscanRange;
+    private final float hitscanNumSteps;
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             int quakeDamageAmount, int mcDamageAmount, String damageType,
                             float hitscanRange, float hitscanStepDistance) {
         super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
-        this.hitscanRange = hitscanRange;
-        this.hitscanStepDistance = hitscanStepDistance;
+
         this.quakeDamageAmount = quakeDamageAmount;
         this.mcDamageAmount = mcDamageAmount;
         this.damageType = damageType;
+
+        this.hitscanRange = hitscanRange;
+        this.hitscanNumSteps = hitscanRange/hitscanStepDistance;
     }
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
@@ -54,13 +57,23 @@ public abstract class HitscanWeapon extends Weapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
-        // Spawn a new bullet in front of the player
         Vec3d eyePos = user.getEyePos();
         Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
-        Vec3d pos = eyePos;
+        Vec3d destPos = eyePos.add(lookDir.multiply(hitscanRange));
 
-        for (float i = 0; i < hitscanRange; i += hitscanStepDistance) {
-            pos = pos.add(lookDir);
+        // The hitscan projectile's initial position is approximated
+        // to be shot from the held weapon, not from the player's eye
+        Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
+        Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(.2);
+        Vec3d handPos = eyePos.subtract(rightDir);
+        Vec3d step = destPos.subtract(handPos).multiply(1/hitscanNumSteps);
+        Vec3d pos = handPos;
+
+        // Optional offset used to draw the weapon's projectile
+        Vec3d offset = upDir.multiply(.3);
+
+        for (int i = 0; i < hitscanNumSteps; i++) {
+            pos = pos.add(step);
             Vec3d minPos = pos.add(new Vec3d(-.1f, -.1f, -.1f));
             Vec3d maxPos = pos.add(new Vec3d(.1f, .1f, .1f));
             BlockPos blockPos = new BlockPos(pos);
@@ -89,7 +102,7 @@ public abstract class HitscanWeapon extends Weapon {
                     onMcDamage(world, collided);
                 }
 
-                onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
+                onProjectileCollision(world, handPos.add(offset), pos);
                 return;
             }
 
@@ -98,13 +111,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
+                        onProjectileCollision(world, handPos.add(offset), pos);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, eyePos.add(0, -user.getStandingEyeHeight()/2, 0), pos);
+        onProjectileCollision(world, handPos.add(offset), pos);
     }
 }

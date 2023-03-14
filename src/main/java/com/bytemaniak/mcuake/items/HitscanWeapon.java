@@ -22,6 +22,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
 public abstract class HitscanWeapon extends Weapon {
+    private final static float HITSCAN_RADIUS = .1f;
+    private final static float HITSCAN_VERTICAL_OFFSET = .3f;
+
     private final int quakeDamageAmount;
     private final int mcDamageAmount;
     private final String damageType;
@@ -69,12 +72,12 @@ public abstract class HitscanWeapon extends Weapon {
 
         // Optional offset used to draw the weapon's projectile
         Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
-        Vec3d offsetWeaponPos = weaponPos.add(upDir.multiply(.3));
+        Vec3d offsetWeaponPos = weaponPos.add(upDir.multiply(HITSCAN_VERTICAL_OFFSET));
 
         for (int i = 0; i < hitscanNumSteps; i++) {
             pos = pos.add(step);
-            Vec3d minPos = pos.add(new Vec3d(-.1f, -.1f, -.1f));
-            Vec3d maxPos = pos.add(new Vec3d(.1f, .1f, .1f));
+            Vec3d minPos = pos.add(new Vec3d(-HITSCAN_RADIUS, -HITSCAN_RADIUS, -HITSCAN_RADIUS));
+            Vec3d maxPos = pos.add(new Vec3d(HITSCAN_RADIUS, HITSCAN_RADIUS, HITSCAN_RADIUS));
             BlockPos blockPos = new BlockPos(pos);
 
             Box collisionBox = new Box(minPos, maxPos);

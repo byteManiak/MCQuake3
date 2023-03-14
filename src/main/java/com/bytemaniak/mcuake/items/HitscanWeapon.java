@@ -56,21 +56,20 @@ public abstract class HitscanWeapon extends Weapon {
     protected void onMcDamage(World world, LivingEntity attacked) {}
 
     @Override
-    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
         Vec3d eyePos = user.getEyePos();
-        Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
+
+        // The furthest hitscan point, to which the projectile will go towards
         Vec3d destPos = eyePos.add(lookDir.multiply(hitscanRange));
 
         // The hitscan projectile's initial position is approximated
         // to be shot from the held weapon, not from the player's eye
-        Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
-        Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(.2);
-        Vec3d handPos = eyePos.subtract(rightDir);
-        Vec3d step = destPos.subtract(handPos).multiply(1/hitscanNumSteps);
-        Vec3d pos = handPos;
+        Vec3d step = destPos.subtract(weaponPos).multiply(1/hitscanNumSteps);
+        Vec3d pos = weaponPos;
 
         // Optional offset used to draw the weapon's projectile
-        Vec3d offset = upDir.multiply(.3);
+        Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
+        Vec3d offsetWeaponPos = weaponPos.add(upDir.multiply(.3));
 
         for (int i = 0; i < hitscanNumSteps; i++) {
             pos = pos.add(step);
@@ -102,7 +101,7 @@ public abstract class HitscanWeapon extends Weapon {
                     onMcDamage(world, collided);
                 }
 
-                onProjectileCollision(world, handPos.add(offset), pos);
+                onProjectileCollision(world, offsetWeaponPos, pos);
                 return;
             }
 
@@ -111,13 +110,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, handPos.add(offset), pos);
+                        onProjectileCollision(world, offsetWeaponPos, pos);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, handPos.add(offset), pos);
+        onProjectileCollision(world, offsetWeaponPos, pos);
     }
 }

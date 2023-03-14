@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -26,9 +27,9 @@ public class Machinegun extends HitscanWeapon {
     }
 
     @Override
-    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
         stack.getOrCreateNbt().putDouble("firing_speed", 1.0);
-        super.onWeaponRefire(world, user, stack);
+        super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 
     @Override

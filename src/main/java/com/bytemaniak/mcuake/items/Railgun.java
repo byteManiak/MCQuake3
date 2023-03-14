@@ -50,9 +50,9 @@ public class Railgun extends HitscanWeapon {
     }
 
     @Override
-    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack) {
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
         triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
-        super.onWeaponRefire(world, user, stack);
+        super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 
     @Override

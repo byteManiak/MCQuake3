@@ -11,6 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
@@ -29,6 +30,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class Weapon extends Item implements GeoItem {
+    private static final float HITSCAN_HORIZONTAL_OFFSET = .2f;
+
     private final Identifier weaponIdentifier;
     private final long refireRate;
     private final boolean hasRepeatedFiringSound;
@@ -83,7 +86,13 @@ public abstract class Weapon extends Item implements GeoItem {
         if (currentTick - player.getWeaponTick(weaponSlot, clientside) >= refireRate) {
             if (!player.useAmmo(weaponSlot)) {
                 if (!clientside) {
-                    this.onWeaponRefire(world, user, stack);
+                    // Whatever projectile the weapon shoots, its initial position is approximated
+                    // to be shot from the held weapon, not from the player's eye
+                    Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
+                    Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
+                    Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(HITSCAN_HORIZONTAL_OFFSET);
+                    Vec3d weaponPos = user.getEyePos().subtract(rightDir);
+                    this.onWeaponRefire(world, user, stack, lookDir, weaponPos);
                 }
 
                 if (hasRepeatedFiringSound) {
@@ -94,7 +103,7 @@ public abstract class Weapon extends Item implements GeoItem {
         }
     }
 
-    protected abstract void onWeaponRefire(World world, LivingEntity user, ItemStack stack);
+    protected abstract void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos);
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

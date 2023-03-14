@@ -28,7 +28,7 @@ public class Entities {
                 new Identifier("mcuake", "shell"),
                 FabricEntityTypeBuilder.<Shell>create(SpawnGroup.MISC, Shell::new)
                         .dimensions(EntityDimensions.fixed(0.05f, 0.05f))
-                        .trackRangeBlocks(64).trackedUpdateRate(10)
+                        .trackRangeBlocks(128).trackedUpdateRate(10)
                         .build());
     }
 }

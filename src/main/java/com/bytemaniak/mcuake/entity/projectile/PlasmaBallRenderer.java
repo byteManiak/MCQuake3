@@ -3,6 +3,7 @@ package com.bytemaniak.mcuake.entity.projectile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -11,21 +12,21 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class PlasmaBallRenderer extends SimpleProjectileRenderer {
+public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/plasmaball.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
+    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE, false);
 
     public PlasmaBallRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 
     @Override
-    public Identifier getTexture(SimpleProjectile entity) {
+    public Identifier getTexture(PlasmaBall entity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(SimpleProjectile entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(PlasmaBall entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
         matrices.scale(.75f, .75f, .75f);

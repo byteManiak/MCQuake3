@@ -3,6 +3,7 @@ package com.bytemaniak.mcuake.entity.projectile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -11,7 +12,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class ShellRenderer extends SimpleProjectileRenderer {
+public class ShellRenderer extends EntityRenderer<Shell> {
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/shell.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
 
@@ -20,12 +21,12 @@ public class ShellRenderer extends SimpleProjectileRenderer {
     }
 
     @Override
-    public Identifier getTexture(SimpleProjectile entity) {
+    public Identifier getTexture(Shell entity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(SimpleProjectile entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(Shell entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
         matrices.scale(.125f, .125f, .125f);

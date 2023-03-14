@@ -1,11 +1,6 @@
 package com.bytemaniak.mcuake;
 
-import com.bytemaniak.mcuake.registry.Packets;
-import com.bytemaniak.mcuake.registry.Blocks;
-import com.bytemaniak.mcuake.registry.Items;
-import com.bytemaniak.mcuake.registry.MusicDiscs;
-import com.bytemaniak.mcuake.registry.Sounds;
-import com.bytemaniak.mcuake.registry.Entities;
+import com.bytemaniak.mcuake.registry.*;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

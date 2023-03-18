@@ -30,13 +30,8 @@ public class Gauntlet extends HitscanWeapon {
     }
 
     @Override
-    protected void onQuakeDamage(World world, LivingEntity attacked) {
+    protected void onDamage(World world, LivingEntity attacked) {
         world.playSoundFromEntity(null, attacked, Sounds.GAUNTLET_DAMAGE, SoundCategory.PLAYERS, 1, 1);
-    }
-
-    @Override
-    protected void onMcDamage(World world, LivingEntity attacked) {
-        onQuakeDamage(world, attacked);
     }
 
     @Override

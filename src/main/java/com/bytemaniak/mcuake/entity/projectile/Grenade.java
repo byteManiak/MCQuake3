@@ -4,6 +4,7 @@ import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Entities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -44,7 +45,7 @@ public class Grenade extends SimpleProjectile {
                 case EAST, WEST -> velocity.multiply(-1, 1, 1);
                 case NORTH, SOUTH -> velocity.multiply(1, 1, -1);
                 case DOWN -> velocity.multiply(1, -1, 1);
-                case UP -> velocity.multiply(1, -.7, 1);
+                case UP -> velocity.multiply(1, -.55, 1);
             };
             if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
             this.setVelocity(velocity);
@@ -55,7 +56,8 @@ public class Grenade extends SimpleProjectile {
     protected void despawn() {
         super.despawn();
         Vec3d pos = this.getPos();
-        this.world.createExplosion(this, pos.x, pos.y, pos.z, 3, World.ExplosionSourceType.NONE);
+        DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+        this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
     }
 
     @Override

@@ -3,11 +3,14 @@ package com.bytemaniak.mcuake.mixin;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.items.Weapon;
 import com.bytemaniak.mcuake.registry.Items;
+import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
 import com.bytemaniak.mcuake.sound.WeaponActive;
 import com.bytemaniak.mcuake.sound.WeaponHum;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.entity.Entity;
@@ -20,6 +23,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
@@ -63,6 +67,27 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+    private void doQuakeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (!this.world.isClient) {
+            Entity attacker = source.getAttacker();
+
+            /* Ignore incoming damage if it's not coming from a player in the same mode */
+            if (attacker == null ||
+                    (attacker instanceof QuakePlayer quakePlayer &&
+                     quakePlayer.isInQuakeMode() != this.isInQuakeMode())) {
+                cir.setReturnValue(false);
+            }
+            /* If INT_MAX damage was dealt, then the player is marked dead in Quake mode
+             * and we don't need to deal damage again (besides, this would recurse infinitely without this check) */
+            else if (isInQuakeMode() && (int)amount != Integer.MAX_VALUE) {
+                ServerPlayNetworking.send((ServerPlayerEntity) attacker, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
+                takeDamage((int)amount, source);
+                cir.setReturnValue(true);
+            }
+        }
     }
 
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",

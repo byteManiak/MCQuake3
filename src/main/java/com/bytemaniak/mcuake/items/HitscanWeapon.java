@@ -2,16 +2,10 @@ package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
-import com.bytemaniak.mcuake.registry.Packets;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -55,8 +49,7 @@ public abstract class HitscanWeapon extends Weapon {
     }
 
     protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}
-    protected void onQuakeDamage(World world, LivingEntity attacked) {}
-    protected void onMcDamage(World world, LivingEntity attacked) {}
+    protected void onDamage(World world, LivingEntity attacked) {}
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
@@ -85,25 +78,13 @@ public abstract class HitscanWeapon extends Weapon {
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
             if (collided != null) {
                 DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, user);
-                if (collided instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
-                    QuakePlayer quakePlayer = (QuakePlayer) playerEntity;
-                    if (quakePlayer.isInQuakeMode()) {
-                        quakePlayer.takeDamage(quakeDamageAmount, damageSource);
-
-                        PacketByteBuf buf = PacketByteBufs.create();
-                        buf.writeInt(quakePlayer.getQuakeHealth());
-                        buf.writeInt(quakePlayer.getQuakeArmor());
-                        ServerPlayNetworking.send((ServerPlayerEntity) user, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
-                        onQuakeDamage(world, playerEntity);
-                    } else {
-                        onMcDamage(world, collided);
-                        collided.damage(damageSource, mcDamageAmount);
-                    }
+                if (collided.isAlive() && collided instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
+                    collided.damage(damageSource, quakeDamageAmount);
                 } else {
                     collided.damage(damageSource, mcDamageAmount);
-                    onMcDamage(world, collided);
                 }
 
+                onDamage(world, collided);
                 onProjectileCollision(world, offsetWeaponPos, pos);
                 return;
             }

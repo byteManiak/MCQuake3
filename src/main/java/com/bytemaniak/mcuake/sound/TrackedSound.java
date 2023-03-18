@@ -23,6 +23,8 @@ public class TrackedSound extends MovingSoundInstance {
 
     @Override
     public void tick() {
+        if (!this.owner.isAlive()) setDone();
+
         this.x = this.owner.getX();
         this.y = this.owner.getY();
         this.z = this.owner.getZ();

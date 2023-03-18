@@ -1,9 +1,10 @@
 package com.bytemaniak.mcuake;
 
+import com.bytemaniak.mcuake.entity.projectile.render.GrenadeRenderer;
 import com.bytemaniak.mcuake.screen.JumppadScreen;
 import com.bytemaniak.mcuake.registry.Packets;
-import com.bytemaniak.mcuake.entity.projectile.PlasmaBallRenderer;
-import com.bytemaniak.mcuake.entity.projectile.ShellRenderer;
+import com.bytemaniak.mcuake.entity.projectile.render.PlasmaBallRenderer;
+import com.bytemaniak.mcuake.entity.projectile.render.ShellRenderer;
 import com.bytemaniak.mcuake.gui.MCuakeGuiRenderer;
 import com.bytemaniak.mcuake.registry.Entities;
 import com.bytemaniak.mcuake.registry.Screens;
@@ -25,6 +26,7 @@ public class MCuakeClient implements ClientModInitializer {
 
         EntityRendererRegistry.register(Entities.PLASMA_BALL, PlasmaBallRenderer::new);
         EntityRendererRegistry.register(Entities.SHELL, ShellRenderer::new);
+        EntityRendererRegistry.register(Entities.GRENADE, GrenadeRenderer::new);
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

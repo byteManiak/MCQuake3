@@ -1,8 +1,8 @@
 package com.bytemaniak.mcuake.entity.projectile;
 
-import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import com.bytemaniak.mcuake.registry.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -12,11 +12,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
-public class SimpleProjectile extends ExplosiveProjectileEntity {
+public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     private int quakeDamageAmount, mcDamageAmount;
     private String damageType;
     protected long lifetimeInTicks;
@@ -39,15 +37,19 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
         this.initTick = world.getTime();
     }
 
+    protected void despawn() {
+        this.discard();
+    }
+
     @Override
     public void tick() {
         super.tick();
         if (this.world.getTime() - initTick > lifetimeInTicks) {
-            this.discard();
+            this.despawn();
         }
     }
 
-    private void doDamage(Entity entity) {
+    protected void doDamage(Entity entity) {
         if (!world.isClient) {
             DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, getOwner());
             if (entity instanceof PlayerEntity playerEntity && playerEntity.isAlive()) {
@@ -67,23 +69,6 @@ public class SimpleProjectile extends ExplosiveProjectileEntity {
                 entity.damage(damageSource, mcDamageAmount);
             }
 
-            this.kill();
-        }
-    }
-
-    @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
-        Entity entity = entityHitResult.getEntity();
-        if (!this.world.isClient) {
-            doDamage(entity);
-        }
-    }
-
-    @Override
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        if (!this.world.isClient) {
             this.kill();
         }
     }

@@ -37,20 +37,18 @@ public class Grenade extends SimpleProjectile {
     public void onCollision(HitResult hitResult)
     {
         super.onCollision(hitResult);
-        //if (!this.world.isClient) {
-            if (hitResult.getType() == HitResult.Type.BLOCK) {
-                Vec3d velocity = this.getVelocity();
-                BlockHitResult blockHit = (BlockHitResult) hitResult;
-                velocity = switch (blockHit.getSide()) {
-                    case EAST, WEST -> velocity.multiply(-1, 1, 1);
-                    case NORTH, SOUTH -> velocity.multiply(1, 1, -1);
-                    case DOWN -> velocity.multiply(1, -1, 1);
-                    case UP -> velocity.multiply(1, -.7, 1);
-                };
-                if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
-                this.setVelocity(velocity);
-            }
-        //}
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+            Vec3d velocity = this.getVelocity();
+            BlockHitResult blockHit = (BlockHitResult) hitResult;
+            velocity = switch (blockHit.getSide()) {
+                case EAST, WEST -> velocity.multiply(-1, 1, 1);
+                case NORTH, SOUTH -> velocity.multiply(1, 1, -1);
+                case DOWN -> velocity.multiply(1, -1, 1);
+                case UP -> velocity.multiply(1, -.7, 1);
+            };
+            if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
+            this.setVelocity(velocity);
+        }
     }
 
     @Override

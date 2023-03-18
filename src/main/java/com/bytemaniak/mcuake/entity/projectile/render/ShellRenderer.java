@@ -1,5 +1,6 @@
-package com.bytemaniak.mcuake.entity.projectile;
+package com.bytemaniak.mcuake.entity.projectile.render;
 
+import com.bytemaniak.mcuake.entity.projectile.Shell;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.*;
@@ -12,24 +13,24 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
-public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
-    private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/plasmaball.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE, false);
+public class ShellRenderer extends EntityRenderer<Shell> {
+    private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/shell.png");
+    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
 
-    public PlasmaBallRenderer(EntityRendererFactory.Context context) {
+    public ShellRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 
     @Override
-    public Identifier getTexture(PlasmaBall entity) {
+    public Identifier getTexture(Shell entity) {
         return TEXTURE;
     }
 
     @Override
-    public void render(PlasmaBall entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(Shell entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
-        matrices.scale(.75f, .75f, .75f);
+        matrices.scale(.125f, .125f, .125f);
         matrices.multiply(this.dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();

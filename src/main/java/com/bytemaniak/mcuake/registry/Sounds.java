@@ -39,6 +39,8 @@ public class Sounds {
 
     private static final Identifier GRENADE_FIRE_IDENT = new Identifier("mcuake", "grenade_launcher");
     public static final SoundEvent GRENADE_FIRE = SoundEvent.of(GRENADE_FIRE_IDENT);
+    private static final Identifier GRENADE_BOUNCE_IDENT = new Identifier("mcuake", "grenade_bounce");
+    public static final SoundEvent GRENADE_BOUNCE = SoundEvent.of(GRENADE_BOUNCE_IDENT);
 
     public static class PlayerSounds {
         public Identifier DEATH;
@@ -117,6 +119,8 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_ACTIVE_IDENT, GAUNTLET_ACTIVE);
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_HUM_IDENT, GAUNTLET_HUM);
         Registry.register(Registries.SOUND_EVENT, GRENADE_FIRE_IDENT, GRENADE_FIRE);
+        Registry.register(Registries.SOUND_EVENT, GRENADE_BOUNCE_IDENT, GRENADE_BOUNCE);
+
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);
         loadPlayerSounds(ASSASSIN);

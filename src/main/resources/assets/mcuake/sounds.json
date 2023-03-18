@@ -79,6 +79,12 @@
       "mcuake:grenade_launcher"
     ]
   },
+  "grenade_bounce": {
+    "sounds": [
+      "mcuake:grenade_bounce1",
+      "mcuake:grenade_bounce2"
+    ]
+  },
 
   "angelyss_death": {
     "sounds": [

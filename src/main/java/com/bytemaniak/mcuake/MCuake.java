@@ -20,6 +20,8 @@ public class MCuake implements ModInitializer {
 		Sounds.loadSounds();
 		MusicDiscs.LoadDiscs();
 
+		Screens.loadScreens();
+
 		Packets.registerServerPackets();
 	}
 }

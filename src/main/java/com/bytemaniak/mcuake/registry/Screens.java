@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 public class Screens {
     public static final ScreenHandlerType<JumppadScreenHandler> JUMPPAD_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(JumppadScreenHandler::new);
 
-    static {
+    public static void loadScreens() {
         Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcuake", "jumppad_power"), JUMPPAD_SCREEN_HANDLER);
     }
 }

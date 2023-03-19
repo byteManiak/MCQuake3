@@ -82,7 +82,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             /* If INT_MAX damage was dealt, then the player is marked dead in Quake mode
              * and we don't need to deal damage again (besides, this would recurse infinitely without this check) */
             else if (isInQuakeMode() && (int)amount != Integer.MAX_VALUE) {
-                if (attacker != null)
+                if (attacker instanceof PlayerEntity)
                     ServerPlayNetworking.send((ServerPlayerEntity) attacker, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
                 takeDamage((int)amount, source);
                 cir.setReturnValue(true);

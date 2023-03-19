@@ -59,10 +59,11 @@ public class Grenade extends SimpleProjectile {
 
     @Override
     protected void despawn() {
-        super.despawn();
         Vec3d pos = this.getPos();
         DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
         this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
+
+        super.despawn();
     }
 
     @Override

@@ -6,10 +6,12 @@ import com.bytemaniak.mcuake.registry.Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimationState;
@@ -37,18 +39,28 @@ public class Gauntlet extends HitscanWeapon {
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
         stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
+        setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 3.0);
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient) {
-            double speed = stack.getOrCreateNbt().getDouble("firing_speed");
+            double speed;
+            long id = GeoItem.getOrAssignId(stack, (ServerWorld) world);
+            try {
+                speed = stack.getOrCreateNbt().getDouble("firing_speed");
+            } catch (NullPointerException e) {
+                speed = 0.0;
+            }
+
             speed -= 0.1;
             if (speed < 0.1) {
                 speed = 0.1;
             }
-            stack.getNbt().putDouble("firing_speed", speed);
+
+            stack.getOrCreateNbt().putDouble("firing_speed", speed);
+            setAnimData(entity, id, SPEED, speed);
         }
         super.inventoryTick(stack, world, entity, slot, selected);
     }
@@ -58,9 +70,12 @@ public class Gauntlet extends HitscanWeapon {
         state.getController().setAnimation(DefaultAnimations.ATTACK_SHOOT);
         ItemStack stack = state.getData(DataTickets.ITEMSTACK);
 
-        double speed = 0.1;
-        if (stack.getNbt() != null)
-            speed = stack.getNbt().getDouble("firing_speed");
+        double speed;
+        try {
+            speed = getAnimData(GeoItem.getId(stack), SPEED);
+        } catch (NullPointerException e) {
+            speed = 0.1;
+        }
 
         state.getController().setAnimationSpeed(speed);
         return PlayState.CONTINUE;

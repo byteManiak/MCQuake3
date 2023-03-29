@@ -7,3 +7,5 @@ A Quake3 mod for Minecraft!
 # Credits
 - Gerd "Elysis" Raudenbusch - for the "Thru the Mirror" track
 - The OpenArena project - for various assets
+
+[![MCuake showcase](http://img.youtube.com/vi/DRD0vbKIzwc/0.jpg)](https://www.youtube.com/watch?v=DRD0vbKIzwc "MCuake showcase")

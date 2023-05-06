@@ -9,13 +9,16 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.UUID;
+
 public class ShowTrailS2CPacket {
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         Vec3d playerPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
         Vec3d endPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+        UUID playerId = buf.readUuid();
         int type = buf.readInt();
 
-        MCuakeClient.trailRenderer.addTrail(playerPos, endPos, type);
+        MCuakeClient.trailRenderer.addTrail(playerPos, endPos, playerId, type);
 
         if (type == QuakePlayer.WeaponSlot.RAILGUN.slot()) {
             double distance = endPos.distanceTo(playerPos);

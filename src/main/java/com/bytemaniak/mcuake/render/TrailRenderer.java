@@ -14,6 +14,8 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Environment(EnvType.CLIENT)
@@ -22,32 +24,48 @@ public class TrailRenderer implements WorldRenderEvents.End {
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
     private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(24));
     private final static long RAILGUN_TRAIL_LIFETIME = 20;
-    private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 2;
+    private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 3;
 
     private final static Vec3d RAILGUN_TRAIL_COLOR = new Vec3d(.35f, 1, 0);
     private final static Vec3d LIGHTNING_GUN_TRAIL_COLOR = new Vec3d(.5, .85, 1);
 
     private class TrailData {
         public Vec3d v1, v2, v3, v4, v5, v6, v7, v8;
+        public Vec3d _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8;
         public long startTick;
         public long lifetime;
         public Vec3d color;
+        public UUID owner;
 
-        public TrailData(Vec3d v1, Vec3d v2, long startTick, long lifetime, Vec3d color) {
+        public static void updateTrailData(TrailData trailData, Vec3d v1, Vec3d v2, long startTick) {
             Vec3d diffVec = v2.subtract(v1);
-            Vec3d leftVec = diffVec.normalize().crossProduct(new Vec3d(0, 1, 0)).multiply(.05f);
+            Vec3d dirVec = diffVec.normalize();
+            Vec3d leftVec = dirVec.crossProduct(new Vec3d(0, 1, 0)).multiply(.05f);
             Vec3d upVec = leftVec.crossProduct(diffVec.normalize());
-            this.v1 = v1.add(leftVec).add(upVec);
-            this.v2 = v1.add(leftVec).add(upVec.negate());;
-            this.v3 = v1.add(leftVec.negate()).add(upVec.negate());
-            this.v4 = v1.add(leftVec.negate()).add(upVec);;
-            this.v5 = this.v1.add(diffVec);
-            this.v6 = this.v2.add(diffVec);
-            this.v7 = this.v3.add(diffVec);
-            this.v8 = this.v4.add(diffVec);
-            this.startTick = startTick;
+            trailData._v1 = v1.add(leftVec).add(upVec);
+            trailData._v2 = v1.add(leftVec).add(upVec.negate());;
+            trailData._v3 = v1.add(leftVec.negate()).add(upVec.negate());
+            trailData._v4 = v1.add(leftVec.negate()).add(upVec);;
+            trailData._v5 = trailData._v1.add(diffVec);
+            trailData._v6 = trailData._v2.add(diffVec);
+            trailData._v7 = trailData._v3.add(diffVec);
+            trailData._v8 = trailData._v4.add(diffVec);
+            trailData.startTick = startTick;
+        }
+
+        public TrailData(Vec3d v1, Vec3d v2, long startTick, long lifetime, Vec3d color, UUID owner) {
+            updateTrailData(this, v1, v2, startTick);
+            this.v1 = this._v1;
+            this.v2 = this._v2;
+            this.v3 = this._v3;
+            this.v4 = this._v4;
+            this.v5 = this._v5;
+            this.v6 = this._v6;
+            this.v7 = this._v7;
+            this.v8 = this._v8;
             this.lifetime = lifetime;
             this.color = color;
+            this.owner = owner;
         }
     }
 
@@ -87,6 +105,15 @@ public class TrailRenderer implements WorldRenderEvents.End {
             long currentTick = worldTime - trail.startTick;
             float alpha = (float)currentTick / trail.lifetime;
 
+            trail.v1 = trail.v1.lerp(trail._v1, alpha);
+            trail.v2 = trail.v2.lerp(trail._v2, alpha);
+            trail.v3 = trail.v3.lerp(trail._v3, alpha);
+            trail.v4 = trail.v4.lerp(trail._v4, alpha);
+            trail.v5 = trail.v5.lerp(trail._v5, alpha);
+            trail.v6 = trail.v6.lerp(trail._v6, alpha);
+            trail.v7 = trail.v7.lerp(trail._v7, alpha);
+            trail.v8 = trail.v8.lerp(trail._v8, alpha);
+
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v1, trail.v2, trail.v3, trail.v4, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v5, trail.v6, trail.v7, trail.v8, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v1, trail.v2, trail.v6, trail.v5, trail.color, alpha);
@@ -99,19 +126,25 @@ public class TrailRenderer implements WorldRenderEvents.End {
         vertexConsumerProvider.draw();
     }
 
-    public void addTrail(Vec3d v1, Vec3d v2, int type) {
+    public void addTrail(Vec3d v1, Vec3d v2, UUID playerId, int type) {
         if (type == QuakePlayer.WeaponSlot.RAILGUN.slot()) {
             addRailgunTrail(v1, v2);
         } else {
-            addLightningGunTrail(v1, v2);
+            addLightningGunTrail(v1, v2, playerId);
         }
     }
 
     private void addRailgunTrail(Vec3d v1, Vec3d v2) {
-        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR));
+        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR, UUID.fromString("")));
     }
 
-    private void addLightningGunTrail(Vec3d v1, Vec3d v2) {
-        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), LIGHTNING_GUN_TRAIL_LIFETIME, LIGHTNING_GUN_TRAIL_COLOR));
+    private void addLightningGunTrail(Vec3d v1, Vec3d v2, UUID playerId) {
+        Optional<TrailData> trail = trailList.stream().filter(t -> t.owner.equals(playerId)).findFirst();
+        if (trail.isEmpty()) {
+            trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), LIGHTNING_GUN_TRAIL_LIFETIME, LIGHTNING_GUN_TRAIL_COLOR, playerId));
+        } else {
+            TrailData trailData = trail.get();
+            TrailData.updateTrailData(trailData, v1, v2, MinecraftClient.getInstance().world.getTime());
+        }
     }
 }

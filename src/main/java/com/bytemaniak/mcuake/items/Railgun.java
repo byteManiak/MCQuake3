@@ -32,11 +32,11 @@ public class Railgun extends HitscanWeapon {
     }
 
     @Override
-    protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {
-        sendRailgunTrail(world, userPos, iterPos);
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {
+        sendRailgunTrail(world, user, userPos, iterPos);
     }
 
-    private void sendRailgunTrail(World world, Vec3d startPos, Vec3d endPos) {
+    private void sendRailgunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeDouble(startPos.x);
         buf.writeDouble(startPos.y);
@@ -44,6 +44,7 @@ public class Railgun extends HitscanWeapon {
         buf.writeDouble(endPos.x);
         buf.writeDouble(endPos.y);
         buf.writeDouble(endPos.z);
+        buf.writeUuid(user.getUuid());
         buf.writeInt(QuakePlayer.WeaponSlot.RAILGUN.slot());
         for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
             ServerPlayNetworking.send(plr, Packets.SHOW_TRAIL, buf);

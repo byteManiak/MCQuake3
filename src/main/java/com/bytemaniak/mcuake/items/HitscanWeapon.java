@@ -48,7 +48,7 @@ public abstract class HitscanWeapon extends Weapon {
                 quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
     }
 
-    protected void onProjectileCollision(World world, Vec3d userPos, Vec3d iterPos) {}
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {}
     protected void onDamage(World world, LivingEntity attacked) {}
 
     @Override
@@ -85,7 +85,7 @@ public abstract class HitscanWeapon extends Weapon {
                 }
 
                 onDamage(world, collided);
-                onProjectileCollision(world, offsetWeaponPos, pos);
+                onProjectileCollision(world, user, offsetWeaponPos, pos);
                 return;
             }
 
@@ -94,13 +94,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, offsetWeaponPos, pos);
+                        onProjectileCollision(world, user, offsetWeaponPos, pos);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, offsetWeaponPos, pos);
+        onProjectileCollision(world, user, offsetWeaponPos, pos);
     }
 }

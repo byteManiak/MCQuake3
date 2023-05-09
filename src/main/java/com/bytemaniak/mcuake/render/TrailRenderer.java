@@ -135,7 +135,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
     }
 
     private void addRailgunTrail(Vec3d v1, Vec3d v2) {
-        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR, UUID.fromString("")));
+        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR, UUID.fromString("00000000-0000-0000-0000-000000000000")));
     }
 
     private void addLightningGunTrail(Vec3d v1, Vec3d v2, UUID playerId) {

@@ -24,6 +24,7 @@ public class Items {
     public static final Item LIGHTNING_GUN = new LightningGun();
     public static final Item RAILGUN = new Railgun();
     public static final Item PLASMAGUN = new Plasmagun();
+    public static final Item ROCKET_LAUNCHER = new RocketLauncher();
 
     public static final Item MACHINEGUN_AMMO = new Item(new FabricItemSettings());
     public static final Item SHOTGUN_AMMO = new Item(new FabricItemSettings());
@@ -47,6 +48,7 @@ public class Items {
         loadItem(LIGHTNING_GUN, new Identifier("mcuake", "lightning_gun"));
         loadItem(RAILGUN, new Identifier("mcuake", "railgun"));
         loadItem(PLASMAGUN, new Identifier("mcuake", "plasmagun"));
+        loadItem(ROCKET_LAUNCHER, new Identifier("mcuake", "rocket_launcher"));
 
         loadItem(MACHINEGUN_AMMO, new Identifier("mcuake", "machinegun_ammo_box"));
         loadItem(SHOTGUN_AMMO, new Identifier("mcuake", "shotgun_ammo_box"));

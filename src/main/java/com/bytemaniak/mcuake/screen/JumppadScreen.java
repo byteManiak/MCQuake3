@@ -20,12 +20,8 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 
 public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
-    private ButtonWidget updatePower;
-    private ButtonWidget incrementForward, decrementForward;
-    private ButtonWidget incrementUp, decrementUp;
     private SliderWidgetSettable powerForward, powerUp;
-    private TextWidget powerForwardText, powerUpText;
-    private float forward_power = 0, up_power = 0;
+    private float forward_power, up_power;
 
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/gui/settings.png");
 
@@ -51,7 +47,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         Optional<Element> hovered = hoveredElement(mouseX, mouseY);
-        if (hovered.isPresent()) hovered.get().mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        hovered.ifPresent(element -> element.mouseDragged(mouseX, mouseY, button, deltaX, deltaY));
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
@@ -72,7 +68,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
         titleY = backgroundHeight / 2 - 48;
 
-        updatePower = ButtonWidget.builder(Text.of("Apply"), (button) -> {
+        ButtonWidget updatePower = ButtonWidget.builder(Text.of("Apply"), (button) -> {
             // Request the server to update the jump pad's stats when pressing the apply button
             PacketByteBuf msg = PacketByteBufs.create();
             msg.writeFloat(forward_power);
@@ -80,26 +76,26 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
             ClientPlayNetworking.send(Packets.JUMPPAD_UPDATE_POWER, msg);
         }).dimensions(baseX + 6, baseY + 52, 40, 20).build();
 
-        incrementForward = ButtonWidget.builder(Text.of("+"), (button) -> {
-            int val = (int)(forward_power * 10) + 1;
+        ButtonWidget incrementForward = ButtonWidget.builder(Text.of("+"), (button) -> {
+            int val = (int) (forward_power * 10) + 1;
             forward_power = val / 10.f;
             powerForward.setValue(forward_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
         }).dimensions(baseX + 97, baseY - 6, 20, 20).build();
 
-        decrementForward = ButtonWidget.builder(Text.of("-"), (button) -> {
-            int val = (int)(forward_power * 10) - 1;
+        ButtonWidget decrementForward = ButtonWidget.builder(Text.of("-"), (button) -> {
+            int val = (int) (forward_power * 10) - 1;
             forward_power = val / 10.f;
             powerForward.setValue(forward_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
         }).dimensions(baseX - 11, baseY - 6, 20, 20).build();
 
-        incrementUp = ButtonWidget.builder(Text.of("+"), (button) -> {
-            int val = (int)(up_power * 10) + 1;
+        ButtonWidget incrementUp = ButtonWidget.builder(Text.of("+"), (button) -> {
+            int val = (int) (up_power * 10) + 1;
             up_power = val / 10.f;
             powerUp.setValue(up_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
         }).dimensions(baseX + 97, baseY + 20, 20, 20).build();
 
-        decrementUp = ButtonWidget.builder(Text.of("-"), (button) -> {
-            int val = (int)(up_power * 10) - 1;
+        ButtonWidget decrementUp = ButtonWidget.builder(Text.of("-"), (button) -> {
+            int val = (int) (up_power * 10) - 1;
             up_power = val / 10.f;
             powerUp.setValue(up_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
         }).dimensions(baseX - 11, baseY + 20, 20, 20).build();
@@ -128,10 +124,10 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
             }
         };
 
-        powerForwardText = new TextWidget(Text.of("Forward:"), textRenderer);
+        TextWidget powerForwardText = new TextWidget(Text.of("Forward:"), textRenderer);
         powerForwardText.setPos(baseX - 39, baseY);
         powerForwardText.setWidth(0);
-        powerUpText = new TextWidget(Text.of("Upward:"), textRenderer);
+        TextWidget powerUpText = new TextWidget(Text.of("Upward:"), textRenderer);
         powerUpText.setPos(baseX - 35, baseY + 22);
         powerUpText.setWidth(0);
         addDrawable(powerForwardText);

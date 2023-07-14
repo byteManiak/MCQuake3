@@ -13,7 +13,6 @@ import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,7 +28,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
     private final static Vec3d RAILGUN_TRAIL_COLOR = new Vec3d(.35f, 1, 0);
     private final static Vec3d LIGHTNING_GUN_TRAIL_COLOR = new Vec3d(.5, .85, 1);
 
-    private class TrailData {
+    private static class TrailData {
         public Vec3d v1, v2, v3, v4, v5, v6, v7, v8;
         public Vec3d _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8;
         public long startTick;
@@ -43,9 +42,9 @@ public class TrailRenderer implements WorldRenderEvents.End {
             Vec3d leftVec = dirVec.crossProduct(new Vec3d(0, 1, 0)).multiply(.05f);
             Vec3d upVec = leftVec.crossProduct(diffVec.normalize());
             trailData._v1 = v1.add(leftVec).add(upVec);
-            trailData._v2 = v1.add(leftVec).add(upVec.negate());;
+            trailData._v2 = v1.add(leftVec).add(upVec.negate());
             trailData._v3 = v1.add(leftVec.negate()).add(upVec.negate());
-            trailData._v4 = v1.add(leftVec.negate()).add(upVec);;
+            trailData._v4 = v1.add(leftVec.negate()).add(upVec);
             trailData._v5 = trailData._v1.add(diffVec);
             trailData._v6 = trailData._v2.add(diffVec);
             trailData._v7 = trailData._v3.add(diffVec);
@@ -69,7 +68,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         }
     }
 
-    private final CopyOnWriteArrayList<TrailData> trailList = new CopyOnWriteArrayList<TrailData>();
+    private final CopyOnWriteArrayList<TrailData> trailList = new CopyOnWriteArrayList<>();
 
     private void genVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d vec, Vec3d col, float alpha) {
         float x = (float)vec.x;
@@ -99,11 +98,9 @@ public class TrailRenderer implements WorldRenderEvents.End {
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
 
-        for (Iterator<TrailData> iter = trailList.iterator(); iter.hasNext(); ) {
-            TrailData trail = iter.next();
-
+        for (TrailData trail : trailList) {
             long currentTick = worldTime - trail.startTick;
-            float alpha = (float)currentTick / trail.lifetime;
+            float alpha = (float) currentTick / trail.lifetime;
 
             trail.v1 = trail.v1.lerp(trail._v1, alpha);
             trail.v2 = trail.v2.lerp(trail._v2, alpha);

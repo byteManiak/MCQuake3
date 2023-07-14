@@ -16,8 +16,8 @@ public class MusicDiscs {
         MusicDiscItem musicDisc = new MusicDiscItem(comparatorOutput, SoundEvent.of(id), new Item.Settings().maxCount(1), 0);
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {content.add(musicDisc);});
-        ItemGroupEvents.modifyEntriesEvent(Items.MCUAKE_GROUP).register(content -> {content.add(musicDisc);});
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> content.add(musicDisc));
+        ItemGroupEvents.modifyEntriesEvent(Items.MCUAKE_GROUP).register(content -> content.add(musicDisc));
     }
 
     public static void LoadDiscs()

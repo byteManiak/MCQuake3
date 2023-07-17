@@ -38,8 +38,10 @@ public class Gauntlet extends HitscanWeapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
-        stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
-        setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 3.0);
+        if (!world.isClient) {
+            stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
+            setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 3.0);
+        }
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 

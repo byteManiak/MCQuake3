@@ -89,15 +89,13 @@ public abstract class Weapon extends Item implements GeoItem {
 
         if (currentTick - player.getWeaponTick(weaponSlot, clientside) >= refireRate) {
             if (!player.useAmmo(weaponSlot)) {
-                if (!clientside) {
-                    // Whatever projectile the weapon shoots, its initial position is approximated
-                    // to be shot from the held weapon, not from the player's eye
-                    Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
-                    Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
-                    Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(HITSCAN_HORIZONTAL_OFFSET);
-                    Vec3d weaponPos = user.getEyePos().subtract(rightDir);
-                    this.onWeaponRefire(world, user, stack, lookDir, weaponPos);
-                }
+                // Whatever projectile the weapon shoots, its initial position is approximated
+                // to be shot from the held weapon, not from the player's eye
+                Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());
+                Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
+                Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(HITSCAN_HORIZONTAL_OFFSET);
+                Vec3d weaponPos = user.getEyePos().subtract(rightDir);
+                this.onWeaponRefire(world, user, stack, lookDir, weaponPos);
 
                 if (hasRepeatedFiringSound) {
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);

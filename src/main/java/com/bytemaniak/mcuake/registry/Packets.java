@@ -5,7 +5,6 @@ import com.bytemaniak.mcuake.network.c2s.PlayerClassUpdateC2SPacket;
 import com.bytemaniak.mcuake.network.c2s.QuakeModeUpdateC2SPacket;
 import com.bytemaniak.mcuake.network.s2c.DealtDamageS2CPacket;
 import com.bytemaniak.mcuake.network.s2c.JumppadPowerS2CPacket;
-import com.bytemaniak.mcuake.network.s2c.ShowTrailS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.util.Identifier;
@@ -22,7 +21,6 @@ public class Packets {
     {
         ClientPlayNetworking.registerGlobalReceiver(Packets.DEALT_DAMAGE, DealtDamageS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(Packets.SHOW_TRAIL, ShowTrailS2CPacket::receive);
     }
 
     public static void registerServerPackets()

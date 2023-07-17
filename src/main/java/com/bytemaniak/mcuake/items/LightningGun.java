@@ -1,9 +1,12 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.MCuakeClient;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -36,21 +39,12 @@ public class LightningGun extends HitscanWeapon {
 
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {
-        sendLightningGunTrail(world, user, userPos, iterPos);
+        submitLightningGunTrail(world, user, userPos, iterPos);
     }
 
-    private void sendLightningGunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeDouble(startPos.x);
-        buf.writeDouble(startPos.y);
-        buf.writeDouble(startPos.z);
-        buf.writeDouble(endPos.x);
-        buf.writeDouble(endPos.y);
-        buf.writeDouble(endPos.z);
-        buf.writeUuid(user.getUuid());
-        buf.writeInt(QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
-        for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-            ServerPlayNetworking.send(plr, Packets.SHOW_TRAIL, buf);
+    @Environment(EnvType.CLIENT)
+    private void submitLightningGunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
+        MCuakeClient.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
     }
 
     @Override

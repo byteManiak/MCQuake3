@@ -2,6 +2,8 @@ package com.bytemaniak.mcuake.items;
 
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
@@ -48,7 +50,9 @@ public abstract class HitscanWeapon extends Weapon {
                 quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
     }
 
+    @Environment(EnvType.CLIENT)
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {}
+
     protected void onDamage(World world, LivingEntity attacked) {}
 
     @Override
@@ -77,14 +81,17 @@ public abstract class HitscanWeapon extends Weapon {
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
             if (collided != null) {
-                DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, user);
-                if (collided.isAlive() && collided instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
-                    collided.damage(damageSource, quakeDamageAmount);
-                } else {
-                    collided.damage(damageSource, mcDamageAmount);
+                if (!world.isClient) {
+                    DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, user);
+                    if (collided.isAlive() && collided instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
+                        collided.damage(damageSource, quakeDamageAmount);
+                    } else {
+                        collided.damage(damageSource, mcDamageAmount);
+                    }
+
+                    onDamage(world, collided);
                 }
 
-                onDamage(world, collided);
                 onProjectileCollision(world, user, offsetWeaponPos, pos);
                 return;
             }

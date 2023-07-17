@@ -1,9 +1,12 @@
 package com.bytemaniak.mcuake.items;
 
+import com.bytemaniak.mcuake.MCuakeClient;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -33,26 +36,19 @@ public class Railgun extends HitscanWeapon {
 
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {
-        sendRailgunTrail(world, user, userPos, iterPos);
+        submitRailgunTrail(world, user, userPos, iterPos);
     }
 
-    private void sendRailgunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeDouble(startPos.x);
-        buf.writeDouble(startPos.y);
-        buf.writeDouble(startPos.z);
-        buf.writeDouble(endPos.x);
-        buf.writeDouble(endPos.y);
-        buf.writeDouble(endPos.z);
-        buf.writeUuid(user.getUuid());
-        buf.writeInt(QuakePlayer.WeaponSlot.RAILGUN.slot());
-        for (ServerPlayerEntity plr : PlayerLookup.world((ServerWorld) world))
-            ServerPlayNetworking.send(plr, Packets.SHOW_TRAIL, buf);
+    @Environment(EnvType.CLIENT)
+    private void submitRailgunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
+        MCuakeClient.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.RAILGUN.slot());
     }
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
-        triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
+        if (!world.isClient)
+            triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
+
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 

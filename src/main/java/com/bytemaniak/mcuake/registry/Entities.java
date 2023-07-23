@@ -38,7 +38,7 @@ public class Entities {
                 new Identifier("mcuake", "grenade"),
                 FabricEntityTypeBuilder.<Grenade>create(SpawnGroup.MISC, Grenade::new)
                         .dimensions(EntityDimensions.fixed(0.3f, 0.3f))
-                        .trackedUpdateRate(128).trackedUpdateRate(10)
+                        .trackRangeBlocks(128).trackedUpdateRate(10)
                         .build());
     }
 }

@@ -47,7 +47,8 @@ public class Plasmagun extends Weapon {
         plasmaBall.setVelocity(destDir.x, destDir.y, destDir.z, PLASMAGUN_PROJECTILE_SPEED, 0);
         world.spawnEntity(plasmaBall);
 
-        triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
+        if (!world.isClient)
+            triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
     }
 
     @Override

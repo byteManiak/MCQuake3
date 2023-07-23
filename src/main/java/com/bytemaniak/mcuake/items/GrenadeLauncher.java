@@ -33,7 +33,8 @@ public class GrenadeLauncher extends Weapon {
         grenade.setVelocity(lookDir.x, lookDir.y, lookDir.z, GRENADE_PROJECTILE_SPEED, 0);
         world.spawnEntity(grenade);
 
-        triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
+        if (!world.isClient)
+            triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
     }
 
     @Override

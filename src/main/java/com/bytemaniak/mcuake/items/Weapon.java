@@ -13,7 +13,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import software.bernie.geckolib.GeckoLib;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animatable.client.RenderProvider;
@@ -45,7 +44,7 @@ public abstract class Weapon extends Item implements GeoItem {
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    protected static final SerializableDataTicket<Double> SPEED = GeckoLibUtil.addDataTicket(SerializableDataTicket.ofDouble(new Identifier(GeckoLib.MOD_ID, "firing_speed")));
+    public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcuake", "firing_speed"));
 
     protected Weapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {

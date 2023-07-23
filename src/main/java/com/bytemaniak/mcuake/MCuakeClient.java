@@ -1,6 +1,7 @@
 package com.bytemaniak.mcuake;
 
 import com.bytemaniak.mcuake.entity.projectile.render.GrenadeRenderer;
+import com.bytemaniak.mcuake.items.Weapon;
 import com.bytemaniak.mcuake.screen.JumppadScreen;
 import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.entity.projectile.render.PlasmaBallRenderer;
@@ -14,6 +15,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MCuakeClient implements ClientModInitializer {
     public static TrailRenderer trailRenderer;
@@ -32,5 +34,7 @@ public class MCuakeClient implements ClientModInitializer {
         WorldRenderEvents.END.register(trailRenderer);
 
         HudRenderCallback.EVENT.register(new MCuakeGuiRenderer());
+
+        GeckoLibUtil.addDataTicket(Weapon.SPEED);
     }
 }

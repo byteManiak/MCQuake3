@@ -67,7 +67,8 @@ public class Shotgun extends Weapon {
         for (int i = 0; i < 3; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 7, 7);
         for (int i = 0; i < 6; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 12, 15);
 
-        triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "shoot");
+        if (!world.isClient)
+            triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "shoot");
     }
 
     @Override

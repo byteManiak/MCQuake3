@@ -30,8 +30,10 @@ public class Machinegun extends HitscanWeapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
-        stack.getOrCreateNbt().putDouble("firing_speed", 1.0);
-        setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 1.0);
+        if (!world.isClient) {
+            stack.getOrCreateNbt().putDouble("firing_speed", 1.0);
+            setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 1.0);
+        }
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 

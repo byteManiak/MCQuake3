@@ -16,10 +16,6 @@ import software.bernie.geckolib.core.object.PlayState;
 public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
 
-    private static final float PLASMAGUN_RANGE = 75;
-    private static final float PLASMAGUN_VERTICAL_SPAWN_OFFSET = .6f;
-    private static final float PLASMAGUN_HORIZONTAL_SPAWN_OFFSET = -.1f;
-    private static final float PLASMAGUN_FORWARD_SPAWN_OFFSET = .5f;
     private static final float PLASMAGUN_PROJECTILE_SPEED = 1.5f;
 
     public Plasmagun() {
@@ -33,12 +29,12 @@ public class Plasmagun extends Weapon {
         Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
         Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
         Vec3d offsetWeaponPos = weaponPos
-                .add(upVec.multiply(PLASMAGUN_VERTICAL_SPAWN_OFFSET))
-                .add(rightVec.multiply(PLASMAGUN_HORIZONTAL_SPAWN_OFFSET))
-                .add(lookDir.multiply(PLASMAGUN_FORWARD_SPAWN_OFFSET));
+                .add(upVec.multiply(PROJECTILE_VERTICAL_SPAWN_OFFSET))
+                .add(rightVec.multiply(PROJECTILE_HORIZONTAL_SPAWN_OFFSET))
+                .add(lookDir.multiply(PROJECTILE_FORWARD_SPAWN_OFFSET));
 
         // The furthest point, to which the projectile will go towards
-        Vec3d destPos = user.getEyePos().add(lookDir.multiply(PLASMAGUN_RANGE));
+        Vec3d destPos = user.getEyePos().add(lookDir.multiply(PROJECTILE_DIRECTION_RANGE));
         Vec3d destDir = destPos.subtract(offsetWeaponPos).normalize();
 
         PlasmaBall plasmaBall = new PlasmaBall(world);

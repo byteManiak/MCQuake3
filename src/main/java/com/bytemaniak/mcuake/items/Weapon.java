@@ -33,6 +33,11 @@ import java.util.function.Supplier;
 public abstract class Weapon extends Item implements GeoItem {
     private static final float HITSCAN_HORIZONTAL_OFFSET = .2f;
 
+    protected static final float PROJECTILE_VERTICAL_SPAWN_OFFSET = .6f;
+    protected static final float PROJECTILE_HORIZONTAL_SPAWN_OFFSET = -.1f;
+    protected static final float PROJECTILE_FORWARD_SPAWN_OFFSET = .5f;
+    protected static final float PROJECTILE_DIRECTION_RANGE = 200;
+
     private final Identifier weaponIdentifier;
     private final long refireRate;
     private final boolean hasRepeatedFiringSound;

@@ -2,10 +2,14 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Entities;
-import net.minecraft.entity.Entity;
+import com.bytemaniak.mcuake.registry.Sounds;
+import com.bytemaniak.mcuake.sound.TrackedSound;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -19,6 +23,19 @@ public class Rocket extends SimpleProjectile {
     }
 
     public Rocket(World world) { this(Entities.ROCKET, world); }
+
+    @Environment(EnvType.CLIENT)
+    private void playSound() {
+        TrackedSound flyingSound = new TrackedSound(this, Sounds.ROCKET_FLYING);
+        MinecraftClient.getInstance().getSoundManager().play(flyingSound);
+    }
+
+    @Override
+    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
+        if (world.isClient) playSound();
+
+        super.onSpawnPacket(packet);
+    }
 
     @Override
     public void onCollision(HitResult hitResult)

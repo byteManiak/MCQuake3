@@ -86,6 +86,12 @@
     ]
   },
 
+  "rocket_flying": {
+    "sounds": [
+      "mcuake:rocket_flying"
+    ]
+  },
+
   "angelyss_death": {
     "sounds": [
       "mcuake:players/angelyss/death1",

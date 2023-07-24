@@ -5,8 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.sound.SoundEvent;
 
 public class WeaponHum extends TrackedSound {
+    protected final QuakePlayer.WeaponSlot slot;
+
     public WeaponHum(Entity owner, SoundEvent sound, QuakePlayer.WeaponSlot weaponSlot) {
-        super(owner, sound, weaponSlot);
+        super(owner, sound);
+        slot = weaponSlot;
     }
 
     @Override
@@ -14,7 +17,7 @@ public class WeaponHum extends TrackedSound {
         QuakePlayer player = (QuakePlayer) owner;
         QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
         if (weapon.slot() != this.slot.slot() || !player.isPlayingHum()) {
-            setDone();
+            stopSound();
         }
         super.tick();
     }

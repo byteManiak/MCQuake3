@@ -7,6 +7,7 @@ import com.bytemaniak.mcuake.entity.projectile.render.ShellRenderer;
 import com.bytemaniak.mcuake.gui.MCuakeGuiRenderer;
 import com.bytemaniak.mcuake.items.Weapon;
 import com.bytemaniak.mcuake.registry.Entities;
+import com.bytemaniak.mcuake.registry.Keybindings;
 import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Screens;
 import com.bytemaniak.mcuake.render.TrailRenderer;
@@ -36,6 +37,8 @@ public class MCuakeClient implements ClientModInitializer {
         WorldRenderEvents.END.register(trailRenderer);
 
         HudRenderCallback.EVENT.register(new MCuakeGuiRenderer());
+
+        Keybindings.registerKeybinds();
 
         GeckoLibUtil.addDataTicket(Weapon.SPEED);
     }

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(HeldItemRenderer.class)
 public class HeldItemRendererMixin {
     @Redirect(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;"))
+    // When shooting a gun, don't play the bow animation as it looks out of place
     private UseAction cancelFirstPersonBowAnimation(ItemStack instance) {
         if (instance.getItem() instanceof Weapon) {
             return UseAction.NONE;

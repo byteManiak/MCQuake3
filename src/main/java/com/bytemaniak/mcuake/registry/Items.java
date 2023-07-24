@@ -1,7 +1,6 @@
 package com.bytemaniak.mcuake.registry;
 
 import com.bytemaniak.mcuake.items.*;
-import com.bytemaniak.mcuake.items.PlayerSettings;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -13,7 +12,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class Items {
-    public static final Item PLAYER_SETTINGS = new PlayerSettings();
+    public static final Item MCUAKE_LOGO = new MCuakeLogo();
 
     public static final Item TOOL = new Tool();
 
@@ -35,11 +34,11 @@ public class Items {
     public static final Item PLASMAGUN_AMMO = new Item(new FabricItemSettings());
     public static final Item BFG_AMMO = new Item(new FabricItemSettings());
 
-    public static final ItemGroup MCUAKE_GROUP = FabricItemGroup.builder(new Identifier("mcuake", "player_settings"))
-            .icon(() -> new ItemStack(PLAYER_SETTINGS)).build();
+    public static final ItemGroup MCUAKE_GROUP = FabricItemGroup.builder(new Identifier("mcuake", "mcuake_logo"))
+            .icon(() -> new ItemStack(MCUAKE_LOGO)).build();
 
     public static void loadItems() {
-        loadItem(PLAYER_SETTINGS, new Identifier("mcuake", "player_settings"));
+        Registry.register(Registries.ITEM, new Identifier("mcuake", "mcuake_logo"), MCUAKE_LOGO);
 
         loadItem(GAUNTLET, new Identifier("mcuake", "gauntlet"));
         loadItem(MACHINEGUN, new Identifier("mcuake", "machinegun"));

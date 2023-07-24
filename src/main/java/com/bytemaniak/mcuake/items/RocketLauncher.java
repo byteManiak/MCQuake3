@@ -19,7 +19,7 @@ public class RocketLauncher extends Weapon {
     private static final float ROCKET_PROJECTILE_SPEED = 1.5f;
 
     public RocketLauncher() {
-        super(QuakePlayer.WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcuake", "rocket_launcher"),
+        super(QuakePlayer.WeaponSlot.ROCKET_LAUNCHER, new Identifier("mcuake", "rocket_launcher"),
                 ROCKET_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);

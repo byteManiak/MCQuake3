@@ -65,10 +65,10 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     // Don't slow the projectile if in water
     public boolean isTouchingWater() { return false; }
 
-    //@Override
+    @Override
     protected boolean isBurning() { return false; }
 
-    //@Override
+    @Override
     // Don't slow down the projectile gradually
     protected float getDrag() { return 1; }
 }

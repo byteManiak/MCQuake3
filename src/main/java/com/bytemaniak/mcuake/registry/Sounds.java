@@ -45,6 +45,11 @@ public class Sounds {
     private static final Identifier ROCKET_FLYING_IDENT = new Identifier("mcuake", "rocket_flying");
     public static final SoundEvent ROCKET_FLYING = SoundEvent.of(ROCKET_FLYING_IDENT);
 
+    private static final Identifier PLASMABALL_FLYING_IDENT = new Identifier("mcuake", "plasmaball_flying");
+    public static final SoundEvent PLASMABALL_FLYING = SoundEvent.of(PLASMABALL_FLYING_IDENT);
+    private static final Identifier PLASMABALL_HIT_IDENT = new Identifier("mcuake", "plasmaball_hit");
+    public static final SoundEvent PLASMABALL_HIT = SoundEvent.of(PLASMABALL_HIT_IDENT);
+
     public static class PlayerSounds {
         public Identifier DEATH;
         public Identifier DROWN;

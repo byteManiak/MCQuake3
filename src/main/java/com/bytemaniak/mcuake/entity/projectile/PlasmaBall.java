@@ -2,8 +2,15 @@ package com.bytemaniak.mcuake.entity.projectile;
 
 import com.bytemaniak.mcuake.registry.DamageSources;
 import com.bytemaniak.mcuake.registry.Entities;
+import com.bytemaniak.mcuake.registry.Sounds;
+import com.bytemaniak.mcuake.sound.TrackedSound;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -18,6 +25,19 @@ public class PlasmaBall extends SimpleProjectile {
 
     public PlasmaBall(World world) { this(Entities.PLASMA_BALL, world); }
 
+    @Environment(EnvType.CLIENT)
+    private void playSound() {
+        TrackedSound flyingSound = new TrackedSound(this, Sounds.PLASMABALL_FLYING);
+        MinecraftClient.getInstance().getSoundManager().play(flyingSound);
+    }
+
+    @Override
+    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
+        if (world.isClient) playSound();
+
+        super.onSpawnPacket(packet);
+    }
+
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
@@ -25,6 +45,7 @@ public class PlasmaBall extends SimpleProjectile {
         if (!this.world.isClient) {
             doDamage(entity);
         }
+        this.world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
     }
 
     @Override
@@ -34,5 +55,6 @@ public class PlasmaBall extends SimpleProjectile {
         if (!this.world.isClient) {
             this.kill();
         }
+        this.world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
     }
 }

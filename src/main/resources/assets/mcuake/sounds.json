@@ -92,6 +92,17 @@
     ]
   },
 
+  "plasmaball_flying": {
+    "sounds": [
+      "mcuake:plasmaball_flying"
+    ]
+  },
+  "plasmaball_hit": {
+  "sounds": [
+    "mcuake:plasmaball_hit"
+  ]
+},
+
   "angelyss_death": {
     "sounds": [
       "mcuake:players/angelyss/death1",

@@ -199,13 +199,19 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public void resetAmmo() {
-        Arrays.fill(weaponAmmo, 0);
         weaponAmmo[WeaponSlot.MACHINEGUN.slot()] = 100;
+        weaponAmmo[WeaponSlot.SHOTGUN.slot()] = 10;
+        weaponAmmo[WeaponSlot.GRENADE_LAUNCHER.slot()] = 10;
+        weaponAmmo[WeaponSlot.ROCKET_LAUNCHER.slot()] = 5;
         weaponAmmo[WeaponSlot.PLASMA_GUN.slot()] = 50;
+        weaponAmmo[WeaponSlot.LIGHTNING_GUN.slot()] = 100;
         weaponAmmo[WeaponSlot.RAILGUN.slot()] = 10;
+        weaponAmmo[WeaponSlot.BFG10K.slot()] = 20;
     }
 
     public boolean useAmmo(WeaponSlot slot) {
+        if (slot == WeaponSlot.GAUNTLET) return false;
+
         if (weaponAmmo[slot.slot()] > 0) {
             weaponAmmo[slot.slot()]--;
             return false;

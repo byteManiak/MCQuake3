@@ -1,6 +1,5 @@
 package com.bytemaniak.mcuake.entity.projectile.render;
 
-import com.bytemaniak.mcuake.entity.projectile.Grenade;
 import com.bytemaniak.mcuake.entity.projectile.Rocket;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -29,7 +28,7 @@ public class RocketRenderer extends EntityRenderer<Rocket> {
     public void render(Rocket entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
-        matrices.scale(.5f, .5f, .5f);
+        matrices.scale(.75f, .75f, .75f);
         matrices.multiply(this.dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();

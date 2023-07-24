@@ -47,7 +47,7 @@ public class Entities {
                 Registries.ENTITY_TYPE,
                 new Identifier("mcuake", "rocket"),
                 FabricEntityTypeBuilder.<Rocket>create(SpawnGroup.MISC, Rocket::new)
-                        .dimensions(EntityDimensions.fixed(0.3f, 0.3f))
+                        .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)
                         .build());
     }

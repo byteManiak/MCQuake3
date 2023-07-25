@@ -1,0 +1,11 @@
+{
+	"providers": [
+		{
+			"type": "ttf",
+			"file": "mcuake:bebasneue.ttf",
+			"shift": [0, 0],
+			"size": 24.0,
+			"oversample": 2.0
+		}
+	]
+}

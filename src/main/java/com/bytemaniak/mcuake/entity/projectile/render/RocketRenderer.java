@@ -15,7 +15,7 @@ import org.joml.Matrix4f;
 
 public class RocketRenderer extends EntityRenderer<Rocket> {
     private static final Identifier TEXTURE = new Identifier("mcuake", "textures/entity/rocket.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityCutoutNoCull(TEXTURE);
+    private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE, false);
 
     public RocketRenderer(EntityRendererFactory.Context ctx) { super(ctx); }
 

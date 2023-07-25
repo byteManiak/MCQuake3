@@ -18,6 +18,22 @@ public interface QuakePlayer {
         private final int slot;
         private WeaponSlot(int val) { this.slot = val; }
         public int slot() { return slot; }
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case GAUNTLET -> { return "Gauntlet"; }
+                case MACHINEGUN -> { return "Machinegun"; }
+                case SHOTGUN -> { return "Shotgun"; }
+                case GRENADE_LAUNCHER -> { return "Grenade Launcher"; }
+                case ROCKET_LAUNCHER -> { return "Rocket Launcher"; }
+                case LIGHTNING_GUN -> { return "Lightning Gun"; }
+                case RAILGUN -> { return "Railgun"; }
+                case PLASMA_GUN -> { return "Plasmagun"; }
+                case BFG10K -> { return "BFG10K"; }
+            }
+            return "";
+        }
     };
 
     public void toggleQuakeMode();

@@ -103,6 +103,14 @@
     ]
   },
 
+  "lightning_hit": {
+    "sounds": [
+      "mcuake:lightning_hit1",
+      "mcuake:lightning_hit2",
+      "mcuake:lightning_hit3"
+    ]
+  },
+
   "weapon_change": {
     "sounds": [
       "mcuake:weapon_change"

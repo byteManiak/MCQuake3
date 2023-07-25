@@ -3,19 +3,12 @@ package com.bytemaniak.mcuake.items;
 import com.bytemaniak.mcuake.MCuakeClient;
 import com.bytemaniak.mcuake.entity.QuakePlayer;
 import com.bytemaniak.mcuake.registry.DamageSources;
-import com.bytemaniak.mcuake.registry.Packets;
 import com.bytemaniak.mcuake.registry.Sounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -35,6 +28,10 @@ public class LightningGun extends HitscanWeapon {
         super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, new Identifier("mcuake", "lightning_gun"),
                 LIGHTNING_REFIRE_RATE, false, null, true,
                 LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
+    }
+    @Override
+    protected void onDamage(World world, LivingEntity attacked) {
+        world.playSoundFromEntity(null, attacked, Sounds.LIGHTNING_HIT, SoundCategory.NEUTRAL, .5f, 1);
     }
 
     @Override

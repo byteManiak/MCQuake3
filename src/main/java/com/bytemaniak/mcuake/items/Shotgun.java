@@ -52,23 +52,24 @@ public class Shotgun extends Weapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
-        Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
-        Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
-        Vec3d offsetWeaponPos = weaponPos
-                .add(upVec.multiply(SHOTGUN_VERTICAL_SPAWN_OFFSET))
-                .add(rightVec.multiply(SHOTGUN_HORIZONTAL_SPAWN_OFFSET))
-                .add(lookDir.multiply(SHOTGUN_FORWARD_SPAWN_OFFSET));
+        if (!world.isClient) {
+            Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
+            Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
+            Vec3d offsetWeaponPos = weaponPos
+                    .add(upVec.multiply(SHOTGUN_VERTICAL_SPAWN_OFFSET))
+                    .add(rightVec.multiply(SHOTGUN_HORIZONTAL_SPAWN_OFFSET))
+                    .add(lookDir.multiply(SHOTGUN_FORWARD_SPAWN_OFFSET));
 
-        // The furthest point, to which the projectiles will go towards
-        Vec3d destPos = user.getEyePos().add(lookDir.multiply(SHOTGUN_RANGE));
-        Vec3d destDir = destPos.subtract(offsetWeaponPos).normalize();
+            // The furthest point, to which the projectiles will go towards
+            Vec3d destPos = user.getEyePos().add(lookDir.multiply(SHOTGUN_RANGE));
+            Vec3d destDir = destPos.subtract(offsetWeaponPos).normalize();
 
-        fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 0, 0);
-        for (int i = 0; i < 3; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 7, 7);
-        for (int i = 0; i < 6; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 12, 15);
+            fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 0, 0);
+            for (int i = 0; i < 3; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 7, 7);
+            for (int i = 0; i < 6; i++) fireProjectile(world, user, upVec, rightVec, destDir, offsetWeaponPos, 12, 15);
 
-        if (!world.isClient)
             triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "shoot");
+        }
     }
 
     @Override

@@ -27,26 +27,27 @@ public class RocketLauncher extends Weapon {
 
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
-        // Spawn a new rocket approximately from the weapon
-        Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
-        Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
-        Vec3d offsetWeaponPos = weaponPos
-                .add(upVec.multiply(PROJECTILE_VERTICAL_SPAWN_OFFSET))
-                .add(rightVec.multiply(PROJECTILE_HORIZONTAL_SPAWN_OFFSET))
-                .add(lookDir.multiply(PROJECTILE_FORWARD_SPAWN_OFFSET));
+        if (!world.isClient) {
+            // Spawn a new rocket approximately from the weapon
+            Vec3d upVec = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw()).normalize();
+            Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
+            Vec3d offsetWeaponPos = weaponPos
+                    .add(upVec.multiply(PROJECTILE_VERTICAL_SPAWN_OFFSET))
+                    .add(rightVec.multiply(PROJECTILE_HORIZONTAL_SPAWN_OFFSET))
+                    .add(lookDir.multiply(PROJECTILE_FORWARD_SPAWN_OFFSET));
 
-        // The furthest point, to which the projectile will go towards
-        Vec3d destPos = user.getEyePos().add(lookDir.multiply(PROJECTILE_DIRECTION_RANGE));
-        Vec3d destDir = destPos.subtract(offsetWeaponPos).normalize();
+            // The furthest point, to which the projectile will go towards
+            Vec3d destPos = user.getEyePos().add(lookDir.multiply(PROJECTILE_DIRECTION_RANGE));
+            Vec3d destDir = destPos.subtract(offsetWeaponPos).normalize();
 
-        Rocket rocket = new Rocket(world);
-        rocket.setOwner(user);
-        rocket.setPosition(offsetWeaponPos);
-        rocket.setVelocity(destDir.x, destDir.y, destDir.z, ROCKET_PROJECTILE_SPEED, 0);
-        world.spawnEntity(rocket);
+            Rocket rocket = new Rocket(world);
+            rocket.setOwner(user);
+            rocket.setPosition(offsetWeaponPos);
+            rocket.setVelocity(destDir.x, destDir.y, destDir.z, ROCKET_PROJECTILE_SPEED, 0);
+            world.spawnEntity(rocket);
 
-        if (!world.isClient)
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -65,8 +66,20 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private boolean playingHumSound = false;
     private boolean playingAttackSound = false;
 
+    private ItemStack prevMainHandStack = null;
+
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public ItemStack getMainHandStack() {
+        ItemStack currentMainHandStack = getEquippedStack(EquipmentSlot.MAINHAND);
+        if (!world.isClient && currentMainHandStack.getItem() instanceof Weapon && currentMainHandStack != prevMainHandStack) {
+            world.playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
+            prevMainHandStack = currentMainHandStack;
+        }
+        return currentMainHandStack;
     }
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)

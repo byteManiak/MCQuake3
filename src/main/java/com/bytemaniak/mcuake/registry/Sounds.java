@@ -50,6 +50,9 @@ public class Sounds {
     private static final Identifier PLASMABALL_HIT_IDENT = new Identifier("mcuake", "plasmaball_hit");
     public static final SoundEvent PLASMABALL_HIT = SoundEvent.of(PLASMABALL_HIT_IDENT);
 
+    private static final Identifier WEAPON_CHANGE_IDENT = new Identifier("mcuake", "weapon_change");
+    public static final SoundEvent WEAPON_CHANGE = SoundEvent.of(WEAPON_CHANGE_IDENT);
+
     public static class PlayerSounds {
         public Identifier DEATH;
         public Identifier DROWN;
@@ -129,6 +132,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, GRENADE_FIRE_IDENT, GRENADE_FIRE);
         Registry.register(Registries.SOUND_EVENT, GRENADE_BOUNCE_IDENT, GRENADE_BOUNCE);
         Registry.register(Registries.SOUND_EVENT, ROCKET_FLYING_IDENT, ROCKET_FLYING);
+        Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
 
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);

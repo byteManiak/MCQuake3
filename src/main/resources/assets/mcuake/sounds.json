@@ -98,10 +98,16 @@
     ]
   },
   "plasmaball_hit": {
-  "sounds": [
-    "mcuake:plasmaball_hit"
-  ]
-},
+    "sounds": [
+      "mcuake:plasmaball_hit"
+    ]
+  },
+
+  "weapon_change": {
+    "sounds": [
+      "mcuake:weapon_change"
+    ]
+  },
 
   "angelyss_death": {
     "sounds": [

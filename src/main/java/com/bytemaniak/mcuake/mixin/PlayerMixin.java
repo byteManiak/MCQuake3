@@ -46,6 +46,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
+    private static final int[] defaultWeaponAmmo = {
+            0, 100, 10, 10, 5, 50, 100, 10, 20, 0
+    };
+
     private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> IN_QUAKE_MODE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -229,7 +233,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             weaponAmmo[slot.slot()]--;
             return false;
         } else {
-            weaponAmmo[slot.slot()] = 50;
+            weaponAmmo[slot.slot()] = defaultWeaponAmmo[slot.slot()];
             return true;
         }
     }

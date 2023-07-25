@@ -79,7 +79,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             world.playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
             prevMainHandStack = currentMainHandStack;
         }
-        return currentMainHandStack;
+        return super.getMainHandStack();
     }
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)

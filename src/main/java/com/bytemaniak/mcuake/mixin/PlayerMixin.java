@@ -47,7 +47,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final int[] defaultWeaponAmmo = {
-            0, 100, 10, 10, 5, 50, 100, 10, 20, 0
+            0, 100, 10, 10, 5, 100, 10, 50, 20, 0
     };
 
     private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
@@ -216,14 +216,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public void resetAmmo() {
-        weaponAmmo[WeaponSlot.MACHINEGUN.slot()] = 100;
-        weaponAmmo[WeaponSlot.SHOTGUN.slot()] = 10;
-        weaponAmmo[WeaponSlot.GRENADE_LAUNCHER.slot()] = 10;
-        weaponAmmo[WeaponSlot.ROCKET_LAUNCHER.slot()] = 5;
-        weaponAmmo[WeaponSlot.PLASMA_GUN.slot()] = 50;
-        weaponAmmo[WeaponSlot.LIGHTNING_GUN.slot()] = 100;
-        weaponAmmo[WeaponSlot.RAILGUN.slot()] = 10;
-        weaponAmmo[WeaponSlot.BFG10K.slot()] = 20;
+        System.arraycopy(defaultWeaponAmmo, 0, weaponAmmo, 0, weaponAmmo.length);
     }
 
     public boolean useAmmo(WeaponSlot slot) {

@@ -1,35 +1,35 @@
 {
   "schemaVersion": 1,
-  "id": "mcuake",
+  "id": "mcquake3",
   "version": "${version}",
 
-  "name": "MCuake",
+  "name": "MCQuake3",
   "description": "Quake3 mod for Minecraft",
   "authors": [
     "byteManiak"
   ],
   "contact": {
     "homepage": "https://github.com/bytemaniak",
-    "sources": "https://github.com/bytemaniak/MCuake"
+    "sources": "https://github.com/bytemaniak/MCQuake3"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/mcuake/icon.png",
+  "icon": "assets/mcquake3/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.bytemaniak.mcuake.MCuake"
+      "com.bytemaniak.mcquake3.MCQuake3"
     ],
     "client": [
-      "com.bytemaniak.mcuake.MCuakeClient"
+      "com.bytemaniak.mcquake3.MCQuake3Client"
     ],
     "server": [
-      "com.bytemaniak.mcuake.MCuakeServer"
+      "com.bytemaniak.mcquake3.MCQuake3Server"
     ]
   },
   "mixins": [
-    "mcuake.mixins.json"
+    "mcquake3.mixins.json"
   ],
 
   "depends": {

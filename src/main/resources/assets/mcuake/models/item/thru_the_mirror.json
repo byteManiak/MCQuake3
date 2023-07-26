@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "mcuake:item/thru_the_mirror"
-  }
-}

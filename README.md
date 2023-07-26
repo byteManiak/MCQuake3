@@ -1,6 +1,6 @@
-# MCuake
+# MCQuake3
 
-![MCuake Logo](src/main/resources/assets/mcuake/icon.png)
+![MCQuake3 Logo](src/main/resources/assets/mcquake3/icon.png)
 
 A Quake3 mod for Minecraft!
 
@@ -8,7 +8,7 @@ A Quake3 mod for Minecraft!
 
 Click the image to see a quick video showcase of all the features implemented so far
 
-[![MCuake showcase](http://img.youtube.com/vi/DRD0vbKIzwc/0.jpg)](https://www.youtube.com/watch?v=DRD0vbKIzwc "MCuake showcase")
+[![MCQuake3 showcase](http://img.youtube.com/vi/DRD0vbKIzwc/0.jpg)](https://www.youtube.com/watch?v=DRD0vbKIzwc "MCQuake3 showcase")
 
 # Credits
 - Gerd "Elysis" Raudenbusch - for the "Thru the Mirror" track

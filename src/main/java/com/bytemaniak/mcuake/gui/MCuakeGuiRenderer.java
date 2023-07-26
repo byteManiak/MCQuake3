@@ -33,8 +33,8 @@ public class MCuakeGuiRenderer implements HudRenderCallback {
             int playerHealth = player.getQuakeHealth();
             int playerArmor = player.getQuakeArmor();
             int healthColor = (playerHealth < 100) ?
-                    (((int)(0xFF * (100-playerHealth)/100.f)     << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
-                    (((int)(0xFF * (1-(playerHealth-100)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f)));
+                    (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
+                    (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
             drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
             drawText(matrixStack, String.valueOf(playerArmor), x + 105, y, 65280);
 

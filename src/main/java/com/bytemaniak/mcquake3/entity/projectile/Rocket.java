@@ -15,10 +15,18 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Rocket extends SimpleProjectile {
+public class Rocket extends SimpleProjectile implements GeoEntity {
     private static final int ROCKET_QUAKE_DAMAGE = 100;
     private static final int ROCKET_MC_DAMAGE = 4;
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Rocket(EntityType<? extends SimpleProjectile> entityType, World world) {
         super(entityType, world, ROCKET_QUAKE_DAMAGE, ROCKET_MC_DAMAGE, DamageSources.ROCKET_DAMAGE, 75);
@@ -64,4 +72,12 @@ public class Rocket extends SimpleProjectile {
     protected ParticleEffect getParticleType() {
         return ParticleTypes.POOF;
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", state -> PlayState.CONTINUE));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 }

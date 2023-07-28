@@ -13,3 +13,4 @@ Click the image to see a quick video showcase of all the features implemented so
 # Credits
 - Gerd "Elysis" Raudenbusch - for the "Thru the Mirror" track
 - The OpenArena project - for various assets
+- Ryoichi Tsunekawa - for the Bebas Neue font

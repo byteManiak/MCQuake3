@@ -53,7 +53,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
         super.onCollision(hitResult);
         if (!this.world.isClient) {
             Vec3d pos = this.getPos();
-            DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+            DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
             this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
             this.kill();
         }
@@ -62,7 +62,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     @Override
     protected void despawn() {
         Vec3d pos = this.getPos();
-        DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+        DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
         this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
 
         super.despawn();

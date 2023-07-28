@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -65,7 +65,7 @@ public class PlayerSettingsScreen extends Screen {
 
         public int getRowWidth() { return this.width; }
 
-        protected boolean isFocused() {
+        public boolean isFocused() {
             return PlayerSettingsScreen.this.getFocused() == this;
         }
 

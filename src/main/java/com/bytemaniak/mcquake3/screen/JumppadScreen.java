@@ -1,8 +1,8 @@
 package com.bytemaniak.mcquake3.screen;
 
 import com.bytemaniak.mcquake3.blocks.JumppadEntity;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.gui.SliderWidgetSettable;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -125,10 +125,10 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         };
 
         TextWidget powerForwardText = new TextWidget(Text.of("Forward:"), textRenderer);
-        powerForwardText.setPos(baseX - 39, baseY);
+        powerForwardText.setPosition(baseX - 39, baseY);
         powerForwardText.setWidth(0);
         TextWidget powerUpText = new TextWidget(Text.of("Upward:"), textRenderer);
-        powerUpText.setPos(baseX - 35, baseY + 22);
+        powerUpText.setPosition(baseX - 35, baseY + 22);
         powerUpText.setWidth(0);
         addDrawable(powerForwardText);
         addDrawable(powerUpText);

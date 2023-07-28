@@ -9,6 +9,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -32,10 +33,11 @@ public class Spikes extends Block {
         super.onEntityCollision(state, world, pos, entity);
         if (!world.isClient) {
             if (entity instanceof LivingEntity && entity.fallDistance > 0.75) {
+                DamageSource spikeDamage = Q3DamageSources.of(world, Q3DamageSources.SPIKES, null, null);
                 if (entity instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
-                    quakePlayer.takeDamage((int) (entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER), Q3DamageSources.SPIKES);
+                    quakePlayer.takeDamage((int) (entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER), spikeDamage);
                 } else {
-                    entity.damage(Q3DamageSources.SPIKES, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
+                    entity.damage(spikeDamage, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
                 }
             }
         }

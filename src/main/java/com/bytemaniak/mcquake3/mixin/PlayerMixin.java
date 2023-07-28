@@ -112,7 +112,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public float reduceFallDistance(float fallDistance) {
         float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
         if (isInQuakeMode() && newFallDistance >= 1) {
-            if (!world.isClient) takeDamage((int) newFallDistance, DamageSource.FALL);
+            if (!world.isClient) takeDamage((int) newFallDistance, world.getDamageSources().fall());
             // Don't take Minecraft fall damage if in Quake mode
             return 0;
         }
@@ -194,7 +194,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         } else {
             SoundEvent hurtSound;
             setQuakeHealth(quakeHealth);
-            if (damageSource.isFromFalling()) {
+            if (damageSource == world.getDamageSources().fall()) {
                 hurtSound = SoundEvent.of(playerSounds.FALL);
             } else {
                 if (quakeHealth > 75) hurtSound = SoundEvent.of(playerSounds.HURT100);

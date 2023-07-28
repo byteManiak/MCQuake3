@@ -5,12 +5,14 @@ import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     private int quakeDamageAmount, mcDamageAmount;
-    protected String damageType;
+    protected RegistryKey<DamageType> damageType;
     protected long lifetimeInTicks;
     protected long initTick;
 
@@ -22,11 +24,11 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
                             int quakeDamageAmount, int mcDamageAmount,
-                            String projectileName, int lifetimeInTicks) {
+                            RegistryKey<DamageType> damageType, int lifetimeInTicks) {
         this(entityType, world);
         this.quakeDamageAmount = quakeDamageAmount;
         this.mcDamageAmount = mcDamageAmount;
-        this.damageType = projectileName;
+        this.damageType = damageType;
         this.lifetimeInTicks = lifetimeInTicks;
         this.initTick = world.getTime();
     }
@@ -45,7 +47,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     protected void doDamage(Entity entity) {
         if (!world.isClient) {
-            DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(damageType, getOwner());
+            DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
 
             if (entity.isAlive() && entity instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
                 entity.damage(damageSource, quakeDamageAmount);

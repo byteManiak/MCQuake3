@@ -5,12 +5,15 @@ import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
@@ -21,14 +24,14 @@ public abstract class HitscanWeapon extends Weapon {
 
     private final int quakeDamageAmount;
     private final int mcDamageAmount;
-    private final String damageType;
+    private final RegistryKey<DamageType> damageType;
 
     private final float hitscanRange;
     private final float hitscanNumSteps;
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int quakeDamageAmount, int mcDamageAmount, String damageType,
+                            int quakeDamageAmount, int mcDamageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance) {
         super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
 
@@ -42,7 +45,7 @@ public abstract class HitscanWeapon extends Weapon {
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int quakeDamageAmount, int mcDamageAmount, String damageType,
+                            int quakeDamageAmount, int mcDamageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange) {
         this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .25f);
@@ -72,14 +75,16 @@ public abstract class HitscanWeapon extends Weapon {
             pos = pos.add(step);
             Vec3d minPos = pos.add(new Vec3d(-HITSCAN_RADIUS, -HITSCAN_RADIUS, -HITSCAN_RADIUS));
             Vec3d maxPos = pos.add(new Vec3d(HITSCAN_RADIUS, HITSCAN_RADIUS, HITSCAN_RADIUS));
-            BlockPos blockPos = new BlockPos(pos);
+
+            Vec3i posI = new Vec3i((int)pos.x, (int)pos.y, (int)pos.z);
+            BlockPos blockPos = new BlockPos(posI);
 
             Box collisionBox = new Box(minPos, maxPos);
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
             if (collided != null) {
                 if (!world.isClient) {
-                    DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(damageType, user);
+                    DamageSource damageSource = Q3DamageSources.of(world, damageType, user, user);
                     if (collided.isAlive() && collided instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
                         collided.damage(damageSource, quakeDamageAmount);
                     } else {

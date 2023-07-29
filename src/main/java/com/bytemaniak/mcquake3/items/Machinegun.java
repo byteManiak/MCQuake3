@@ -6,8 +6,11 @@ import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -35,6 +38,14 @@ public class Machinegun extends HitscanWeapon {
             setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 1.0);
         }
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
+    }
+
+    @Override
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
+        if (!world.isClient && isBlockCollision)
+            world.playSound(null, new BlockPos(iterPos), Sounds.BULLET_MISS, SoundCategory.NEUTRAL, 1, 1);
+
+        world.addParticle(ParticleTypes.LAVA, true, iterPos.x, iterPos.y, iterPos.z, Math.random()/5, 0.1, Math.random()/5);
     }
 
     @Override

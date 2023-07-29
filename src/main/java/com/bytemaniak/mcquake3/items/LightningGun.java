@@ -35,8 +35,9 @@ public class LightningGun extends HitscanWeapon {
     }
 
     @Override
-    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {
-        submitLightningGunTrail(world, user, userPos, iterPos);
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
+        if (world.isClient)
+            submitLightningGunTrail(world, user, userPos, iterPos);
     }
 
     @Environment(EnvType.CLIENT)

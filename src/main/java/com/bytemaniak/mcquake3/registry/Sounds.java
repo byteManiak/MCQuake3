@@ -53,6 +53,9 @@ public class Sounds {
     private static final Identifier LIGHTNING_HIT_IDENT = new Identifier("mcquake3", "lightning_hit");
     public static final SoundEvent LIGHTNING_HIT = SoundEvent.of(LIGHTNING_HIT_IDENT);
 
+    private static final Identifier BULLET_MISS_IDENT = new Identifier("mcquake3", "bullet_miss");
+    public static final SoundEvent BULLET_MISS = SoundEvent.of(BULLET_MISS_IDENT);
+
     private static final Identifier WEAPON_CHANGE_IDENT = new Identifier("mcquake3", "weapon_change");
     public static final SoundEvent WEAPON_CHANGE = SoundEvent.of(WEAPON_CHANGE_IDENT);
 
@@ -136,6 +139,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, GRENADE_BOUNCE_IDENT, GRENADE_BOUNCE);
         Registry.register(Registries.SOUND_EVENT, ROCKET_FLYING_IDENT, ROCKET_FLYING);
         Registry.register(Registries.SOUND_EVENT, LIGHTNING_HIT_IDENT, LIGHTNING_HIT);
+        Registry.register(Registries.SOUND_EVENT, BULLET_MISS_IDENT, BULLET_MISS);
         Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
 
         loadPlayerSounds(ANGELYSS);

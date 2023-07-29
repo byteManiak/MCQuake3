@@ -2,8 +2,6 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.DamageSources;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
@@ -50,8 +48,7 @@ public abstract class HitscanWeapon extends Weapon {
                 quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
     }
 
-    @Environment(EnvType.CLIENT)
-    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos) {}
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {}
 
     protected void onDamage(World world, LivingEntity attacked) {}
 
@@ -90,8 +87,8 @@ public abstract class HitscanWeapon extends Weapon {
                     }
 
                     onDamage(world, collided);
-                } else
-                    onProjectileCollision(world, user, offsetWeaponPos, pos);
+                }
+                onProjectileCollision(world, user, offsetWeaponPos, pos, false);
                 return;
             }
 
@@ -100,15 +97,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        if (world.isClient)
-                            onProjectileCollision(world, user, offsetWeaponPos, pos);
+                        onProjectileCollision(world, user, offsetWeaponPos, pos, true);
                         return;
                     }
                 }
             }
         }
 
-        if (world.isClient)
-            onProjectileCollision(world, user, offsetWeaponPos, pos);
+        onProjectileCollision(world, user, offsetWeaponPos, pos, false);
     }
 }

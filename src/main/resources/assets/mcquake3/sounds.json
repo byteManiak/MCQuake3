@@ -106,6 +106,14 @@
     ]
   },
 
+  "bullet_miss": {
+    "sounds": [
+      "mcquake3:bullet_miss1",
+      "mcquake3:bullet_miss2",
+      "mcquake3:bullet_miss3"
+    ]
+  },
+
   "weapon_change": {
     "sounds": [
       "mcquake3:weapon_change"

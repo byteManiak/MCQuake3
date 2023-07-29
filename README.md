@@ -11,5 +11,5 @@ Click the image to see a quick video showcase of all the features implemented so
 [![MCQuake3 showcase](http://img.youtube.com/vi/DRD0vbKIzwc/0.jpg)](https://www.youtube.com/watch?v=DRD0vbKIzwc "MCQuake3 showcase")
 
 # Credits
-- The OpenArena project - for various assets
-- Ryoichi Tsunekawa - for the Bebas Neue font
+- The OpenArena project - for various assets including all the weapon and player sounds, under the GPLv2 license: [About OpenArena](http://openarena.ws/about.html)
+- Ryoichi Tsunekawa - for the Bebas Neue font, under the Open Font License: [About Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue/about)

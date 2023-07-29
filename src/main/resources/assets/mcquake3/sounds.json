@@ -10,11 +10,6 @@
       "mcquake3:hit"
     ]
   },
-  "thru_the_mirror": {
-    "sounds": [
-      "mcquake3:thru_the_mirror"
-    ]
-  },
 
   "gauntlet_idle": {
     "sounds": [

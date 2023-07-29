@@ -22,8 +22,6 @@
   "item.mcquake3.shotgun": "Shotgun",
   "item.mcquake3.shotgun_ammo_box": "Shotgun Ammo Box",
   "item.mcquake3.spikes": "Spikes",
-  "item.mcquake3.thru_the_mirror": "Music Disc",
-  "item.mcquake3.thru_the_mirror.desc": "Elysis - Thru The Mirror",
   "item.mcquake3.tool": "MCQuake3 Tool",
   "itemGroup.mcquake3.mcquake3_logo": "MCQuake3",
   "death.attack.mcquake3.bfg10k": " %1$s has been forcefully relocated to hell by %2$s.",

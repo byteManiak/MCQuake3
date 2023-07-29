@@ -10,8 +10,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class MusicDiscs {
-    private static final Identifier THRU_THE_MIRROR_IDENT = new Identifier("mcquake3", "thru_the_mirror");
-
     private static void LoadDisc(Identifier id, int comparatorOutput) {
         MusicDiscItem musicDisc = new MusicDiscItem(comparatorOutput, SoundEvent.of(id), new Item.Settings().maxCount(1), 0);
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
@@ -20,9 +18,5 @@ public class MusicDiscs {
         ItemGroupEvents.modifyEntriesEvent(Items.MCQUAKE3_GROUP).register(content -> content.add(musicDisc));
     }
 
-    public static void LoadDiscs()
-    {
-        LoadDisc(THRU_THE_MIRROR_IDENT, 1);
-    }
-
+    public static void LoadDiscs() {}
 }

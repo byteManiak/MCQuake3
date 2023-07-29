@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
-import com.bytemaniak.mcquake3.registry.DamageSources;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +28,7 @@ public class Machinegun extends HitscanWeapon {
     public Machinegun() {
         super(QuakePlayer.WeaponSlot.MACHINEGUN, new Identifier("mcquake3", "machinegun"),
                 MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
-                MACHINEGUN_QUAKE_DAMAGE, MACHINEGUN_MC_DAMAGE, DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE);
+                MACHINEGUN_QUAKE_DAMAGE, MACHINEGUN_MC_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Machinegun extends HitscanWeapon {
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
         if (!world.isClient && isBlockCollision)
-            world.playSound(null, new BlockPos(iterPos), Sounds.BULLET_MISS, SoundCategory.NEUTRAL, 1, 1);
+            world.playSound(null, new BlockPos((int)iterPos.x, (int)iterPos.y, (int)iterPos.z), Sounds.BULLET_MISS, SoundCategory.NEUTRAL, 1, 1);
 
         world.addParticle(ParticleTypes.LAVA, true, iterPos.x, iterPos.y, iterPos.z, Math.random()/5, 0.1, Math.random()/5);
     }

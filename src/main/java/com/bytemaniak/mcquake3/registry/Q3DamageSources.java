@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 
-public class DamageSources {
+public class Q3DamageSources {
     public static final String GAUNTLET_DAMAGE = "mcquake3.gauntlet";
     public static final String MACHINEGUN_DAMAGE = "mcquake3.machinegun";
     public static final String SHOTGUN_DAMAGE = "mcquake3.shotgun";

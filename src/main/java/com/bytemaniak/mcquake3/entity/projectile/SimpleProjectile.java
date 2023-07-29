@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
-import com.bytemaniak.mcquake3.registry.DamageSources;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
@@ -45,7 +45,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     protected void doDamage(Entity entity) {
         if (!world.isClient) {
-            DamageSource damageSource = new DamageSources.QuakeDamageSource(damageType, getOwner());
+            DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(damageType, getOwner());
 
             if (entity.isAlive() && entity instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
                 entity.damage(damageSource, quakeDamageAmount);

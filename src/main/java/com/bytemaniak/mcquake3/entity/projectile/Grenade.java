@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
-import com.bytemaniak.mcquake3.registry.DamageSources;
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -21,7 +21,7 @@ public class Grenade extends SimpleProjectile {
     private static final int GRENADE_MC_DAMAGE = 4;
 
     public Grenade(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, GRENADE_QUAKE_DAMAGE, GRENADE_MC_DAMAGE, DamageSources.GRENADE_DAMAGE, 50);
+        super(entityType, world, GRENADE_QUAKE_DAMAGE, GRENADE_MC_DAMAGE, Q3DamageSources.GRENADE_DAMAGE, 50);
     }
 
     public Grenade(World world) { this(Entities.GRENADE, world); }
@@ -31,7 +31,7 @@ public class Grenade extends SimpleProjectile {
         super.onEntityHit(entityHitResult);
         if (!this.world.isClient) {
             Vec3d pos = this.getPos();
-            DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+            DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
             this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
             this.kill();
         }
@@ -60,7 +60,7 @@ public class Grenade extends SimpleProjectile {
     @Override
     protected void despawn() {
         Vec3d pos = this.getPos();
-        DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+        DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
         this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
 
         super.despawn();

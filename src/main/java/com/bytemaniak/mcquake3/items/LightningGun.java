@@ -2,7 +2,7 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.MCQuake3Client;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
-import com.bytemaniak.mcquake3.registry.DamageSources;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,7 +27,7 @@ public class LightningGun extends HitscanWeapon {
     public LightningGun() {
         super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, new Identifier("mcquake3", "lightning_gun"),
                 LIGHTNING_REFIRE_RATE, false, null, true,
-                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
+                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {

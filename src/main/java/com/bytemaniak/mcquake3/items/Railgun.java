@@ -2,7 +2,7 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.MCQuake3Client;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
-import com.bytemaniak.mcquake3.registry.DamageSources;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,7 +25,7 @@ public class Railgun extends HitscanWeapon {
     public Railgun() {
         super(QuakePlayer.WeaponSlot.RAILGUN, new Identifier("mcquake3", "railgun"),
                 RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
+                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
     }
 
     @Override

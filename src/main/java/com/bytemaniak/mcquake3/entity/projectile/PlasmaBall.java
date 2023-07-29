@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
-import com.bytemaniak.mcquake3.registry.DamageSources;
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.TrackedSound;
 import net.fabricmc.api.EnvType;
@@ -22,7 +22,7 @@ public class PlasmaBall extends SimpleProjectile {
     private static final int PLASMAGUN_MC_DAMAGE = 4;
 
     public PlasmaBall(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, PLASMAGUN_QUAKE_DAMAGE, PLASMAGUN_MC_DAMAGE, DamageSources.PLASMAGUN_DAMAGE, 75);
+        super(entityType, world, PLASMAGUN_QUAKE_DAMAGE, PLASMAGUN_MC_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, 75);
     }
 
     public PlasmaBall(World world) { this(Entities.PLASMA_BALL, world); }

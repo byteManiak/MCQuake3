@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
-import com.bytemaniak.mcquake3.registry.DamageSources;
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.TrackedSound;
 import net.fabricmc.api.EnvType;
@@ -29,7 +29,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Rocket(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, ROCKET_QUAKE_DAMAGE, ROCKET_MC_DAMAGE, DamageSources.ROCKET_DAMAGE, 75);
+        super(entityType, world, ROCKET_QUAKE_DAMAGE, ROCKET_MC_DAMAGE, Q3DamageSources.ROCKET_DAMAGE, 75);
     }
 
     public Rocket(World world) { this(Entities.ROCKET, world); }
@@ -53,7 +53,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
         super.onCollision(hitResult);
         if (!this.world.isClient) {
             Vec3d pos = this.getPos();
-            DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+            DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
             this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
             this.kill();
         }
@@ -62,7 +62,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     @Override
     protected void despawn() {
         Vec3d pos = this.getPos();
-        DamageSource damageSource = new DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
+        DamageSource damageSource = new Q3DamageSources.QuakeDamageSource(this.damageType, this.getOwner());
         this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
 
         super.despawn();

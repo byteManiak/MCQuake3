@@ -87,6 +87,8 @@ public abstract class Weapon extends Item implements GeoItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        if (!user.isAlive()) return;
+
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
         boolean clientside = world.isClient;

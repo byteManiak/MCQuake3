@@ -15,10 +15,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Grenade extends SimpleProjectile {
+public class Grenade extends SimpleProjectile implements GeoEntity {
     private static final int GRENADE_QUAKE_DAMAGE = 20;
     private static final int GRENADE_MC_DAMAGE = 4;
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Grenade(EntityType<? extends SimpleProjectile> entityType, World world) {
         super(entityType, world, GRENADE_QUAKE_DAMAGE, GRENADE_MC_DAMAGE, Q3DamageSources.GRENADE_DAMAGE, 50);
@@ -81,4 +89,12 @@ public class Grenade extends SimpleProjectile {
 
     @Override
     protected float getDrag() { return .925f; }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", state -> PlayState.CONTINUE));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
 }

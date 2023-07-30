@@ -1,0 +1,83 @@
+{
+	"providers": [
+		{
+			"type": "ttf",
+			"file": "mcquake3:bebasneue.ttf",
+			"shift": [0, 0],
+			"size": 24.0,
+			"oversample": 2.0
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/machinegun.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF1"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/shotgun.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF2"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/grenade.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF3"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/rocket.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF4"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/lightning_gun.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF5"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/railgun.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF6"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/plasmagun.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF7"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/bfg10k.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF8"
+			]
+		}
+	]
+}

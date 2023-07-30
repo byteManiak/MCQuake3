@@ -12,7 +12,7 @@ import net.minecraft.text.Style;
 import net.minecraft.util.Identifier;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
-    private static final Identifier QUAKE_FONT = new Identifier("mcquake3", "bebasneue");
+    private static final Identifier QUAKE_FONT = new Identifier("mcquake3", "quake_hud");
 
     private void drawText(MatrixStack matrixStack, String str, float x, float y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
@@ -38,7 +38,12 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
             drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
             drawText(matrixStack, String.valueOf(playerArmor), x + 105, y, 65280);
 
-            drawText(matrixStack, player.getCurrentWeapon().toString(), x - 170, y - 16, 0x00FFFFFF);
+            QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
+            if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot() > 0) {
+                int slotChar = '\uFFF0'+player.getCurrentWeapon().slot();
+                drawText(matrixStack, Character.toString((char)slotChar), x - 190, y - 16, 0x00FFFFFF);
+            }
+
             drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 170, y, 0x00FFFFFF);
         }
     }

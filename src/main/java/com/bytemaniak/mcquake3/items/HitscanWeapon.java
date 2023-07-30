@@ -45,7 +45,7 @@ public abstract class HitscanWeapon extends Weapon {
                             int quakeDamageAmount, int mcDamageAmount, String damageType,
                             float hitscanRange) {
         this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
-                quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .35f);
+                quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .25f);
     }
 
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {}

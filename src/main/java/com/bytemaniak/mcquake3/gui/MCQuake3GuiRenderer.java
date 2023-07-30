@@ -42,9 +42,8 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
             if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot() > 0) {
                 int slotChar = '\uFFF0'+player.getCurrentWeapon().slot();
                 drawText(matrixStack, Character.toString((char)slotChar), x - 190, y - 16, 0x00FFFFFF);
+                drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 170, y, 0x00FFFFFF);
             }
-
-            drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 170, y, 0x00FFFFFF);
         }
     }
 }

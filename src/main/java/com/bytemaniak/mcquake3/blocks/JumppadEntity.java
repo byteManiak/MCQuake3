@@ -25,6 +25,8 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
 
     public float forward_power = 0, up_power = 0;
 
+    public long lastTick = 0;
+
     private UUID lastPlayerUser;
     private JumppadScreenHandler lastScreen;
 

@@ -30,6 +30,8 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
 
+	private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
+
 	public Jumppad() {
 		super(FabricBlockSettings.of(Material.METAL));
 	}
@@ -80,8 +82,12 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 				entity.addVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
 				entity.velocityModified = true;
 				JumppadEntity jumppad = (JumppadEntity) world.getBlockEntity(pos);
-				if (jumppad != null && (jumppad.forward_power > 0 || jumppad.up_power > 0))
+				if (jumppad != null &&
+					world.getTime() - ent.lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN &&
+					(jumppad.forward_power > 0 || jumppad.up_power > 0)) {
 					world.playSound(null, pos, Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
+					ent.lastTick = world.getTime();
+				}
 			}
 		}
 	}

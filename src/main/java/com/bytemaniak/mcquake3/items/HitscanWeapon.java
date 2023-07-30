@@ -76,7 +76,7 @@ public abstract class HitscanWeapon extends Weapon {
             Vec3d minPos = pos.add(new Vec3d(-HITSCAN_RADIUS, -HITSCAN_RADIUS, -HITSCAN_RADIUS));
             Vec3d maxPos = pos.add(new Vec3d(HITSCAN_RADIUS, HITSCAN_RADIUS, HITSCAN_RADIUS));
 
-            Vec3i posI = new Vec3i((int)pos.x, (int)pos.y, (int)pos.z);
+            Vec3i posI = new Vec3i((int)Math.floor(pos.x), (int)Math.floor(pos.y), (int)Math.floor(pos.z));
             BlockPos blockPos = new BlockPos(posI);
 
             Box collisionBox = new Box(minPos, maxPos);

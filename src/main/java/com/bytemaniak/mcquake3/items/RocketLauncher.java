@@ -16,7 +16,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class RocketLauncher extends Weapon {
     private static final long ROCKET_REFIRE_RATE = 15;
-    private static final float ROCKET_PROJECTILE_SPEED = 0.15f;
+    private static final float ROCKET_PROJECTILE_SPEED = 1.5f;
 
     public RocketLauncher() {
         super(QuakePlayer.WeaponSlot.ROCKET_LAUNCHER, new Identifier("mcquake3", "rocket_launcher"),

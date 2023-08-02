@@ -26,6 +26,9 @@
     ],
     "server": [
       "com.bytemaniak.mcquake3.MCQuake3Server"
+    ],
+    "preLaunch": [
+      "com.bytemaniak.mcquake3.MCQuake3"
     ]
   },
   "mixins": [

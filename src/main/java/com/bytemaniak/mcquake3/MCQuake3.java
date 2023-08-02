@@ -1,12 +1,14 @@
 package com.bytemaniak.mcquake3;
 
 import com.bytemaniak.mcquake3.registry.*;
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib.GeckoLib;
 
-public class MCQuake3 implements ModInitializer {
+public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 	public static final Logger LOGGER = LoggerFactory.getLogger("mcquake3");
 
 	@Override
@@ -23,5 +25,10 @@ public class MCQuake3 implements ModInitializer {
 		Screens.loadScreens();
 
 		Packets.registerServerPackets();
+	}
+
+	@Override
+	public void onPreLaunch() {
+		MixinExtrasBootstrap.init();
 	}
 }

@@ -19,15 +19,14 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class Gauntlet extends HitscanWeapon {
     private static final long GAUNTLET_REFIRE_RATE = 10;
-    private static final int GAUNTLET_QUAKE_DAMAGE = 50;
-    private static final int GAUNTLET_MC_DAMAGE = 5;
+    private static final int GAUNTLET_DAMAGE = 5;
     private static final float GAUNTLET_RANGE = 2.5f;
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     public Gauntlet() {
         super(QuakePlayer.WeaponSlot.GAUNTLET, new Identifier("mcquake3", "gauntlet"),
                 GAUNTLET_REFIRE_RATE, false, null, true,
-                GAUNTLET_QUAKE_DAMAGE, GAUNTLET_MC_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
+                GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
                 GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP);
     }
 

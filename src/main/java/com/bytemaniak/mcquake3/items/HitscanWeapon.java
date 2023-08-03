@@ -22,8 +22,7 @@ public abstract class HitscanWeapon extends Weapon {
     private final static float HITSCAN_RADIUS = .1f;
     private final static float HITSCAN_VERTICAL_OFFSET = .3f;
 
-    private final int quakeDamageAmount;
-    private final int mcDamageAmount;
+    private final int damageAmount;
     private final RegistryKey<DamageType> damageType;
 
     private final float hitscanRange;
@@ -31,12 +30,11 @@ public abstract class HitscanWeapon extends Weapon {
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int quakeDamageAmount, int mcDamageAmount, RegistryKey<DamageType> damageType,
+                            int damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance) {
         super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
 
-        this.quakeDamageAmount = quakeDamageAmount;
-        this.mcDamageAmount = mcDamageAmount;
+        this.damageAmount = damageAmount;
         this.damageType = damageType;
 
         this.hitscanRange = hitscanRange;
@@ -45,10 +43,10 @@ public abstract class HitscanWeapon extends Weapon {
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int quakeDamageAmount, int mcDamageAmount, RegistryKey<DamageType> damageType,
+                            int damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange) {
         this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
-                quakeDamageAmount, mcDamageAmount, damageType, hitscanRange, .25f);
+                damageAmount, damageType, hitscanRange, .25f);
     }
 
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {}
@@ -85,7 +83,7 @@ public abstract class HitscanWeapon extends Weapon {
             if (collided != null) {
                 if (!world.isClient) {
                     DamageSource damageSource = Q3DamageSources.of(world, damageType, user, user);
-                    collided.damage(damageSource, mcDamageAmount);
+                    collided.damage(damageSource, damageAmount);
                     onDamage(world, collided);
                 }
                 onProjectileCollision(world, user, offsetWeaponPos, pos, false);

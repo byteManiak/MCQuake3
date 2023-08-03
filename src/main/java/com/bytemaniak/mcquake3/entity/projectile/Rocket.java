@@ -23,13 +23,12 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class Rocket extends SimpleProjectile implements GeoEntity {
-    private static final int ROCKET_QUAKE_DAMAGE = 100;
-    private static final int ROCKET_MC_DAMAGE = 4;
+    private static final int ROCKET_DAMAGE = 4;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Rocket(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, ROCKET_QUAKE_DAMAGE, ROCKET_MC_DAMAGE, Q3DamageSources.ROCKET_DAMAGE, 75);
+        super(entityType, world, ROCKET_DAMAGE, Q3DamageSources.ROCKET_DAMAGE, 75);
     }
 
     public Rocket(World world) { this(Entities.ROCKET, world); }

@@ -9,11 +9,10 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class Shell extends SimpleProjectile {
-    private static final int SHOTGUN_QUAKE_DAMAGE = 10;
-    private static final int SHOTGUN_MC_DAMAGE = 4;
+    private static final int SHOTGUN_DAMAGE = 4;
 
     public Shell(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, SHOTGUN_QUAKE_DAMAGE, SHOTGUN_MC_DAMAGE, Q3DamageSources.SHOTGUN_DAMAGE, 3);
+        super(entityType, world, SHOTGUN_DAMAGE, Q3DamageSources.SHOTGUN_DAMAGE, 3);
     }
 
     public Shell(World world) { this(Entities.SHELL, world); }

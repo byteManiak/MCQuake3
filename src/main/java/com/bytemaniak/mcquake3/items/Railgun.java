@@ -18,14 +18,13 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class Railgun extends HitscanWeapon {
     private static final int RAILGUN_REFIRE_TICK_RATE = 50;
-    private static final int RAILGUN_QUAKE_DAMAGE = 100;
-    private static final int RAILGUN_MC_DAMAGE = 10;
+    private static final int RAILGUN_DAMAGE = 10;
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
         super(QuakePlayer.WeaponSlot.RAILGUN, new Identifier("mcquake3", "railgun"),
                 RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_QUAKE_DAMAGE, RAILGUN_MC_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
+                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
     }
 
     @Override

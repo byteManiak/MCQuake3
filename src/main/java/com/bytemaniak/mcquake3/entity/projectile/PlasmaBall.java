@@ -18,11 +18,10 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class PlasmaBall extends SimpleProjectile {
-    private static final int PLASMAGUN_QUAKE_DAMAGE = 20;
-    private static final int PLASMAGUN_MC_DAMAGE = 4;
+    private static final int PLASMAGUN_DAMAGE = 4;
 
     public PlasmaBall(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, PLASMAGUN_QUAKE_DAMAGE, PLASMAGUN_MC_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, 75);
+        super(entityType, world, PLASMAGUN_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, 75);
     }
 
     public PlasmaBall(World world) { this(Entities.PLASMA_BALL, world); }

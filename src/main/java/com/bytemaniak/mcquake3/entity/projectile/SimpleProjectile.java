@@ -10,7 +10,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
-    private int quakeDamageAmount, mcDamageAmount;
+    private int damageAmount;
     protected RegistryKey<DamageType> damageType;
     protected long lifetimeInTicks;
     protected long initTick;
@@ -22,11 +22,9 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
-                            int quakeDamageAmount, int mcDamageAmount,
-                            RegistryKey<DamageType> damageType, int lifetimeInTicks) {
+                            int damageAmount, RegistryKey<DamageType> damageType, int lifetimeInTicks) {
         this(entityType, world);
-        this.quakeDamageAmount = quakeDamageAmount;
-        this.mcDamageAmount = mcDamageAmount;
+        this.damageAmount = damageAmount;
         this.damageType = damageType;
         this.lifetimeInTicks = lifetimeInTicks;
         this.initTick = world.getTime();
@@ -47,7 +45,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     protected void doDamage(Entity entity) {
         if (!world.isClient) {
             DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-            entity.damage(damageSource, mcDamageAmount);
+            entity.damage(damageSource, damageAmount);
             this.kill();
         }
     }

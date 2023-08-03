@@ -20,14 +20,13 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class LightningGun extends HitscanWeapon {
     private static final long LIGHTNING_REFIRE_RATE = 1;
-    private static final int LIGHTNING_QUAKE_DAMAGE = 8;
-    private static final int LIGHTNING_MC_DAMAGE = 2;
+    private static final int LIGHTNING_DAMAGE = 2;
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {
         super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, new Identifier("mcquake3", "lightning_gun"),
                 LIGHTNING_REFIRE_RATE, false, null, true,
-                LIGHTNING_QUAKE_DAMAGE, LIGHTNING_MC_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
+                LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {

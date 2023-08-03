@@ -85,12 +85,7 @@ public abstract class HitscanWeapon extends Weapon {
             if (collided != null) {
                 if (!world.isClient) {
                     DamageSource damageSource = Q3DamageSources.of(world, damageType, user, user);
-                    if (collided.isAlive() && collided instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
-                        collided.damage(damageSource, quakeDamageAmount);
-                    } else {
-                        collided.damage(damageSource, mcDamageAmount);
-                    }
-
+                    collided.damage(damageSource, mcDamageAmount);
                     onDamage(world, collided);
                 }
                 onProjectileCollision(world, user, offsetWeaponPos, pos, false);

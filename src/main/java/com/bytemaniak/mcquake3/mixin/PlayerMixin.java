@@ -3,28 +3,23 @@ package com.bytemaniak.mcquake3.mixin;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Items;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
@@ -37,8 +32,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Arrays;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
@@ -86,37 +79,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return super.getMainHandStack();
     }
 
-    @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
-    private void doQuakeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!this.world.isClient) {
-            Entity attacker = source.getAttacker();
-
-            /* Ignore incoming damage if it's not coming from a player in the same mode */
-            if (attacker instanceof QuakePlayer quakePlayer &&
-                    quakePlayer.isInQuakeMode() != this.isInQuakeMode()) {
-                cir.setReturnValue(false);
-            }
-            /* If INT_MAX damage was dealt, then the player is marked dead in Quake mode
-             * and we don't need to deal damage again (besides, this would recurse infinitely without this check) */
-            else if (isInQuakeMode() && (int)amount != Integer.MAX_VALUE) {
-                if (attacker instanceof PlayerEntity)
-                    ServerPlayNetworking.send((ServerPlayerEntity) attacker, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
-                takeDamage((int)amount, source);
-                cir.setReturnValue(true);
-            }
-        }
-    }
-
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {
-        float newFallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
-        if (isInQuakeMode() && newFallDistance >= 1) {
-            if (!world.isClient) takeDamage((int) newFallDistance, world.getDamageSources().fall());
-            // Don't take Minecraft fall damage if in Quake mode
-            return 0;
-        }
-        return newFallDistance;
+        return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
     }
 
     @Inject(method = "jump", at = @At("HEAD"))
@@ -180,32 +146,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
     public void setQuakeArmor(int amount) { this.dataTracker.set(QUAKE_ARMOR, amount); }
 
-    public void takeDamage(int amount, DamageSource damageSource) {
-        int quakeHealth = getQuakeHealth();
-        quakeHealth -= amount;
-        if (quakeHealth <= 0) {
-            this.damage(damageSource, Integer.MAX_VALUE);
-            resetAmmo();
-            // Reset weapon ticks so weapon delay doesn't apply to the newly-spawned player
-            Arrays.fill(weaponTicks, 0);
-            Arrays.fill(clientWeaponTicks, 0);
-            setQuakeHealth(100);
-            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.DEATH), SoundCategory.PLAYERS, 1, 1);
-        } else {
-            SoundEvent hurtSound;
-            setQuakeHealth(quakeHealth);
-            if (damageSource == world.getDamageSources().fall()) {
-                hurtSound = SoundEvent.of(playerSounds.FALL);
-            } else {
-                if (quakeHealth > 75) hurtSound = SoundEvent.of(playerSounds.HURT100);
-                else if (quakeHealth > 50) hurtSound = SoundEvent.of(playerSounds.HURT75);
-                else if (quakeHealth > 25) hurtSound = SoundEvent.of(playerSounds.HURT50);
-                else hurtSound = SoundEvent.of(playerSounds.HURT25);
-            }
-            world.playSoundFromEntity(null, this, hurtSound, SoundCategory.PLAYERS, 1, 1);
-        }
-    }
-
     public long getWeaponTick(WeaponSlot slot, boolean clientside) {
         return clientside ? clientWeaponTicks[slot.slot()] : weaponTicks[slot.slot()];
     }
@@ -248,7 +188,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (isInQuakeMode()) {
+        if (getMainHandStack().getItem() instanceof Weapon) {
             cir.setReturnValue(ActionResult.PASS);
         }
     }

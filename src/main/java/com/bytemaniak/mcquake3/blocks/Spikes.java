@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.blocks;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -34,11 +33,7 @@ public class Spikes extends Block {
         if (!world.isClient) {
             if (entity instanceof LivingEntity && entity.fallDistance > 0.75) {
                 DamageSource spikeDamage = Q3DamageSources.of(world, Q3DamageSources.SPIKES, null, null);
-                if (entity instanceof QuakePlayer quakePlayer && quakePlayer.isInQuakeMode()) {
-                    quakePlayer.takeDamage((int) (entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER), spikeDamage);
-                } else {
-                    entity.damage(spikeDamage, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
-                }
+                entity.damage(spikeDamage, entity.fallDistance * SPIKES_DAMAGE_MULTIPLIER);
             }
         }
     }

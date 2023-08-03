@@ -3,7 +3,6 @@ package com.bytemaniak.mcquake3.registry;
 import com.bytemaniak.mcquake3.network.c2s.JumppadPowerC2SPacket;
 import com.bytemaniak.mcquake3.network.c2s.PlayerClassUpdateC2SPacket;
 import com.bytemaniak.mcquake3.network.c2s.QuakeModeUpdateC2SPacket;
-import com.bytemaniak.mcquake3.network.s2c.DealtDamageS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.JumppadPowerS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -19,7 +18,6 @@ public class Packets {
 
     public static void registerClientPackets()
     {
-        ClientPlayNetworking.registerGlobalReceiver(Packets.DEALT_DAMAGE, DealtDamageS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
     }
 

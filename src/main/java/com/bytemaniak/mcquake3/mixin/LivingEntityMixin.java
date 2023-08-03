@@ -7,8 +7,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.TagKey;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -22,5 +24,13 @@ public class LivingEntityMixin {
                  damageType == DamageTypeTags.IS_EXPLOSION)) {
             return true;
         } else return original.call(damageSource, damageType);
+    }
+
+    @Redirect(method = "onDamaged", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;hurtTime:I", opcode = Opcodes.PUTFIELD))
+    private void cancelHurtTilt(LivingEntity entity, int value) {
+        DamageSource lastDamageSource = entity.getRecentDamageSource();
+        if (lastDamageSource != null && lastDamageSource.getName().contains("mcquake3"))
+            entity.hurtTime = entity.maxHurtTime = 0;
+        else entity.hurtTime = entity.maxHurtTime = value;
     }
 }

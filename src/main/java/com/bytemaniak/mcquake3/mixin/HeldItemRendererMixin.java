@@ -1,21 +1,21 @@
 package com.bytemaniak.mcquake3.mixin;
 
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.UseAction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(HeldItemRenderer.class)
 public class HeldItemRendererMixin {
-    @Redirect(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;"))
+    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;"))
     // When shooting a gun, don't play the bow animation as it looks out of place
-    private UseAction cancelFirstPersonBowAnimation(ItemStack instance) {
+    private UseAction cancelFirstPersonBowAnimation(ItemStack instance, Operation<UseAction> original) {
         if (instance.getItem() instanceof Weapon) {
             return UseAction.NONE;
-        }
-        return instance.getUseAction();
+        } else return original.call(instance);
     }
 }

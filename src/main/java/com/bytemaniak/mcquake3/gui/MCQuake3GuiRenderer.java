@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralTextContent;
@@ -24,13 +25,14 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
     }
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
+        ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
         if (player.isInQuakeMode()) {
             Window window = MinecraftClient.getInstance().getWindow();
             int x = window.getScaledWidth()/2;
             int y = window.getScaledHeight() - 10;
-            int playerHealth = player.getQuakeHealth();
+            int playerHealth = (int)(plr.getHealth()*5);
             int playerArmor = player.getQuakeArmor();
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :

@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class Machinegun extends HitscanWeapon {
     private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
-    private static final int MACHINEGUN_DAMAGE = 2;
+    private static final float MACHINEGUN_DAMAGE = MiscUtils.toMCDamage(7);
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {

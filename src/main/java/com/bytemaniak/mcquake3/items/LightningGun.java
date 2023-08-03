@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.MCQuake3Client;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +21,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class LightningGun extends HitscanWeapon {
     private static final long LIGHTNING_REFIRE_RATE = 1;
-    private static final int LIGHTNING_DAMAGE = 2;
+    private static final float LIGHTNING_DAMAGE = MiscUtils.toMCDamage(8);
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {

@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.MCQuake3Client;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +19,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class Railgun extends HitscanWeapon {
     private static final int RAILGUN_REFIRE_TICK_RATE = 50;
-    private static final int RAILGUN_DAMAGE = 10;
+    private static final float RAILGUN_DAMAGE = MiscUtils.toMCDamage(100);
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {

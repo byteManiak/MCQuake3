@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.registry.Entities;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.TrackedSound;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -18,7 +19,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class PlasmaBall extends SimpleProjectile {
-    private static final int PLASMAGUN_DAMAGE = 4;
+    private static final float PLASMAGUN_DAMAGE = MiscUtils.toMCDamage(20);
 
     public PlasmaBall(EntityType<? extends SimpleProjectile> entityType, World world) {
         super(entityType, world, PLASMAGUN_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, 75);

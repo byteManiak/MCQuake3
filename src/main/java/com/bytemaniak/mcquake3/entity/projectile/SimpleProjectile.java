@@ -10,7 +10,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
-    private int damageAmount;
+    private float damageAmount;
     protected RegistryKey<DamageType> damageType;
     protected long lifetimeInTicks;
     protected long initTick;
@@ -22,7 +22,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
-                            int damageAmount, RegistryKey<DamageType> damageType, int lifetimeInTicks) {
+                            float damageAmount, RegistryKey<DamageType> damageType, int lifetimeInTicks) {
         this(entityType, world);
         this.damageAmount = damageAmount;
         this.damageType = damageType;

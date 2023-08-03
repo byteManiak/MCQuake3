@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class Gauntlet extends HitscanWeapon {
     private static final long GAUNTLET_REFIRE_RATE = 10;
-    private static final int GAUNTLET_DAMAGE = 5;
+    private static final float GAUNTLET_DAMAGE = MiscUtils.toMCDamage(50);
     private static final float GAUNTLET_RANGE = 2.5f;
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 

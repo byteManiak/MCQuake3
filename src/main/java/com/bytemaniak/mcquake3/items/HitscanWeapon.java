@@ -22,7 +22,7 @@ public abstract class HitscanWeapon extends Weapon {
     private final static float HITSCAN_RADIUS = .1f;
     private final static float HITSCAN_VERTICAL_OFFSET = .3f;
 
-    private final int damageAmount;
+    private final float damageAmount;
     private final RegistryKey<DamageType> damageType;
 
     private final float hitscanRange;
@@ -30,7 +30,7 @@ public abstract class HitscanWeapon extends Weapon {
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int damageAmount, RegistryKey<DamageType> damageType,
+                            float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance) {
         super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
 
@@ -43,7 +43,7 @@ public abstract class HitscanWeapon extends Weapon {
 
     protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                            int damageAmount, RegistryKey<DamageType> damageType,
+                            float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange) {
         this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 damageAmount, damageType, hitscanRange, .25f);

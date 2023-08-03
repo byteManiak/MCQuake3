@@ -139,10 +139,8 @@ public class PlayerSettingsScreen extends Screen {
             this.toggleGameMode.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_MODE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 120, height - 24, 100, 20).build();
-        addDrawable(voiceList);
-        addDrawable(toggleGameMode);
-        addSelectableChild(voiceList);
-        addSelectableChild(toggleGameMode);
+        addDrawableChild(voiceList);
+        addDrawableChild(toggleGameMode);
         super.init();
     }
 

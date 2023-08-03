@@ -130,23 +130,15 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         TextWidget powerUpText = new TextWidget(Text.of("Upward:"), textRenderer);
         powerUpText.setPosition(baseX - 35, baseY + 22);
         powerUpText.setWidth(0);
-        addDrawable(powerForwardText);
-        addDrawable(powerUpText);
+        addDrawableChild(powerForwardText);
+        addDrawableChild(powerUpText);
 
-        addDrawable(updatePower);
-        addDrawable(incrementForward);
-        addDrawable(decrementForward);
-        addDrawable(powerForward);
-        addDrawable(incrementUp);
-        addDrawable(decrementUp);
-        addDrawable(powerUp);
-
-        addSelectableChild(updatePower);
-        addSelectableChild(incrementForward);
-        addSelectableChild(decrementForward);
-        addSelectableChild(powerForward);
-        addSelectableChild(incrementUp);
-        addSelectableChild(decrementUp);
-        addSelectableChild(powerUp);
+        addDrawableChild(updatePower);
+        addDrawableChild(incrementForward);
+        addDrawableChild(decrementForward);
+        addDrawableChild(powerForward);
+        addDrawableChild(incrementUp);
+        addDrawableChild(decrementUp);
+        addDrawableChild(powerUp);
     }
 }

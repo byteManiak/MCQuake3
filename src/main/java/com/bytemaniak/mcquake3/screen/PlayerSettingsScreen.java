@@ -113,7 +113,7 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     private PlayerVoiceList voiceList;
-    private ButtonWidget toggleGameMode;
+    private ButtonWidget toggleGui;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -122,25 +122,25 @@ public class PlayerSettingsScreen extends Screen {
 
     protected void init() {
         voiceList = new PlayerVoiceList(client, width / 2 - 40, height / 2 - 100, 80, 200, 18);
-        String buttonText = user.isInQuakeMode() ? "Quake mode" : "Minecraft mode";
-        toggleGameMode = ButtonWidget.builder(Text.of(buttonText), (button) -> {
-            user.toggleQuakeMode();
+        String buttonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
+        toggleGui = ButtonWidget.builder(Text.of(buttonText), (button) -> {
+            user.toggleQuakeGui();
 
-            boolean inQuakeMode = user.isInQuakeMode();
+            boolean quakeGuiEnabled = user.quakeGuiEnabled();
             String newButtonText;
-            if (inQuakeMode) {
+            if (quakeGuiEnabled) {
                 SoundUtils.playSoundLocally(Sounds.DAMAGE_DEALT);
-                newButtonText = "Quake mode";
+                newButtonText = "Disable Quake GUI";
             } else {
                 SoundUtils.playSoundLocally(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-                newButtonText = "Minecraft mode";
+                newButtonText = "Enable Quake GUI";
             }
 
-            this.toggleGameMode.setMessage(Text.of(newButtonText));
-            ClientPlayNetworking.send(Packets.QUAKE_MODE_UPDATE, PacketByteBufs.empty());
+            this.toggleGui.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 120, height - 24, 100, 20).build();
         addDrawableChild(voiceList);
-        addDrawableChild(toggleGameMode);
+        addDrawableChild(toggleGui);
         super.init();
     }
 

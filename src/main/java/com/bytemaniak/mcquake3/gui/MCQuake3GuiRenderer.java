@@ -28,17 +28,15 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
-        if (player.isInQuakeMode()) {
+        if (player.quakeGuiEnabled()) {
             Window window = MinecraftClient.getInstance().getWindow();
             int x = window.getScaledWidth()/2;
             int y = window.getScaledHeight() - 10;
             int playerHealth = (int)(plr.getHealth()*5);
-            int playerArmor = player.getQuakeArmor();
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
                     (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
             drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
-            drawText(matrixStack, String.valueOf(playerArmor), x + 105, y, 65280);
 
             QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
             if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot() > 0) {

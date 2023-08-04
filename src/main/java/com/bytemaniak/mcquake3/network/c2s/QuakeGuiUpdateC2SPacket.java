@@ -7,10 +7,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class QuakeModeUpdateC2SPacket {
+public class QuakeGuiUpdateC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         if (player instanceof QuakePlayer quakePlayer) {
-            quakePlayer.toggleQuakeMode();
+            quakePlayer.toggleQuakeGui();
         }
     }
 }

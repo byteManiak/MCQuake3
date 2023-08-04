@@ -36,15 +36,9 @@ public interface QuakePlayer {
         }
     };
 
-    public void toggleQuakeMode();
-    public boolean isInQuakeMode();
-    public void setQuakeMode(boolean enabled);
-
-    public void setQuakeHealth(int amount);
-    public void setQuakeArmor(int amount);
-
-    public int getQuakeHealth();
-    public int getQuakeArmor();
+    public void toggleQuakeGui();
+    public boolean quakeGuiEnabled();
+    public void setQuakeGui(boolean enabled);
 
     public void resetAmmo();
 

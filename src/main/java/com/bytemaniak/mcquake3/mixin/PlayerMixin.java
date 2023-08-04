@@ -43,9 +43,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             0, 100, 10, 10, 5, 100, 10, 50, 20, 0
     };
 
-    private static final TrackedData<Integer> QUAKE_HEALTH = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<Boolean> IN_QUAKE_MODE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
@@ -86,22 +84,18 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "jump", at = @At("HEAD"))
     private void playQuakeJumpSound(CallbackInfo ci) {
-        if (isInQuakeMode()) world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+        if (quakeGuiEnabled()) world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putInt("quake_health", getQuakeHealth());
-        nbt.putInt("quake_armor", getQuakeArmor());
-        nbt.putBoolean("quake_mode", isInQuakeMode());
+        nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", playerSounds.playerClass);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        this.dataTracker.set(QUAKE_HEALTH, nbt.getInt("quake_health"));
-        this.dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_armor"));
-        this.dataTracker.set(IN_QUAKE_MODE, nbt.getBoolean("quake_mode"));
+        this.dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         this.dataTracker.set(QUAKE_PLAYER_SOUNDS, quakePlayerSounds);
@@ -110,15 +104,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
-        this.dataTracker.startTracking(QUAKE_HEALTH, 100);
-        this.dataTracker.startTracking(QUAKE_ARMOR, 0);
-        this.dataTracker.startTracking(IN_QUAKE_MODE, false);
+        this.dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
     private void noDropInventoryInQuakeMode(CallbackInfo ci) {
-        if (this.isInQuakeMode()) ci.cancel();
+        if (this.quakeGuiEnabled()) ci.cancel();
     }
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
@@ -129,21 +121,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return stack;
     }
 
-    public void toggleQuakeMode() {
-        boolean newMode = !this.dataTracker.get(IN_QUAKE_MODE);
-        this.dataTracker.set(IN_QUAKE_MODE, newMode);
+    public void toggleQuakeGui() {
+        boolean guiMode = !this.dataTracker.get(QUAKE_GUI_ENABLED);
+        this.dataTracker.set(QUAKE_GUI_ENABLED, guiMode);
     }
 
-    public boolean isInQuakeMode() { return !isCreative() && !isSpectator() && this.dataTracker.get(IN_QUAKE_MODE); }
-    public void setQuakeMode(boolean enabled) { this.dataTracker.set(IN_QUAKE_MODE, enabled); }
-
-    public int getQuakeHealth() { return this.dataTracker.get(QUAKE_HEALTH); }
-    public void setQuakeHealth(int amount) {
-        this.dataTracker.set(QUAKE_HEALTH, amount);
-    }
-
-    public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
-    public void setQuakeArmor(int amount) { this.dataTracker.set(QUAKE_ARMOR, amount); }
+    public boolean quakeGuiEnabled() { return this.dataTracker.get(QUAKE_GUI_ENABLED); }
+    public void setQuakeGui(boolean enabled) { this.dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
 
     public long getWeaponTick(WeaponSlot slot) {
         return weaponTicks[slot.slot()];

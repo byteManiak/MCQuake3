@@ -21,10 +21,10 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
     private void copyFromQuakePlayer(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
         QuakePlayer thisQuakePlayer = (QuakePlayer) this;
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
-        thisQuakePlayer.setQuakeMode(oldQuakePlayer.isInQuakeMode());
+        thisQuakePlayer.setQuakeGui(oldQuakePlayer.quakeGuiEnabled());
 
         // Don't remove inventory and XP if in Quake mode
-        if (oldQuakePlayer.isInQuakeMode()) {
+        if (oldQuakePlayer.quakeGuiEnabled()) {
             this.getInventory().clone(oldPlayer.getInventory());
             this.experienceLevel = oldPlayer.experienceLevel;
             this.totalExperience = oldPlayer.totalExperience;

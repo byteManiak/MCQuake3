@@ -69,6 +69,12 @@
     ]
   },
 
+  "bfg10k": {
+    "sounds": [
+      "mcquake3:bfg10k"
+    ]
+  },
+
   "grenade_launcher": {
     "sounds": [
       "mcquake3:grenade_launcher"

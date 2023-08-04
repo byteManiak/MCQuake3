@@ -24,6 +24,7 @@ public class Items {
     public static final Item RAILGUN = new Railgun();
     public static final Item PLASMAGUN = new Plasmagun();
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
+    public static final Item BFG10K = new BFG10K();
 
     public static final Item MACHINEGUN_AMMO = new Item(new FabricItemSettings());
     public static final Item SHOTGUN_AMMO = new Item(new FabricItemSettings());
@@ -48,6 +49,7 @@ public class Items {
         loadItem(RAILGUN, new Identifier("mcquake3", "railgun"));
         loadItem(PLASMAGUN, new Identifier("mcquake3", "plasmagun"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3", "rocket_launcher"));
+        loadItem(BFG10K, new Identifier("mcquake3", "bfg10k"));
 
         loadItem(MACHINEGUN_AMMO, new Identifier("mcquake3", "machinegun_ammo_box"));
         loadItem(SHOTGUN_AMMO, new Identifier("mcquake3", "shotgun_ammo_box"));

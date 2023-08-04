@@ -1,9 +1,6 @@
 package com.bytemaniak.mcquake3;
 
-import com.bytemaniak.mcquake3.entity.projectile.render.GrenadeRenderer;
-import com.bytemaniak.mcquake3.entity.projectile.render.PlasmaBallRenderer;
-import com.bytemaniak.mcquake3.entity.projectile.render.RocketRenderer;
-import com.bytemaniak.mcquake3.entity.projectile.render.ShellRenderer;
+import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Entities;
@@ -32,6 +29,7 @@ public class MCQuake3Client implements ClientModInitializer {
         EntityRendererRegistry.register(Entities.SHELL, ShellRenderer::new);
         EntityRendererRegistry.register(Entities.GRENADE, GrenadeRenderer::new);
         EntityRendererRegistry.register(Entities.ROCKET, RocketRenderer::new);
+        EntityRendererRegistry.register(Entities.BFG10K_PROJECTILE, BFG10KProjectileRenderer::new);
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

@@ -37,6 +37,9 @@ public class Sounds {
     private static final Identifier GAUNTLET_HUM_IDENT = new Identifier("mcquake3", "gauntlet_idle");
     public static final SoundEvent GAUNTLET_HUM = SoundEvent.of(GAUNTLET_HUM_IDENT);
 
+    private static final Identifier BFG10K_FIRE_IDENT = new Identifier("mcquake3", "bfg10k");
+    public static final SoundEvent BFG10K_FIRE = SoundEvent.of(BFG10K_FIRE_IDENT);
+
     private static final Identifier GRENADE_FIRE_IDENT = new Identifier("mcquake3", "grenade_launcher");
     public static final SoundEvent GRENADE_FIRE = SoundEvent.of(GRENADE_FIRE_IDENT);
     private static final Identifier GRENADE_BOUNCE_IDENT = new Identifier("mcquake3", "grenade_bounce");
@@ -132,6 +135,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, RAILGUN_FIRE_IDENT, RAILGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, RAILGUN_HUM_IDENT, RAILGUN_HUM);
         Registry.register(Registries.SOUND_EVENT, SHOTGUN_FIRE_IDENT, SHOTGUN_FIRE);
+        Registry.register(Registries.SOUND_EVENT, BFG10K_FIRE_IDENT, BFG10K_FIRE);
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_DAMAGE_IDENT, GAUNTLET_DAMAGE);
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_ACTIVE_IDENT, GAUNTLET_ACTIVE);
         Registry.register(Registries.SOUND_EVENT, GAUNTLET_HUM_IDENT, GAUNTLET_HUM);

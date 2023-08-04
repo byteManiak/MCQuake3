@@ -52,7 +52,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private final int[] weaponAmmo = new int[10];
 
     private final long[] weaponTicks = new long[9];
-    private final long[] clientWeaponTicks = new long[9];
 
     private Sounds.PlayerSounds playerSounds = Sounds.TONY;
 
@@ -146,13 +145,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public int getQuakeArmor() { return this.dataTracker.get(QUAKE_ARMOR); }
     public void setQuakeArmor(int amount) { this.dataTracker.set(QUAKE_ARMOR, amount); }
 
-    public long getWeaponTick(WeaponSlot slot, boolean clientside) {
-        return clientside ? clientWeaponTicks[slot.slot()] : weaponTicks[slot.slot()];
+    public long getWeaponTick(WeaponSlot slot) {
+        return weaponTicks[slot.slot()];
     }
 
-    public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside) {
-        if (clientside) clientWeaponTicks[slot.slot()] = tick;
-        else weaponTicks[slot.slot()] = tick;
+    public void setWeaponTick(WeaponSlot slot, long tick) {
+        weaponTicks[slot.slot()] = tick;
     }
 
     public void resetAmmo() {

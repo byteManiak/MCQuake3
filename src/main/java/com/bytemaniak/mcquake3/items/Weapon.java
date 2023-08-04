@@ -93,7 +93,7 @@ public abstract class Weapon extends Item implements GeoItem {
         QuakePlayer player = (QuakePlayer) user;
         boolean clientside = world.isClient;
 
-        if (currentTick - player.getWeaponTick(weaponSlot, clientside) >= refireRate) {
+        if (currentTick - player.getWeaponTick(weaponSlot) >= refireRate) {
             if (!player.useAmmo(weaponSlot)) {
                 // Whatever projectile the weapon shoots, its initial position is approximated
                 // to be shot from the held weapon, not from the player's eye
@@ -107,7 +107,7 @@ public abstract class Weapon extends Item implements GeoItem {
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
                 }
             }
-            player.setWeaponTick(weaponSlot, currentTick, clientside);
+            player.setWeaponTick(weaponSlot, currentTick);
         }
     }
 

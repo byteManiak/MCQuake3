@@ -56,8 +56,8 @@ public interface QuakePlayer {
 
     public void takeDamage(int amount, DamageSource damageSource);
 
-    public long getWeaponTick(WeaponSlot slot, boolean clientside);
-    public void setWeaponTick(WeaponSlot slot, long tick, boolean clientside);
+    public long getWeaponTick(WeaponSlot slot);
+    public void setWeaponTick(WeaponSlot slot, long tick);
 
     public String getPlayerVoice();
     public void setPlayerVoice(String soundsSet);

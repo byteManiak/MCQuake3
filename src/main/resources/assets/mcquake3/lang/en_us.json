@@ -3,6 +3,7 @@
   "entity.mcquake3.shell": "Shell",
   "block.mcquake3.jumppad": "Jump Pad",
   "block.mcquake3.spikes": "Spikes",
+  "item.mcquake3.bfg10k": "BFG10K",
   "item.mcquake3.bfg_ammo_box": "BFG10K Ammo Box",
   "item.mcquake3.gauntlet": "Gauntlet",
   "item.mcquake3.grenade_ammo_box": "Grenade Gun Ammo Box",

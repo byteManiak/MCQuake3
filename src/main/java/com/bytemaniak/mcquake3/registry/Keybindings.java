@@ -15,7 +15,7 @@ public class Keybindings {
         playerSettingsMenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.mcquake3.playermenu",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_P,
+                GLFW.GLFW_KEY_O,
                 "category.mcquake3.bindings"));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {

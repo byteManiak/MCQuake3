@@ -129,7 +129,7 @@ public class PlayerSettingsScreen extends Screen {
 
             this.toggleGui.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 120, height - 24, 100, 20).build();
+        }).dimensions(width - 140, height - 24, 120, 20).build();
 
         String playerSoundsButtonText = user.quakePlayerSoundsEnabled() ? "Disable player sounds" : "Enable player sounds";
         togglePlayerSounds = ButtonWidget.builder(Text.of(playerSoundsButtonText), (button) -> {
@@ -142,12 +142,17 @@ public class PlayerSettingsScreen extends Screen {
 
             this.togglePlayerSounds.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_PLAYER_SOUNDS_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 120, height - 48, 100, 20).build();
+        }).dimensions(width - 140, height - 48, 120, 20).build();
+
+        ButtonWidget giveWeapons = ButtonWidget.builder(Text.of("Give me a full arsenal"), (button -> {
+            ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty());
+        })).dimensions(width / 4, height - 24, width / 3, 20).build();
 
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
         addDrawableChild(togglePlayerSounds);
+        addDrawableChild(giveWeapons);
         super.init();
     }
 

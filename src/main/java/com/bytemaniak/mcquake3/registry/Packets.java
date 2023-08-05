@@ -1,9 +1,6 @@
 package com.bytemaniak.mcquake3.registry;
 
-import com.bytemaniak.mcquake3.network.c2s.JumppadPowerC2SPacket;
-import com.bytemaniak.mcquake3.network.c2s.PlayerClassUpdateC2SPacket;
-import com.bytemaniak.mcquake3.network.c2s.QuakeGuiUpdateC2SPacket;
-import com.bytemaniak.mcquake3.network.c2s.QuakePlayerSoundsUpdateC2SPacket;
+import com.bytemaniak.mcquake3.network.c2s.*;
 import com.bytemaniak.mcquake3.network.s2c.JumppadPowerS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -16,6 +13,7 @@ public class Packets {
     public static final Identifier QUAKE_GUI_UPDATE = new Identifier("mcquake3", "quake_gui_update");
     public static final Identifier QUAKE_PLAYER_SOUNDS_UPDATE = new Identifier("mcquake3", "quake_player_sounds_update");
     public static final Identifier PLAYER_CLASS_UPDATE = new Identifier("mcquake3", "player_class_update");
+    public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3", "full_arsenal_request");
 
     public static void registerClientPackets()
     {
@@ -28,5 +26,6 @@ public class Packets {
         ServerPlayNetworking.registerGlobalReceiver(Packets.QUAKE_GUI_UPDATE, QuakeGuiUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(Packets.QUAKE_PLAYER_SOUNDS_UPDATE, QuakePlayerSoundsUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(Packets.PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(Packets.FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);
     }
 }

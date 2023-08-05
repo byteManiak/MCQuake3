@@ -114,7 +114,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putBoolean("quake_player_sounds_enabled", quakePlayerSoundsEnabled());
-        nbt.putString("quake_player_sounds", playerSounds.playerClass);
+        nbt.putString("quake_player_sounds", this.dataTracker.get(QUAKE_PLAYER_SOUNDS));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))

@@ -11,7 +11,8 @@
   ],
   "client": [
     "ClientPlayerMixin",
-    "HeldItemRendererMixin"
+    "HeldItemRendererMixin",
+    "ClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

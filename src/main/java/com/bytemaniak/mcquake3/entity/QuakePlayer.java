@@ -40,6 +40,10 @@ public interface QuakePlayer {
     public boolean quakeGuiEnabled();
     public void setQuakeGui(boolean enabled);
 
+    public void toggleQuakePlayerSounds();
+    public boolean quakePlayerSoundsEnabled();
+    public void setQuakePlayerSoundsEnabled(boolean enabled);
+
     public void resetAmmo();
 
     // Returns true if the player used up all the weapon ammo

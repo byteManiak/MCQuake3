@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -25,6 +26,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,6 +46,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     };
 
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> QUAKE_PLAYER_SOUNDS_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
@@ -84,18 +87,40 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "jump", at = @At("HEAD"))
     private void playQuakeJumpSound(CallbackInfo ci) {
-        if (quakeGuiEnabled()) world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+        if (quakePlayerSoundsEnabled())
+            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+    }
+
+    @Nullable
+    @Override
+    public SoundEvent getHurtSound(DamageSource source) {
+        if (quakePlayerSoundsEnabled()) {
+            if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+            else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
+            else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
+            else return SoundEvent.of(playerSounds.HURT25);
+        }
+        return super.getHurtSound(source);
+    }
+
+    @Nullable
+    @Override
+    public SoundEvent getDeathSound() {
+        if (quakePlayerSoundsEnabled()) return SoundEvent.of(playerSounds.DEATH);
+        return super.getDeathSound();
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
+        nbt.putBoolean("quake_player_sounds_enabled", quakePlayerSoundsEnabled());
         nbt.putString("quake_player_sounds", playerSounds.playerClass);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         this.dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
+        this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, nbt.getBoolean("quake_player_sounds_enabled"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         this.dataTracker.set(QUAKE_PLAYER_SOUNDS, quakePlayerSounds);
@@ -105,6 +130,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
         this.dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
+        this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS_ENABLED, false);
         this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
     }
 
@@ -128,6 +154,14 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     public boolean quakeGuiEnabled() { return this.dataTracker.get(QUAKE_GUI_ENABLED); }
     public void setQuakeGui(boolean enabled) { this.dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
+
+    public void toggleQuakePlayerSounds() {
+        boolean playerSounds = !this.dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED);
+        this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, playerSounds);
+    }
+
+    public boolean quakePlayerSoundsEnabled() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED); }
+    public void setQuakePlayerSoundsEnabled(boolean enabled) { this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, enabled); }
 
     public long getWeaponTick(WeaponSlot slot) {
         return weaponTicks[slot.slot()];

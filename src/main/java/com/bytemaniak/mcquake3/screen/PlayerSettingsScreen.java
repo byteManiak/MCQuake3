@@ -4,27 +4,21 @@ import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
-import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class PlayerSettingsScreen extends Screen {
@@ -104,16 +98,9 @@ public class PlayerSettingsScreen extends Screen {
 
     }
 
-    private static final Identifier TEXTURE = new Identifier("mcquake3", "textures/gui/settings.png");
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        drawTexture(matrices, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
-    }
-
     private PlayerVoiceList voiceList;
     private ButtonWidget toggleGui;
+    private ButtonWidget togglePlayerSounds;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -121,9 +108,13 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     protected void init() {
-        voiceList = new PlayerVoiceList(client, width / 2 - 40, height / 2 - 100, 80, 200, 18);
-        String buttonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
-        toggleGui = ButtonWidget.builder(Text.of(buttonText), (button) -> {
+        ButtonWidget voiceSelectionText = ButtonWidget.builder(Text.of("Player voice"), (button -> {}))
+                .dimensions(20, 20, (int)(width/6.5f), 20).build();
+
+        voiceList = new PlayerVoiceList(client, 20, 45, (int)(width/6.5f), height - 65, 18);
+
+        String guiButtonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
+        toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {
             user.toggleQuakeGui();
 
             boolean quakeGuiEnabled = user.quakeGuiEnabled();
@@ -139,22 +130,31 @@ public class PlayerSettingsScreen extends Screen {
             this.toggleGui.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 120, height - 24, 100, 20).build();
+
+        String playerSoundsButtonText = user.quakePlayerSoundsEnabled() ? "Disable player sounds" : "Enable player sounds";
+        togglePlayerSounds = ButtonWidget.builder(Text.of(playerSoundsButtonText), (button) -> {
+            user.toggleQuakePlayerSounds();
+
+            boolean quakePlayerSoundsEnabled = user.quakePlayerSoundsEnabled();
+            String newButtonText;
+            if (quakePlayerSoundsEnabled) newButtonText = "Disable player sounds";
+            else newButtonText = "Enable player sounds";
+
+            this.togglePlayerSounds.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(Packets.QUAKE_PLAYER_SOUNDS_UPDATE, PacketByteBufs.empty());
+        }).dimensions(width - 120, height - 48, 100, 20).build();
+
+        addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
+        addDrawableChild(togglePlayerSounds);
         super.init();
-    }
-
-    @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        Optional<Element> hovered = hoveredElement(mouseX, mouseY);
-        hovered.ifPresent(element -> element.mouseDragged(mouseX, mouseY, button, deltaX, deltaY));
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
-        drawBackground(matrices, delta, mouseX, mouseY);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 10, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

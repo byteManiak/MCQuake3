@@ -9,6 +9,15 @@
 		},
 		{
 			"type": "bitmap",
+			"file": "mcquake3:font/health.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF0"
+			]
+		},
+		{
+			"type": "bitmap",
 			"file": "mcquake3:font/machinegun.png",
 			"ascent": -10,
 			"height": 14,

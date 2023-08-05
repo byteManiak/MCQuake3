@@ -19,7 +19,7 @@ public class BFG10K extends Weapon {
     private static final float BFG_PROJECTILE_SPEED = 1.5f;
 
     public BFG10K() {
-        super(QuakePlayer.WeaponSlot.PLASMA_GUN, new Identifier("mcquake3", "bfg10k"),
+        super(QuakePlayer.WeaponSlot.BFG10K, new Identifier("mcquake3", "bfg10k"),
                 BFG_REFIRE_TICK_RATE, true, Sounds.BFG10K_FIRE, false);
     }
 

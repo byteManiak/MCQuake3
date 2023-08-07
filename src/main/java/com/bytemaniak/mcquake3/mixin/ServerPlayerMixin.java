@@ -23,16 +23,6 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
         thisQuakePlayer.setQuakeGui(oldQuakePlayer.quakeGuiEnabled());
         thisQuakePlayer.setQuakePlayerSoundsEnabled(oldQuakePlayer.quakePlayerSoundsEnabled());
-
-        // Don't remove inventory and XP if in Quake mode
-        if (oldQuakePlayer.quakeGuiEnabled()) {
-            this.getInventory().clone(oldPlayer.getInventory());
-            this.experienceLevel = oldPlayer.experienceLevel;
-            this.totalExperience = oldPlayer.totalExperience;
-            this.experienceProgress = oldPlayer.experienceProgress;
-            this.setScore(oldPlayer.getScore());
-        }
-
         thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
     }
 }

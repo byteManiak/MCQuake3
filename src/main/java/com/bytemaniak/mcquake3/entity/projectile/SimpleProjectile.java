@@ -52,7 +52,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
             if (entity instanceof PlayerEntity)
                 ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
             entity.damage(damageSource, damageAmount);
-            this.kill();
+            this.despawn();
         }
     }
 

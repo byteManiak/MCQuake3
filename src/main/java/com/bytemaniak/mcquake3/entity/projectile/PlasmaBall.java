@@ -53,14 +53,13 @@ public class PlasmaBall extends SimpleProjectile {
     public void onCollision(HitResult hitResult)
     {
         super.onCollision(hitResult);
+
         if (!this.world.isClient) {
             this.world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
-            this.kill();
+            this.despawn();
         }
     }
 
     @Override
-    protected ParticleEffect getParticleType() {
-        return ParticleTypes.ELECTRIC_SPARK;
-    }
+    protected ParticleEffect getParticleType() { return ParticleTypes.ELECTRIC_SPARK; }
 }

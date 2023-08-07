@@ -44,18 +44,19 @@ public class BFG10KProjectile extends SimpleProjectile {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (!this.world.isClient) {
+
+        if (!this.world.isClient)
             doDamage(entity);
-        }
     }
 
     @Override
     public void onCollision(HitResult hitResult)
     {
         super.onCollision(hitResult);
+
         if (!this.world.isClient) {
             this.world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
-            this.kill();
+            this.despawn();
         }
     }
 

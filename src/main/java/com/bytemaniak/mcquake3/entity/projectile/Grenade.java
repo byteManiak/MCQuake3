@@ -1,11 +1,15 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -36,18 +40,16 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        if (!this.world.isClient) {
-            Vec3d pos = this.getPos();
-            DamageSource damageSource = Q3DamageSources.of(world, damageType, this, this.getOwner());
-            this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
-            this.kill();
-        }
+
+        if (!this.world.isClient)
+            this.despawn();
     }
 
     @Override
     public void onCollision(HitResult hitResult)
     {
         super.onCollision(hitResult);
+
         if (hitResult.getType() == HitResult.Type.BLOCK) {
             Vec3d velocity = this.getVelocity();
             BlockHitResult blockHit = (BlockHitResult) hitResult;
@@ -68,7 +70,11 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void despawn() {
         Vec3d pos = this.getPos();
         DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-        this.world.createExplosion(this, damageSource, null, pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
+        Explosion explosion = this.world.createExplosion(this, damageSource, null,
+                pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
+        if (!explosion.getAffectedPlayers().isEmpty()) {
+            ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
+        }
 
         super.despawn();
     }

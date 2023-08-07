@@ -20,7 +20,6 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     protected long lifetimeInTicks;
     protected long initTick;
 
-    protected void initDataTracker() {}
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
         super(entityType, world);
         initTick = world.getTime();

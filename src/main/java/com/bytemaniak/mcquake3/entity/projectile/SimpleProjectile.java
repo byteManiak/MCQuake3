@@ -41,7 +41,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.world.getTime() - initTick > lifetimeInTicks) {
+        if (!this.world.isClient && this.world.getTime() - initTick > lifetimeInTicks) {
             this.despawn();
         }
     }

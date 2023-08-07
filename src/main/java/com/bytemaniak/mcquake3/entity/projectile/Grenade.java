@@ -53,12 +53,15 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
         if (hitResult.getType() == HitResult.Type.BLOCK) {
             Vec3d velocity = this.getVelocity();
             BlockHitResult blockHit = (BlockHitResult) hitResult;
-            velocity = switch (blockHit.getSide()) {
+            if (blockHit.isInsideBlock())
+                velocity = velocity.multiply(-1, -1, -1);
+            else velocity = switch (blockHit.getSide()) {
                 case EAST, WEST -> velocity.multiply(-1, 1, 1);
                 case NORTH, SOUTH -> velocity.multiply(1, 1, -1);
                 case DOWN -> velocity.multiply(1, -1, 1);
                 case UP -> velocity.multiply(1, -.55, 1);
             };
+
             if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
             else this.world.playSound(null, this.getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
 

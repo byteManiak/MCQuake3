@@ -71,7 +71,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
         Vec3d pos = this.getPos();
         DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
         Explosion explosion = this.world.createExplosion(this, damageSource, null,
-                pos.x, pos.y, pos.z, 3, false, World.ExplosionSourceType.NONE);
+                pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
         if (!explosion.getAffectedPlayers().isEmpty()) {
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
         }

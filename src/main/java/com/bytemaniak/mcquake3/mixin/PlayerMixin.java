@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -96,7 +97,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public SoundEvent getHurtSound(DamageSource source) {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+            if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
+            else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
             else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
             else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
             else return SoundEvent.of(playerSounds.HURT25);

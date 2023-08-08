@@ -43,7 +43,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final int[] defaultWeaponAmmo = {
-            0, 100, 10, 10, 5, 100, 10, 50, 20, 0
+            100, 10, 10, 5, 100, 10, 50, 20
     };
 
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -51,7 +51,16 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
-    private final int[] weaponAmmo = new int[10];
+    private final static TrackedData<Integer>[] QUAKE_PLAYER_AMMO = new TrackedData[]{
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
+        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER)
+    };
 
     private final long[] weaponTicks = new long[9];
 
@@ -121,6 +130,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putBoolean("quake_player_sounds_enabled", quakePlayerSoundsEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
+
+        for (int i = 0; i < 8; i++)
+            nbt.putInt("quake_ammo"+i, this.dataTracker.get(QUAKE_PLAYER_AMMO[i]));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -130,6 +142,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
+
+        for (int i = 0; i < 8; i++)
+            this.dataTracker.set(QUAKE_PLAYER_AMMO[i], nbt.getInt("quake_ammo"+i));
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -137,6 +152,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         this.dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS_ENABLED, false);
         this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
+
+        for (int i = 0; i < 8; i++)
+            this.dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -177,17 +195,21 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public void resetAmmo() {
-        System.arraycopy(defaultWeaponAmmo, 0, weaponAmmo, 0, weaponAmmo.length);
+        for (int i = 0; i < 8; i++)
+            this.dataTracker.set(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
     }
 
     public boolean useAmmo(WeaponSlot slot) {
         if (slot == WeaponSlot.GAUNTLET) return false;
 
-        if (weaponAmmo[slot.slot()] > 0) {
-            weaponAmmo[slot.slot()]--;
+        int weaponSlot = slot.slot()-1;
+        int weaponAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[weaponSlot]);
+
+        if (weaponAmmo > 0) {
+            this.dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], weaponAmmo-1);
             return false;
         } else {
-            weaponAmmo[slot.slot()] = defaultWeaponAmmo[slot.slot()];
+            this.dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], defaultWeaponAmmo[weaponSlot]);
             return true;
         }
     }
@@ -201,7 +223,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public int getCurrentAmmo() {
-        return weaponAmmo[getCurrentWeapon().slot()];
+        return this.dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot()-1]);
     }
 
     public String getPlayerVoice() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS); }

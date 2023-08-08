@@ -8,9 +8,12 @@ import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -31,6 +34,10 @@ public class LightningGun extends HitscanWeapon {
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {
+        if (attacked instanceof CreeperEntity creeper && !creeper.shouldRenderOverlay()) {
+            world.playSoundFromEntity(null, creeper, SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT, SoundCategory.NEUTRAL, 1, 1);
+            creeper.onStruckByLightning((ServerWorld) world, null);
+        }
         world.playSoundFromEntity(null, attacked, Sounds.LIGHTNING_HIT, SoundCategory.NEUTRAL, .5f, 1);
     }
 

@@ -54,8 +54,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final long[] weaponTicks = new long[9];
 
-    private Sounds.PlayerSounds playerSounds = Sounds.TONY;
-
     private boolean isHoldingGauntlet = false;
     private boolean isHoldingLightning = false;
     private boolean isHoldingRailgun = false;
@@ -87,13 +85,16 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "jump", at = @At("HEAD"))
     private void playQuakeJumpSound(CallbackInfo ci) {
-        if (quakePlayerSoundsEnabled())
+        if (quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+        }
     }
 
     @Nullable
     @Override
     public SoundEvent getHurtSound(DamageSource source) {
+        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
         if (quakePlayerSoundsEnabled()) {
             if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
             else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
@@ -106,7 +107,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Nullable
     @Override
     public SoundEvent getDeathSound() {
-        if (quakePlayerSoundsEnabled()) return SoundEvent.of(playerSounds.DEATH);
+        if (quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
+            return SoundEvent.of(playerSounds.DEATH);
+        }
         return super.getDeathSound();
     }
 
@@ -114,7 +118,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putBoolean("quake_player_sounds_enabled", quakePlayerSoundsEnabled());
-        nbt.putString("quake_player_sounds", this.dataTracker.get(QUAKE_PLAYER_SOUNDS));
+        nbt.putString("quake_player_sounds", getPlayerVoice());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -123,8 +127,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, nbt.getBoolean("quake_player_sounds_enabled"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
-        this.dataTracker.set(QUAKE_PLAYER_SOUNDS, quakePlayerSounds);
-        this.playerSounds = new Sounds.PlayerSounds(quakePlayerSounds);
+        setPlayerVoice(quakePlayerSounds);
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -199,8 +202,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return weaponAmmo[getCurrentWeapon().slot()];
     }
 
-    public String getPlayerVoice() { return this.playerSounds.playerClass; }
-    public void setPlayerVoice(String soundsSet) { this.playerSounds = new Sounds.PlayerSounds(soundsSet); }
+    public String getPlayerVoice() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS); }
+    public void setPlayerVoice(String soundsSet) {
+        this.dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
+    }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {

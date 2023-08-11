@@ -49,6 +49,8 @@ public interface QuakePlayer {
     // Returns true if the player used up all the weapon ammo
     public boolean useAmmo(WeaponSlot slot);
     public int getCurrentAmmo();
+    public int getAmmo(WeaponSlot slot);
+    public void addAmmo(int amount, WeaponSlot slot);
 
     public WeaponSlot getCurrentWeapon();
 

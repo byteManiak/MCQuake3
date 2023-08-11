@@ -62,6 +62,9 @@ public class Sounds {
     private static final Identifier WEAPON_CHANGE_IDENT = new Identifier("mcquake3", "weapon_change");
     public static final SoundEvent WEAPON_CHANGE = SoundEvent.of(WEAPON_CHANGE_IDENT);
 
+    private static final Identifier AMMO_PICKUP_IDENT = new Identifier("mcquake3", "ammo_pickup");
+    public static final SoundEvent AMMO_PICKUP = SoundEvent.of(AMMO_PICKUP_IDENT);
+
     public static class PlayerSounds {
         public Identifier DEATH;
         public Identifier DROWN;
@@ -145,6 +148,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, LIGHTNING_HIT_IDENT, LIGHTNING_HIT);
         Registry.register(Registries.SOUND_EVENT, BULLET_MISS_IDENT, BULLET_MISS);
         Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
+        Registry.register(Registries.SOUND_EVENT, AMMO_PICKUP_IDENT, AMMO_PICKUP);
 
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);

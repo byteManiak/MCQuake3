@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "type=1": {"model": "mcquake3:block/machinegun_ammo_box"},
+    "type=2": {"model": "mcquake3:block/shotgun_ammo_box"},
+    "type=3": {"model": "mcquake3:block/grenade_ammo_box"},
+    "type=4": {"model": "mcquake3:block/rocket_ammo_box"},
+    "type=5": {"model": "mcquake3:block/lightning_ammo_box"},
+    "type=6": {"model": "mcquake3:block/railgun_ammo_box"},
+    "type=7": {"model": "mcquake3:block/plasma_ammo_box"},
+    "type=8": {"model": "mcquake3:block/bfg_ammo_box"}
+  }
+}

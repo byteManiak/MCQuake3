@@ -1,0 +1,12 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "builtin/entity",
+  "textures": {
+    "0": "mcquake3:item/machinegun_ammo_box",
+    "particle": "mcquake3:machinegun_ammo_box"
+  },
+  "texture_size": [
+    64,
+    64
+  ]
+}

@@ -126,6 +126,12 @@
     ]
   },
 
+  "ammo_pickup": {
+    "sounds": [
+      "mcquake3:ammo_pickup"
+    ]
+  },
+
   "angelyss_death": {
     "sounds": [
       "mcquake3:players/angelyss/death1",

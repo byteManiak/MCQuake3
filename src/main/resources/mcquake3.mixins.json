@@ -12,7 +12,8 @@
   "client": [
     "ClientPlayerMixin",
     "HeldItemRendererMixin",
-    "ClientPlayerInteractionManagerMixin"
+    "ClientPlayerInteractionManagerMixin",
+    "MouseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

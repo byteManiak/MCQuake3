@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.blocks.ammo.render;
 
-import com.bytemaniak.mcquake3.blocks.ammo.AmmoBoxEntity;
+import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
-public class AmmoBoxRenderer<T extends AmmoBoxEntity> extends GeoBlockRenderer<T> {
+public class AmmoBoxRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> {
     public AmmoBoxRenderer(Identifier id) {
         super(new AmmoBoxModel<T>(id));
     }

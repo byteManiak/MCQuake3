@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.blocks.ammo;
+package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -25,14 +25,14 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AmmoBoxEntity extends BlockEntity implements GeoBlockEntity {
+public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     private static final long AMMO_BOX_REUSE_TIME = 300;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private long ticksSinceLastUse = AMMO_BOX_REUSE_TIME;
     public boolean lastShouldRender = true;
 
-    public AmmoBoxEntity(BlockEntityType<? extends AmmoBoxEntity> type, BlockPos pos, BlockState state) {
+    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -76,7 +76,7 @@ public class AmmoBoxEntity extends BlockEntity implements GeoBlockEntity {
     public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
         if (world.isClient) return;
 
-        AmmoBoxEntity ammoBox = (AmmoBoxEntity) t;
+        PickupEntity ammoBox = (PickupEntity) t;
         ammoBox.ticksSinceLastUse++;
         if (ammoBox.lastShouldRender != ammoBox.shouldRender()) {
             ammoBox.markDirty();

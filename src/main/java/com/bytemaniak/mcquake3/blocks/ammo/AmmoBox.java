@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.blocks.ammo;
 
+import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -35,7 +36,7 @@ public abstract class AmmoBox extends BlockWithEntity implements BlockEntityProv
         super.onEntityCollision(state, world, pos, entity);
         if (world.isClient) return;
 
-        AmmoBoxEntity ammoBox = (AmmoBoxEntity)world.getBlockEntity(pos);
+        PickupEntity ammoBox = (PickupEntity)world.getBlockEntity(pos);
         if (entity instanceof PlayerEntity player) {
             QuakePlayer qPlayer = (QuakePlayer)player;
             if (qPlayer.getAmmo(slot) < 200 && ammoBox.use()) {
@@ -49,6 +50,6 @@ public abstract class AmmoBox extends BlockWithEntity implements BlockEntityProv
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return AmmoBoxEntity::tick;
+        return PickupEntity::tick;
     }
 }

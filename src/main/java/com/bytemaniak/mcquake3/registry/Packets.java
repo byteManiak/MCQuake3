@@ -1,9 +1,9 @@
 package com.bytemaniak.mcquake3.registry;
 
 import com.bytemaniak.mcquake3.network.c2s.*;
-import com.bytemaniak.mcquake3.network.s2c.AmmoBoxUpdateS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.DealtDamageS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.JumppadPowerS2CPacket;
+import com.bytemaniak.mcquake3.network.s2c.PickupVisibilityS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.util.Identifier;
@@ -22,7 +22,7 @@ public class Packets {
     {
         ClientPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(Packets.DEALT_DAMAGE, DealtDamageS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(Packets.AMMO_BOX_UPDATE, AmmoBoxUpdateS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(Packets.AMMO_BOX_UPDATE, PickupVisibilityS2CPacket::receive);
     }
 
     public static void registerServerPackets()

@@ -208,10 +208,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (weaponAmmo > 0) {
             this.dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], weaponAmmo-1);
             return false;
-        } else {
-            this.dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], defaultWeaponAmmo[weaponSlot]);
-            return true;
-        }
+        } else return true;
     }
 
     public WeaponSlot getCurrentWeapon() {

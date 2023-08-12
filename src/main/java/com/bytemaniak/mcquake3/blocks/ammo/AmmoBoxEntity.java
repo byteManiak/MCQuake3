@@ -30,7 +30,7 @@ public class AmmoBoxEntity extends BlockEntity implements GeoBlockEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private long ticksSinceLastUse = AMMO_BOX_REUSE_TIME;
-    public boolean lastShouldRender;
+    public boolean lastShouldRender = true;
 
     public AmmoBoxEntity(BlockEntityType<? extends AmmoBoxEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

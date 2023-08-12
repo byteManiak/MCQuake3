@@ -124,7 +124,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, UUID playerId, int type) {
-        if (type == QuakePlayer.WeaponSlot.RAILGUN.slot()) {
+        if (type == QuakePlayer.WeaponSlot.RAILGUN.slot) {
             addRailgunTrail(v1, v2);
         } else {
             addLightningGunTrail(v1, v2, playerId);

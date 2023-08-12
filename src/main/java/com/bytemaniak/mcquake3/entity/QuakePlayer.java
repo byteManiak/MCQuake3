@@ -4,20 +4,24 @@ import net.minecraft.entity.damage.DamageSource;
 
 public interface QuakePlayer {
     public enum WeaponSlot {
-        GAUNTLET(0),
-        MACHINEGUN(1),
-        SHOTGUN(2),
-        GRENADE_LAUNCHER(3),
-        ROCKET_LAUNCHER(4),
-        LIGHTNING_GUN(5),
-        RAILGUN(6),
-        PLASMA_GUN(7),
-        BFG10K(8),
-        NONE(9);
+        GAUNTLET(0, 0),
+        MACHINEGUN(1, 50),
+        SHOTGUN(2, 10),
+        GRENADE_LAUNCHER(3, 5),
+        ROCKET_LAUNCHER(4, 5),
+        LIGHTNING_GUN(5, 60),
+        RAILGUN(6, 10),
+        PLASMA_GUN(7, 30),
+        BFG10K(8, 15),
+        NONE(9, 0);
 
-        private final int slot;
-        private WeaponSlot(int val) { this.slot = val; }
-        public int slot() { return slot; }
+        public final int slot;
+        public final int ammoCount;
+
+        private WeaponSlot(int val, int ammoCount) {
+            this.slot = val;
+            this.ammoCount = ammoCount;
+        }
 
         @Override
         public String toString() {

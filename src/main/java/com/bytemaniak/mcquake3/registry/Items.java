@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.registry;
 
 import com.bytemaniak.mcquake3.items.*;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -26,15 +25,6 @@ public class Items {
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
     public static final Item BFG10K = new BFG10K();
 
-    public static final Item MACHINEGUN_AMMO = new Item(new FabricItemSettings());
-    public static final Item SHOTGUN_AMMO = new Item(new FabricItemSettings());
-    public static final Item GRENADE_AMMO = new Item(new FabricItemSettings());
-    public static final Item ROCKET_AMMO = new Item(new FabricItemSettings());
-    public static final Item LIGHTNING_AMMO = new Item(new FabricItemSettings());
-    public static final Item RAILGUN_AMMO = new Item(new FabricItemSettings());
-    public static final Item PLASMAGUN_AMMO = new Item(new FabricItemSettings());
-    public static final Item BFG_AMMO = new Item(new FabricItemSettings());
-
     public static final ItemGroup MCQUAKE3_GROUP = FabricItemGroup.builder(new Identifier("mcquake3", "mcquake3_logo"))
             .icon(() -> new ItemStack(MCQUAKE3_LOGO)).build();
 
@@ -50,15 +40,6 @@ public class Items {
         loadItem(PLASMAGUN, new Identifier("mcquake3", "plasmagun"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3", "rocket_launcher"));
         loadItem(BFG10K, new Identifier("mcquake3", "bfg10k"));
-
-        loadItem(MACHINEGUN_AMMO, new Identifier("mcquake3", "machinegun_ammo_box"));
-        loadItem(SHOTGUN_AMMO, new Identifier("mcquake3", "shotgun_ammo_box"));
-        loadItem(GRENADE_AMMO, new Identifier("mcquake3", "grenade_ammo_box"));
-        loadItem(ROCKET_AMMO, new Identifier("mcquake3", "rocket_ammo_box"));
-        loadItem(LIGHTNING_AMMO, new Identifier("mcquake3", "lightning_ammo_box"));
-        loadItem(RAILGUN_AMMO, new Identifier("mcquake3", "railgun_ammo_box"));
-        loadItem(PLASMAGUN_AMMO, new Identifier("mcquake3", "plasmagun_ammo_box"));
-        loadItem(BFG_AMMO, new Identifier("mcquake3", "bfg_ammo_box"));
 
         loadItem(TOOL, new Identifier("mcquake3", "tool"));
     }

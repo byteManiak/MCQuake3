@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.machinegun_ammo_box - Converted",
+				"identifier": "geometry.machinegun_ammo_box",
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 2,

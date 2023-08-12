@@ -187,11 +187,11 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public void setQuakePlayerSoundsEnabled(boolean enabled) { this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, enabled); }
 
     public long getWeaponTick(WeaponSlot slot) {
-        return weaponTicks[slot.slot()];
+        return weaponTicks[slot.slot];
     }
 
     public void setWeaponTick(WeaponSlot slot, long tick) {
-        weaponTicks[slot.slot()] = tick;
+        weaponTicks[slot.slot] = tick;
     }
 
     public void resetAmmo() {
@@ -202,7 +202,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public boolean useAmmo(WeaponSlot slot) {
         if (slot == WeaponSlot.GAUNTLET) return false;
 
-        int weaponSlot = slot.slot()-1;
+        int weaponSlot = slot.slot-1;
         int weaponAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[weaponSlot]);
 
         if (weaponAmmo > 0) {
@@ -222,15 +222,15 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    public int getAmmo(WeaponSlot slot) { return this.dataTracker.get((QUAKE_PLAYER_AMMO[slot.slot()-1])); }
+    public int getAmmo(WeaponSlot slot) { return this.dataTracker.get((QUAKE_PLAYER_AMMO[slot.slot-1])); }
     public int getCurrentAmmo() {
-        return this.dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot()-1]);
+        return this.dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot-1]);
     }
 
     public void addAmmo(int amount, WeaponSlot slot) {
-        int currentAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot()-1]);
+        int currentAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]);
         currentAmmo += amount; if (currentAmmo > 200) currentAmmo = 200;
-        this.dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot()-1], currentAmmo);
+        this.dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot-1], currentAmmo);
     }
 
     public String getPlayerVoice() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS); }

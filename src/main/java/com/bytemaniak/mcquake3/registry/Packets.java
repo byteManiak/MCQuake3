@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.registry;
 
 import com.bytemaniak.mcquake3.network.c2s.*;
+import com.bytemaniak.mcquake3.network.s2c.AmmoBoxUpdateS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.DealtDamageS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.JumppadPowerS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -15,11 +16,13 @@ public class Packets {
     public static final Identifier QUAKE_PLAYER_SOUNDS_UPDATE = new Identifier("mcquake3", "quake_player_sounds_update");
     public static final Identifier PLAYER_CLASS_UPDATE = new Identifier("mcquake3", "player_class_update");
     public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3", "full_arsenal_request");
+    public static final Identifier AMMO_BOX_UPDATE = new Identifier("mcquake3", "ammo_box_update");
 
     public static void registerClientPackets()
     {
         ClientPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(Packets.DEALT_DAMAGE, DealtDamageS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(Packets.AMMO_BOX_UPDATE, AmmoBoxUpdateS2CPacket::receive);
     }
 
     public static void registerServerPackets()

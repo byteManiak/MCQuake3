@@ -1,25 +1,25 @@
-package com.bytemaniak.mcquake3.blocks;
+package com.bytemaniak.mcquake3.blocks.ammo;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class AmmoBox extends Block implements BlockEntityProvider {
-    private static final long AMMO_BOX_RESPAWN_TIME = 300;
-    private static final IntProperty TYPE = IntProperty.of("type", 1, 8);
+public abstract class AmmoBox extends BlockWithEntity implements BlockEntityProvider {
+    protected QuakePlayer.WeaponSlot slot;
 
-    private static final VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 15, 10, 15);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(3, 0, 3, 13, 10, 13);
 
     public AmmoBox() {
         super(FabricBlockSettings.of(Material.METAL).noCollision());
@@ -29,28 +29,26 @@ public class AmmoBox extends Block implements BlockEntityProvider {
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
-    {
-        builder.add(TYPE);
-    }
-
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new AmmoBoxEntity(pos, state);
-    }
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
+        if (world.isClient) return;
+
         AmmoBoxEntity ammoBox = (AmmoBoxEntity)world.getBlockEntity(pos);
-        if (world.getTime() - ammoBox.lastTick > AMMO_BOX_RESPAWN_TIME && entity instanceof PlayerEntity player) {
+        if (entity instanceof PlayerEntity player) {
             QuakePlayer qPlayer = (QuakePlayer)player;
-            if (qPlayer.getAmmo(QuakePlayer.WeaponSlot.MACHINEGUN) < 200) {
-                qPlayer.addAmmo(20, QuakePlayer.WeaponSlot.MACHINEGUN);
-                ammoBox.lastTick = world.getTime();
+            if (qPlayer.getAmmo(slot) < 200 && ammoBox.use()) {
+                qPlayer.addAmmo(slot.ammoCount, slot);
+                world.markDirty(pos);
                 world.playSoundFromEntity(null, entity, Sounds.AMMO_PICKUP, SoundCategory.NEUTRAL, 1, 1);
             }
         }
+    }
 
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return AmmoBoxEntity::tick;
     }
 }

@@ -49,7 +49,7 @@ public class LightningGun extends HitscanWeapon {
 
     @Environment(EnvType.CLIENT)
     private void submitLightningGunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        MCQuake3Client.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot());
+        MCQuake3Client.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot);
     }
 
     @Override

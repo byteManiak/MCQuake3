@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.blocks.ammo.render;
+package com.bytemaniak.mcquake3.blocks.render;
 
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -9,9 +9,9 @@ import net.minecraft.util.Identifier;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
-public class AmmoBoxRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> {
-    public AmmoBoxRenderer(Identifier id) {
-        super(new AmmoBoxModel<T>(id));
+public class PickupRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> {
+    public PickupRenderer(Identifier id) {
+        super(new PickupModel<T>(id));
     }
 
     @Override

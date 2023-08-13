@@ -126,9 +126,33 @@
     ]
   },
 
+  "regen": {
+    "sounds": [
+      "mcquake3:regen"
+    ]
+  },
+
   "ammo_pickup": {
     "sounds": [
       "mcquake3:ammo_pickup"
+    ]
+  },
+
+  "5health": {
+    "sounds": [
+      "mcquake3:5health"
+    ]
+  },
+
+  "25health": {
+    "sounds": [
+      "mcquake3:25health"
+    ]
+  },
+
+  "50health": {
+    "sounds": [
+      "mcquake3:50health"
     ]
   },
 

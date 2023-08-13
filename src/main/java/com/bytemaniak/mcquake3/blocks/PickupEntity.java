@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Packets;
+import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -14,6 +15,8 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -26,14 +29,17 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PickupEntity extends BlockEntity implements GeoBlockEntity {
-    private static final long AMMO_BOX_REUSE_TIME = 300;
+    private static final long PICKUP_REUSE_TIME = 300;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private long ticksSinceLastUse = AMMO_BOX_REUSE_TIME;
+    private long ticksSinceLastUse = PICKUP_REUSE_TIME;
     public boolean lastShouldRender = true;
 
-    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state) {
+    protected SoundEvent useSound;
+
+    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state, SoundEvent sound) {
         super(type, pos, state);
+        this.useSound = sound;
     }
 
     @Override
@@ -49,11 +55,11 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     public boolean shouldRender() {
-        return ticksSinceLastUse > AMMO_BOX_REUSE_TIME;
+        return ticksSinceLastUse > PICKUP_REUSE_TIME;
     }
 
     public boolean use() {
-        if (ticksSinceLastUse > AMMO_BOX_REUSE_TIME) {
+        if (ticksSinceLastUse > PICKUP_REUSE_TIME) {
             ticksSinceLastUse = 0;
             return true;
         }
@@ -76,12 +82,14 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
         if (world.isClient) return;
 
-        PickupEntity ammoBox = (PickupEntity) t;
-        ammoBox.ticksSinceLastUse++;
-        if (ammoBox.lastShouldRender != ammoBox.shouldRender()) {
-            ammoBox.markDirty();
+        PickupEntity pickupEntity = (PickupEntity) t;
+        pickupEntity.ticksSinceLastUse++;
+        if (pickupEntity.lastShouldRender != pickupEntity.shouldRender()) {
+            pickupEntity.markDirty();
+            if (pickupEntity.shouldRender()) world.playSound(null, pos, Sounds.REGEN, SoundCategory.NEUTRAL, 1, 1);
+            else world.playSound(null, pos, pickupEntity.useSound, SoundCategory.NEUTRAL, 1, 1);
         }
-        ammoBox.lastShouldRender = ammoBox.shouldRender();
+        pickupEntity.lastShouldRender = pickupEntity.shouldRender();
     }
 
     @Override

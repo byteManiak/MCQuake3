@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.blocks.ammo;
+package com.bytemaniak.mcquake3.blocks.health;
 
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.registry.Blocks;
@@ -6,8 +6,8 @@ import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 
-public class BFGAmmoBoxEntity extends PickupEntity {
-    public BFGAmmoBoxEntity(BlockPos pos, BlockState state) {
-        super(Blocks.BFG_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP);
+public class Health50Entity extends PickupEntity {
+    public Health50Entity(BlockPos pos, BlockState state) {
+        super(Blocks.HEALTH50_ENTITY, pos, state, Sounds.HEALTH50);
     }
 }

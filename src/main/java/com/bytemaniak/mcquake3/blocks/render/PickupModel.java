@@ -1,12 +1,12 @@
-package com.bytemaniak.mcquake3.blocks.ammo.render;
+package com.bytemaniak.mcquake3.blocks.render;
 
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class AmmoBoxModel<T extends PickupEntity> extends DefaultedEntityGeoModel<T> {
-    public AmmoBoxModel(Identifier assetSubpath) {
+public class PickupModel<T extends PickupEntity> extends DefaultedEntityGeoModel<T> {
+    public PickupModel(Identifier assetSubpath) {
         super(assetSubpath);
     }
 

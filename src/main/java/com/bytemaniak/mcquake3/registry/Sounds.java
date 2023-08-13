@@ -62,8 +62,20 @@ public class Sounds {
     private static final Identifier WEAPON_CHANGE_IDENT = new Identifier("mcquake3", "weapon_change");
     public static final SoundEvent WEAPON_CHANGE = SoundEvent.of(WEAPON_CHANGE_IDENT);
 
+    private static final Identifier REGEN_IDENT = new Identifier("mcquake3", "regen");
+    public static final SoundEvent REGEN = SoundEvent.of(REGEN_IDENT);
+
     private static final Identifier AMMO_PICKUP_IDENT = new Identifier("mcquake3", "ammo_pickup");
     public static final SoundEvent AMMO_PICKUP = SoundEvent.of(AMMO_PICKUP_IDENT);
+
+    private static final Identifier HEALTH5_IDENT = new Identifier("mcquake3", "5health");
+    public static final SoundEvent HEALTH5 = SoundEvent.of(HEALTH5_IDENT);
+
+    private static final Identifier HEALTH25_IDENT = new Identifier("mcquake3", "25health");
+    public static final SoundEvent HEALTH25 = SoundEvent.of(HEALTH25_IDENT);
+
+    private static final Identifier HEALTH50_IDENT = new Identifier("mcquake3", "50health");
+    public static final SoundEvent HEALTH50 = SoundEvent.of(HEALTH50_IDENT);
 
     public static class PlayerSounds {
         public Identifier DEATH;
@@ -148,7 +160,11 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, LIGHTNING_HIT_IDENT, LIGHTNING_HIT);
         Registry.register(Registries.SOUND_EVENT, BULLET_MISS_IDENT, BULLET_MISS);
         Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
+        Registry.register(Registries.SOUND_EVENT, REGEN_IDENT, REGEN);
         Registry.register(Registries.SOUND_EVENT, AMMO_PICKUP_IDENT, AMMO_PICKUP);
+        Registry.register(Registries.SOUND_EVENT, HEALTH5_IDENT, HEALTH5);
+        Registry.register(Registries.SOUND_EVENT, HEALTH25_IDENT, HEALTH25);
+        Registry.register(Registries.SOUND_EVENT, HEALTH50_IDENT, HEALTH50);
 
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);

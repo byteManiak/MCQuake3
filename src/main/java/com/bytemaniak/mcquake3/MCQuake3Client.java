@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3;
 
-import com.bytemaniak.mcquake3.blocks.ammo.render.AmmoBoxRenderer;
+import com.bytemaniak.mcquake3.blocks.render.PickupRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
 import com.bytemaniak.mcquake3.items.Weapon;
@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.util.Identifier;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MCQuake3Client implements ClientModInitializer {
@@ -32,21 +31,27 @@ public class MCQuake3Client implements ClientModInitializer {
         EntityRendererRegistry.register(Entities.BFG10K_PROJECTILE, BFG10KProjectileRenderer::new);
 
         BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "machinegun_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.MACHINEGUN_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.SHOTGUN_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "shotgun_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.SHOTGUN_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.GRENADE_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "grenade_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.GRENADE_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.ROCKET_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "rocket_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.ROCKET_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.LIGHTNING_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "lightning_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.LIGHTNING_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.RAILGUN_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "railgun_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.RAILGUN_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.PLASMAGUN_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "plasmagun_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.PLASMAGUN_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.BFG_AMMO_BOX_ENTITY,
-                context -> new AmmoBoxRenderer<>(new Identifier("mcquake3", "bfg_ammo_box")));
+                context -> new PickupRenderer<>(Blocks.BFG_AMMO_BOX));
+        BlockEntityRendererRegistry.register(Blocks.HEALTH5_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HEALTH5));
+        BlockEntityRendererRegistry.register(Blocks.HEALTH25_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HEALTH25));
+        BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HEALTH50));
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

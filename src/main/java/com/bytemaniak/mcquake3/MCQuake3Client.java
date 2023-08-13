@@ -8,11 +8,13 @@ import com.bytemaniak.mcquake3.registry.*;
 import com.bytemaniak.mcquake3.render.TrailRenderer;
 import com.bytemaniak.mcquake3.screen.JumppadScreen;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.RenderLayer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MCQuake3Client implements ClientModInitializer {
@@ -52,6 +54,10 @@ public class MCQuake3Client implements ClientModInitializer {
                 context -> new PickupRenderer<>(Blocks.HEALTH25));
         BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH50));
+
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH5_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH25_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH50_BLOCK, RenderLayer.getTranslucent());
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

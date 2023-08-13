@@ -1,6 +1,9 @@
 {
   "entity.mcquake3.plasmaball": "Plasma Ball",
   "entity.mcquake3.shell": "Shell",
+  "block.mcquake3.5health": "5 Health",
+  "block.mcquake3.25health": "25 Health",
+  "block.mcquake3.50health": "50 Health",
   "block.mcquake3.bfg_ammo_box": "Box of BFG Ammo",
   "block.mcquake3.grenade_ammo_box": "Box of Grenades",
   "block.mcquake3.jumppad": "Jump Pad",

@@ -28,23 +28,24 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
+        Window window = MinecraftClient.getInstance().getWindow();
+        int x = window.getScaledWidth()/2;
+        int y = window.getScaledHeight() - 10;
+
+        QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
+        if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot > 0) {
+            int slotChar = '\uFFF0'+player.getCurrentWeapon().slot;
+            drawText(matrixStack, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
+            drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 180, y, 0x00FFFFFF);
+        }
+
         if (player.quakeGuiEnabled()) {
-            Window window = MinecraftClient.getInstance().getWindow();
-            int x = window.getScaledWidth()/2;
-            int y = window.getScaledHeight() - 10;
             int playerHealth = (int)(plr.getHealth()*5);
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
                     (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
             drawText(matrixStack, "\uFFF0", x - 150, y - 16, 0x00FFFFFF);
             drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
-
-            QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
-            if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot > 0) {
-                int slotChar = '\uFFF0'+player.getCurrentWeapon().slot;
-                drawText(matrixStack, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
-                drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 180, y, 0x00FFFFFF);
-            }
         }
     }
 }

@@ -34,7 +34,7 @@ public class BFG10KProjectileRenderer extends EntityRenderer<BFG10KProjectile> {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
         matrices.scale(1.1f, 1.1f, 1.1f);
-        matrices.multiply(this.dispatcher.getRotation());
+        matrices.multiply(dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();
         Matrix4f matrix4f = entry.getPositionMatrix();

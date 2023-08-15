@@ -34,6 +34,6 @@ public class JumppadScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return !this.entity.isRemoved();
+        return !entity.isRemoved();
     }
 }

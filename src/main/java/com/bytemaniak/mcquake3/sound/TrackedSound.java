@@ -20,11 +20,11 @@ public class TrackedSound extends MovingSoundInstance {
 
     @Override
     public void tick() {
-        if (!this.owner.isAlive()) stopSound();
+        if (!owner.isAlive()) stopSound();
 
-        this.x = this.owner.lastRenderX;
-        this.y = this.owner.lastRenderY;
-        this.z = this.owner.lastRenderZ;
+        x = owner.lastRenderX;
+        y = owner.lastRenderY;
+        z = owner.lastRenderZ;
     }
 
     public void stopSound() {

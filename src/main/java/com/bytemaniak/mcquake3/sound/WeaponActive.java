@@ -16,7 +16,7 @@ public class WeaponActive extends TrackedSound {
     public void tick() {
         QuakePlayer player = (QuakePlayer) owner;
         QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
-        if (weapon.slot != this.slot.slot || !player.isPlayingAttack()) {
+        if (weapon.slot != slot.slot || !player.isPlayingAttack()) {
             stopSound();
         }
         super.tick();

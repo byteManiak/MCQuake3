@@ -56,15 +56,15 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     {
         super.onCollision(hitResult);
 
-        if (!this.world.isClient)
-            this.despawn();
+        if (!world.isClient)
+            despawn();
     }
 
     @Override
     protected void despawn() {
-        Vec3d pos = this.getPos();
+        Vec3d pos = getPos();
         DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-        Explosion explosion = this.world.createExplosion(this, damageSource, null,
+        Explosion explosion = world.createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
         if (!explosion.getAffectedPlayers().isEmpty()) {
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
@@ -84,5 +84,5 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
+    public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 }

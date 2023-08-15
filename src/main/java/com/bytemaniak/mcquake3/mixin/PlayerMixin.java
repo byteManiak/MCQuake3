@@ -132,34 +132,34 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putString("quake_player_sounds", getPlayerVoice());
 
         for (int i = 0; i < 8; i++)
-            nbt.putInt("quake_ammo"+i, this.dataTracker.get(QUAKE_PLAYER_AMMO[i]));
+            nbt.putInt("quake_ammo"+i, dataTracker.get(QUAKE_PLAYER_AMMO[i]));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        this.dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
-        this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, nbt.getBoolean("quake_player_sounds_enabled"));
+        dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
+        dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, nbt.getBoolean("quake_player_sounds_enabled"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
 
         for (int i = 0; i < 8; i++)
-            this.dataTracker.set(QUAKE_PLAYER_AMMO[i], nbt.getInt("quake_ammo"+i));
+            dataTracker.set(QUAKE_PLAYER_AMMO[i], nbt.getInt("quake_ammo"+i));
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
-        this.dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
-        this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS_ENABLED, false);
-        this.dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
+        dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
+        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS_ENABLED, false);
+        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
 
         for (int i = 0; i < 8; i++)
-            this.dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
+            dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
     private void noDropInventoryInQuakeMode(CallbackInfo ci) {
-        if (this.quakeGuiEnabled()) ci.cancel();
+        if (quakeGuiEnabled()) ci.cancel();
     }
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
@@ -171,20 +171,20 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public void toggleQuakeGui() {
-        boolean guiMode = !this.dataTracker.get(QUAKE_GUI_ENABLED);
-        this.dataTracker.set(QUAKE_GUI_ENABLED, guiMode);
+        boolean guiMode = !dataTracker.get(QUAKE_GUI_ENABLED);
+        dataTracker.set(QUAKE_GUI_ENABLED, guiMode);
     }
 
-    public boolean quakeGuiEnabled() { return this.dataTracker.get(QUAKE_GUI_ENABLED); }
-    public void setQuakeGui(boolean enabled) { this.dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
+    public boolean quakeGuiEnabled() { return dataTracker.get(QUAKE_GUI_ENABLED); }
+    public void setQuakeGui(boolean enabled) { dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
 
     public void toggleQuakePlayerSounds() {
-        boolean playerSounds = !this.dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED);
-        this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, playerSounds);
+        boolean playerSounds = !dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED);
+        dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, playerSounds);
     }
 
-    public boolean quakePlayerSoundsEnabled() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED); }
-    public void setQuakePlayerSoundsEnabled(boolean enabled) { this.dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, enabled); }
+    public boolean quakePlayerSoundsEnabled() { return dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED); }
+    public void setQuakePlayerSoundsEnabled(boolean enabled) { dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, enabled); }
 
     public long getWeaponTick(WeaponSlot slot) {
         return weaponTicks[slot.slot];
@@ -196,17 +196,17 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     public void resetAmmo() {
         for (int i = 0; i < 8; i++)
-            this.dataTracker.set(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
+            dataTracker.set(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
     }
 
     public boolean useAmmo(WeaponSlot slot) {
         if (slot == WeaponSlot.GAUNTLET) return false;
 
         int weaponSlot = slot.slot-1;
-        int weaponAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[weaponSlot]);
+        int weaponAmmo = dataTracker.get(QUAKE_PLAYER_AMMO[weaponSlot]);
 
         if (weaponAmmo > 0) {
-            this.dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], weaponAmmo-1);
+            dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], weaponAmmo-1);
             return false;
         } else return true;
     }
@@ -219,20 +219,20 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    public int getAmmo(WeaponSlot slot) { return this.dataTracker.get((QUAKE_PLAYER_AMMO[slot.slot-1])); }
+    public int getAmmo(WeaponSlot slot) { return dataTracker.get((QUAKE_PLAYER_AMMO[slot.slot-1])); }
     public int getCurrentAmmo() {
-        return this.dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot-1]);
+        return dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot-1]);
     }
 
     public void addAmmo(int amount, WeaponSlot slot) {
-        int currentAmmo = this.dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]);
+        int currentAmmo = dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]);
         currentAmmo += amount; if (currentAmmo > 200) currentAmmo = 200;
-        this.dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot-1], currentAmmo);
+        dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot-1], currentAmmo);
     }
 
-    public String getPlayerVoice() { return this.dataTracker.get(QUAKE_PLAYER_SOUNDS); }
+    public String getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
     public void setPlayerVoice(String soundsSet) {
-        this.dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
+        dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
     }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)

@@ -3,7 +3,10 @@ package com.bytemaniak.mcquake3.entity.projectile.render;
 import com.bytemaniak.mcquake3.entity.projectile.PlasmaBall;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -31,7 +34,7 @@ public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
         // Copied from DragonFireballEntityRenderer.render()
         matrices.push();
         matrices.scale(.75f, .75f, .75f);
-        matrices.multiply(this.dispatcher.getRotation());
+        matrices.multiply(dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();
         Matrix4f matrix4f = entry.getPositionMatrix();

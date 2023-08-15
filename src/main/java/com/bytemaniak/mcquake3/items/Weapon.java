@@ -101,7 +101,7 @@ public abstract class Weapon extends Item implements GeoItem {
                 Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
                 Vec3d rightDir = lookDir.crossProduct(upDir).normalize().multiply(HITSCAN_HORIZONTAL_OFFSET);
                 Vec3d weaponPos = user.getEyePos().subtract(rightDir);
-                this.onWeaponRefire(world, user, stack, lookDir, weaponPos);
+                onWeaponRefire(world, user, stack, lookDir, weaponPos);
 
                 if (hasRepeatedFiringSound) {
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
@@ -115,7 +115,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
+        return cache;
     }
 
     @Override
@@ -129,7 +129,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
             @Override
             public GeoItemRenderer<?> getCustomRenderer() {
-                return this.renderer;
+                return renderer;
             }
         });
     }

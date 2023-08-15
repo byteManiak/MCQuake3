@@ -33,7 +33,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
 
     @Override
     protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+        textRenderer.draw(matrices, title, (float)titleX, (float)titleY, 4210752);
     }
 
     @Override
@@ -103,24 +103,24 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         powerForward = new SliderWidgetSettable(baseX + 11, baseY - 6, 85, 20, Text.of(String.format("%.2f", forward_power)), forward_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX) {
             @Override
             protected void updateMessage() {
-                this.setMessage(Text.of(String.format("%.2f", forward_power)));
+                setMessage(Text.of(String.format("%.2f", forward_power)));
             }
 
             @Override
             protected void applyValue() {
-                forward_power = (float)this.value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
+                forward_power = (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
             }
         };
 
         powerUp = new SliderWidgetSettable(baseX + 11, baseY + 20, 85, 20, Text.of(String.format("%.2f", up_power)), up_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX) {
             @Override
             protected void updateMessage() {
-                this.setMessage(Text.of(String.format("%.2f", up_power)));
+                setMessage(Text.of(String.format("%.2f", up_power)));
             }
 
             @Override
             protected void applyValue() {
-                up_power = (float)this.value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
+                up_power = (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
             }
         };
 

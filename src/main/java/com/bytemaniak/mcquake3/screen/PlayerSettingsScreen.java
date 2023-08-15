@@ -55,9 +55,9 @@ public class PlayerSettingsScreen extends Screen {
         public void appendNarrations(NarrationMessageBuilder builder) {}
 
         @Override
-        protected int getScrollbarPositionX() { return this.right - 5; }
+        protected int getScrollbarPositionX() { return right - 5; }
 
-        public int getRowWidth() { return this.width; }
+        public int getRowWidth() { return width; }
 
         public boolean isFocused() {
             return PlayerSettingsScreen.this.getFocused() == this;
@@ -80,9 +80,9 @@ public class PlayerSettingsScreen extends Screen {
 
             public boolean mouseClicked(double mouseX, double mouseY, int button) {
                 if (button == 0) {
-                    this.onPressed();
+                    onPressed();
                     PacketByteBuf buf = PacketByteBufs.create();
-                    buf.writeString(this.playerSounds.playerClass);
+                    buf.writeString(playerSounds.playerClass);
                     ClientPlayNetworking.send(Packets.PLAYER_CLASS_UPDATE, buf);
                     return true;
                 } else {
@@ -127,7 +127,7 @@ public class PlayerSettingsScreen extends Screen {
                 newButtonText = "Enable Quake GUI";
             }
 
-            this.toggleGui.setMessage(Text.of(newButtonText));
+            toggleGui.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 140, height - 24, 120, 20).build();
 
@@ -140,7 +140,7 @@ public class PlayerSettingsScreen extends Screen {
             if (quakePlayerSoundsEnabled) newButtonText = "Disable player sounds";
             else newButtonText = "Enable player sounds";
 
-            this.togglePlayerSounds.setMessage(Text.of(newButtonText));
+            togglePlayerSounds.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_PLAYER_SOUNDS_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 140, height - 48, 120, 20).build();
 
@@ -159,7 +159,7 @@ public class PlayerSettingsScreen extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 10, 16777215);
+        drawCenteredTextWithShadow(matrices, textRenderer, title, width / 2, 10, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

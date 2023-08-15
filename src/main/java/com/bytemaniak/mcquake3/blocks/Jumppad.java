@@ -52,7 +52,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext context) {
-		return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing());
+		return getDefaultState().with(FACING, context.getHorizontalPlayerFacing());
 	}
 
 	@Override

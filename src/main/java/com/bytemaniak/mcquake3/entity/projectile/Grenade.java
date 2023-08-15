@@ -41,8 +41,8 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
 
-        if (!this.world.isClient)
-            this.despawn();
+        if (!world.isClient)
+            despawn();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
         super.onCollision(hitResult);
 
         if (hitResult.getType() == HitResult.Type.BLOCK) {
-            Vec3d velocity = this.getVelocity();
+            Vec3d velocity = getVelocity();
             BlockHitResult blockHit = (BlockHitResult) hitResult;
             if (blockHit.isInsideBlock())
                 velocity = velocity.multiply(-1, -1, -1);
@@ -63,17 +63,17 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
             };
 
             if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
-            else this.world.playSound(null, this.getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
+            else world.playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
 
-            this.setVelocity(velocity);
+            setVelocity(velocity);
         }
     }
 
     @Override
     protected void despawn() {
-        Vec3d pos = this.getPos();
+        Vec3d pos = getPos();
         DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-        Explosion explosion = this.world.createExplosion(this, damageSource, null,
+        Explosion explosion = world.createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
         if (getOwner() != null && !explosion.getAffectedPlayers().isEmpty())
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
@@ -85,8 +85,8 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     public void tick() {
         super.tick();
 
-        Vec3d velocity = this.getVelocity();
-        this.setVelocity(velocity.x, velocity.y - 0.05f, velocity.z);
+        Vec3d velocity = getVelocity();
+        setVelocity(velocity.x, velocity.y - 0.05f, velocity.z);
     }
 
     @Override
@@ -103,5 +103,5 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return this.cache; }
+    public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 }

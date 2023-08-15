@@ -35,14 +35,14 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     protected void despawn() {
-        this.discard();
+        discard();
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.world.isClient && this.world.getTime() - initTick > lifetimeInTicks) {
-            this.despawn();
+        if (!world.isClient && world.getTime() - initTick > lifetimeInTicks) {
+            despawn();
         }
     }
 
@@ -52,7 +52,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
             if (entity instanceof PlayerEntity)
                 ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
             entity.damage(damageSource, damageAmount);
-            this.despawn();
+            despawn();
         }
     }
 

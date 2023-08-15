@@ -117,6 +117,6 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
+        return cache;
     }
 }

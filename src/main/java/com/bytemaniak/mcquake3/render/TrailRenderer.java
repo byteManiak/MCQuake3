@@ -54,14 +54,14 @@ public class TrailRenderer implements WorldRenderEvents.End {
 
         public TrailData(Vec3d v1, Vec3d v2, long startTick, long lifetime, Vec3d color, UUID owner) {
             updateTrailData(this, v1, v2, startTick);
-            this.v1 = this._v1;
-            this.v2 = this._v2;
-            this.v3 = this._v3;
-            this.v4 = this._v4;
-            this.v5 = this._v5;
-            this.v6 = this._v6;
-            this.v7 = this._v7;
-            this.v8 = this._v8;
+            this.v1 = _v1;
+            this.v2 = _v2;
+            this.v3 = _v3;
+            this.v4 = _v4;
+            this.v5 = _v5;
+            this.v6 = _v6;
+            this.v7 = _v7;
+            this.v8 = _v8;
             this.lifetime = lifetime;
             this.color = color;
             this.owner = owner;

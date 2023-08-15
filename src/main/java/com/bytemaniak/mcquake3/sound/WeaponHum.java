@@ -16,7 +16,7 @@ public class WeaponHum extends TrackedSound {
     public void tick() {
         QuakePlayer player = (QuakePlayer) owner;
         QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
-        if (weapon.slot != this.slot.slot || !player.isPlayingHum()) {
+        if (weapon.slot != slot.slot || !player.isPlayingHum()) {
             stopSound();
         }
         super.tick();

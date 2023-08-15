@@ -44,7 +44,7 @@ public class PlasmaBall extends SimpleProjectile {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (!this.world.isClient) {
+        if (!world.isClient) {
             doDamage(entity);
         }
     }
@@ -54,9 +54,9 @@ public class PlasmaBall extends SimpleProjectile {
     {
         super.onCollision(hitResult);
 
-        if (!this.world.isClient) {
-            this.world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
-            this.despawn();
+        if (!world.isClient) {
+            world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
+            despawn();
         }
     }
 

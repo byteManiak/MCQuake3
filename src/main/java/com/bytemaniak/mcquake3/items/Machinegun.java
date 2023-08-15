@@ -26,7 +26,7 @@ public class Machinegun extends HitscanWeapon {
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {
-        super(QuakePlayer.WeaponSlot.MACHINEGUN, new Identifier("mcquake3", "machinegun"),
+        super(QuakePlayer.WeaponSlot.MACHINEGUN, new Identifier("mcquake3:machinegun"),
                 MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
                 MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE);
     }

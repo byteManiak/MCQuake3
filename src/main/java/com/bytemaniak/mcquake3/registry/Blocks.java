@@ -17,51 +17,51 @@ import net.minecraft.util.Identifier;
 import static com.bytemaniak.mcquake3.registry.Items.loadItem;
 
 public class Blocks {
-    private static final Identifier JUMPPAD = new Identifier("mcquake3", "jumppad");
+    private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
     public static final Block JUMPPAD_BLOCK = new Jumppad();
     public static final BlockEntityType<JumppadEntity> JUMPPAD_BLOCK_ENTITY;
 
-    public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3", "machinegun_ammo_box");
+    public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3:machinegun_ammo_box");
     public static final Block MACHINEGUN_AMMO_BOX_BLOCK = new MachinegunAmmoBox();
     public static final BlockEntityType<MachinegunAmmoBoxEntity> MACHINEGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier SHOTGUN_AMMO_BOX = new Identifier("mcquake3", "shotgun_ammo_box");
+    public static final Identifier SHOTGUN_AMMO_BOX = new Identifier("mcquake3:shotgun_ammo_box");
     public static final Block SHOTGUN_AMMO_BOX_BLOCK = new ShotgunAmmoBox();
     public static final BlockEntityType<ShotgunAmmoBoxEntity> SHOTGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier GRENADE_AMMO_BOX = new Identifier("mcquake3", "grenade_ammo_box");
+    public static final Identifier GRENADE_AMMO_BOX = new Identifier("mcquake3:grenade_ammo_box");
     public static final Block GRENADE_AMMO_BOX_BLOCK = new GrenadeAmmoBox();
     public static final BlockEntityType<GrenadeAmmoBoxEntity> GRENADE_AMMO_BOX_ENTITY;
 
-    public static final Identifier ROCKET_AMMO_BOX = new Identifier("mcquake3", "rocket_ammo_box");
+    public static final Identifier ROCKET_AMMO_BOX = new Identifier("mcquake3:rocket_ammo_box");
     public static final Block ROCKET_AMMO_BOX_BLOCK = new RocketAmmoBox();
     public static final BlockEntityType<RocketAmmoBoxEntity> ROCKET_AMMO_BOX_ENTITY;
 
-    public static final Identifier LIGHTNING_AMMO_BOX = new Identifier("mcquake3", "lightning_ammo_box");
+    public static final Identifier LIGHTNING_AMMO_BOX = new Identifier("mcquake3:lightning_ammo_box");
     public static final Block LIGHTNING_AMMO_BOX_BLOCK = new LightningAmmoBox();
     public static final BlockEntityType<LightningAmmoBoxEntity> LIGHTNING_AMMO_BOX_ENTITY;
 
-    public static final Identifier RAILGUN_AMMO_BOX = new Identifier("mcquake3", "railgun_ammo_box");
+    public static final Identifier RAILGUN_AMMO_BOX = new Identifier("mcquake3:railgun_ammo_box");
     public static final Block RAILGUN_AMMO_BOX_BLOCK = new RailgunAmmoBox();
     public static final BlockEntityType<RailgunAmmoBoxEntity> RAILGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier PLASMAGUN_AMMO_BOX = new Identifier("mcquake3", "plasmagun_ammo_box");
+    public static final Identifier PLASMAGUN_AMMO_BOX = new Identifier("mcquake3:plasmagun_ammo_box");
     public static final Block PLASMAGUN_AMMO_BOX_BLOCK = new PlasmagunAmmoBox();
     public static final BlockEntityType<PlasmagunAmmoBoxEntity> PLASMAGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier BFG_AMMO_BOX = new Identifier("mcquake3", "bfg_ammo_box");
+    public static final Identifier BFG_AMMO_BOX = new Identifier("mcquake3:bfg_ammo_box");
     public static final Block BFG_AMMO_BOX_BLOCK = new BFGAmmoBox();
     public static final BlockEntityType<BFGAmmoBoxEntity> BFG_AMMO_BOX_ENTITY;
 
-    public static final Identifier HEALTH5 = new Identifier("mcquake3", "5health");
+    public static final Identifier HEALTH5 = new Identifier("mcquake3:5health");
     public static final Block HEALTH5_BLOCK = new Health5();
     public static final BlockEntityType<Health5Entity> HEALTH5_ENTITY;
 
-    public static final Identifier HEALTH25 = new Identifier("mcquake3", "25health");
+    public static final Identifier HEALTH25 = new Identifier("mcquake3:25health");
     public static final Block HEALTH25_BLOCK = new Health25();
     public static final BlockEntityType<Health25Entity> HEALTH25_ENTITY;
 
-    public static final Identifier HEALTH50 = new Identifier("mcquake3", "50health");
+    public static final Identifier HEALTH50 = new Identifier("mcquake3:50health");
     public static final Block HEALTH50_BLOCK = new Health50();
     public static final BlockEntityType<Health50Entity> HEALTH50_ENTITY;
 
@@ -95,8 +95,8 @@ public class Blocks {
     }
 
     public static void loadBlocks() {
-        loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3", "spikes"));
-        loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcquake3", "jumppad"));
+        loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
+        loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcquake3:jumppad"));
         loadDefaultBlock(MACHINEGUN_AMMO_BOX_BLOCK, MACHINEGUN_AMMO_BOX);
         loadDefaultBlock(SHOTGUN_AMMO_BOX_BLOCK, SHOTGUN_AMMO_BOX);
         loadDefaultBlock(GRENADE_AMMO_BOX_BLOCK, GRENADE_AMMO_BOX);

@@ -49,7 +49,7 @@ public abstract class Weapon extends Item implements GeoItem {
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3", "firing_speed"));
+    public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3:firing_speed"));
 
     protected Weapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {

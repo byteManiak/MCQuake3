@@ -19,7 +19,7 @@ public class GrenadeLauncher extends Weapon {
     private static final float GRENADE_PROJECTILE_SPEED = 1.5f;
 
     public GrenadeLauncher() {
-        super(QuakePlayer.WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcquake3", "grenade_launcher"),
+        super(QuakePlayer.WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"),
                 GRENADE_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);

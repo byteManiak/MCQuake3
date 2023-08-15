@@ -25,23 +25,23 @@ public class Items {
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
     public static final Item BFG10K = new BFG10K();
 
-    public static final ItemGroup MCQUAKE3_GROUP = FabricItemGroup.builder(new Identifier("mcquake3", "mcquake3_logo"))
+    public static final ItemGroup MCQUAKE3_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_logo"))
             .icon(() -> new ItemStack(MCQUAKE3_LOGO)).build();
 
     public static void loadItems() {
-        Registry.register(Registries.ITEM, new Identifier("mcquake3", "mcquake3_logo"), MCQUAKE3_LOGO);
+        Registry.register(Registries.ITEM, new Identifier("mcquake3:mcquake3_logo"), MCQUAKE3_LOGO);
 
-        loadItem(GAUNTLET, new Identifier("mcquake3", "gauntlet"));
-        loadItem(MACHINEGUN, new Identifier("mcquake3", "machinegun"));
-        loadItem(SHOTGUN, new Identifier("mcquake3", "shotgun"));
-        loadItem(GRENADE_LAUNCHER, new Identifier("mcquake3", "grenade_launcher"));
-        loadItem(LIGHTNING_GUN, new Identifier("mcquake3", "lightning_gun"));
-        loadItem(RAILGUN, new Identifier("mcquake3", "railgun"));
-        loadItem(PLASMAGUN, new Identifier("mcquake3", "plasmagun"));
-        loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3", "rocket_launcher"));
-        loadItem(BFG10K, new Identifier("mcquake3", "bfg10k"));
+        loadItem(GAUNTLET, new Identifier("mcquake3:gauntlet"));
+        loadItem(MACHINEGUN, new Identifier("mcquake3:machinegun"));
+        loadItem(SHOTGUN, new Identifier("mcquake3:shotgun"));
+        loadItem(GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"));
+        loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
+        loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
+        loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
+        loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
+        loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
 
-        loadItem(TOOL, new Identifier("mcquake3", "tool"));
+        loadItem(TOOL, new Identifier("mcquake3:tool"));
     }
 
     // Load an item into the item registry and add it to the MCQuake3 creative tab

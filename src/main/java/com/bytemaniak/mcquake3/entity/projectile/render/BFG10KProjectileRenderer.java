@@ -17,7 +17,7 @@ import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class BFG10KProjectileRenderer extends EntityRenderer<BFG10KProjectile> {
-    private static final Identifier TEXTURE = new Identifier("mcquake3", "textures/entity/bfg10k_projectile.png");
+    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/entity/bfg10k_projectile.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE, false);
 
     public BFG10KProjectileRenderer(EntityRendererFactory.Context context) {

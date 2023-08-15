@@ -9,14 +9,14 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.util.Identifier;
 
 public class Packets {
-    public static final Identifier DEALT_DAMAGE = new Identifier("mcquake3", "dealt_damage");
-    public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3", "jumppad_update_power");
-    public static final Identifier JUMPPAD_UPDATED_POWER = new Identifier("mcquake3", "jumppad_updated_power");
-    public static final Identifier QUAKE_GUI_UPDATE = new Identifier("mcquake3", "quake_gui_update");
-    public static final Identifier QUAKE_PLAYER_SOUNDS_UPDATE = new Identifier("mcquake3", "quake_player_sounds_update");
-    public static final Identifier PLAYER_CLASS_UPDATE = new Identifier("mcquake3", "player_class_update");
-    public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3", "full_arsenal_request");
-    public static final Identifier AMMO_BOX_UPDATE = new Identifier("mcquake3", "ammo_box_update");
+    public static final Identifier DEALT_DAMAGE = new Identifier("mcquake3:dealt_damage");
+    public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3:jumppad_update_power");
+    public static final Identifier JUMPPAD_UPDATED_POWER = new Identifier("mcquake3:jumppad_updated_power");
+    public static final Identifier QUAKE_GUI_UPDATE = new Identifier("mcquake3:quake_gui_update");
+    public static final Identifier QUAKE_PLAYER_SOUNDS_UPDATE = new Identifier("mcquake3:quake_player_sounds_update");
+    public static final Identifier PLAYER_CLASS_UPDATE = new Identifier("mcquake3:player_class_update");
+    public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3:full_arsenal_request");
+    public static final Identifier AMMO_BOX_UPDATE = new Identifier("mcquake3:ammo_box_update");
 
     public static void registerClientPackets()
     {

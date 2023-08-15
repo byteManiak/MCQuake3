@@ -28,7 +28,7 @@ public class LightningGun extends HitscanWeapon {
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {
-        super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, new Identifier("mcquake3", "lightning_gun"),
+        super(QuakePlayer.WeaponSlot.LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"),
                 LIGHTNING_REFIRE_RATE, false, null, true,
                 LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE);
     }

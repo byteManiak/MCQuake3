@@ -14,7 +14,7 @@ import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class ShellRenderer extends EntityRenderer<Shell> {
-    private static final Identifier TEXTURE = new Identifier("mcquake3", "textures/entity/shell.png");
+    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/entity/shell.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
 
     public ShellRenderer(EntityRendererFactory.Context context) {

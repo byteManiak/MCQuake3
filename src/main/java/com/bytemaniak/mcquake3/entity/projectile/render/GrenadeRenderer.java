@@ -15,7 +15,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class GrenadeRenderer extends GeoEntityRenderer<Grenade> {
 
     public GrenadeRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3", "grenade"), true));
+        super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3:grenade"), true));
     }
 
     @Override

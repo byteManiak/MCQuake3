@@ -14,7 +14,7 @@ import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class PlasmaBallRenderer extends EntityRenderer<PlasmaBall> {
-    private static final Identifier TEXTURE = new Identifier("mcquake3", "textures/entity/plasmaball.png");
+    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/entity/plasmaball.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE, false);
 
     public PlasmaBallRenderer(EntityRendererFactory.Context context) {

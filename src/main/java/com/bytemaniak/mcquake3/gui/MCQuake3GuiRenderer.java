@@ -13,7 +13,7 @@ import net.minecraft.text.Style;
 import net.minecraft.util.Identifier;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
-    private static final Identifier QUAKE_FONT = new Identifier("mcquake3", "quake_hud");
+    private static final Identifier QUAKE_FONT = new Identifier("mcquake3:quake_hud");
 
     private void drawText(MatrixStack matrixStack, String str, float x, float y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;

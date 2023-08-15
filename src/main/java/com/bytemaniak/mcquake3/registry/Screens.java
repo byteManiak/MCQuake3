@@ -11,6 +11,6 @@ public class Screens {
     public static final ScreenHandlerType<JumppadScreenHandler> JUMPPAD_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(JumppadScreenHandler::new);
 
     public static void loadScreens() {
-        Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcquake3", "jumppad_power"), JUMPPAD_SCREEN_HANDLER);
+        Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcquake3:jumppad_power"), JUMPPAD_SCREEN_HANDLER);
     }
 }

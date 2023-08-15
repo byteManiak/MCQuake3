@@ -23,7 +23,7 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(QuakePlayer.WeaponSlot.RAILGUN, new Identifier("mcquake3", "railgun"),
+        super(QuakePlayer.WeaponSlot.RAILGUN, new Identifier("mcquake3:railgun"),
                 RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
                 RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
     }

@@ -25,7 +25,7 @@ public class Shotgun extends Weapon {
     private static final float SHOTGUN_PROJECTILE_SPEED = 4.25f;
 
     public Shotgun() {
-        super(QuakePlayer.WeaponSlot.SHOTGUN, new Identifier("mcquake3", "shotgun"),
+        super(QuakePlayer.WeaponSlot.SHOTGUN, new Identifier("mcquake3:shotgun"),
                 SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false);
     }
 

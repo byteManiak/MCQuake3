@@ -15,7 +15,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class RocketRenderer extends GeoEntityRenderer<Rocket> {
     public RocketRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3", "rocket"), true));
+        super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3:rocket"), true));
     }
 
     @Override

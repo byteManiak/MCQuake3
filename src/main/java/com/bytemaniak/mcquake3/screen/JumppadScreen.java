@@ -23,7 +23,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     private SliderWidgetSettable powerForward, powerUp;
     private float forward_power, up_power;
 
-    private static final Identifier TEXTURE = new Identifier("mcquake3", "textures/gui/settings.png");
+    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/gui/settings.png");
 
     public JumppadScreen(JumppadScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, Text.of("Jump Pad Boost Settings"));

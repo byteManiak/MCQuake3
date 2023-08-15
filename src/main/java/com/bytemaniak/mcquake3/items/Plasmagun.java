@@ -19,7 +19,7 @@ public class Plasmagun extends Weapon {
     private static final float PLASMAGUN_PROJECTILE_SPEED = 1.5f;
 
     public Plasmagun() {
-        super(QuakePlayer.WeaponSlot.PLASMA_GUN, new Identifier("mcquake3", "plasmagun"),
+        super(QuakePlayer.WeaponSlot.PLASMA_GUN, new Identifier("mcquake3:plasmagun"),
                 PLASMAGUN_REFIRE_TICK_RATE, true, Sounds.PLASMAGUN_FIRE, false);
     }
 

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": {"model": "mcquake3:block/plasmagun_ammo_box"}
+    "": {"model": "builtin/entity"}
   }
 }

@@ -1,6 +1,8 @@
 package com.bytemaniak.mcquake3.entity;
 
+import com.bytemaniak.mcquake3.registry.Items;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.Item;
 
 public interface QuakePlayer {
     public enum WeaponSlot {
@@ -37,6 +39,21 @@ public interface QuakePlayer {
                 case BFG10K -> { return "BFG10K"; }
             }
             return "";
+        }
+
+        public Item toItem() {
+            switch (this) {
+                case GAUNTLET -> { return Items.GAUNTLET; }
+                case MACHINEGUN -> { return Items.MACHINEGUN; }
+                case SHOTGUN -> { return Items.SHOTGUN; }
+                case GRENADE_LAUNCHER -> { return Items.GRENADE_LAUNCHER; }
+                case ROCKET_LAUNCHER -> { return Items.ROCKET_LAUNCHER; }
+                case LIGHTNING_GUN -> { return Items.LIGHTNING_GUN; }
+                case RAILGUN -> { return Items.RAILGUN; }
+                case PLASMA_GUN -> { return Items.PLASMAGUN; }
+                case BFG10K -> { return Items.BFG10K; }
+            }
+            return net.minecraft.item.Items.AIR;
         }
     };
 

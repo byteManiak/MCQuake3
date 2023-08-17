@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": {"model": "mcquake3:block/railgun_ammo_box"}
+    "": {"model": "builtin/entity"}
   }
 }

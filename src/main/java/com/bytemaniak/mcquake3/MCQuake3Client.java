@@ -54,6 +54,22 @@ public class MCQuake3Client implements ClientModInitializer {
                 context -> new PickupRenderer<>(Blocks.HEALTH25));
         BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH50));
+        BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_ENTITY,
+                context -> new PickupRenderer<>(Blocks.MACHINEGUN));
+        BlockEntityRendererRegistry.register(Blocks.SHOTGUN_ENTITY,
+                context -> new PickupRenderer<>(Blocks.SHOTGUN));
+        BlockEntityRendererRegistry.register(Blocks.GRENADE_ENTITY,
+                context -> new PickupRenderer<>(Blocks.GRENADE));
+        BlockEntityRendererRegistry.register(Blocks.ROCKET_ENTITY,
+                context -> new PickupRenderer<>(Blocks.ROCKET));
+        BlockEntityRendererRegistry.register(Blocks.LIGHTNING_ENTITY,
+                context -> new PickupRenderer<>(Blocks.LIGHTNING));
+        BlockEntityRendererRegistry.register(Blocks.RAILGUN_ENTITY,
+                context -> new PickupRenderer<>(Blocks.RAILGUN));
+        BlockEntityRendererRegistry.register(Blocks.PLASMAGUN_ENTITY,
+                context -> new PickupRenderer<>(Blocks.PLASMAGUN));
+        BlockEntityRendererRegistry.register(Blocks.BFG_ENTITY,
+                context -> new PickupRenderer<>(Blocks.BFG));
 
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH5_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH25_BLOCK, RenderLayer.getTranslucent());

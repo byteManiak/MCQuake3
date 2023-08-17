@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": {"model": "mcquake3:block/50health"}
+    "": {"model": "builtin/entity"}
   }
 }

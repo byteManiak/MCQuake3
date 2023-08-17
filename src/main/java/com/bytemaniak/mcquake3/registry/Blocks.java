@@ -5,6 +5,7 @@ import com.bytemaniak.mcquake3.blocks.JumppadEntity;
 import com.bytemaniak.mcquake3.blocks.Spikes;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
+import com.bytemaniak.mcquake3.blocks.weapon.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
@@ -65,6 +66,39 @@ public class Blocks {
     public static final Block HEALTH50_BLOCK = new Health50();
     public static final BlockEntityType<Health50Entity> HEALTH50_ENTITY;
 
+	public static final Identifier MACHINEGUN = new Identifier("mcquake3:machinegun_pickup");
+	public static final Block MACHINEGUN_BLOCK = new MachinegunPickup();
+	public static final BlockEntityType<MachinegunPickupEntity> MACHINEGUN_ENTITY;
+
+	public static final Identifier SHOTGUN = new Identifier("mcquake3:shotgun_pickup");
+	public static final Block SHOTGUN_BLOCK = new ShotgunPickup();
+	public static final BlockEntityType<ShotgunPickupEntity> SHOTGUN_ENTITY;
+
+	public static final Identifier GRENADE = new Identifier("mcquake3:grenade_pickup");
+	public static final Block GRENADE_BLOCK = new GrenadePickup();
+	public static final BlockEntityType<GrenadePickupEntity> GRENADE_ENTITY;
+
+	public static final Identifier ROCKET = new Identifier("mcquake3:rocket_pickup");
+	public static final Block ROCKET_BLOCK = new RocketPickup();
+	public static final BlockEntityType<RocketPickupEntity> ROCKET_ENTITY;
+
+	public static final Identifier LIGHTNING = new Identifier("mcquake3:lightning_pickup");
+	public static final Block LIGHTNING_BLOCK = new LightningPickup();
+	public static final BlockEntityType<LightningPickupEntity> LIGHTNING_ENTITY;
+
+	public static final Identifier RAILGUN = new Identifier("mcquake3:railgun_pickup");
+	public static final Block RAILGUN_BLOCK = new RailgunPickup();
+	public static final BlockEntityType<RailgunPickupEntity> RAILGUN_ENTITY;
+
+	public static final Identifier PLASMAGUN = new Identifier("mcquake3:plasmagun_pickup");
+	public static final Block PLASMAGUN_BLOCK = new PlasmagunPickup();
+	public static final BlockEntityType<PlasmagunPickupEntity> PLASMAGUN_ENTITY;
+
+	public static final Identifier BFG = new Identifier("mcquake3:bfg_pickup");
+	public static final Block BFG_BLOCK = new BFGPickup();
+	public static final BlockEntityType<BFGPickupEntity> BFG_ENTITY;
+
+
     public static final Block SPIKES_BLOCK = new Spikes();
 
     static {
@@ -92,6 +126,22 @@ public class Blocks {
                 FabricBlockEntityTypeBuilder.create(Health25Entity::new, HEALTH25_BLOCK).build());
         HEALTH50_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH50,
                 FabricBlockEntityTypeBuilder.create(Health50Entity::new, HEALTH50_BLOCK).build());
+        MACHINEGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN,
+				FabricBlockEntityTypeBuilder.create(MachinegunPickupEntity::new, MACHINEGUN_BLOCK).build());
+		SHOTGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN,
+				FabricBlockEntityTypeBuilder.create(ShotgunPickupEntity::new, SHOTGUN_BLOCK).build());
+		GRENADE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, GRENADE,
+				FabricBlockEntityTypeBuilder.create(GrenadePickupEntity::new, GRENADE_BLOCK).build());
+		ROCKET_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, ROCKET,
+				FabricBlockEntityTypeBuilder.create(RocketPickupEntity::new, ROCKET_BLOCK).build());
+		LIGHTNING_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, LIGHTNING,
+				FabricBlockEntityTypeBuilder.create(LightningPickupEntity::new, LIGHTNING_BLOCK).build());
+		RAILGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, RAILGUN,
+				FabricBlockEntityTypeBuilder.create(RailgunPickupEntity::new, RAILGUN_BLOCK).build());
+		PLASMAGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PLASMAGUN,
+				FabricBlockEntityTypeBuilder.create(PlasmagunPickupEntity::new, PLASMAGUN_BLOCK).build());
+		BFG_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, BFG,
+				FabricBlockEntityTypeBuilder.create(BFGPickupEntity::new, BFG_BLOCK).build());
     }
 
     public static void loadBlocks() {
@@ -108,6 +158,15 @@ public class Blocks {
         loadDefaultBlock(HEALTH5_BLOCK, HEALTH5);
         loadDefaultBlock(HEALTH25_BLOCK, HEALTH25);
         loadDefaultBlock(HEALTH50_BLOCK, HEALTH50);
+        loadDefaultBlock(MACHINEGUN_BLOCK, MACHINEGUN);
+        loadDefaultBlock(SHOTGUN_BLOCK, SHOTGUN);
+        loadDefaultBlock(GRENADE_BLOCK, GRENADE);
+        loadDefaultBlock(ROCKET_BLOCK, ROCKET);
+        loadDefaultBlock(LIGHTNING_BLOCK, LIGHTNING);
+        loadDefaultBlock(RAILGUN_BLOCK, RAILGUN);
+        loadDefaultBlock(PLASMAGUN_BLOCK, PLASMAGUN);
+        loadDefaultBlock(BFG_BLOCK, BFG);
+
     }
 
     // Load a block into the block registry and create a default item for it

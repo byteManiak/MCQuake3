@@ -66,9 +66,8 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
         DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
         Explosion explosion = world.createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
-        if (!explosion.getAffectedPlayers().isEmpty()) {
+        if (getOwner() != null && !explosion.getAffectedPlayers().isEmpty())
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
-        }
 
         super.despawn();
     }

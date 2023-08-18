@@ -13,7 +13,8 @@
     "ClientPlayerMixin",
     "HeldItemRendererMixin",
     "ClientPlayerInteractionManagerMixin",
-    "MouseMixin"
+    "MouseMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

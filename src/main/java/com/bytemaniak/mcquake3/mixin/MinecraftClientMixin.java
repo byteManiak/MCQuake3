@@ -27,7 +27,6 @@ public class MinecraftClientMixin {
     private boolean isQuakeWeaponFired(KeyBinding key, Operation<Boolean> original) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (key.getTranslationKey().equals("key.use") &&
-                client.player.isUsingItem() &&
                 client.player.getActiveItem().getItem() instanceof Weapon &&
                 client.options.attackKey.isPressed()) {
             return true;

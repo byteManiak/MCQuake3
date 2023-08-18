@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
     @Inject(method = "doAttack", at = @At(value = "HEAD"), cancellable = true)
+    // Replace the attack action with the use action when firing Quake weapons
     private void doQuakeWeaponAttack(CallbackInfoReturnable<Void> cir) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player.getMainHandStack().getItem() instanceof Weapon) {
@@ -22,6 +23,7 @@ public class MinecraftClientMixin {
     }
 
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;isPressed()Z"))
+    // Keep the Quake weapons firing. Replace right click check with left click check when Quake weapons are fired to ensure that.
     private boolean isQuakeWeaponFired(KeyBinding key, Operation<Boolean> original) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (key.getTranslationKey().equals("key.use") &&

@@ -19,6 +19,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @WrapOperation(method = "onDamaged", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;hurtTime:I", opcode = Opcodes.PUTFIELD))
+    // Don't show the vanilla damage hurt tilt when damaged by Quake weapons as some of them fire multiple times per second
     private void cancelHurtTilt(LivingEntity entity, int value, Operation<Void> original) {
         DamageSource lastDamageSource = entity.getRecentDamageSource();
         if (lastDamageSource != null && entity instanceof PlayerEntity && lastDamageSource.getName().contains("mcquake3"))

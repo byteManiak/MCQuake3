@@ -16,7 +16,7 @@ public class PickupRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> 
 
     @Override
     public void actuallyRender(MatrixStack poseStack, T animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        if (!animatable.lastShouldRender) alpha = 0.3f;
+        if (!animatable.lastShouldRender) alpha = 0.105f;
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

@@ -49,7 +49,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
-    // No point syncing ammo (for now?), so using a regular int array
     private final static TrackedData<Integer>[] QUAKE_PLAYER_AMMO = new TrackedData[]{
         DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
         DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),

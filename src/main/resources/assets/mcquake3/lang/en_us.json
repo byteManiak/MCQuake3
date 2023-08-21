@@ -52,5 +52,6 @@
   "death.attack.mcquake3.spikes": "%1$s was impaled to death.",
   "death.attack.mcquake3.spikes.player": "%2$s did a \"This is Sparta\" on %1$s.",
   "key.mcquake3.playermenu": "MCQuake3 Player Settings",
+  "key.mcquake3.playertaunt": "Taunt",
   "category.mcquake3.bindings": "MCQuake3"
 }

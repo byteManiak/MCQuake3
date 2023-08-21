@@ -14,28 +14,24 @@ public class Keybindings {
     private static KeyBinding playerSettingsMenu;
     private static KeyBinding playerTaunt;
 
-    public static void registerKeybinds() {
-        playerSettingsMenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.mcquake3.playermenu",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_O,
+    private static KeyBinding registerKeybind(String id, int key) {
+        return KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.mcquake3."+id, InputUtil.Type.KEYSYM, key,
                 "category.mcquake3.bindings"));
+    }
+
+    public static void registerKeybinds() {
+        playerSettingsMenu = registerKeybind("playermenu", GLFW.GLFW_KEY_O);
+        playerTaunt = registerKeybind("playertaunt", GLFW.GLFW_KEY_Z);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (playerSettingsMenu.wasPressed()) {
+            if (playerSettingsMenu.wasPressed())
                 client.setScreen(new PlayerSettingsScreen(Text.of("MCQuake3 Player Settings"), client.player));
-            }
         });
 
-        playerTaunt = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.mcquake3.playertaunt",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_Z,
-                "category.mcquake3.bindings"));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (playerTaunt.wasPressed()) {
+            if (playerTaunt.wasPressed())
                 ClientPlayNetworking.send(Packets.PLAYER_TAUNT, PacketByteBufs.empty());
-            }
         });
     }
 }

@@ -60,7 +60,6 @@ public interface QuakePlayer {
     public boolean quakeGuiEnabled();
     public void setQuakeGui(boolean enabled);
 
-    public void toggleQuakePlayerSounds();
     public boolean quakePlayerSoundsEnabled();
 
     public void resetAmmo();
@@ -78,6 +77,8 @@ public interface QuakePlayer {
 
     public String getPlayerVoice();
     public void setPlayerVoice(String soundsSet);
+
+    public void taunt();
 
     public void playHum(QuakePlayer.WeaponSlot weaponSlot);
     public void stopHum();

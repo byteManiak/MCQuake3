@@ -143,7 +143,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
-        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "None");
+        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
 
         for (int i = 0; i < 8; i++)
             dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
@@ -219,6 +219,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public String getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
     public void setPlayerVoice(String soundsSet) {
         dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
+    }
+
+    public void taunt() {
+        if (quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
+            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
+        }
     }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)

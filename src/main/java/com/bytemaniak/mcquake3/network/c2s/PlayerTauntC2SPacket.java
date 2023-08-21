@@ -7,10 +7,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class QuakePlayerSoundsUpdateC2SPacket {
+public class PlayerTauntC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        if (player instanceof QuakePlayer quakePlayer) {
-            quakePlayer.toggleQuakePlayerSounds();
-        }
+        QuakePlayer qPlayer = (QuakePlayer) player;
+        qPlayer.taunt();
     }
 }

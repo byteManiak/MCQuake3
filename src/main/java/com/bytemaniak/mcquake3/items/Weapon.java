@@ -91,7 +91,6 @@ public abstract class Weapon extends Item implements GeoItem {
 
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
-        boolean clientside = world.isClient;
 
         if (currentTick - player.getWeaponTick(weaponSlot) >= refireRate) {
             if (!player.useAmmo(weaponSlot)) {

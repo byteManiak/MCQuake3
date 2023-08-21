@@ -22,7 +22,6 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
         QuakePlayer thisQuakePlayer = (QuakePlayer) this;
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
         thisQuakePlayer.setQuakeGui(oldQuakePlayer.quakeGuiEnabled());
-        thisQuakePlayer.setQuakePlayerSoundsEnabled(oldQuakePlayer.quakePlayerSoundsEnabled());
         thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
     }
 }

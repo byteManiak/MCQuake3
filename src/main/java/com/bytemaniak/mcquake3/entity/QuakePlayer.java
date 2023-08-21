@@ -63,7 +63,6 @@ public interface QuakePlayer {
 
     public void toggleQuakePlayerSounds();
     public boolean quakePlayerSoundsEnabled();
-    public void setQuakePlayerSoundsEnabled(boolean enabled);
 
     public void resetAmmo();
 

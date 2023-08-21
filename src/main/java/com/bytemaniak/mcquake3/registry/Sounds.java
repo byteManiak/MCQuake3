@@ -107,6 +107,7 @@ public class Sounds {
         }
     }
 
+    public static PlayerSounds NONE = new PlayerSounds("Vanilla");
     public static PlayerSounds ANGELYSS = new PlayerSounds("Angelyss");
     public static PlayerSounds ARACHNA = new PlayerSounds("Arachna");
     public static PlayerSounds ASSASSIN = new PlayerSounds("Assassin");

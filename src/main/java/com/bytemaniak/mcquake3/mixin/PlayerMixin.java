@@ -47,7 +47,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     };
 
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean> QUAKE_PLAYER_SOUNDS_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     // No point syncing ammo (for now?), so using a regular int array
@@ -128,7 +127,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
-        nbt.putBoolean("quake_player_sounds_enabled", quakePlayerSoundsEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
 
         for (int i = 0; i < 8; i++)
@@ -138,7 +136,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
-        dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, nbt.getBoolean("quake_player_sounds_enabled"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
@@ -150,8 +147,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
-        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS_ENABLED, false);
-        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Tony");
+        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "None");
 
         for (int i = 0; i < 8; i++)
             dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
@@ -178,13 +174,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public boolean quakeGuiEnabled() { return dataTracker.get(QUAKE_GUI_ENABLED); }
     public void setQuakeGui(boolean enabled) { dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
 
-    public void toggleQuakePlayerSounds() {
-        boolean playerSounds = !dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED);
-        dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, playerSounds);
-    }
-
-    public boolean quakePlayerSoundsEnabled() { return dataTracker.get(QUAKE_PLAYER_SOUNDS_ENABLED); }
-    public void setQuakePlayerSoundsEnabled(boolean enabled) { dataTracker.set(QUAKE_PLAYER_SOUNDS_ENABLED, enabled); }
+    public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
 
     public long getWeaponTick(WeaponSlot slot) {
         return weaponTicks[slot.slot];

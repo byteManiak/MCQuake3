@@ -30,6 +30,7 @@ public class PlayerSettingsScreen extends Screen {
             this.left = x;
             this.right = x + width;
             this.bottom = y + height;
+            addEntry(new PlayerVoiceEntry(Sounds.NONE));
             addEntry(new PlayerVoiceEntry(Sounds.ANGELYSS));
             addEntry(new PlayerVoiceEntry(Sounds.ARACHNA));
             addEntry(new PlayerVoiceEntry(Sounds.ASSASSIN));
@@ -92,7 +93,8 @@ public class PlayerSettingsScreen extends Screen {
 
             private void onPressed() {
                 PlayerVoiceList.this.setSelected(this);
-                SoundUtils.playSoundLocally(SoundEvent.of(playerSounds.TAUNT));
+                if (!playerSounds.playerClass.equals("None"))
+                    SoundUtils.playSoundLocally(SoundEvent.of(playerSounds.TAUNT));
             }
         }
 
@@ -112,6 +114,9 @@ public class PlayerSettingsScreen extends Screen {
                 .dimensions(20, 20, (int)(width/6.5f), 20).build();
 
         voiceList = new PlayerVoiceList(client, 20, 45, (int)(width/6.5f), height - 65, 18);
+        voiceList.setSelected(voiceList.children().stream()
+                .filter(e -> e.playerSounds.playerClass.equals(((QuakePlayer)MinecraftClient.getInstance().player).getPlayerVoice()))
+                .findFirst().get());
 
         String guiButtonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
         toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {
@@ -131,19 +136,6 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 140, height - 24, 120, 20).build();
 
-        String playerSoundsButtonText = user.quakePlayerSoundsEnabled() ? "Disable player sounds" : "Enable player sounds";
-        togglePlayerSounds = ButtonWidget.builder(Text.of(playerSoundsButtonText), (button) -> {
-            user.toggleQuakePlayerSounds();
-
-            boolean quakePlayerSoundsEnabled = user.quakePlayerSoundsEnabled();
-            String newButtonText;
-            if (quakePlayerSoundsEnabled) newButtonText = "Disable player sounds";
-            else newButtonText = "Enable player sounds";
-
-            togglePlayerSounds.setMessage(Text.of(newButtonText));
-            ClientPlayNetworking.send(Packets.QUAKE_PLAYER_SOUNDS_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 140, height - 48, 120, 20).build();
-
         ButtonWidget giveWeapons = ButtonWidget.builder(Text.of("Give me a full arsenal"), (button -> {
             ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty());
         })).dimensions(width / 4, height - 24, width / 3, 20).build();
@@ -151,7 +143,6 @@ public class PlayerSettingsScreen extends Screen {
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
-        addDrawableChild(togglePlayerSounds);
         addDrawableChild(giveWeapons);
         super.init();
     }

@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.entity;
 
 import com.bytemaniak.mcquake3.registry.Items;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 
 public interface QuakePlayer {
@@ -73,8 +72,6 @@ public interface QuakePlayer {
     public void addAmmo(int amount, WeaponSlot slot);
 
     public WeaponSlot getCurrentWeapon();
-
-    public void takeDamage(int amount, DamageSource damageSource);
 
     public long getWeaponTick(WeaponSlot slot);
     public void setWeaponTick(WeaponSlot slot, long tick);

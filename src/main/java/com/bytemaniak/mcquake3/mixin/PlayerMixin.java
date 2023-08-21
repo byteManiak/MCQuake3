@@ -29,7 +29,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -38,8 +37,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
-    @Shadow public abstract boolean isCreative();
-
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final int[] defaultWeaponAmmo = {

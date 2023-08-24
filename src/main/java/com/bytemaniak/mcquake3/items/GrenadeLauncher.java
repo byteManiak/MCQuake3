@@ -16,7 +16,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class GrenadeLauncher extends Weapon {
     private static final long GRENADE_REFIRE_RATE = 15;
-    private static final float GRENADE_PROJECTILE_SPEED = 1.5f;
+    private static final float GRENADE_PROJECTILE_SPEED = .85f;
 
     public GrenadeLauncher() {
         super(QuakePlayer.WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"),

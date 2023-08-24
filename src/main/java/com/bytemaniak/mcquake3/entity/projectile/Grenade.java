@@ -62,7 +62,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
                 case UP -> velocity.multiply(1, -.55, 1);
             };
 
-            if (velocity.y > 0 && velocity.y < 0.1f) velocity = velocity.multiply(1, 0, 1);
+            if (velocity.y > 0 && velocity.y < 0.075f) velocity = velocity.multiply(1, 0, 1);
             else world.playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
 
             setVelocity(velocity);

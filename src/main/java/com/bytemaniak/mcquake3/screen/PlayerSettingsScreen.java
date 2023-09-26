@@ -113,10 +113,12 @@ public class PlayerSettingsScreen extends Screen {
         ButtonWidget voiceSelectionText = ButtonWidget.builder(Text.of("Player voice"), (button -> {}))
                 .dimensions(20, 20, (int)(width/6.5f), 20).build();
 
+        String playerVoice = ((QuakePlayer)MinecraftClient.getInstance().player).getPlayerVoice();
+
         voiceList = new PlayerVoiceList(client, 20, 45, (int)(width/6.5f), height - 65, 18);
         voiceList.setSelected(voiceList.children().stream()
-                .filter(e -> e.playerSounds.playerClass.equals(((QuakePlayer)MinecraftClient.getInstance().player).getPlayerVoice()))
-                .findFirst().get());
+                .filter(e -> e.playerSounds.playerClass.equals(playerVoice))
+                .findFirst().orElse(voiceList.getFirst()));
 
         String guiButtonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
         toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {

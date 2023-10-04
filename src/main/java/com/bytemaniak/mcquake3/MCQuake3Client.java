@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3;
 
+import com.bytemaniak.mcquake3.blocks.render.ArmorFixRenderer;
 import com.bytemaniak.mcquake3.blocks.render.PickupRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
@@ -55,11 +56,11 @@ public class MCQuake3Client implements ClientModInitializer {
         BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH50));
         BlockEntityRendererRegistry.register(Blocks.ARMOR_SHARD_ENTITY,
-                context -> new PickupRenderer<>(Blocks.ARMOR_SHARD));
+                context -> new ArmorFixRenderer<>(Blocks.ARMOR_SHARD));
         BlockEntityRendererRegistry.register(Blocks.LIGHT_ARMOR_ENTITY,
-                context -> new PickupRenderer<>(Blocks.LIGHT_ARMOR));
+                context -> new ArmorFixRenderer<>(Blocks.LIGHT_ARMOR));
         BlockEntityRendererRegistry.register(Blocks.HEAVY_ARMOR_ENTITY,
-                context -> new PickupRenderer<>(Blocks.HEAVY_ARMOR));
+                context -> new ArmorFixRenderer<>(Blocks.HEAVY_ARMOR));
         BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.MACHINEGUN));
         BlockEntityRendererRegistry.register(Blocks.SHOTGUN_ENTITY,

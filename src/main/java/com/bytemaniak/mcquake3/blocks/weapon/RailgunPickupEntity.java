@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class RailgunPickupEntity extends PickupEntity {
     public RailgunPickupEntity(BlockPos pos, BlockState state) {
-        super(Blocks.RAILGUN_ENTITY, pos, state, Sounds.AMMO_PICKUP);
+        super(Blocks.RAILGUN_ENTITY, pos, state, Sounds.WEAPON_PICKUP);
     }
 }

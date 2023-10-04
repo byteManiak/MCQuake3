@@ -68,6 +68,9 @@ public class Sounds {
     private static final Identifier AMMO_PICKUP_IDENT = new Identifier("mcquake3:ammo_pickup");
     public static final SoundEvent AMMO_PICKUP = SoundEvent.of(AMMO_PICKUP_IDENT);
 
+    private static final Identifier WEAPON_PICKUP_IDENT = new Identifier("mcquake3:weapon_pickup");
+    public static final SoundEvent WEAPON_PICKUP = SoundEvent.of(WEAPON_PICKUP_IDENT);
+
     private static final Identifier HEALTH5_IDENT = new Identifier("mcquake3:5health");
     public static final SoundEvent HEALTH5 = SoundEvent.of(HEALTH5_IDENT);
 
@@ -172,6 +175,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
         Registry.register(Registries.SOUND_EVENT, REGEN_IDENT, REGEN);
         Registry.register(Registries.SOUND_EVENT, AMMO_PICKUP_IDENT, AMMO_PICKUP);
+        Registry.register(Registries.SOUND_EVENT, WEAPON_PICKUP_IDENT, WEAPON_PICKUP);
         Registry.register(Registries.SOUND_EVENT, HEALTH5_IDENT, HEALTH5);
         Registry.register(Registries.SOUND_EVENT, HEALTH25_IDENT, HEALTH25);
         Registry.register(Registries.SOUND_EVENT, HEALTH50_IDENT, HEALTH50);

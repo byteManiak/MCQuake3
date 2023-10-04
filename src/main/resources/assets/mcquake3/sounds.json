@@ -138,6 +138,12 @@
     ]
   },
 
+  "weapon_pickup": {
+    "sounds": [
+      "mcquake3:weapon_pickup"
+    ]
+  },
+
   "5health": {
     "sounds": [
       "mcquake3:5health"

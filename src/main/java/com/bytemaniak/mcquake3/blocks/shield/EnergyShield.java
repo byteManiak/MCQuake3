@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.blocks.armor;
+package com.bytemaniak.mcquake3.blocks.shield;
 
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class Armor extends Pickup {
+public abstract class EnergyShield extends Pickup {
     protected float armorValue;
 
     @Override

@@ -1,12 +1,12 @@
-package com.bytemaniak.mcquake3.blocks.armor;
+package com.bytemaniak.mcquake3.blocks.shield;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-public class HeavyArmor extends Armor {
-    public HeavyArmor() {
+public class HeavyEnergyShield extends EnergyShield {
+    public HeavyEnergyShield() {
         super();
         this.armorValue = 100;
     }
@@ -14,6 +14,6 @@ public class HeavyArmor extends Armor {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new HeavyArmorEntity(pos, state);
+        return new HeavyEnergyShieldEntity(pos, state);
     }
 }

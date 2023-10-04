@@ -4,8 +4,8 @@ import com.bytemaniak.mcquake3.blocks.Jumppad;
 import com.bytemaniak.mcquake3.blocks.JumppadEntity;
 import com.bytemaniak.mcquake3.blocks.Spikes;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
-import com.bytemaniak.mcquake3.blocks.armor.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
+import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -68,16 +68,16 @@ public class Blocks {
     public static final BlockEntityType<Health50Entity> HEALTH50_ENTITY;
 
     public static final Identifier SHIELD_CELL = new Identifier("mcquake3:energy_shield_cell");
-    public static final Block SHIELD_CELL_BLOCK = new ArmorShard();
-    public static final BlockEntityType<ArmorShardEntity> SHIELD_CELL_ENTITY;
+    public static final Block SHIELD_CELL_BLOCK = new ShieldCell();
+    public static final BlockEntityType<ShieldCellEntity> SHIELD_CELL_ENTITY;
 
     public static final Identifier LIGHT_ENERGY_SHIELD = new Identifier("mcquake3:light_energy_shield");
-    public static final Block LIGHT_ENERGY_SHIELD_BLOCK = new LightArmor();
-    public static final BlockEntityType<LightArmorEntity> LIGHT_ENERGY_SHIELD_ENTITY;
+    public static final Block LIGHT_ENERGY_SHIELD_BLOCK = new LightEnergyShield();
+    public static final BlockEntityType<LightEnergyShieldEntity> LIGHT_ENERGY_SHIELD_ENTITY;
 
     public static final Identifier HEAVY_ENERGY_SHIELD = new Identifier("mcquake3:heavy_energy_shield");
-    public static final Block HEAVY_ENERGY_SHIELD_BLOCK = new HeavyArmor();
-    public static final BlockEntityType<HeavyArmorEntity> HEAVY_ENERGY_SHIELD_ENTITY;
+    public static final Block HEAVY_ENERGY_SHIELD_BLOCK = new HeavyEnergyShield();
+    public static final BlockEntityType<HeavyEnergyShieldEntity> HEAVY_ENERGY_SHIELD_ENTITY;
 
     public static final Identifier MACHINEGUN = new Identifier("mcquake3:machinegun_pickup");
 	public static final Block MACHINEGUN_BLOCK = new MachinegunPickup();
@@ -140,11 +140,11 @@ public class Blocks {
         HEALTH50_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH50,
                 FabricBlockEntityTypeBuilder.create(Health50Entity::new, HEALTH50_BLOCK).build());
         SHIELD_CELL_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHIELD_CELL,
-                FabricBlockEntityTypeBuilder.create(ArmorShardEntity::new, SHIELD_CELL_BLOCK).build());
+                FabricBlockEntityTypeBuilder.create(ShieldCellEntity::new, SHIELD_CELL_BLOCK).build());
         LIGHT_ENERGY_SHIELD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, LIGHT_ENERGY_SHIELD,
-                FabricBlockEntityTypeBuilder.create(LightArmorEntity::new, LIGHT_ENERGY_SHIELD_BLOCK).build());
+                FabricBlockEntityTypeBuilder.create(LightEnergyShieldEntity::new, LIGHT_ENERGY_SHIELD_BLOCK).build());
         HEAVY_ENERGY_SHIELD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEAVY_ENERGY_SHIELD,
-                FabricBlockEntityTypeBuilder.create(HeavyArmorEntity::new, HEAVY_ENERGY_SHIELD_BLOCK).build());
+                FabricBlockEntityTypeBuilder.create(HeavyEnergyShieldEntity::new, HEAVY_ENERGY_SHIELD_BLOCK).build());
         MACHINEGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN,
 				FabricBlockEntityTypeBuilder.create(MachinegunPickupEntity::new, MACHINEGUN_BLOCK).build());
 		SHOTGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN,

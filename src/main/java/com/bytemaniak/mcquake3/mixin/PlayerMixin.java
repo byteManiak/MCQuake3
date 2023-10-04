@@ -176,7 +176,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public boolean damage(DamageSource source, float amount) {
         int energyShield = getEnergyShield();
         float damage = MiscUtils.fromMCDamage(amount);
-        if (energyShield > damage) {
+        if (energyShield > damage * 0.66f) {
             energyShield -= (int)(damage * 0.66f);
             damage *= 0.33f;
         } else {

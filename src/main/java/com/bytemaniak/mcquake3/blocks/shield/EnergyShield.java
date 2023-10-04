@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.blocks.shield;
 
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
+import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class EnergyShield extends Pickup {
-    protected float armorValue;
+    protected int armorValue;
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
@@ -20,6 +21,10 @@ public abstract class EnergyShield extends Pickup {
         if (!armorPickup.shouldRender()) return;
 
         if (entity instanceof PlayerEntity player) {
+            QuakePlayer quakePlayer = (QuakePlayer)player;
+            if (quakePlayer.getEnergyShield() == 200) return;
+
+            quakePlayer.addEnergyShield(armorValue);
             armorPickup.use();
             world.markDirty(pos);
         }

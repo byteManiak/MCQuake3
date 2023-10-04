@@ -46,6 +46,13 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
                     (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
             drawText(matrixStack, "\uFFF0", x - 150, y - 16, 0x00FFFFFF);
             drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
+
+            int playerArmor = player.getEnergyShield();
+            int armorColor = (playerArmor < 100) ?
+                    (((int)(0xFF * (100-playerArmor)/100.f)  << 16) + ((int)(0xFF * playerArmor/100.f) << 8)) :
+                    (((int)(0xFF * (200-playerArmor)/100.f)) << 8)  + ((int)(0xFF * (playerArmor-100)/100.f));
+            drawText(matrixStack, "\uFFF9", x + 105, y - 16, 0x00FFFFFF);
+            drawText(matrixStack, String.valueOf(playerArmor), x + 125, y, armorColor);
         }
     }
 }

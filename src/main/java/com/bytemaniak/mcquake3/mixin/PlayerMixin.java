@@ -6,20 +6,19 @@ import com.bytemaniak.mcquake3.registry.Items;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
@@ -56,6 +55,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
         DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER)
     };
+
+    private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     private final long[] weaponTicks = new long[9];
 
@@ -124,6 +125,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
+        nbt.putInt("quake_energy_shield", getEnergyShield());
 
         for (int i = 0; i < 8; i++)
             nbt.putInt("quake_ammo"+i, dataTracker.get(QUAKE_PLAYER_AMMO[i]));
@@ -132,6 +134,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
+        dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
@@ -144,6 +147,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public void initQuakeDataTracker(CallbackInfo ci) {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
+        dataTracker.startTracking(QUAKE_ARMOR, 0);
 
         for (int i = 0; i < 8; i++)
             dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
@@ -160,6 +164,27 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
         }
         return stack;
+    }
+
+    @Nullable
+    @Override
+    public ItemEntity dropItem(ItemConvertible item) {
+        return super.dropItem(item);
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        int energyShield = getEnergyShield();
+        float damage = MiscUtils.fromMCDamage(amount);
+        if (energyShield > damage) {
+            energyShield -= (int)(damage * 0.66f);
+            damage *= 0.33f;
+        } else {
+            damage -= energyShield;
+            energyShield = 0;
+        }
+        setEnergyShield(energyShield);
+        return super.damage(source, MiscUtils.toMCDamage(damage));
     }
 
     public void toggleQuakeGui() {
@@ -205,7 +230,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    public int getAmmo(WeaponSlot slot) { return dataTracker.get((QUAKE_PLAYER_AMMO[slot.slot-1])); }
+    public int getAmmo(WeaponSlot slot) { return dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]); }
     public int getCurrentAmmo() {
         return dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot-1]);
     }
@@ -214,6 +239,16 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         int currentAmmo = dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]);
         currentAmmo += amount; if (currentAmmo > 200) currentAmmo = 200;
         dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot-1], currentAmmo);
+    }
+
+    public int getEnergyShield() { return dataTracker.get(QUAKE_ARMOR); }
+    public void setEnergyShield(int amount) {
+        dataTracker.set(QUAKE_ARMOR, amount);
+    }
+    public void addEnergyShield(int amount) {
+        int currentShield = dataTracker.get(QUAKE_ARMOR);
+        currentShield += amount; if (currentShield > 200) currentShield = 200;
+        dataTracker.set(QUAKE_ARMOR, currentShield);
     }
 
     public String getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }

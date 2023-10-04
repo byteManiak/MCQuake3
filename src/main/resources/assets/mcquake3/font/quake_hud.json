@@ -87,6 +87,15 @@
 			"chars": [
 				"\uFFF8"
 			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/shield.png",
+			"ascent": -10,
+			"height": 14,
+			"chars": [
+				"\uFFF9"
+			]
 		}
 	]
 }

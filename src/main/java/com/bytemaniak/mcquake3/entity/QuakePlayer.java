@@ -70,6 +70,10 @@ public interface QuakePlayer {
     public int getAmmo(WeaponSlot slot);
     public void addAmmo(int amount, WeaponSlot slot);
 
+    public int getEnergyShield();
+    public void setEnergyShield(int amount);
+    public void addEnergyShield(int amount);
+
     public WeaponSlot getCurrentWeapon();
 
     public long getWeaponTick(WeaponSlot slot);

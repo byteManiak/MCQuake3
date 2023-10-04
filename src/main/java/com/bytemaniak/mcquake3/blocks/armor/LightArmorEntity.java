@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class LightArmorEntity extends PickupEntity {
     public LightArmorEntity(BlockPos pos, BlockState state) {
-        super(Blocks.LIGHT_ARMOR_ENTITY, pos, state, Sounds.LIGHT_ARMOR);
+        super(Blocks.LIGHT_ENERGY_SHIELD_ENTITY, pos, state, Sounds.LIGHT_ENERGY_SHIELD);
     }
 }

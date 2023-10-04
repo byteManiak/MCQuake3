@@ -80,14 +80,14 @@ public class Sounds {
     private static final Identifier HEALTH50_IDENT = new Identifier("mcquake3:50health");
     public static final SoundEvent HEALTH50 = SoundEvent.of(HEALTH50_IDENT);
 
-    private static final Identifier ARMOR_SHARD_IDENT = new Identifier("mcquake3:armor_shard");
-    public static final SoundEvent ARMOR_SHARD = SoundEvent.of(ARMOR_SHARD_IDENT);
+    private static final Identifier SHIELD_CELL_IDENT = new Identifier("mcquake3:energy_shield_cell");
+    public static final SoundEvent SHIELD_CELL = SoundEvent.of(SHIELD_CELL_IDENT);
 
-    private static final Identifier LIGHT_ARMOR_IDENT = new Identifier("mcquake3:light_armor");
-    public static final SoundEvent LIGHT_ARMOR = SoundEvent.of(LIGHT_ARMOR_IDENT);
+    private static final Identifier LIGHT_ENERGY_SHIELD_IDENT = new Identifier("mcquake3:light_energy_shield");
+    public static final SoundEvent LIGHT_ENERGY_SHIELD = SoundEvent.of(LIGHT_ENERGY_SHIELD_IDENT);
 
-    private static final Identifier HEAVY_ARMOR_IDENT = new Identifier("mcquake3:heavy_armor");
-    public static final SoundEvent HEAVY_ARMOR = SoundEvent.of(HEAVY_ARMOR_IDENT);
+    private static final Identifier HEAVY_ENERGY_SHIELD_IDENT = new Identifier("mcquake3:heavy_energy_shield");
+    public static final SoundEvent HEAVY_ENERGY_SHIELD = SoundEvent.of(HEAVY_ENERGY_SHIELD_IDENT);
 
     public static class PlayerSounds {
         public Identifier DEATH;
@@ -179,9 +179,9 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, HEALTH5_IDENT, HEALTH5);
         Registry.register(Registries.SOUND_EVENT, HEALTH25_IDENT, HEALTH25);
         Registry.register(Registries.SOUND_EVENT, HEALTH50_IDENT, HEALTH50);
-        Registry.register(Registries.SOUND_EVENT, ARMOR_SHARD_IDENT, ARMOR_SHARD);
-        Registry.register(Registries.SOUND_EVENT, LIGHT_ARMOR_IDENT, LIGHT_ARMOR);
-        Registry.register(Registries.SOUND_EVENT, HEAVY_ARMOR_IDENT, HEAVY_ARMOR);
+        Registry.register(Registries.SOUND_EVENT, SHIELD_CELL_IDENT, SHIELD_CELL);
+        Registry.register(Registries.SOUND_EVENT, LIGHT_ENERGY_SHIELD_IDENT, LIGHT_ENERGY_SHIELD);
+        Registry.register(Registries.SOUND_EVENT, HEAVY_ENERGY_SHIELD_IDENT, HEAVY_ENERGY_SHIELD);
 
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);

@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class ArmorShardEntity extends PickupEntity {
     public ArmorShardEntity(BlockPos pos, BlockState state) {
-        super(Blocks.ARMOR_SHARD_ENTITY, pos, state, Sounds.ARMOR_SHARD);
+        super(Blocks.SHIELD_CELL_ENTITY, pos, state, Sounds.SHIELD_CELL);
     }
 }

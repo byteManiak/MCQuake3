@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class HeavyArmorEntity extends PickupEntity {
     public HeavyArmorEntity(BlockPos pos, BlockState state) {
-        super(Blocks.HEAVY_ARMOR_ENTITY, pos, state, Sounds.HEAVY_ARMOR);
+        super(Blocks.HEAVY_ENERGY_SHIELD_ENTITY, pos, state, Sounds.HEAVY_ENERGY_SHIELD);
     }
 }

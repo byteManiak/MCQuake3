@@ -162,19 +162,19 @@
     ]
   },
 
-  "armor_shard": {
+  "energy_shield_cell": {
     "sounds": [
-      "mcquake3:armor_shard"
+      "mcquake3:energy_shield_cell"
     ]
   },
-  "light_armor": {
+  "light_energy_shield": {
     "sounds": [
-      "mcquake3:light_armor"
+      "mcquake3:light_energy_shield"
     ]
   },
-  "heavy_armor": {
+  "heavy_energy_shield": {
     "sounds": [
-      "mcquake3:heavy_armor"
+      "mcquake3:heavy_energy_shield"
     ]
   },
 

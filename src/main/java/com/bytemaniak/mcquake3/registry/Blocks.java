@@ -67,17 +67,17 @@ public class Blocks {
     public static final Block HEALTH50_BLOCK = new Health50();
     public static final BlockEntityType<Health50Entity> HEALTH50_ENTITY;
 
-    public static final Identifier ARMOR_SHARD = new Identifier("mcquake3:armor_shard");
-    public static final Block ARMOR_SHARD_BLOCK = new ArmorShard();
-    public static final BlockEntityType<ArmorShardEntity> ARMOR_SHARD_ENTITY;
+    public static final Identifier SHIELD_CELL = new Identifier("mcquake3:energy_shield_cell");
+    public static final Block SHIELD_CELL_BLOCK = new ArmorShard();
+    public static final BlockEntityType<ArmorShardEntity> SHIELD_CELL_ENTITY;
 
-    public static final Identifier LIGHT_ARMOR = new Identifier("mcquake3:light_armor");
-    public static final Block LIGHT_ARMOR_BLOCK = new LightArmor();
-    public static final BlockEntityType<LightArmorEntity> LIGHT_ARMOR_ENTITY;
+    public static final Identifier LIGHT_ENERGY_SHIELD = new Identifier("mcquake3:light_energy_shield");
+    public static final Block LIGHT_ENERGY_SHIELD_BLOCK = new LightArmor();
+    public static final BlockEntityType<LightArmorEntity> LIGHT_ENERGY_SHIELD_ENTITY;
 
-    public static final Identifier HEAVY_ARMOR = new Identifier("mcquake3:heavy_armor");
-    public static final Block HEAVY_ARMOR_BLOCK = new HeavyArmor();
-    public static final BlockEntityType<HeavyArmorEntity> HEAVY_ARMOR_ENTITY;
+    public static final Identifier HEAVY_ENERGY_SHIELD = new Identifier("mcquake3:heavy_energy_shield");
+    public static final Block HEAVY_ENERGY_SHIELD_BLOCK = new HeavyArmor();
+    public static final BlockEntityType<HeavyArmorEntity> HEAVY_ENERGY_SHIELD_ENTITY;
 
     public static final Identifier MACHINEGUN = new Identifier("mcquake3:machinegun_pickup");
 	public static final Block MACHINEGUN_BLOCK = new MachinegunPickup();
@@ -139,12 +139,12 @@ public class Blocks {
                 FabricBlockEntityTypeBuilder.create(Health25Entity::new, HEALTH25_BLOCK).build());
         HEALTH50_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH50,
                 FabricBlockEntityTypeBuilder.create(Health50Entity::new, HEALTH50_BLOCK).build());
-        ARMOR_SHARD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, ARMOR_SHARD,
-                FabricBlockEntityTypeBuilder.create(ArmorShardEntity::new, ARMOR_SHARD_BLOCK).build());
-        LIGHT_ARMOR_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, LIGHT_ARMOR,
-                FabricBlockEntityTypeBuilder.create(LightArmorEntity::new, LIGHT_ARMOR_BLOCK).build());
-        HEAVY_ARMOR_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEAVY_ARMOR,
-                FabricBlockEntityTypeBuilder.create(HeavyArmorEntity::new, HEAVY_ARMOR_BLOCK).build());
+        SHIELD_CELL_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHIELD_CELL,
+                FabricBlockEntityTypeBuilder.create(ArmorShardEntity::new, SHIELD_CELL_BLOCK).build());
+        LIGHT_ENERGY_SHIELD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, LIGHT_ENERGY_SHIELD,
+                FabricBlockEntityTypeBuilder.create(LightArmorEntity::new, LIGHT_ENERGY_SHIELD_BLOCK).build());
+        HEAVY_ENERGY_SHIELD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEAVY_ENERGY_SHIELD,
+                FabricBlockEntityTypeBuilder.create(HeavyArmorEntity::new, HEAVY_ENERGY_SHIELD_BLOCK).build());
         MACHINEGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN,
 				FabricBlockEntityTypeBuilder.create(MachinegunPickupEntity::new, MACHINEGUN_BLOCK).build());
 		SHOTGUN_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN,
@@ -177,9 +177,9 @@ public class Blocks {
         loadDefaultBlock(HEALTH5_BLOCK, HEALTH5);
         loadDefaultBlock(HEALTH25_BLOCK, HEALTH25);
         loadDefaultBlock(HEALTH50_BLOCK, HEALTH50);
-        loadDefaultBlock(ARMOR_SHARD_BLOCK, ARMOR_SHARD);
-        loadDefaultBlock(LIGHT_ARMOR_BLOCK, LIGHT_ARMOR);
-        loadDefaultBlock(HEAVY_ARMOR_BLOCK, HEAVY_ARMOR);
+        loadDefaultBlock(SHIELD_CELL_BLOCK, SHIELD_CELL);
+        loadDefaultBlock(LIGHT_ENERGY_SHIELD_BLOCK, LIGHT_ENERGY_SHIELD);
+        loadDefaultBlock(HEAVY_ENERGY_SHIELD_BLOCK, HEAVY_ENERGY_SHIELD);
         loadDefaultBlock(MACHINEGUN_BLOCK, MACHINEGUN);
         loadDefaultBlock(SHOTGUN_BLOCK, SHOTGUN);
         loadDefaultBlock(GRENADE_BLOCK, GRENADE);

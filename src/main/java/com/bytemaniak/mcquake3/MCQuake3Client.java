@@ -54,6 +54,12 @@ public class MCQuake3Client implements ClientModInitializer {
                 context -> new PickupRenderer<>(Blocks.HEALTH25));
         BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH50));
+        BlockEntityRendererRegistry.register(Blocks.ARMOR_SHARD_ENTITY,
+                context -> new PickupRenderer<>(Blocks.ARMOR_SHARD));
+        BlockEntityRendererRegistry.register(Blocks.LIGHT_ARMOR_ENTITY,
+                context -> new PickupRenderer<>(Blocks.LIGHT_ARMOR));
+        BlockEntityRendererRegistry.register(Blocks.HEAVY_ARMOR_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HEAVY_ARMOR));
         BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.MACHINEGUN));
         BlockEntityRendererRegistry.register(Blocks.SHOTGUN_ENTITY,
@@ -74,6 +80,7 @@ public class MCQuake3Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH5_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH25_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH50_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.ARMOR_SHARD_BLOCK, RenderLayer.getTranslucent());
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

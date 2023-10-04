@@ -156,6 +156,22 @@
     ]
   },
 
+  "armor_shard": {
+    "sounds": [
+      "mcquake3:armor_shard"
+    ]
+  },
+  "light_armor": {
+    "sounds": [
+      "mcquake3:light_armor"
+    ]
+  },
+  "heavy_armor": {
+    "sounds": [
+      "mcquake3:heavy_armor"
+    ]
+  },
+
   "angelyss_death": {
     "sounds": [
       "mcquake3:players/angelyss/death1",

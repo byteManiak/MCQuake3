@@ -6,7 +6,6 @@ import com.bytemaniak.mcquake3.registry.Items;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
-import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -170,21 +169,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Override
     public ItemEntity dropItem(ItemConvertible item) {
         return super.dropItem(item);
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        int energyShield = getEnergyShield();
-        float damage = MiscUtils.fromMCDamage(amount);
-        if (energyShield > damage * 0.66f) {
-            energyShield -= (int)(damage * 0.66f);
-            damage *= 0.33f;
-        } else {
-            damage -= energyShield;
-            energyShield = 0;
-        }
-        setEnergyShield(energyShield);
-        return super.damage(source, MiscUtils.toMCDamage(damage));
     }
 
     public void toggleQuakeGui() {

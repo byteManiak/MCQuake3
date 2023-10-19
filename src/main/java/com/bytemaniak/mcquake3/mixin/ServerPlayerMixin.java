@@ -1,7 +1,9 @@
 package com.bytemaniak.mcquake3.mixin;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -24,5 +26,23 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
         thisQuakePlayer.setQuakeGui(oldQuakePlayer.quakeGuiEnabled());
         thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
         thisQuakePlayer.resetAmmo();
+    }
+
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        QuakePlayer quakePlayer = (QuakePlayer) this;
+        int energyShield = quakePlayer.getEnergyShield();
+        float damage = MiscUtils.fromMCDamage(amount);
+        if (energyShield > damage * 0.66f) {
+            energyShield -= (int)(damage * 0.66f);
+            damage *= 0.33f;
+        } else {
+            damage -= energyShield;
+            energyShield = 0;
+        }
+
+        if (!world.isClient) quakePlayer.setEnergyShield(energyShield);
+        return super.damage(source, MiscUtils.toMCDamage(damage));
     }
 }

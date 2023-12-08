@@ -149,7 +149,7 @@ public class Blocks {
         HASTE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HASTE,
                 FabricBlockEntityTypeBuilder.create(HasteEntity::new, HASTE_BLOCK).build());
         INVISIBILITY_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, INVISIBILITY,
-                FabricBlockEntityTypeBuilder.create(HasteEntity::new, INVISIBILITY_BLOCK).build());
+                FabricBlockEntityTypeBuilder.create(InvisibilityEntity::new, INVISIBILITY_BLOCK).build());
         QUAD_DAMAGE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, QUAD_DAMAGE,
                 FabricBlockEntityTypeBuilder.create(QuadDamageEntity::new, QUAD_DAMAGE_BLOCK).build());
         HEALTH5_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH5,

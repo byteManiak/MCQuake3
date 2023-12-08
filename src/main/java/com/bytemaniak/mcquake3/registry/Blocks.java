@@ -62,7 +62,7 @@ public class Blocks {
 
     public static final Identifier INVISIBILITY = new Identifier("mcquake3:invisibility");
     public static final Block INVISIBILITY_BLOCK = new Invisibility();
-    public static final BlockEntityType<HasteEntity> INVISIBILITY_ENTITY;
+    public static final BlockEntityType<InvisibilityEntity> INVISIBILITY_ENTITY;
 
     public static final Identifier QUAD_DAMAGE = new Identifier("mcquake3:quad_damage");
     public static final Block QUAD_DAMAGE_BLOCK = new QuadDamage();

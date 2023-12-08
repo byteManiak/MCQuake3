@@ -21,12 +21,12 @@ public class Invisibility extends Pickup {
         super.onEntityCollision(state, world, pos, entity);
         if (world.isClient) return;
 
-        PickupEntity hastePickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!hastePickup.shouldRender()) return;
+        PickupEntity invisibilityPickup = (PickupEntity) world.getBlockEntity(pos);
+        if (!invisibilityPickup.shouldRender()) return;
 
         if (entity instanceof PlayerEntity player) {
             player.addStatusEffect(Q3StatusEffects.INVISIBILITY_STATUS_EFFECT, null);
-            hastePickup.use();
+            invisibilityPickup.use();
             world.markDirty(pos);
         }
     }

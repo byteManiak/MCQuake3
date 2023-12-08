@@ -5,9 +5,7 @@ import com.bytemaniak.mcquake3.blocks.JumppadEntity;
 import com.bytemaniak.mcquake3.blocks.Spikes;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
-import com.bytemaniak.mcquake3.blocks.powerup.Haste;
-import com.bytemaniak.mcquake3.blocks.powerup.HasteEntity;
-import com.bytemaniak.mcquake3.blocks.powerup.Invisibility;
+import com.bytemaniak.mcquake3.blocks.powerup.*;
 import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -65,6 +63,10 @@ public class Blocks {
     public static final Identifier INVISIBILITY = new Identifier("mcquake3:invisibility");
     public static final Block INVISIBILITY_BLOCK = new Invisibility();
     public static final BlockEntityType<HasteEntity> INVISIBILITY_ENTITY;
+
+    public static final Identifier QUAD_DAMAGE = new Identifier("mcquake3:quad_damage");
+    public static final Block QUAD_DAMAGE_BLOCK = new QuadDamage();
+    public static final BlockEntityType<QuadDamageEntity> QUAD_DAMAGE_ENTITY;
 
     public static final Identifier HEALTH5 = new Identifier("mcquake3:5health");
     public static final Block HEALTH5_BLOCK = new Health5();
@@ -148,6 +150,8 @@ public class Blocks {
                 FabricBlockEntityTypeBuilder.create(HasteEntity::new, HASTE_BLOCK).build());
         INVISIBILITY_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, INVISIBILITY,
                 FabricBlockEntityTypeBuilder.create(HasteEntity::new, INVISIBILITY_BLOCK).build());
+        QUAD_DAMAGE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, QUAD_DAMAGE,
+                FabricBlockEntityTypeBuilder.create(QuadDamageEntity::new, QUAD_DAMAGE_BLOCK).build());
         HEALTH5_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH5,
                 FabricBlockEntityTypeBuilder.create(Health5Entity::new, HEALTH5_BLOCK).build());
         HEALTH25_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH25,
@@ -191,6 +195,7 @@ public class Blocks {
         loadDefaultBlock(BFG_AMMO_BOX_BLOCK, BFG_AMMO_BOX);
         loadDefaultBlock(HASTE_BLOCK, HASTE);
         loadDefaultBlock(INVISIBILITY_BLOCK, INVISIBILITY);
+        loadDefaultBlock(QUAD_DAMAGE_BLOCK, QUAD_DAMAGE);
         loadDefaultBlock(HEALTH5_BLOCK, HEALTH5);
         loadDefaultBlock(HEALTH25_BLOCK, HEALTH25);
         loadDefaultBlock(HEALTH50_BLOCK, HEALTH50);

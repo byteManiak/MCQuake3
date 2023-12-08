@@ -53,6 +53,8 @@ public class MCQuake3Client implements ClientModInitializer {
                 context -> new PickupRenderer<>(Blocks.HASTE));
         BlockEntityRendererRegistry.register(Blocks.INVISIBILITY_ENTITY,
                 context -> new PickupRenderer<>(Blocks.INVISIBILITY));
+        BlockEntityRendererRegistry.register(Blocks.QUAD_DAMAGE_ENTITY,
+                context -> new PickupRenderer<>(Blocks.QUAD_DAMAGE));
         BlockEntityRendererRegistry.register(Blocks.HEALTH5_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH5));
         BlockEntityRendererRegistry.register(Blocks.HEALTH25_ENTITY,

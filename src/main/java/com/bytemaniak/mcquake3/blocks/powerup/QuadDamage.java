@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.blocks.powerup;
 
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -24,7 +25,7 @@ public class QuadDamage extends Pickup {
         if (!quadDamagePickup.shouldRender()) return;
 
         if (entity instanceof PlayerEntity player) {
-            //player.addStatusEffect(Q3StatusEffects.INVISIBILITY_STATUS_EFFECT, null);
+            player.addStatusEffect(Q3StatusEffects.fromEffect(Q3StatusEffects.QUAD_DAMAGE), null);
             quadDamagePickup.use();
             world.markDirty(pos);
         }

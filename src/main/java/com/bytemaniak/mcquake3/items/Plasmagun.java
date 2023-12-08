@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.entity.projectile.PlasmaBall;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -42,6 +43,8 @@ public class Plasmagun extends Weapon {
             plasmaBall.setOwner(user);
             plasmaBall.setPosition(offsetWeaponPos);
             plasmaBall.setVelocity(destDir.x, destDir.y, destDir.z, PLASMAGUN_PROJECTILE_SPEED, 0);
+
+            if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) plasmaBall.setQuadDamage();
             world.spawnEntity(plasmaBall);
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");

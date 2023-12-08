@@ -18,6 +18,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 		Items.loadItems();
 		Blocks.loadBlocks();
 		Entities.loadEntities();
+		Q3StatusEffects.registerEffects();
 
 		Sounds.loadSounds();
 		MusicDiscs.LoadDiscs();

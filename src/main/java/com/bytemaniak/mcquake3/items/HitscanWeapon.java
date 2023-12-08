@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
@@ -85,10 +86,12 @@ public abstract class HitscanWeapon extends Weapon {
             Box collisionBox = new Box(minPos, maxPos);
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
+            float damage = user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE) ? damageAmount*4 : damageAmount;
+
             if (collided != null) {
                 if (!world.isClient) {
                     DamageSource damageSource = Q3DamageSources.of(world, damageType, user, user);
-                    collided.damage(damageSource, damageAmount);
+                    collided.damage(damageSource, damage);
                     onDamage(world, collided);
                     if (collided instanceof PlayerEntity)
                         ServerPlayNetworking.send((ServerPlayerEntity) user, Packets.DEALT_DAMAGE, PacketByteBufs.empty());

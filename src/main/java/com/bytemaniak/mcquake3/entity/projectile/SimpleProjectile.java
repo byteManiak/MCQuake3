@@ -46,11 +46,17 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
         }
     }
 
+    public void setQuadDamage() {
+        this.damageAmount *= 4;
+    }
+
     protected void doDamage(Entity entity) {
         if (!world.isClient) {
             DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
+
             if (getOwner() != null && entity instanceof PlayerEntity)
                 ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
+
             entity.damage(damageSource, damageAmount);
             despawn();
         }

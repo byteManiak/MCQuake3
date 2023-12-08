@@ -6,6 +6,7 @@ import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,7 +26,7 @@ public class Invisibility extends Pickup {
         if (!invisibilityPickup.shouldRender()) return;
 
         if (entity instanceof PlayerEntity player) {
-            player.addStatusEffect(Q3StatusEffects.INVISIBILITY_STATUS_EFFECT, null);
+            player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.INVISIBILITY), null);
             invisibilityPickup.use();
             world.markDirty(pos);
         }

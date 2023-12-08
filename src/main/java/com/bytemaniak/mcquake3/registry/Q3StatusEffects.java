@@ -1,14 +1,25 @@
 package com.bytemaniak.mcquake3.registry;
 
+import com.bytemaniak.mcquake3.blocks.powerup.QuadDamageStatusEffect;
 import com.bytemaniak.mcquake3.util.MiscUtils;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class Q3StatusEffects {
-    public static final StatusEffectInstance SPEED_STATUS_EFFECT =
-            new StatusEffectInstance(StatusEffects.SPEED, MiscUtils.toTicks(30), 2);
-    public static final StatusEffectInstance HASTE_STATUS_EFFECT =
-            new StatusEffectInstance(StatusEffects.HASTE, MiscUtils.toTicks(30), 3);
-    public static final StatusEffectInstance INVISIBILITY_STATUS_EFFECT =
-            new StatusEffectInstance(StatusEffects.INVISIBILITY, MiscUtils.toTicks(30));
+    public static final StatusEffect QUAD_DAMAGE = new QuadDamageStatusEffect();
+
+    public static StatusEffectInstance fromEffect(StatusEffect effect, int amplifier) {
+        return new StatusEffectInstance(effect, MiscUtils.toTicks(30), amplifier);
+    }
+
+    public static StatusEffectInstance fromEffect(StatusEffect effect) {
+        return new StatusEffectInstance(effect, MiscUtils.toTicks(30), 0);
+    }
+
+    public static void registerEffects() {
+        Registry.register(Registries.STATUS_EFFECT, new Identifier("mcquake3:quad_damage"), QUAD_DAMAGE);
+    }
 }

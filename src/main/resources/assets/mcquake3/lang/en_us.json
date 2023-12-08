@@ -4,6 +4,8 @@
   "block.mcquake3.5health": "5 Health",
   "block.mcquake3.25health": "25 Health",
   "block.mcquake3.50health": "50 Health",
+  "block.mcquake3.haste": "Haste Spawner",
+  "block.mcquake3.invisibility": "Invisibility Spawner",
   "block.mcquake3.energy_shield_cell": "Energy Shield Cell Spawner",
   "block.mcquake3.light_energy_shield": "Light Energy Shield Spawner",
   "block.mcquake3.heavy_energy_shield": "Heavy Energy Shield Spawner",

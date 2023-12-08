@@ -5,6 +5,9 @@ import com.bytemaniak.mcquake3.blocks.JumppadEntity;
 import com.bytemaniak.mcquake3.blocks.Spikes;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
+import com.bytemaniak.mcquake3.blocks.powerup.Haste;
+import com.bytemaniak.mcquake3.blocks.powerup.HasteEntity;
+import com.bytemaniak.mcquake3.blocks.powerup.Invisibility;
 import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -54,6 +57,14 @@ public class Blocks {
     public static final Identifier BFG_AMMO_BOX = new Identifier("mcquake3:bfg_ammo_box");
     public static final Block BFG_AMMO_BOX_BLOCK = new BFGAmmoBox();
     public static final BlockEntityType<BFGAmmoBoxEntity> BFG_AMMO_BOX_ENTITY;
+
+    public static final Identifier HASTE = new Identifier("mcquake3:haste");
+    public static final Block HASTE_BLOCK = new Haste();
+    public static final BlockEntityType<HasteEntity> HASTE_ENTITY;
+
+    public static final Identifier INVISIBILITY = new Identifier("mcquake3:invisibility");
+    public static final Block INVISIBILITY_BLOCK = new Invisibility();
+    public static final BlockEntityType<HasteEntity> INVISIBILITY_ENTITY;
 
     public static final Identifier HEALTH5 = new Identifier("mcquake3:5health");
     public static final Block HEALTH5_BLOCK = new Health5();
@@ -133,6 +144,10 @@ public class Blocks {
                 FabricBlockEntityTypeBuilder.create(PlasmagunAmmoBoxEntity::new, PLASMAGUN_AMMO_BOX_BLOCK).build());
         BFG_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, BFG_AMMO_BOX,
                 FabricBlockEntityTypeBuilder.create(BFGAmmoBoxEntity::new, BFG_AMMO_BOX_BLOCK).build());
+        HASTE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HASTE,
+                FabricBlockEntityTypeBuilder.create(HasteEntity::new, HASTE_BLOCK).build());
+        INVISIBILITY_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, INVISIBILITY,
+                FabricBlockEntityTypeBuilder.create(HasteEntity::new, INVISIBILITY_BLOCK).build());
         HEALTH5_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH5,
                 FabricBlockEntityTypeBuilder.create(Health5Entity::new, HEALTH5_BLOCK).build());
         HEALTH25_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, HEALTH25,
@@ -174,6 +189,8 @@ public class Blocks {
         loadDefaultBlock(RAILGUN_AMMO_BOX_BLOCK, RAILGUN_AMMO_BOX);
         loadDefaultBlock(PLASMAGUN_AMMO_BOX_BLOCK, PLASMAGUN_AMMO_BOX);
         loadDefaultBlock(BFG_AMMO_BOX_BLOCK, BFG_AMMO_BOX);
+        loadDefaultBlock(HASTE_BLOCK, HASTE);
+        loadDefaultBlock(INVISIBILITY_BLOCK, INVISIBILITY);
         loadDefaultBlock(HEALTH5_BLOCK, HEALTH5);
         loadDefaultBlock(HEALTH25_BLOCK, HEALTH25);
         loadDefaultBlock(HEALTH50_BLOCK, HEALTH50);

@@ -49,6 +49,10 @@ public class MCQuake3Client implements ClientModInitializer {
                 context -> new PickupRenderer<>(Blocks.PLASMAGUN_AMMO_BOX));
         BlockEntityRendererRegistry.register(Blocks.BFG_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.BFG_AMMO_BOX));
+        BlockEntityRendererRegistry.register(Blocks.HASTE_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HASTE));
+        BlockEntityRendererRegistry.register(Blocks.INVISIBILITY_ENTITY,
+                context -> new PickupRenderer<>(Blocks.HASTE));
         BlockEntityRendererRegistry.register(Blocks.HEALTH5_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH5));
         BlockEntityRendererRegistry.register(Blocks.HEALTH25_ENTITY,

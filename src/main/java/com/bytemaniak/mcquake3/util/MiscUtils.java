@@ -5,4 +5,5 @@ public class MiscUtils {
         return amount/5;
     }
     public static float fromMCDamage(float amount) { return amount*5; }
+    public static int toTicks(float seconds) { return (int)(seconds * 20); }
 }

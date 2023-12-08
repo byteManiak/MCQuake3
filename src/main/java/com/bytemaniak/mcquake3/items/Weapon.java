@@ -2,6 +2,8 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -92,7 +94,13 @@ public abstract class Weapon extends Item implements GeoItem {
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
 
-        if (currentTick - player.getWeaponTick(weaponSlot) >= refireRate) {
+        StatusEffectInstance playerHaste = user.getStatusEffect(StatusEffects.HASTE);
+        float refireModifier = 1;
+
+        if (playerHaste != null)
+            refireModifier = playerHaste.getAmplifier() > 3 ? 0.7f : (1-playerHaste.getAmplifier()*0.1f);
+
+        if (currentTick - player.getWeaponTick(weaponSlot) >= (long)((float)refireRate * refireModifier)) {
             if (!player.useAmmo(weaponSlot)) {
                 // Whatever projectile the weapon shoots, its initial position is approximated
                 // to be shot from the held weapon, not from the player's eye

@@ -52,7 +52,7 @@ public class MCQuake3Client implements ClientModInitializer {
         BlockEntityRendererRegistry.register(Blocks.HASTE_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HASTE));
         BlockEntityRendererRegistry.register(Blocks.INVISIBILITY_ENTITY,
-                context -> new PickupRenderer<>(Blocks.HASTE));
+                context -> new PickupRenderer<>(Blocks.INVISIBILITY));
         BlockEntityRendererRegistry.register(Blocks.HEALTH5_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH5));
         BlockEntityRendererRegistry.register(Blocks.HEALTH25_ENTITY,
@@ -86,6 +86,7 @@ public class MCQuake3Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH25_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH50_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.SHIELD_CELL_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(Blocks.INVISIBILITY_BLOCK, RenderLayer.getTranslucent());
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

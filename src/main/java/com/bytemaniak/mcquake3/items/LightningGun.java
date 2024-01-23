@@ -1,9 +1,9 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.MCQuake3Client;
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.registry.client.Renderers;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -49,7 +49,7 @@ public class LightningGun extends HitscanWeapon {
 
     @Environment(EnvType.CLIENT)
     private void submitLightningGunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        MCQuake3Client.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot);
+        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot);
     }
 
     @Override

@@ -1,5 +1,6 @@
-package com.bytemaniak.mcquake3.registry;
+package com.bytemaniak.mcquake3.registry.client;
 
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.screen.PlayerSettingsScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;

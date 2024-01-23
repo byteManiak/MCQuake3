@@ -47,7 +47,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     public void setQuadDamage() {
-        this.damageAmount *= 4;
+        this.damageAmount *= 3;
     }
 
     protected void doDamage(Entity entity) {

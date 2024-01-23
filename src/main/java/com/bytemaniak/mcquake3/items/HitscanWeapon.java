@@ -86,7 +86,7 @@ public abstract class HitscanWeapon extends Weapon {
             Box collisionBox = new Box(minPos, maxPos);
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
-            float damage = user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE) ? damageAmount*4 : damageAmount;
+            float damage = user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE) ? damageAmount*3 : damageAmount;
 
             if (collided != null) {
                 if (!world.isClient) {

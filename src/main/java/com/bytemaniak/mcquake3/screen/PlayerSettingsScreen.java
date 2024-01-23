@@ -100,9 +100,7 @@ public class PlayerSettingsScreen extends Screen {
 
     }
 
-    private PlayerVoiceList voiceList;
     private ButtonWidget toggleGui;
-    private ButtonWidget togglePlayerSounds;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -115,7 +113,7 @@ public class PlayerSettingsScreen extends Screen {
 
         String playerVoice = ((QuakePlayer)MinecraftClient.getInstance().player).getPlayerVoice();
 
-        voiceList = new PlayerVoiceList(client, 20, 45, (int)(width/6.5f), height - 65, 18);
+        PlayerVoiceList voiceList = new PlayerVoiceList(client, 20, 45, (int) (width / 6.5f), height - 65, 18);
         voiceList.setSelected(voiceList.children().stream()
                 .filter(e -> e.playerSounds.playerClass.equals(playerVoice))
                 .findFirst().orElse(voiceList.getFirst()));
@@ -138,9 +136,11 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 140, height - 24, 120, 20).build();
 
-        ButtonWidget giveWeapons = ButtonWidget.builder(Text.of("Give me a full arsenal"), (button -> {
-            ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty());
-        })).dimensions(width / 4, height - 24, width / 3, 20).build();
+        ButtonWidget giveWeapons =
+                ButtonWidget.builder(
+                        Text.of("Give me a full arsenal"),
+                        (button -> ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty())))
+                .dimensions(width / 4, height - 24, width / 3, 20).build();
 
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);

@@ -34,8 +34,8 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     private long ticksSinceLastUse = PICKUP_REUSE_TIME;
     public boolean lastShouldRender = true;
 
-    private SoundEvent useSound;
-    private SoundEvent regenSound;
+    private final SoundEvent useSound;
+    private final SoundEvent regenSound;
 
     public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state, SoundEvent useSound, SoundEvent regenSound) {
         super(type, pos, state);

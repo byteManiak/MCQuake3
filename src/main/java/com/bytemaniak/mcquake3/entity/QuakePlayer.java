@@ -4,7 +4,7 @@ import com.bytemaniak.mcquake3.registry.Items;
 import net.minecraft.item.Item;
 
 public interface QuakePlayer {
-    public enum WeaponSlot {
+    enum WeaponSlot {
         GAUNTLET(0, 0),
         MACHINEGUN(1, 50),
         SHOTGUN(2, 10),
@@ -19,7 +19,7 @@ public interface QuakePlayer {
         public final int slot;
         public final int ammoCount;
 
-        private WeaponSlot(int val, int ammoCount) {
+        WeaponSlot(int val, int ammoCount) {
             this.slot = val;
             this.ammoCount = ammoCount;
         }
@@ -54,47 +54,47 @@ public interface QuakePlayer {
             }
             return net.minecraft.item.Items.AIR;
         }
-    };
+    }
 
-    public void toggleQuakeGui();
-    public boolean quakeGuiEnabled();
-    public void setQuakeGui(boolean enabled);
+    void toggleQuakeGui();
+    boolean quakeGuiEnabled();
+    void setQuakeGui(boolean enabled);
 
-    public boolean quakePlayerSoundsEnabled();
+    boolean quakePlayerSoundsEnabled();
 
-    public void resetAmmo();
+    void resetAmmo();
 
     // Returns true if the player used up all the weapon ammo
-    public boolean useAmmo(WeaponSlot slot);
-    public int getCurrentAmmo();
-    public int getAmmo(WeaponSlot slot);
-    public void addAmmo(int amount, WeaponSlot slot);
+    boolean useAmmo(WeaponSlot slot);
+    int getCurrentAmmo();
+    int getAmmo(WeaponSlot slot);
+    void addAmmo(int amount, WeaponSlot slot);
 
-    public int getEnergyShield();
-    public void setEnergyShield(int amount);
-    public void addEnergyShield(int amount);
+    int getEnergyShield();
+    void setEnergyShield(int amount);
+    void addEnergyShield(int amount);
 
-    public WeaponSlot getCurrentWeapon();
+    WeaponSlot getCurrentWeapon();
 
-    public long getWeaponTick(WeaponSlot slot);
-    public void setWeaponTick(WeaponSlot slot, long tick);
+    long getWeaponTick(WeaponSlot slot);
+    void setWeaponTick(WeaponSlot slot, long tick);
 
-    public String getPlayerVoice();
-    public void setPlayerVoice(String soundsSet);
+    String getPlayerVoice();
+    void setPlayerVoice(String soundsSet);
 
-    public void taunt();
+    void taunt();
 
-    public void playHum(QuakePlayer.WeaponSlot weaponSlot);
-    public void stopHum();
+    void playHum(QuakePlayer.WeaponSlot weaponSlot);
+    void stopHum();
 
-    public void playAttackSound(QuakePlayer.WeaponSlot weaponSlot);
-    public void stopAttackSound();
+    void playAttackSound(QuakePlayer.WeaponSlot weaponSlot);
+    void stopAttackSound();
 
-    public void stopSounds();
+    void stopSounds();
 
-    public boolean isPlayingHum();
-    public boolean isPlayingAttack();
+    boolean isPlayingHum();
+    boolean isPlayingAttack();
 
-    public void setQuadDamage(boolean quadDamage);
-    public boolean hasQuadDamage();
+    void setQuadDamage(boolean quadDamage);
+    boolean hasQuadDamage();
 }

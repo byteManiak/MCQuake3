@@ -31,11 +31,11 @@ public class Railgun extends HitscanWeapon {
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
         if (world.isClient)
-            submitRailgunTrail(world, user, userPos, iterPos);
+            submitRailgunTrail(user, userPos, iterPos);
     }
 
     @Environment(EnvType.CLIENT)
-    private void submitRailgunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
+    private void submitRailgunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
         MCQuake3Client.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.RAILGUN.slot);
     }
 

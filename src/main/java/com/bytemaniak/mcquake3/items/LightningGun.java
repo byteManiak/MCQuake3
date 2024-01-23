@@ -44,11 +44,11 @@ public class LightningGun extends HitscanWeapon {
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
         if (world.isClient)
-            submitLightningGunTrail(world, user, userPos, iterPos);
+            submitLightningGunTrail(user, userPos, iterPos);
     }
 
     @Environment(EnvType.CLIENT)
-    private void submitLightningGunTrail(World world, LivingEntity user, Vec3d startPos, Vec3d endPos) {
+    private void submitLightningGunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
         MCQuake3Client.trailRenderer.addTrail(startPos, endPos, user.getUuid(), QuakePlayer.WeaponSlot.LIGHTNING_GUN.slot);
     }
 

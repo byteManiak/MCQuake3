@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class PickupRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> {
     public PickupRenderer(Identifier id) {
-        super(new PickupModel<T>(id));
+        super(new PickupModel<>(id));
     }
 
     @Override

@@ -47,8 +47,6 @@ public class Items {
     // Load an item into the item registry and add it to the MCQuake3 creative tab
     public static void loadItem(Item item, Identifier id) {
         Registry.register(Registries.ITEM, id, item);
-        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_GROUP).register(content -> {
-            content.add(item);
-        });
+        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_GROUP).register(content -> content.add(item));
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class MusicDiscs {
-    private static void LoadDisc(Identifier id, int comparatorOutput) {
+    private static void loadDisc(Identifier id, int comparatorOutput) {
         MusicDiscItem musicDisc = new MusicDiscItem(comparatorOutput, SoundEvent.of(id), new Item.Settings().maxCount(1), 0);
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
@@ -18,5 +18,5 @@ public class MusicDiscs {
         ItemGroupEvents.modifyEntriesEvent(Items.MCQUAKE3_GROUP).register(content -> content.add(musicDisc));
     }
 
-    public static void LoadDiscs() {}
+    public static void loadDiscs() {}
 }

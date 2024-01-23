@@ -132,6 +132,28 @@
     ]
   },
 
+  "powerup_regen": {
+    "sounds": [
+      "mcquake3:powerup_regen"
+    ]
+  },
+
+  "haste": {
+    "sounds": [
+      "mcquake3:haste"
+    ]
+  },
+  "invisibility": {
+    "sounds": [
+      "mcquake3:invisibility"
+    ]
+  },
+  "quad_damage": {
+    "sounds": [
+      "mcquake3:quad_damage"
+    ]
+  },
+
   "ammo_pickup": {
     "sounds": [
       "mcquake3:ammo_pickup"

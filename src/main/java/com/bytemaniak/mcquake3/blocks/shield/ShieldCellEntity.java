@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class ShieldCellEntity extends PickupEntity {
     public ShieldCellEntity(BlockPos pos, BlockState state) {
-        super(Blocks.SHIELD_CELL_ENTITY, pos, state, Sounds.SHIELD_CELL);
+        super(Blocks.SHIELD_CELL_ENTITY, pos, state, Sounds.SHIELD_CELL, Sounds.REGEN);
     }
 }

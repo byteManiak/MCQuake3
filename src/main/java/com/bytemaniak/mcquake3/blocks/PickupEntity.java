@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Packets;
-import com.bytemaniak.mcquake3.registry.Sounds;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -35,11 +34,13 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     private long ticksSinceLastUse = PICKUP_REUSE_TIME;
     public boolean lastShouldRender = true;
 
-    protected SoundEvent useSound;
+    private SoundEvent useSound;
+    private SoundEvent regenSound;
 
-    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state, SoundEvent sound) {
+    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state, SoundEvent useSound, SoundEvent regenSound) {
         super(type, pos, state);
-        this.useSound = sound;
+        this.useSound = useSound;
+        this.regenSound = regenSound;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
         pickupEntity.ticksSinceLastUse++;
         if (pickupEntity.lastShouldRender != pickupEntity.shouldRender()) {
             pickupEntity.markDirty();
-            if (pickupEntity.shouldRender()) world.playSound(null, pos, Sounds.REGEN, SoundCategory.NEUTRAL, 1, 1);
+            if (pickupEntity.shouldRender()) world.playSound(null, pos, pickupEntity.regenSound, SoundCategory.NEUTRAL, 1, 1);
             else world.playSound(null, pos, pickupEntity.useSound, SoundCategory.NEUTRAL, 1, 1);
         }
         pickupEntity.lastShouldRender = pickupEntity.shouldRender();

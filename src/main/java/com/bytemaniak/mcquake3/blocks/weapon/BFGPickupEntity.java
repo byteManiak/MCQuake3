@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class BFGPickupEntity extends PickupEntity {
     public BFGPickupEntity(BlockPos pos, BlockState state) {
-        super(Blocks.BFG_ENTITY, pos, state, Sounds.WEAPON_PICKUP);
+        super(Blocks.BFG_ENTITY, pos, state, Sounds.WEAPON_PICKUP, Sounds.REGEN);
     }
 }

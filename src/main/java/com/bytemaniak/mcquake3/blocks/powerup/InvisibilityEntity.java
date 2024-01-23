@@ -7,5 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 
 public class InvisibilityEntity extends PickupEntity {
-    public InvisibilityEntity(BlockPos pos, BlockState state) { super(Blocks.INVISIBILITY_ENTITY, pos, state, Sounds.AMMO_PICKUP); }
+    public InvisibilityEntity(BlockPos pos, BlockState state) {
+        super(Blocks.INVISIBILITY_ENTITY, pos, state, Sounds.INVISIBILITY, Sounds.POWERUP_REGEN);
+    }
 }

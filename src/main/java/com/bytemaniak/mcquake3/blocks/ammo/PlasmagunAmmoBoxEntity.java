@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class PlasmagunAmmoBoxEntity extends PickupEntity {
     public PlasmagunAmmoBoxEntity(BlockPos pos, BlockState state) {
-        super(Blocks.PLASMAGUN_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP);
+        super(Blocks.PLASMAGUN_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP, Sounds.REGEN);
     }
 }

@@ -64,6 +64,15 @@ public class Sounds {
 
     private static final Identifier REGEN_IDENT = new Identifier("mcquake3:regen");
     public static final SoundEvent REGEN = SoundEvent.of(REGEN_IDENT);
+    private static final Identifier POWERUP_REGEN_IDENT = new Identifier("mcquake3:powerup_regen");
+    public static final SoundEvent POWERUP_REGEN = SoundEvent.of(POWERUP_REGEN_IDENT);
+
+    private static final Identifier HASTE_IDENT = new Identifier("mcquake3:haste");
+    public static final SoundEvent HASTE = SoundEvent.of(HASTE_IDENT);
+    private static final Identifier INVISIBILITY_IDENT = new Identifier("mcquake3:invisibility");
+    public static final SoundEvent INVISIBILITY = SoundEvent.of(INVISIBILITY_IDENT);
+    private static final Identifier QUAD_DAMAGE_IDENT = new Identifier("mcquake3:quad_damage");
+    public static final SoundEvent QUAD_DAMAGE = SoundEvent.of(QUAD_DAMAGE_IDENT);
 
     private static final Identifier AMMO_PICKUP_IDENT = new Identifier("mcquake3:ammo_pickup");
     public static final SoundEvent AMMO_PICKUP = SoundEvent.of(AMMO_PICKUP_IDENT);
@@ -174,6 +183,10 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, BULLET_MISS_IDENT, BULLET_MISS);
         Registry.register(Registries.SOUND_EVENT, WEAPON_CHANGE_IDENT, WEAPON_CHANGE);
         Registry.register(Registries.SOUND_EVENT, REGEN_IDENT, REGEN);
+        Registry.register(Registries.SOUND_EVENT, POWERUP_REGEN_IDENT, POWERUP_REGEN);
+        Registry.register(Registries.SOUND_EVENT, HASTE_IDENT, HASTE);
+        Registry.register(Registries.SOUND_EVENT, INVISIBILITY_IDENT, INVISIBILITY);
+        Registry.register(Registries.SOUND_EVENT, QUAD_DAMAGE_IDENT, QUAD_DAMAGE);
         Registry.register(Registries.SOUND_EVENT, AMMO_PICKUP_IDENT, AMMO_PICKUP);
         Registry.register(Registries.SOUND_EVENT, WEAPON_PICKUP_IDENT, WEAPON_PICKUP);
         Registry.register(Registries.SOUND_EVENT, HEALTH5_IDENT, HEALTH5);

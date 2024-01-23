@@ -94,4 +94,7 @@ public interface QuakePlayer {
 
     public boolean isPlayingHum();
     public boolean isPlayingAttack();
+
+    public void setQuadDamage(boolean quadDamage);
+    public boolean hasQuadDamage();
 }

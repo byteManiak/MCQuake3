@@ -6,16 +6,15 @@ import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.*;
+import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.render.TrailRenderer;
 import com.bytemaniak.mcquake3.screen.JumppadScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MCQuake3Client implements ClientModInitializer {
@@ -89,6 +88,17 @@ public class MCQuake3Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH50_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.SHIELD_CELL_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.INVISIBILITY_BLOCK, RenderLayer.getTranslucent());
+
+        LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
+            if (entityRenderer instanceof PlayerEntityRenderer) {
+                registrationHelper.register(
+                    new QuadDamageGlintRenderer(
+                            entityRenderer,
+                            context.getModelLoader()
+                    )
+                );
+            }
+        });
 
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);

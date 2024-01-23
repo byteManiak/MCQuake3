@@ -57,6 +57,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
+    private final static TrackedData<Boolean> QUAD_DAMAGE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     private final long[] weaponTicks = new long[9];
 
     private boolean isHoldingGauntlet = false;
@@ -125,6 +127,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
         nbt.putInt("quake_energy_shield", getEnergyShield());
+        nbt.putBoolean("quad_damage", hasQuadDamage());
 
         for (int i = 0; i < 8; i++)
             nbt.putInt("quake_ammo"+i, dataTracker.get(QUAKE_PLAYER_AMMO[i]));
@@ -134,6 +137,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
+        dataTracker.set(QUAD_DAMAGE, nbt.getBoolean("quad_damage"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
@@ -147,6 +151,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
         dataTracker.startTracking(QUAKE_ARMOR, 0);
+        dataTracker.startTracking(QUAD_DAMAGE, false);
 
         for (int i = 0; i < 8; i++)
             dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
@@ -359,4 +364,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Environment(EnvType.CLIENT)
     public boolean isPlayingAttack() { return playingAttackSound; }
+
+    public void setQuadDamage(boolean quadDamage) { dataTracker.set(QUAD_DAMAGE, quadDamage); }
+    public boolean hasQuadDamage() { return dataTracker.get(QUAD_DAMAGE); }
 }

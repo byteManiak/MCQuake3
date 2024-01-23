@@ -8,8 +8,13 @@ import net.minecraft.sound.SoundEvent;
 
 public class SoundUtils {
     @Environment(EnvType.CLIENT)
+    public static void playSoundLocally(SoundEvent sound, float volume, float pitch) {
+        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(sound, pitch, volume));
+    }
+
+    @Environment(EnvType.CLIENT)
     public static void playSoundLocally(SoundEvent sound, float volume) {
-        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(sound, 1, volume));
+        playSoundLocally(sound, volume, 1);
     }
 
     @Environment(EnvType.CLIENT)

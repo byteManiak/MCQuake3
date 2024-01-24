@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"gob"
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"o": {
+			"item": "minecraft:orange_dye"
+		},
+		"b": {
+			"item": "mcquake3:gauntlet_blade"
+		}
+	},
+	"result": {
+		"item": "mcquake3:gauntlet",
+		"count": 1
+	}
+}

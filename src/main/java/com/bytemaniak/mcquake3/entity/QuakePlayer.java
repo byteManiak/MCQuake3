@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.entity;
 
-import com.bytemaniak.mcquake3.registry.Items;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.item.Item;
 
 public interface QuakePlayer {
@@ -42,15 +42,15 @@ public interface QuakePlayer {
 
         public Item toItem() {
             switch (this) {
-                case GAUNTLET -> { return Items.GAUNTLET; }
-                case MACHINEGUN -> { return Items.MACHINEGUN; }
-                case SHOTGUN -> { return Items.SHOTGUN; }
-                case GRENADE_LAUNCHER -> { return Items.GRENADE_LAUNCHER; }
-                case ROCKET_LAUNCHER -> { return Items.ROCKET_LAUNCHER; }
-                case LIGHTNING_GUN -> { return Items.LIGHTNING_GUN; }
-                case RAILGUN -> { return Items.RAILGUN; }
-                case PLASMA_GUN -> { return Items.PLASMAGUN; }
-                case BFG10K -> { return Items.BFG10K; }
+                case GAUNTLET -> { return Weapons.GAUNTLET; }
+                case MACHINEGUN -> { return Weapons.MACHINEGUN; }
+                case SHOTGUN -> { return Weapons.SHOTGUN; }
+                case GRENADE_LAUNCHER -> { return Weapons.GRENADE_LAUNCHER; }
+                case ROCKET_LAUNCHER -> { return Weapons.ROCKET_LAUNCHER; }
+                case LIGHTNING_GUN -> { return Weapons.LIGHTNING_GUN; }
+                case RAILGUN -> { return Weapons.RAILGUN; }
+                case PLASMA_GUN -> { return Weapons.PLASMAGUN; }
+                case BFG10K -> { return Weapons.BFG10K; }
             }
             return net.minecraft.item.Items.AIR;
         }

@@ -15,7 +15,6 @@ public class MusicDiscs {
         Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
         Registry.register(Registries.ITEM, id, musicDisc);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> content.add(musicDisc));
-        ItemGroupEvents.modifyEntriesEvent(Items.MCQUAKE3_GROUP).register(content -> content.add(musicDisc));
     }
 
     public static void loadDiscs() {}

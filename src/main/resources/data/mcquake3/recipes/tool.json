@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"crc",
+		"crc",
+		" i "
+	],
+	"key":{
+		"c": {
+			"item": "minecraft:copper_ingot"
+		},
+		"r": {
+			"item": "minecraft:redstone"
+		},
+		"i": {
+			"item": "mcquake3:iron_rod"
+		}
+	},
+	"result": {
+		"item": "mcquake3:tool",
+		"count": 1
+	}
+}

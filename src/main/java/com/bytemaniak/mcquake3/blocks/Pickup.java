@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.blocks;
 
-import com.bytemaniak.mcquake3.registry.Items;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -37,7 +37,7 @@ public abstract class Pickup extends BlockWithEntity implements BlockEntityProvi
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            if (player.getStackInHand(hand).isOf(Items.TOOL)) {
+            if (player.getStackInHand(hand).isOf(Weapons.TOOL)) {
                 world.breakBlock(pos, true);
                 return ActionResult.SUCCESS;
             }

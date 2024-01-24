@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.blocks;
 
-import com.bytemaniak.mcquake3.registry.Items;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -95,7 +95,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ItemStack mainHandStack = player.getStackInHand(hand);
-		if (!world.isClient && mainHandStack.isOf(Items.TOOL))
+		if (!world.isClient && mainHandStack.isOf(Weapons.TOOL))
 		{
 			JumppadEntity jumppad = (JumppadEntity)world.getBlockEntity(pos);
 			PlayerEntity lastPlayer = jumppad.getLastPlayerUser();
@@ -112,7 +112,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 			}
 		}
 
-		if (mainHandStack.isOf(Items.MACHINEGUN) || mainHandStack.isOf(Items.PLASMAGUN)) return ActionResult.PASS;
+		if (mainHandStack.isOf(Weapons.MACHINEGUN) || mainHandStack.isOf(Weapons.PLASMAGUN)) return ActionResult.PASS;
 		else return ActionResult.SUCCESS;
 	}
 }

@@ -2,8 +2,8 @@ package com.bytemaniak.mcquake3.mixin;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.bytemaniak.mcquake3.registry.Items;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
 import net.fabricmc.api.EnvType;
@@ -264,7 +264,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (world.isClient) {
             ItemStack handStack = getMainHandStack();
             if (handStack.getItem() instanceof Weapon weapon) {
-                if (handStack.isOf(Items.GAUNTLET)) {
+                if (handStack.isOf(Weapons.GAUNTLET)) {
                     if (!isHoldingGauntlet) {
                         isHoldingGauntlet = true;
                         playHum(QuakePlayer.WeaponSlot.GAUNTLET);
@@ -272,7 +272,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                         isHoldingLightning = false;
                         isHoldingRailgun = false;
                     }
-                } else if (handStack.isOf(Items.LIGHTNING_GUN)) {
+                } else if (handStack.isOf(Weapons.LIGHTNING_GUN)) {
                     if (!isHoldingLightning) {
                         isHoldingLightning = true;
                         playHum(QuakePlayer.WeaponSlot.LIGHTNING_GUN);
@@ -280,7 +280,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                         isHoldingGauntlet = false;
                         isHoldingRailgun = false;
                     }
-                } else if (handStack.isOf(Items.RAILGUN)) {
+                } else if (handStack.isOf(Weapons.RAILGUN)) {
                     if (!isHoldingRailgun) {
                         isHoldingRailgun = true;
                         playHum(QuakePlayer.WeaponSlot.RAILGUN);

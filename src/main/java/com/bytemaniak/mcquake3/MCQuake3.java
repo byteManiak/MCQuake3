@@ -15,7 +15,8 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 	public void onInitialize() {
 		GeckoLib.initialize();
 
-		Items.loadItems();
+		Weapons.loadItems();
+		CraftingItems.loadCraftingItems();
 		Blocks.loadBlocks();
 		Entities.loadEntities();
 		Q3StatusEffects.registerEffects();

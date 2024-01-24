@@ -8,16 +8,18 @@ import com.bytemaniak.mcquake3.blocks.health.*;
 import com.bytemaniak.mcquake3.blocks.powerup.*;
 import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-
-import static com.bytemaniak.mcquake3.registry.Items.loadItem;
 
 public class Blocks {
     private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
@@ -124,8 +126,10 @@ public class Blocks {
 	public static final Block BFG_BLOCK = new BFGPickup();
 	public static final BlockEntityType<BFGPickupEntity> BFG_ENTITY;
 
-
     public static final Block SPIKES_BLOCK = new Spikes();
+
+    public static final ItemGroup MCQUAKE3_BLOCKS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_blocks"))
+            .icon(() -> new ItemStack(JUMPPAD_BLOCK)).build();
 
     static {
         JUMPPAD_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, JUMPPAD,
@@ -217,6 +221,7 @@ public class Blocks {
     private static void loadDefaultBlock(Block block, Identifier id) {
         BlockItem blockItem = new BlockItem(block, new Item.Settings());
         Registry.register(Registries.BLOCK, id, block);
-        loadItem(blockItem, id);
+        Registry.register(Registries.ITEM, id, blockItem);
+        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_BLOCKS_GROUP).register(content -> content.add(blockItem));
     }
 }

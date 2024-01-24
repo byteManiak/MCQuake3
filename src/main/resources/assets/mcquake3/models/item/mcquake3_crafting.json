@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "mcquake3:item/mcquake3_logo"
+    "layer0": "mcquake3:item/mcquake3_crafting"
   }
 }

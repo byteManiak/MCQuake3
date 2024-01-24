@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"cci",
+		"cti",
+		"hm "
+	],
+	"key":{
+		"c": {
+			"item": "minecraft:copper_ingot"
+		},
+		"t": {
+			"item": "mcquake3:gun_trigger"
+		},
+		"i": {
+			"item": "mcquake3:iron_rod"
+		},
+		"h": {
+			"item": "mcquake3:gun_handle"
+		},
+		"m": {
+			"item": "mcquake3:magazine_holder"
+		}
+	},
+	"result": {
+		"item": "mcquake3:gun_base",
+		"count": 1
+	}
+}

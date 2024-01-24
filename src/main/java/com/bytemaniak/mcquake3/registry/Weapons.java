@@ -10,9 +10,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public class Items {
-    public static final Item MCQUAKE3_LOGO = new MCQuake3Logo();
-
+public class Weapons {
     public static final Item TOOL = new Tool();
 
     public static final Item GAUNTLET = new Gauntlet();
@@ -25,12 +23,10 @@ public class Items {
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
     public static final Item BFG10K = new BFG10K();
 
-    public static final ItemGroup MCQUAKE3_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_logo"))
-            .icon(() -> new ItemStack(MCQUAKE3_LOGO)).build();
+    public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
+            .icon(() -> new ItemStack(MACHINEGUN)).build();
 
     public static void loadItems() {
-        Registry.register(Registries.ITEM, new Identifier("mcquake3:mcquake3_logo"), MCQUAKE3_LOGO);
-
         loadItem(GAUNTLET, new Identifier("mcquake3:gauntlet"));
         loadItem(MACHINEGUN, new Identifier("mcquake3:machinegun"));
         loadItem(SHOTGUN, new Identifier("mcquake3:shotgun"));
@@ -47,6 +43,6 @@ public class Items {
     // Load an item into the item registry and add it to the MCQuake3 creative tab
     public static void loadItem(Item item, Identifier id) {
         Registry.register(Registries.ITEM, id, item);
-        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_GROUP).register(content -> content.add(item));
+        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_WEAPONS_GROUP).register(content -> content.add(item));
     }
 }

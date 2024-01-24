@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"  b",
+		"gr ",
+		"  b"
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"r": {
+			"item": "minecraft:red_dye"
+		},
+		"b": {
+			"item": "mcquake3:shotgun_barrel"
+		}
+	},
+	"result": {
+		"item": "mcquake3:shotgun",
+		"count": 1
+	}
+}

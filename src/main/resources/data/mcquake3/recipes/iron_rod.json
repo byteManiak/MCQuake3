@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"i",
+		"i"
+	],
+	"key":{
+		"i": {
+			"item": "minecraft:iron_ingot"
+		}
+	},
+	"result": {
+		"item": "mcquake3:iron_rod",
+		"count": 4
+	}
+}

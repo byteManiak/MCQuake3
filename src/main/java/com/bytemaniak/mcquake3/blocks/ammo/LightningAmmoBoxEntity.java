@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class LightningAmmoBoxEntity extends PickupEntity {
     public LightningAmmoBoxEntity(BlockPos pos, BlockState state) {
-        super(Blocks.LIGHTNING_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP, Sounds.REGEN);
+        super(Blocks.LIGHTNING_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP, Sounds.REGEN, 5);
     }
 }

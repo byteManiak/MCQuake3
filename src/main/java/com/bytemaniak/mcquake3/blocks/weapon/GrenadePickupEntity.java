@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class GrenadePickupEntity extends PickupEntity {
     public GrenadePickupEntity(BlockPos pos, BlockState state) {
-        super(Blocks.GRENADE_ENTITY, pos, state, Sounds.WEAPON_PICKUP, Sounds.REGEN);
+        super(Blocks.GRENADE_ENTITY, pos, state, Sounds.WEAPON_PICKUP, Sounds.REGEN, 5);
     }
 }

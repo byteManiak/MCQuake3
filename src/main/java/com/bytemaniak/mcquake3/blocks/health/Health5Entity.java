@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class Health5Entity extends PickupEntity {
     public Health5Entity(BlockPos pos, BlockState state) {
-        super(Blocks.HEALTH5_ENTITY, pos, state, Sounds.HEALTH5, Sounds.REGEN);
+        super(Blocks.HEALTH5_ENTITY, pos, state, Sounds.HEALTH5, Sounds.REGEN, 35);
     }
 }

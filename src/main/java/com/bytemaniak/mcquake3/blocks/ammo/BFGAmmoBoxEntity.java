@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class BFGAmmoBoxEntity extends PickupEntity {
     public BFGAmmoBoxEntity(BlockPos pos, BlockState state) {
-        super(Blocks.BFG_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP, Sounds.REGEN);
+        super(Blocks.BFG_AMMO_BOX_ENTITY, pos, state, Sounds.AMMO_PICKUP, Sounds.REGEN, 5);
     }
 }

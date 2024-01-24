@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class QuadDamageEntity extends PickupEntity {
     public QuadDamageEntity(BlockPos pos, BlockState state) {
-        super(Blocks.QUAD_DAMAGE_ENTITY, pos, state, Sounds.QUAD_DAMAGE, Sounds.POWERUP_REGEN);
+        super(Blocks.QUAD_DAMAGE_ENTITY, pos, state, Sounds.QUAD_DAMAGE, Sounds.POWERUP_REGEN, 60);
     }
 }

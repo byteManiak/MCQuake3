@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class HasteEntity extends PickupEntity {
     public HasteEntity(BlockPos pos, BlockState state) {
-        super(Blocks.HASTE_ENTITY, pos, state, Sounds.HASTE, Sounds.POWERUP_REGEN);
+        super(Blocks.HASTE_ENTITY, pos, state, Sounds.HASTE, Sounds.POWERUP_REGEN, 60);
     }
 }

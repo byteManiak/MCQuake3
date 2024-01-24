@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Packets;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -28,19 +29,21 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PickupEntity extends BlockEntity implements GeoBlockEntity {
-    private static final long PICKUP_REUSE_TIME = 300;
-
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private long ticksSinceLastUse = PICKUP_REUSE_TIME;
+
+    private final long regenTime;
+    private long ticksSinceLastUse;
     public boolean lastShouldRender = true;
 
     private final SoundEvent useSound;
     private final SoundEvent regenSound;
 
-    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state, SoundEvent useSound, SoundEvent regenSound) {
+    public PickupEntity(BlockEntityType<? extends PickupEntity> type, BlockPos pos, BlockState state,
+                        SoundEvent useSound, SoundEvent regenSound, float regenTime) {
         super(type, pos, state);
         this.useSound = useSound;
         this.regenSound = regenSound;
+        this.regenTime = this.ticksSinceLastUse = MiscUtils.toTicks(regenTime);
     }
 
     @Override
@@ -56,11 +59,11 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     public boolean shouldRender() {
-        return ticksSinceLastUse > PICKUP_REUSE_TIME;
+        return ticksSinceLastUse > regenTime;
     }
 
     public boolean use() {
-        if (ticksSinceLastUse > PICKUP_REUSE_TIME) {
+        if (ticksSinceLastUse > regenTime) {
             ticksSinceLastUse = 0;
             return true;
         }

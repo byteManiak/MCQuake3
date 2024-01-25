@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"dbd"
+	],
+	"key":{
+		"d": {
+			"item": "minecraft:diamond"
+		},
+		"b": {
+			"item": "mcquake3:barrel"
+		}
+	},
+	"result": {
+		"item": "mcquake3:reinforced_barrel",
+		"count": 1
+	}
+}

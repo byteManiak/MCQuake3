@@ -1,26 +1,29 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"l  ",
+		"c i",
 		"ger",
-		"l  "
+		"c i"
 	],
 	"key":{
 		"g": {
 			"item": "mcquake3:gun_base"
 		},
-		"l": {
-			"item": "minecraft:light_blue_dye"
+		"c": {
+			"item": "minecraft:cyan_dye"
 		},
 		"e": {
 			"item": "mcquake3:energy_chamber"
 		},
 		"r": {
 			"item": "mcquake3:reinforced_barrel"
+		},
+		"i": {
+			"item": "minecraft:iron_ingot"
 		}
 	},
 	"result": {
-		"item": "mcquake3:plasmagun",
+		"item": "mcquake3:lightning_gun",
 		"count": 1
 	}
 }

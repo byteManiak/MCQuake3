@@ -1,13 +1,16 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"cc ",
+		"ccf",
 		"cti",
 		"hm "
 	],
 	"key":{
 		"c": {
 			"item": "minecraft:copper_ingot"
+		},
+		"f": {
+			"item": "minecraft:flint_and_steel"
 		},
 		"t": {
 			"item": "mcquake3:gun_trigger"

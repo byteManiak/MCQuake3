@@ -21,6 +21,7 @@ public class CraftingItems {
     public static final Item BARREL = new Item(new FabricItemSettings());
     public static final Item ROTATING_SHAFT = new Item(new FabricItemSettings());
     public static final Item REINFORCED_BARREL = new Item(new FabricItemSettings());
+    public static final Item ENERGY_CHAMBER = new Item(new FabricItemSettings());
 
     public static final Item GAUNTLET_BLADE = new Item(new FabricItemSettings());
 
@@ -43,6 +44,7 @@ public class CraftingItems {
         loadItem(BARREL, new Identifier("mcquake3:barrel"));
         loadItem(ROTATING_SHAFT, new Identifier("mcquake3:rotating_shaft"));
         loadItem(REINFORCED_BARREL, new Identifier("mcquake3:reinforced_barrel"));
+        loadItem(ENERGY_CHAMBER, new Identifier("mcquake3:energy_chamber"));
         loadItem(GAUNTLET_BLADE, new Identifier("mcquake3:gauntlet_blade"));
     }
 }

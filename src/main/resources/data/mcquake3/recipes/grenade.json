@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" b ",
+		"iti",
+		" c "
+	],
+	"key":{
+		"b": {
+			"item": "minecraft:stone_button"
+		},
+		"i": {
+			"item": "minecraft:iron_ingot"
+		},
+		"t": {
+			"item": "minecraft:tnt"
+		},
+		"c": {
+			"item": "minecraft:copper_ingot"
+		}
+	},
+	"result": {
+		"item": "mcquake3:grenade",
+		"count": 1
+	}
+}

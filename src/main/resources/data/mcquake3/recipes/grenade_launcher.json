@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"gpb",
+		"r  "
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"b": {
+			"item": "mcquake3:barrel"
+		},
+		"p": {
+			"item": "minecraft:piston"
+		},
+		"r": {
+			"item": "minecraft:red_dye"
+		}
+	},
+	"result": {
+		"item": "mcquake3:grenade_launcher",
+		"count": 1
+	}
+}

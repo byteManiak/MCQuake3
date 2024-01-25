@@ -25,6 +25,7 @@ public class Weapons {
     public static final Item BFG10K = new BFG10K();
 
     public static final Item BULLET = new Item(new FabricItemSettings());
+    public static final Item SHELL = new Item(new FabricItemSettings());
 
     public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
             .icon(() -> new ItemStack(MACHINEGUN)).build();
@@ -41,6 +42,7 @@ public class Weapons {
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
 
         loadItem(BULLET, new Identifier("mcquake3:bullet"));
+        loadItem(SHELL, new Identifier("mcquake3:shell"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));
     }

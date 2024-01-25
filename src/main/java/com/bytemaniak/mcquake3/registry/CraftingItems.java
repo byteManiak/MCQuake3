@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CraftingItems {
     public static final Item IRON_ROD = new Item(new FabricItemSettings());
+    public static final Item COPPER_NUGGET = new Item(new FabricItemSettings());
 
     public static final Item GUN_HANDLE = new Item(new FabricItemSettings());
     public static final Item GUN_TRIGGER = new Item(new FabricItemSettings());
@@ -33,6 +34,7 @@ public class CraftingItems {
 
     public static void loadCraftingItems() {
         loadItem(IRON_ROD, new Identifier("mcquake3:iron_rod"));
+        loadItem(COPPER_NUGGET, new Identifier("mcquake3:copper_nugget"));
         loadItem(GUN_HANDLE, new Identifier("mcquake3:gun_handle"));
         loadItem(GUN_TRIGGER, new Identifier("mcquake3:gun_trigger"));
         loadItem(MAGAZINE_HOLDER, new Identifier("mcquake3:magazine_holder"));

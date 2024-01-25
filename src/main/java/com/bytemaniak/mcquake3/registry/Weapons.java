@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.registry;
 
 import com.bytemaniak.mcquake3.items.*;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -23,6 +24,8 @@ public class Weapons {
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
     public static final Item BFG10K = new BFG10K();
 
+    public static final Item BULLET = new Item(new FabricItemSettings());
+
     public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
             .icon(() -> new ItemStack(MACHINEGUN)).build();
 
@@ -36,6 +39,8 @@ public class Weapons {
         loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
+
+        loadItem(BULLET, new Identifier("mcquake3:bullet"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));
     }

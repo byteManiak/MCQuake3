@@ -1,7 +1,8 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"gob"
+		"gor",
+		"  b"
 	],
 	"key":{
 		"g": {
@@ -9,6 +10,9 @@
 		},
 		"o": {
 			"item": "minecraft:orange_dye"
+		},
+		"r": {
+			"item": "mcquake3:rotating_shaft"
 		},
 		"b": {
 			"item": "mcquake3:gauntlet_blade"

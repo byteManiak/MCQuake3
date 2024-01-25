@@ -1,0 +1,7 @@
+{
+	"parent": "item/generated",
+	"texture_size": [16, 16],
+	"textures": {
+		"layer0": "mcquake3:item/rotating_shaft"
+	}
+}

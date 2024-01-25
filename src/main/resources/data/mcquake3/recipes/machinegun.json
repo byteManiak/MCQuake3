@@ -1,8 +1,9 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"gyr",
-		"  b"
+		"y  ",
+		"grb",
+		"y  "
 	],
 	"key":{
 		"g": {

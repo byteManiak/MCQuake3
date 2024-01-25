@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"h",
+		"s"
+	],
+	"key":{
+		"h": {
+			"item": "minecraft:heavy_weighted_pressure_plate"
+		},
+		"s": {
+			"item": "minecraft:sticky_piston"
+		}
+	},
+	"result": {
+		"item": "mcquake3:jumppad",
+		"count": 1
+	}
+}

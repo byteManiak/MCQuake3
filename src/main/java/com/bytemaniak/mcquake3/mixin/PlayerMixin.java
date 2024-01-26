@@ -44,17 +44,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
-    private final static TrackedData<Integer>[] QUAKE_PLAYER_AMMO = new TrackedData[]{
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER),
-        DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER)
-    };
-
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     private final static TrackedData<Boolean> QUAD_DAMAGE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -128,9 +117,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putString("quake_player_sounds", getPlayerVoice());
         nbt.putInt("quake_energy_shield", getEnergyShield());
         nbt.putBoolean("quad_damage", hasQuadDamage());
-
-        for (int i = 0; i < 8; i++)
-            nbt.putInt("quake_ammo"+i, dataTracker.get(QUAKE_PLAYER_AMMO[i]));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -141,9 +127,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
-
-        for (int i = 0; i < 8; i++)
-            dataTracker.set(QUAKE_PLAYER_AMMO[i], nbt.getInt("quake_ammo"+i));
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -152,9 +135,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
         dataTracker.startTracking(QUAKE_ARMOR, 0);
         dataTracker.startTracking(QUAD_DAMAGE, false);
-
-        for (int i = 0; i < 8; i++)
-            dataTracker.startTracking(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -194,40 +174,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         weaponTicks[slot.slot] = tick;
     }
 
-    public void resetAmmo() {
-        for (int i = 0; i < 8; i++)
-            dataTracker.set(QUAKE_PLAYER_AMMO[i], defaultWeaponAmmo[i]);
-    }
-
-    public boolean useAmmo(WeaponSlot slot) {
-        if (slot == WeaponSlot.GAUNTLET) return false;
-
-        int weaponSlot = slot.slot-1;
-        int weaponAmmo = dataTracker.get(QUAKE_PLAYER_AMMO[weaponSlot]);
-
-        if (weaponAmmo > 0) {
-            dataTracker.set(QUAKE_PLAYER_AMMO[weaponSlot], weaponAmmo-1);
-            return false;
-        } else return true;
-    }
-
     public WeaponSlot getCurrentWeapon() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) {
             return weapon.weaponSlot;
         } else {
             return WeaponSlot.NONE;
         }
-    }
-
-    public int getAmmo(WeaponSlot slot) { return dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]); }
-    public int getCurrentAmmo() {
-        return dataTracker.get(QUAKE_PLAYER_AMMO[getCurrentWeapon().slot-1]);
-    }
-
-    public void addAmmo(int amount, WeaponSlot slot) {
-        int currentAmmo = dataTracker.get(QUAKE_PLAYER_AMMO[slot.slot-1]);
-        currentAmmo += amount; if (currentAmmo > 200) currentAmmo = 200;
-        dataTracker.set(QUAKE_PLAYER_AMMO[slot.slot-1], currentAmmo);
     }
 
     public int getEnergyShield() { return dataTracker.get(QUAKE_ARMOR); }

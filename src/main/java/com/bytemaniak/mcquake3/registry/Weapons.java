@@ -14,6 +14,11 @@ import net.minecraft.util.Identifier;
 public class Weapons {
     public static final Item TOOL = new Tool();
 
+    public static final Item BULLET = new Item(new FabricItemSettings());
+    public static final Item SHELL = new Item(new FabricItemSettings());
+    public static final Item ROCKET = new Item(new FabricItemSettings());
+    public static final Item GRENADE = new Item(new FabricItemSettings());
+
     public static final Item GAUNTLET = new Gauntlet();
     public static final Item MACHINEGUN = new Machinegun();
     public static final Item SHOTGUN = new Shotgun();
@@ -24,29 +29,28 @@ public class Weapons {
     public static final Item ROCKET_LAUNCHER = new RocketLauncher();
     public static final Item BFG10K = new BFG10K();
 
-    public static final Item BULLET = new Item(new FabricItemSettings());
-    public static final Item SHELL = new Item(new FabricItemSettings());
-    public static final Item ROCKET = new Item(new FabricItemSettings());
-    public static final Item GRENADE = new Item(new FabricItemSettings());
-
     public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
             .icon(() -> new ItemStack(MACHINEGUN)).build();
 
     public static void loadItems() {
         loadItem(GAUNTLET, new Identifier("mcquake3:gauntlet"));
+
+        loadItem(BULLET, new Identifier("mcquake3:bullet"));
         loadItem(MACHINEGUN, new Identifier("mcquake3:machinegun"));
+
+        loadItem(SHELL, new Identifier("mcquake3:shell"));
         loadItem(SHOTGUN, new Identifier("mcquake3:shotgun"));
+
+        loadItem(GRENADE, new Identifier("mcquake3:grenade"));
         loadItem(GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"));
+
         loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
         loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
         loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
+
+        loadItem(ROCKET, new Identifier("mcquake3:rocket"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
-
-        loadItem(BULLET, new Identifier("mcquake3:bullet"));
-        loadItem(SHELL, new Identifier("mcquake3:shell"));
-        loadItem(ROCKET, new Identifier("mcquake3:rocket"));
-        loadItem(GRENADE, new Identifier("mcquake3:grenade"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));
     }

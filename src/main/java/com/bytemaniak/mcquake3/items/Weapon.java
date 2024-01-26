@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -47,6 +48,7 @@ public abstract class Weapon extends Item implements GeoItem {
     public final boolean hasActiveLoopSound;
 
     public final QuakePlayer.WeaponSlot weaponSlot;
+    protected final Item ammoType;
 
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
@@ -57,6 +59,14 @@ public abstract class Weapon extends Item implements GeoItem {
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {
         super(new Item.Settings().maxCount(1));
         this.weaponSlot = weaponSlot;
+        this.ammoType = switch (weaponSlot) {
+            case MACHINEGUN -> Weapons.BULLET;
+            case SHOTGUN -> Weapons.SHELL;
+            case ROCKET_LAUNCHER -> Weapons.ROCKET;
+            case GRENADE_LAUNCHER -> Weapons.GRENADE;
+            default -> null;
+        };
+
         this.weaponIdentifier = id;
 
         this.refireRate = refireRateInTicks;
@@ -101,7 +111,21 @@ public abstract class Weapon extends Item implements GeoItem {
             refireModifier = playerHaste.getAmplifier() > 3 ? 0.7f : (1-playerHaste.getAmplifier()*0.1f);
 
         if (currentTick - player.getWeaponTick(weaponSlot) >= (long)((float)refireRate * refireModifier)) {
-            if (!player.useAmmo(weaponSlot)) {
+            PlayerEntity p = (PlayerEntity) user;
+            boolean hasAmmo = false;
+
+            if (p.isCreative() || ammoType == null) hasAmmo = true;
+            else for (int i = 0; i < p.getInventory().size(); ++i) {
+                ItemStack itemStack = p.getInventory().getStack(i);
+                if (itemStack.isOf(ammoType)) {
+                    hasAmmo = true;
+                    itemStack.decrement(1);
+                    if (itemStack.isEmpty()) p.getInventory().removeOne(itemStack);
+                    break;
+                }
+            }
+
+            if (hasAmmo) {
                 // Whatever projectile the weapon shoots, its initial position is approximated
                 // to be shot from the held weapon, not from the player's eye
                 Vec3d lookDir = Vec3d.fromPolar(user.getPitch(), user.getYaw());

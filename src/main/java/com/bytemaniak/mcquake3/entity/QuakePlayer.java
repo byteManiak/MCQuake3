@@ -62,14 +62,6 @@ public interface QuakePlayer {
 
     boolean quakePlayerSoundsEnabled();
 
-    void resetAmmo();
-
-    // Returns true if the player used up all the weapon ammo
-    boolean useAmmo(WeaponSlot slot);
-    int getCurrentAmmo();
-    int getAmmo(WeaponSlot slot);
-    void addAmmo(int amount, WeaponSlot slot);
-
     int getEnergyShield();
     void setEnergyShield(int amount);
     void addEnergyShield(int amount);

@@ -23,7 +23,8 @@ public abstract class WeaponPickup extends Pickup {
             QuakePlayer qPlayer = (QuakePlayer)player;
             ItemStack weapon = new ItemStack(slot.toItem());
             if (!player.getInventory().containsAny(t -> t.isOf(slot.toItem()))) player.giveItemStack(weapon);
-            else qPlayer.addAmmo(slot.ammoCount, slot);
+            // TODO: Reimplement giving player some ammo when picking up weapon
+            // else qPlayer.addAmmo(slot.ammoCount, slot);
 
             world.markDirty(pos);
         }

@@ -20,10 +20,11 @@ public abstract class AmmoBox extends Pickup {
         PickupEntity ammoBox = (PickupEntity)world.getBlockEntity(pos);
         if (entity instanceof PlayerEntity player) {
             QuakePlayer qPlayer = (QuakePlayer)player;
-            if (qPlayer.getAmmo(slot) < 200 && ammoBox.use()) {
+            // TODO: Reimplement giving player ammo
+            /* if (qPlayer.getAmmo(slot) < 200 && ammoBox.use()) {
                 qPlayer.addAmmo(slot.ammoCount, slot);
                 world.markDirty(pos);
-            }
+            } */
         }
     }
 }

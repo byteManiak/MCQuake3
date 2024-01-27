@@ -11,8 +11,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -73,10 +71,5 @@ public class Shotgun extends Weapon {
 
             triggerAnim(user, GeoItem.getOrAssignId(user.getActiveItem(), (ServerWorld) world), "controller", "shoot");
         }
-    }
-
-    @Override
-    protected PlayState handle(AnimationState<Weapon> state) {
-        return null;
     }
 }

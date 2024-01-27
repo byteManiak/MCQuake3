@@ -166,7 +166,7 @@ public abstract class Weapon extends Item implements GeoItem {
         });
     }
 
-    protected abstract PlayState handle(AnimationState<Weapon> state);
+    protected PlayState handle(AnimationState<Weapon> state) { return null; };
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

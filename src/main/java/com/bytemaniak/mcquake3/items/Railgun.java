@@ -14,8 +14,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
 
 public class Railgun extends HitscanWeapon {
     private static final int RAILGUN_REFIRE_TICK_RATE = 50;
@@ -45,10 +43,5 @@ public class Railgun extends HitscanWeapon {
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
 
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
-    }
-
-    @Override
-    protected PlayState handle(AnimationState<Weapon> state) {
-        return null;
     }
 }

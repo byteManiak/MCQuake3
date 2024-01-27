@@ -12,8 +12,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
 
 public class RocketLauncher extends Weapon {
     private static final long ROCKET_REFIRE_RATE = 15;
@@ -51,10 +49,5 @@ public class RocketLauncher extends Weapon {
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
         }
-    }
-
-    @Override
-    protected PlayState handle(AnimationState<Weapon> state) {
-        return null;
     }
 }

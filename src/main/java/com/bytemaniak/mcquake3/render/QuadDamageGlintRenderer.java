@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.render;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -38,7 +38,7 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M ext
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if (!((QuakePlayer)entity).hasQuadDamage()) return;
+        if (!entity.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) return;
 
         float f = (float)entity.age + tickDelta;
         EntityModel<AbstractClientPlayerEntity> entityModel = this.getEnergySwirlModel();

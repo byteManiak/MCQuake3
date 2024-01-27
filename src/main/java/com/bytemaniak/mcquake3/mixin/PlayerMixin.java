@@ -10,14 +10,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundManager;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
@@ -45,8 +47,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
-
-    private final static TrackedData<Boolean> QUAD_DAMAGE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     private final long[] weaponTicks = new long[9];
 
@@ -117,14 +117,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
         nbt.putInt("quake_energy_shield", getEnergyShield());
-        nbt.putBoolean("quad_damage", hasQuadDamage());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
-        dataTracker.set(QUAD_DAMAGE, nbt.getBoolean("quad_damage"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
@@ -135,7 +133,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
         dataTracker.startTracking(QUAKE_ARMOR, 0);
-        dataTracker.startTracking(QUAD_DAMAGE, false);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -149,12 +146,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
         }
         return stack;
-    }
-
-    @Nullable
-    @Override
-    public ItemEntity dropItem(ItemConvertible item) {
-        return super.dropItem(item);
     }
 
     public void toggleQuakeGui() {
@@ -317,7 +308,4 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Environment(EnvType.CLIENT)
     public boolean isPlayingAttack() { return playingAttackSound; }
-
-    public void setQuadDamage(boolean quadDamage) { dataTracker.set(QUAD_DAMAGE, quadDamage); }
-    public boolean hasQuadDamage() { return dataTracker.get(QUAD_DAMAGE); }
 }

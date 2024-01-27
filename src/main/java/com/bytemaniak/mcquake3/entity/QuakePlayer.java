@@ -86,7 +86,4 @@ public interface QuakePlayer {
 
     boolean isPlayingHum();
     boolean isPlayingAttack();
-
-    void setQuadDamage(boolean quadDamage);
-    boolean hasQuadDamage();
 }

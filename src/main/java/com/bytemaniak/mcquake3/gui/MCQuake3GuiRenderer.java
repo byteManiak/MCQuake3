@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.gui;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -32,8 +33,8 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         int x = window.getScaledWidth()/2;
         int y = window.getScaledHeight() - 10;
 
-        QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
-        if (weapon != QuakePlayer.WeaponSlot.NONE && weapon.slot > 0) {
+        WeaponSlot weapon = player.getCurrentWeapon();
+        if (weapon != WeaponSlot.NONE && weapon.slot > 0) {
             int slotChar = '\uFFF0'+player.getCurrentWeapon().slot;
             drawText(matrixStack, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
             // TODO: Reimplement ammo tracking

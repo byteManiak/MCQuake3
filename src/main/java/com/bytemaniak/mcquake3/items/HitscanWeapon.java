@@ -1,9 +1,9 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
@@ -34,7 +34,7 @@ public abstract class HitscanWeapon extends Weapon {
     private final float hitscanRange;
     private final float hitscanNumSteps;
 
-    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance) {
@@ -47,7 +47,7 @@ public abstract class HitscanWeapon extends Weapon {
         this.hitscanNumSteps = hitscanRange/hitscanStepDistance;
     }
 
-    protected HitscanWeapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange) {

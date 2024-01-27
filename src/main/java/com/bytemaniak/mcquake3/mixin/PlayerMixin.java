@@ -1,11 +1,12 @@
 package com.bytemaniak.mcquake3.mixin;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -211,7 +212,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 if (handStack.isOf(Weapons.GAUNTLET)) {
                     if (!isHoldingGauntlet) {
                         isHoldingGauntlet = true;
-                        playHum(QuakePlayer.WeaponSlot.GAUNTLET);
+                        playHum(WeaponSlot.GAUNTLET);
 
                         isHoldingLightning = false;
                         isHoldingRailgun = false;
@@ -219,7 +220,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 } else if (handStack.isOf(Weapons.LIGHTNING_GUN)) {
                     if (!isHoldingLightning) {
                         isHoldingLightning = true;
-                        playHum(QuakePlayer.WeaponSlot.LIGHTNING_GUN);
+                        playHum(WeaponSlot.LIGHTNING_GUN);
 
                         isHoldingGauntlet = false;
                         isHoldingRailgun = false;
@@ -227,7 +228,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 } else if (handStack.isOf(Weapons.RAILGUN)) {
                     if (!isHoldingRailgun) {
                         isHoldingRailgun = true;
-                        playHum(QuakePlayer.WeaponSlot.RAILGUN);
+                        playHum(WeaponSlot.RAILGUN);
 
                         isHoldingGauntlet = false;
                         isHoldingLightning = false;
@@ -256,7 +257,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @Environment(EnvType.CLIENT)
-    public void playHum(QuakePlayer.WeaponSlot weaponSlot) {
+    public void playHum(WeaponSlot weaponSlot) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
@@ -277,7 +278,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public void stopHum() { playingHumSound = false; }
 
     @Environment(EnvType.CLIENT)
-    public void playAttackSound(QuakePlayer.WeaponSlot weaponSlot) {
+    public void playAttackSound(WeaponSlot weaponSlot) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
@@ -298,7 +299,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public void stopAttackSound() { playingAttackSound = false; }
 
     @Environment(EnvType.CLIENT)
-    public void stopSounds() {
+    private void stopSounds() {
         stopHum();
         stopAttackSound();
     }

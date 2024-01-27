@@ -1,9 +1,9 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.entity.projectile.Shell;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -26,7 +26,7 @@ public class Shotgun extends Weapon {
     private static final float SHOTGUN_PROJECTILE_SPEED = 4.25f;
 
     public Shotgun() {
-        super(QuakePlayer.WeaponSlot.SHOTGUN, new Identifier("mcquake3:shotgun"),
+        super(WeaponSlot.SHOTGUN, new Identifier("mcquake3:shotgun"),
                 SHOTGUN_REFIRE_TICK_RATE, true, Sounds.SHOTGUN_FIRE, false);
     }
 

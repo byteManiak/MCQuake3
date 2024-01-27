@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import org.spongepowered.asm.mixin.Mixin;

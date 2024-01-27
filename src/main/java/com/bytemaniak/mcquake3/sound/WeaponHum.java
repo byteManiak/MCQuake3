@@ -1,13 +1,14 @@
 package com.bytemaniak.mcquake3.sound;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.SoundEvent;
 
 public class WeaponHum extends TrackedSound {
-    protected final QuakePlayer.WeaponSlot slot;
+    protected final WeaponSlot slot;
 
-    public WeaponHum(Entity owner, SoundEvent sound, QuakePlayer.WeaponSlot weaponSlot) {
+    public WeaponHum(Entity owner, SoundEvent sound, WeaponSlot weaponSlot) {
         super(owner, sound);
         slot = weaponSlot;
     }
@@ -15,7 +16,7 @@ public class WeaponHum extends TrackedSound {
     @Override
     public void tick() {
         QuakePlayer player = (QuakePlayer) owner;
-        QuakePlayer.WeaponSlot weapon = player.getCurrentWeapon();
+        WeaponSlot weapon = player.getCurrentWeapon();
         if (weapon.slot != slot.slot || !player.isPlayingHum()) {
             stopSound();
         }

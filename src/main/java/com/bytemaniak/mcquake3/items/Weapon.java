@@ -1,7 +1,8 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -47,7 +48,7 @@ public abstract class Weapon extends Item implements GeoItem {
     private final SoundEvent firingSound;
     public final boolean hasActiveLoopSound;
 
-    public final QuakePlayer.WeaponSlot weaponSlot;
+    public final WeaponSlot weaponSlot;
     protected final Item ammoType;
 
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -55,7 +56,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
     public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3:firing_speed"));
 
-    protected Weapon(QuakePlayer.WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
+    protected Weapon(WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound) {
         super(new Item.Settings().maxCount(1));
         this.weaponSlot = weaponSlot;

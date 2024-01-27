@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.mixin;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
 import com.bytemaniak.mcquake3.util.MiscUtils;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;

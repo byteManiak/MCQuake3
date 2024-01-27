@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin;
 
-import com.bytemaniak.mcquake3.entity.QuakePlayer;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;

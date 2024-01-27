@@ -19,6 +19,10 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
         super(world, pos, yaw, gameProfile);
     }
 
+    private static final int[] defaultWeaponAmmo = {
+            100, 10, 10, 5, 100, 10, 50, 20
+    };
+
     @Inject(method = "copyFrom", at = @At("HEAD"))
     private void copyFromQuakePlayer(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
         QuakePlayer thisQuakePlayer = (QuakePlayer) this;

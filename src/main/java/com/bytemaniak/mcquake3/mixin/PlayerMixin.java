@@ -40,10 +40,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
-    private static final int[] defaultWeaponAmmo = {
-            100, 10, 10, 5, 100, 10, 50, 20
-    };
-
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 

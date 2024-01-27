@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.mixin;
+package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

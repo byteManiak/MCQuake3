@@ -6,15 +6,15 @@
   "mixins": [
     "PlayerMixin",
     "ServerPlayerMixin",
-    "ExplosiveProjectileEntityMixin",
-    "LivingEntityMixin"
+    "misc/ExplosiveProjectileEntityMixin",
+    "misc/LivingEntityMixin"
   ],
   "client": [
-    "ClientPlayerMixin",
-    "HeldItemRendererMixin",
-    "ClientPlayerInteractionManagerMixin",
-    "MouseMixin",
-    "MinecraftClientMixin"
+    "misc/ClientPlayerMixin",
+    "misc/HeldItemRendererMixin",
+    "misc/ClientPlayerInteractionManagerMixin",
+    "misc/MouseMixin",
+    "misc/MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

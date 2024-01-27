@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.mixin;
+package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.client.MinecraftClient;

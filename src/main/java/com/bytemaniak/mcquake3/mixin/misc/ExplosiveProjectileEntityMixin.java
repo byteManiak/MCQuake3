@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.mixin;
+package com.bytemaniak.mcquake3.mixin.misc;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;

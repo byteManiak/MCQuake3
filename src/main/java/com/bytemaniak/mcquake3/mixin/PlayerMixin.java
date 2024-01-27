@@ -93,6 +93,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
+            else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
             else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
             else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
             else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);

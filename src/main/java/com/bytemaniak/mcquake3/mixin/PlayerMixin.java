@@ -3,9 +3,10 @@ package com.bytemaniak.mcquake3.mixin;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -39,20 +40,15 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final long[] weaponTicks = new long[9];
 
-    private ItemStack prevMainHandStack = null;
-
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    @Override
-    public ItemStack getMainHandStack() {
-        ItemStack currentMainHandStack = getEquippedStack(EquipmentSlot.MAINHAND);
-        if (!world.isClient && currentMainHandStack.getItem() instanceof Weapon && currentMainHandStack != prevMainHandStack) {
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
+    public void playWeaponSwitchSound(PlayerEntity playerEntity, Operation<Void> original) {
+        if (!world.isClient && playerEntity.getMainHandStack().getItem() instanceof Weapon)
             world.playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
-        }
-        prevMainHandStack = currentMainHandStack;
-        return super.getMainHandStack();
+        original.call(playerEntity);
     }
 
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",

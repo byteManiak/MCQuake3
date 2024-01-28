@@ -31,15 +31,6 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
 
     protected WeaponSoundsMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
-    @Environment(EnvType.CLIENT)
-    private int getCurrentWeapon() {
-        if (getMainHandStack().getItem() instanceof Weapon weapon) {
-            return weapon.slot;
-        } else {
-            return -1;
-        }
-    }
-
     @Inject(method = "tick", at = @At(value = "RETURN"))
     private void handleLoopingWeaponSounds(CallbackInfo ci) {
         if (world.isClient) {
@@ -78,9 +69,9 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
 
                 if (weapon.hasActiveLoopSound) {
                     if (!isUsingItem() && playingAttackSound) {
-                        playHum(getCurrentWeapon());
+                        playHum(weapon.slot);
                     } else if (isUsingItem() && !playingAttackSound) {
-                        playAttackSound(getCurrentWeapon());
+                        playAttackSound(weapon.slot);
                     }
                 }
             } else if (playingHumSound || playingAttackSound) {

@@ -20,15 +20,16 @@ public class Invisibility extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity invisibilityPickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!invisibilityPickup.shouldRender()) return;
+        if (!world.isClient) {
+            PickupEntity invisibilityPickup = (PickupEntity) world.getBlockEntity(pos);
+            if (!invisibilityPickup.shouldRender()) return;
 
-        if (entity instanceof PlayerEntity player) {
-            player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.INVISIBILITY), null);
-            invisibilityPickup.use();
-            world.markDirty(pos);
+            if (entity instanceof PlayerEntity player) {
+                player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.INVISIBILITY), null);
+                invisibilityPickup.use();
+                world.markDirty(pos);
+            }
         }
     }
 }

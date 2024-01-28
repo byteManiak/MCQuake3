@@ -16,24 +16,24 @@ public abstract class Health extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity healthPickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!healthPickup.shouldRender()) return;
+        if (!world.isClient) {
+            PickupEntity healthPickup = (PickupEntity) world.getBlockEntity(pos);
+            if (!healthPickup.shouldRender()) return;
 
-        if (entity instanceof PlayerEntity player) {
-            float health = player.getHealth();
-            if (!healOver100 && (int)health == MiscUtils.toMCDamage(100)) return;
+            if (entity instanceof PlayerEntity player) {
+                float health = player.getHealth();
+                if (!healOver100 && (int) health == MiscUtils.toMCDamage(100)) return;
 
-            if (healOver100 || health + healthAmount <= MiscUtils.toMCDamage(100)) {
-                player.heal(healthAmount);
-                healthPickup.use();
+                if (healOver100 || health + healthAmount <= MiscUtils.toMCDamage(100)) {
+                    player.heal(healthAmount);
+                    healthPickup.use();
+                } else {
+                    player.setHealth(MiscUtils.toMCDamage(100));
+                    healthPickup.use();
+                }
+                world.markDirty(pos);
             }
-            else {
-                player.setHealth(MiscUtils.toMCDamage(100));
-                healthPickup.use();
-            }
-            world.markDirty(pos);
         }
     }
 }

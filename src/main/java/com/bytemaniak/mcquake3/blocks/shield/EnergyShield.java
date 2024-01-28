@@ -15,18 +15,19 @@ public abstract class EnergyShield extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity armorPickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!armorPickup.shouldRender()) return;
+        if (!world.isClient) {
+            PickupEntity armorPickup = (PickupEntity) world.getBlockEntity(pos);
+            if (!armorPickup.shouldRender()) return;
 
-        if (entity instanceof PlayerEntity player) {
-            QuakePlayer quakePlayer = (QuakePlayer)player;
-            if (quakePlayer.getEnergyShield() == 200) return;
+            if (entity instanceof PlayerEntity player) {
+                QuakePlayer quakePlayer = (QuakePlayer) player;
+                if (quakePlayer.getEnergyShield() == 200) return;
 
-            quakePlayer.addEnergyShield(armorValue);
-            armorPickup.use();
-            world.markDirty(pos);
+                quakePlayer.addEnergyShield(armorValue);
+                armorPickup.use();
+                world.markDirty(pos);
+            }
         }
     }
 }

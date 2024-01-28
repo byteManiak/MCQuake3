@@ -19,15 +19,16 @@ public class QuadDamage extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity quadDamagePickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!quadDamagePickup.shouldRender()) return;
+        if (!world.isClient) {
+            PickupEntity quadDamagePickup = (PickupEntity) world.getBlockEntity(pos);
+            if (!quadDamagePickup.shouldRender()) return;
 
-        if (entity instanceof PlayerEntity player) {
-            player.addStatusEffect(Q3StatusEffects.fromEffect(Q3StatusEffects.QUAD_DAMAGE), null);
-            quadDamagePickup.use();
-            world.markDirty(pos);
+            if (entity instanceof PlayerEntity player) {
+                player.addStatusEffect(Q3StatusEffects.fromEffect(Q3StatusEffects.QUAD_DAMAGE), null);
+                quadDamagePickup.use();
+                world.markDirty(pos);
+            }
         }
     }
 }

@@ -73,27 +73,28 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
 
     @Override
     public void markDirty() {
-        if (world.isClient) return;
-
-        PacketByteBuf data = PacketByteBufs.create();
-        data.writeBlockPos(getPos());
-        data.writeBoolean(shouldRender());
-        for (ServerPlayerEntity plr : PlayerLookup.tracking((ServerWorld) world, getPos()))
-            ServerPlayNetworking.send(plr, Packets.AMMO_BOX_UPDATE, data);
-        super.markDirty();
+        if (!world.isClient) {
+            PacketByteBuf data = PacketByteBufs.create();
+            data.writeBlockPos(getPos());
+            data.writeBoolean(shouldRender());
+            for (ServerPlayerEntity plr : PlayerLookup.tracking((ServerWorld) world, getPos()))
+                ServerPlayNetworking.send(plr, Packets.AMMO_BOX_UPDATE, data);
+            super.markDirty();
+        }
     }
 
     public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
-        if (world.isClient) return;
-
-        PickupEntity pickupEntity = (PickupEntity) t;
-        pickupEntity.ticksSinceLastUse++;
-        if (pickupEntity.lastShouldRender != pickupEntity.shouldRender()) {
-            pickupEntity.markDirty();
-            if (pickupEntity.shouldRender()) world.playSound(null, pos, pickupEntity.regenSound, SoundCategory.NEUTRAL, 1, 1);
-            else world.playSound(null, pos, pickupEntity.useSound, SoundCategory.NEUTRAL, 1, 1);
+        if (!world.isClient) {
+            PickupEntity pickupEntity = (PickupEntity) t;
+            pickupEntity.ticksSinceLastUse++;
+            if (pickupEntity.lastShouldRender != pickupEntity.shouldRender()) {
+                pickupEntity.markDirty();
+                if (pickupEntity.shouldRender())
+                    world.playSound(null, pos, pickupEntity.regenSound, SoundCategory.NEUTRAL, 1, 1);
+                else world.playSound(null, pos, pickupEntity.useSound, SoundCategory.NEUTRAL, 1, 1);
+            }
+            pickupEntity.lastShouldRender = pickupEntity.shouldRender();
         }
-        pickupEntity.lastShouldRender = pickupEntity.shouldRender();
     }
 
     @Override

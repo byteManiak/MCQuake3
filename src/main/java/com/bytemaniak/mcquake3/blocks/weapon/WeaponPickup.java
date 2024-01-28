@@ -16,15 +16,16 @@ public abstract class WeaponPickup extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity weaponPickup = (PickupEntity)world.getBlockEntity(pos);
-        if (entity instanceof PlayerEntity player && weaponPickup.use()) {
-            if (!player.getInventory().containsAny(t -> t.isOf(weapon)))
-                player.giveItemStack(new ItemStack(weapon));
-            // TODO: Limit ammo usage once Quake server mode is implemented
-            player.giveItemStack(new ItemStack(weapon.ammoType, weapon.ammoBoxCount));
-            world.markDirty(pos);
+        if (!world.isClient) {
+            PickupEntity weaponPickup = (PickupEntity) world.getBlockEntity(pos);
+            if (entity instanceof PlayerEntity player && weaponPickup.use()) {
+                if (!player.getInventory().containsAny(t -> t.isOf(weapon)))
+                    player.giveItemStack(new ItemStack(weapon));
+                // TODO: Limit ammo usage once Quake server mode is implemented
+                player.giveItemStack(new ItemStack(weapon.ammoType, weapon.ammoBoxCount));
+                world.markDirty(pos);
+            }
         }
     }
 }

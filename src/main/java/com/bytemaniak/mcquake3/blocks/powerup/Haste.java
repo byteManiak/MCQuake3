@@ -20,16 +20,17 @@ public class Haste extends Pickup {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (world.isClient) return;
 
-        PickupEntity hastePickup = (PickupEntity) world.getBlockEntity(pos);
-        if (!hastePickup.shouldRender()) return;
+        if (!world.isClient) {
+            PickupEntity hastePickup = (PickupEntity) world.getBlockEntity(pos);
+            if (!hastePickup.shouldRender()) return;
 
-        if (entity instanceof PlayerEntity player) {
-            player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.SPEED, 2), null);
-            player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.HASTE, 3), null);
-            hastePickup.use();
-            world.markDirty(pos);
+            if (entity instanceof PlayerEntity player) {
+                player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.SPEED, 2), null);
+                player.addStatusEffect(Q3StatusEffects.fromEffect(StatusEffects.HASTE, 3), null);
+                hastePickup.use();
+                world.markDirty(pos);
+            }
         }
     }
 }

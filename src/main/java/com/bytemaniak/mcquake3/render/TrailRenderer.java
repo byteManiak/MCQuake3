@@ -36,11 +36,11 @@ public class TrailRenderer implements WorldRenderEvents.End {
         public Vec3d color;
         public UUID owner;
 
-        public static void updateTrailData(TrailData trailData, Vec3d v1, Vec3d v2, long startTick) {
+        public static void updateTrailData(TrailData trailData, Vec3d v1, Vec3d v2, Vec3d upVec, long startTick) {
+            upVec = upVec.multiply(0.075f);
             Vec3d diffVec = v2.subtract(v1);
             Vec3d dirVec = diffVec.normalize();
-            Vec3d leftVec = dirVec.crossProduct(new Vec3d(0, 1, 0)).multiply(.05f);
-            Vec3d upVec = leftVec.crossProduct(diffVec.normalize());
+            Vec3d leftVec = dirVec.crossProduct(upVec);//.multiply(.3f);
             trailData._v1 = v1.add(leftVec).add(upVec);
             trailData._v2 = v1.add(leftVec).add(upVec.negate());
             trailData._v3 = v1.add(leftVec.negate()).add(upVec.negate());
@@ -52,8 +52,8 @@ public class TrailRenderer implements WorldRenderEvents.End {
             trailData.startTick = startTick;
         }
 
-        public TrailData(Vec3d v1, Vec3d v2, long startTick, long lifetime, Vec3d color, UUID owner) {
-            updateTrailData(this, v1, v2, startTick);
+        public TrailData(Vec3d v1, Vec3d v2, Vec3d upVec, long startTick, long lifetime, Vec3d color, UUID owner) {
+            updateTrailData(this, v1, v2, upVec, startTick);
             this.v1 = _v1;
             this.v2 = _v2;
             this.v3 = _v3;
@@ -123,25 +123,24 @@ public class TrailRenderer implements WorldRenderEvents.End {
         vertexConsumerProvider.draw();
     }
 
-    public void addTrail(Vec3d v1, Vec3d v2, UUID playerId, int type) {
-        if (type == Weapons.RAILGUN.slot) {
-            addRailgunTrail(v1, v2);
-        } else {
-            addLightningGunTrail(v1, v2, playerId);
-        }
+    public void addTrail(Vec3d v1, Vec3d v2, Vec3d upVec, UUID playerId, int type) {
+        if (type == Weapons.RAILGUN.slot) addRailgunTrail(v1, v2, upVec);
+        else addLightningGunTrail(v1, v2, upVec, playerId);
     }
 
-    private void addRailgunTrail(Vec3d v1, Vec3d v2) {
-        trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR, UUID.fromString("00000000-0000-0000-0000-000000000000")));
+    private void addRailgunTrail(Vec3d v1, Vec3d v2, Vec3d upVec) {
+        trailList.add(new TrailData(v1, v2, upVec, MinecraftClient.getInstance().world.getTime(),
+                RAILGUN_TRAIL_LIFETIME, RAILGUN_TRAIL_COLOR, UUID.fromString("00000000-0000-0000-0000-000000000000")));
     }
 
-    private void addLightningGunTrail(Vec3d v1, Vec3d v2, UUID playerId) {
+    private void addLightningGunTrail(Vec3d v1, Vec3d v2, Vec3d upVec, UUID playerId) {
         Optional<TrailData> trail = trailList.stream().filter(t -> t.owner.equals(playerId)).findFirst();
         if (trail.isEmpty()) {
-            trailList.add(new TrailData(v1, v2, MinecraftClient.getInstance().world.getTime(), LIGHTNING_GUN_TRAIL_LIFETIME, LIGHTNING_GUN_TRAIL_COLOR, playerId));
+            trailList.add(new TrailData(v1, v2, upVec, MinecraftClient.getInstance().world.getTime(),
+                    LIGHTNING_GUN_TRAIL_LIFETIME, LIGHTNING_GUN_TRAIL_COLOR, playerId));
         } else {
             TrailData trailData = trail.get();
-            TrailData.updateTrailData(trailData, v1, v2, MinecraftClient.getInstance().world.getTime());
+            TrailData.updateTrailData(trailData, v1, v2, upVec, MinecraftClient.getInstance().world.getTime());
         }
     }
 }

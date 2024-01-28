@@ -40,7 +40,7 @@ public class Machinegun extends HitscanWeapon {
     }
 
     @Override
-    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, Vec3d upVec, boolean isBlockCollision) {
         if (!world.isClient && isBlockCollision)
             world.playSound(null, new BlockPos((int)iterPos.x, (int)iterPos.y, (int)iterPos.z), Sounds.BULLET_MISS, SoundCategory.NEUTRAL, .75f, 1);
 

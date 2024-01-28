@@ -57,7 +57,7 @@ public abstract class HitscanWeapon extends Weapon {
                 damageAmount, damageType, hitscanRange, .25f, ammoType, startingAmmo, ammoBoxCount, slot);
     }
 
-    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {}
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, Vec3d upVec, boolean isBlockCollision) {}
 
     protected void onDamage(World world, LivingEntity attacked) {}
 
@@ -98,7 +98,7 @@ public abstract class HitscanWeapon extends Weapon {
                     if (collided instanceof PlayerEntity)
                         ServerPlayNetworking.send((ServerPlayerEntity) user, Packets.DEALT_DAMAGE, PacketByteBufs.empty());
                 }
-                onProjectileCollision(world, user, offsetWeaponPos, pos, false);
+                onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, false);
                 return;
             }
 
@@ -107,13 +107,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, user, offsetWeaponPos, pos, true);
+                        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, true);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, user, offsetWeaponPos, pos, false);
+        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, false);
     }
 }

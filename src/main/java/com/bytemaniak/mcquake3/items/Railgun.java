@@ -25,14 +25,14 @@ public class Railgun extends HitscanWeapon {
     }
 
     @Override
-    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {
+    protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, Vec3d upVec, boolean isBlockCollision) {
         if (world.isClient)
-            submitRailgunTrail(user, userPos, iterPos);
+            submitRailgunTrail(user, userPos, iterPos, upVec);
     }
 
     @Environment(EnvType.CLIENT)
-    private void submitRailgunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), slot);
+    private void submitRailgunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos, Vec3d upVec) {
+        Renderers.trailRenderer.addTrail(startPos, endPos, upVec, user.getUuid(), slot);
     }
 
     @Override

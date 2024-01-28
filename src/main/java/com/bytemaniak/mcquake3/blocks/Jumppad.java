@@ -76,15 +76,14 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 			JumppadEntity ent = (JumppadEntity) world.getBlockEntity(pos);
 			Direction direction = state.get(FACING);
 
-			entity.setOnGround(false);
-			entity.setVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
-			entity.velocityModified = true;
-
-			if (!world.isClient) {
+			if (world.isClient) {
+				entity.setOnGround(false);
+				entity.setVelocity(Vec3d.of(direction.getVector()).multiply(ent.forward_power).add(0.f, ent.up_power / 4.f, 0.f));
+				entity.velocityModified = true;
+			} else {
 				JumppadEntity jumppad = (JumppadEntity) world.getBlockEntity(pos);
 				if (jumppad != null &&
-					world.getTime() - ent.lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN &&
-					(jumppad.forward_power > 0 || jumppad.up_power > 0)) {
+					world.getTime() - ent.lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
 					world.playSound(null, pos, Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
 					ent.lastTick = world.getTime();
 				}

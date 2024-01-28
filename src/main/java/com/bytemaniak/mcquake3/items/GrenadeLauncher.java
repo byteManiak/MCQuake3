@@ -3,7 +3,8 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.projectile.Grenade;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.util.WeaponSlot;
+import com.bytemaniak.mcquake3.registry.WeaponInfo;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -18,8 +19,8 @@ public class GrenadeLauncher extends Weapon {
     private static final float GRENADE_PROJECTILE_SPEED = .85f;
 
     public GrenadeLauncher() {
-        super(WeaponSlot.GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"),
-                GRENADE_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false);
+        super(WeaponInfo.GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"),
+                GRENADE_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false, Weapons.GRENADE);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

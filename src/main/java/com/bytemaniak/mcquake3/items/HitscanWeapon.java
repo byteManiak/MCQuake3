@@ -3,7 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
-import com.bytemaniak.mcquake3.util.WeaponSlot;
+import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,11 +35,11 @@ public abstract class HitscanWeapon extends Weapon {
     private final float hitscanRange;
     private final float hitscanNumSteps;
 
-    protected HitscanWeapon(WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(WeaponInfo weaponInfo, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
-                            float hitscanRange, float hitscanStepDistance) {
-        super(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound);
+                            float hitscanRange, float hitscanStepDistance, Item ammoType) {
+        super(weaponInfo, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound, ammoType);
 
         this.damageAmount = damageAmount;
         this.damageType = damageType;
@@ -47,12 +48,12 @@ public abstract class HitscanWeapon extends Weapon {
         this.hitscanNumSteps = hitscanRange/hitscanStepDistance;
     }
 
-    protected HitscanWeapon(WeaponSlot weaponSlot, Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(WeaponInfo weaponInfo, Identifier id, long refireRateInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
-                            float hitscanRange) {
-        this(weaponSlot, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
-                damageAmount, damageType, hitscanRange, .25f);
+                            float hitscanRange, Item ammoType) {
+        this(weaponInfo, id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
+                damageAmount, damageType, hitscanRange, .25f, ammoType);
     }
 
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, boolean isBlockCollision) {}

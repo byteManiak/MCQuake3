@@ -9,10 +9,10 @@ public interface QuakePlayer {
     void setEnergyShield(int amount);
     void addEnergyShield(int amount);
 
-    WeaponSlot getCurrentWeapon();
+    int getCurrentQuakeWeaponId();
 
-    long getWeaponTick(WeaponSlot slot);
-    void setWeaponTick(WeaponSlot slot, long tick);
+    long getWeaponTick(int id);
+    void setWeaponTick(int id, long tick);
 
     boolean quakePlayerSoundsEnabled();
 

@@ -3,7 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.projectile.BFG10KProjectile;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.util.WeaponSlot;
+import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -18,8 +18,8 @@ public class BFG10K extends Weapon {
     private static final float BFG_PROJECTILE_SPEED = 1.5f;
 
     public BFG10K() {
-        super(WeaponSlot.BFG10K, new Identifier("mcquake3:bfg10k"),
-                BFG_REFIRE_TICK_RATE, true, Sounds.BFG10K_FIRE, false);
+        super(WeaponInfo.BFG10K, new Identifier("mcquake3:bfg10k"),
+                BFG_REFIRE_TICK_RATE, true, Sounds.BFG10K_FIRE, false, null);
     }
 
     @Override

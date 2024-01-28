@@ -2,9 +2,9 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.client.Renderers;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.WeaponSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
@@ -21,9 +21,9 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(WeaponSlot.RAILGUN, new Identifier("mcquake3:railgun"),
+        super(WeaponInfo.RAILGUN, new Identifier("mcquake3:railgun"),
                 RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE);
+                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE, null);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Railgun extends HitscanWeapon {
 
     @Environment(EnvType.CLIENT)
     private void submitRailgunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), WeaponSlot.RAILGUN.slot);
+        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), id);
     }
 
     @Override

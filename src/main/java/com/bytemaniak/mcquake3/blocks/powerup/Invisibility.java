@@ -10,10 +10,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class Invisibility extends Pickup {
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new InvisibilityEntity(pos, state); }
 

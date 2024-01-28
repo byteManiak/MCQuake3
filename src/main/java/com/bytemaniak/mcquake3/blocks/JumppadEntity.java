@@ -16,7 +16,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -40,7 +39,6 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
         return Text.translatable(getCachedState().getBlock().getTranslationKey());
     }
 
-    @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         lastScreen = new JumppadScreenHandler(syncId, inv, this);

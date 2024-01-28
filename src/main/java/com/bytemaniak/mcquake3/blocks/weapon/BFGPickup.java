@@ -4,7 +4,6 @@ import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
-import org.jetbrains.annotations.Nullable;
 
 public class BFGPickup extends WeaponPickup {
     public BFGPickup() {
@@ -12,7 +11,6 @@ public class BFGPickup extends WeaponPickup {
         this.weapon = Weapons.BFG10K;
     }
 
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new BFGPickupEntity(pos, state);

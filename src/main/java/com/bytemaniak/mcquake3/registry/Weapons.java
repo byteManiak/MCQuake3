@@ -19,15 +19,15 @@ public class Weapons {
     public static final Item ROCKET = new Item(new FabricItemSettings());
     public static final Item GRENADE = new Item(new FabricItemSettings());
 
-    public static final Item GAUNTLET = new Gauntlet();
-    public static final Item MACHINEGUN = new Machinegun();
-    public static final Item SHOTGUN = new Shotgun();
-    public static final Item GRENADE_LAUNCHER = new GrenadeLauncher();
-    public static final Item LIGHTNING_GUN = new LightningGun();
-    public static final Item RAILGUN = new Railgun();
-    public static final Item PLASMAGUN = new Plasmagun();
-    public static final Item ROCKET_LAUNCHER = new RocketLauncher();
-    public static final Item BFG10K = new BFG10K();
+    public static final Weapon GAUNTLET = new Gauntlet();
+    public static final Weapon MACHINEGUN = new Machinegun();
+    public static final Weapon SHOTGUN = new Shotgun();
+    public static final Weapon GRENADE_LAUNCHER = new GrenadeLauncher();
+    public static final Weapon LIGHTNING_GUN = new LightningGun();
+    public static final Weapon RAILGUN = new Railgun();
+    public static final Weapon PLASMAGUN = new Plasmagun();
+    public static final Weapon ROCKET_LAUNCHER = new RocketLauncher();
+    public static final Weapon BFG10K = new BFG10K();
 
     public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
             .icon(() -> new ItemStack(MACHINEGUN)).build();

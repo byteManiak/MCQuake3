@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.render;
 
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
@@ -124,7 +124,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, UUID playerId, int type) {
-        if (type == WeaponInfo.RAILGUN.id()) {
+        if (type == Weapons.RAILGUN.slot) {
             addRailgunTrail(v1, v2);
         } else {
             addLightningGunTrail(v1, v2, playerId);

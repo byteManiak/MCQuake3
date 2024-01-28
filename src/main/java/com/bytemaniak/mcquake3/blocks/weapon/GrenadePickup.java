@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.blocks.weapon;
 
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,7 +10,6 @@ public class GrenadePickup extends WeaponPickup {
     public GrenadePickup() {
         super();
         this.weapon = Weapons.GRENADE_LAUNCHER;
-        this.weaponInfo = WeaponInfo.GRENADE_LAUNCHER;
     }
 
     @Nullable

@@ -162,7 +162,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     public int getCurrentQuakeWeaponId() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) {
-            return weapon.id;
+            return weapon.slot;
         } else {
             return -1;
         }
@@ -205,7 +205,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 if (handStack.isOf(Weapons.GAUNTLET)) {
                     if (!isHoldingGauntlet) {
                         isHoldingGauntlet = true;
-                        playHum(weapon.id);
+                        playHum(weapon.slot);
 
                         isHoldingLightning = false;
                         isHoldingRailgun = false;
@@ -213,7 +213,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 } else if (handStack.isOf(Weapons.LIGHTNING_GUN)) {
                     if (!isHoldingLightning) {
                         isHoldingLightning = true;
-                        playHum(weapon.id);
+                        playHum(weapon.slot);
 
                         isHoldingGauntlet = false;
                         isHoldingRailgun = false;
@@ -221,7 +221,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 } else if (handStack.isOf(Weapons.RAILGUN)) {
                     if (!isHoldingRailgun) {
                         isHoldingRailgun = true;
-                        playHum(weapon.id);
+                        playHum(weapon.slot);
 
                         isHoldingGauntlet = false;
                         isHoldingLightning = false;
@@ -254,12 +254,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
-        WeaponHum humSound;
-        switch (id) {
-            case 0 -> humSound = new WeaponHum(this, Sounds.GAUNTLET_HUM, id);
-            case 6 -> humSound = new WeaponHum(this, Sounds.RAILGUN_HUM, id);
-            default -> humSound = null;
-        }
+        WeaponHum humSound = null;
+
+        if (id == Weapons.GAUNTLET.slot)
+            humSound = new WeaponHum(this, Sounds.GAUNTLET_HUM, id);
+        else if (id == Weapons.RAILGUN.slot)
+            humSound = new WeaponHum(this, Sounds.RAILGUN_HUM, id);
 
         if (humSound != null) {
             manager.play(humSound);
@@ -275,12 +275,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
-        WeaponActive attackSound;
-        switch (id) {
-            case 0 -> attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, id);
-            case 5 -> attackSound = new WeaponActive(this, Sounds.LIGHTNING_ACTIVE, id);
-            default -> attackSound = null;
-        }
+        WeaponActive attackSound = null;
+
+        if (id == Weapons.GAUNTLET.slot)
+            attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, id);
+        else if (id == Weapons.LIGHTNING_GUN.slot)
+            attackSound = new WeaponActive(this, Sounds.LIGHTNING_ACTIVE, id);
 
         if (attackSound != null) {
             manager.play(attackSound);

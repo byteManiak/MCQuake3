@@ -2,7 +2,6 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.client.Renderers;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
@@ -21,9 +20,8 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(WeaponInfo.RAILGUN, new Identifier("mcquake3:railgun"),
-                RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE, null);
+        super(new Identifier("mcquake3:railgun"), RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
+                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE, null, 10, 10, 6);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class Railgun extends HitscanWeapon {
 
     @Environment(EnvType.CLIENT)
     private void submitRailgunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), id);
+        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), slot);
     }
 
     @Override

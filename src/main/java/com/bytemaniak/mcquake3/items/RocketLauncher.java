@@ -3,7 +3,6 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.projectile.Rocket;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -19,8 +18,8 @@ public class RocketLauncher extends Weapon {
     private static final float ROCKET_PROJECTILE_SPEED = 1.5f;
 
     public RocketLauncher() {
-        super(WeaponInfo.ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"),
-                ROCKET_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false, Weapons.ROCKET);
+        super(new Identifier("mcquake3:rocket_launcher"), ROCKET_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false,
+                Weapons.ROCKET, 5, 5, 4);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

@@ -2,7 +2,6 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.minecraft.entity.Entity;
@@ -27,9 +26,8 @@ public class Machinegun extends HitscanWeapon {
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {
-        super(WeaponInfo.MACHINEGUN, new Identifier("mcquake3:machinegun"),
-                MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
-                MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE, Weapons.BULLET);
+        super(new Identifier("mcquake3:machinegun"), MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
+                MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE, Weapons.BULLET, 100, 50, 1);
     }
 
     @Override

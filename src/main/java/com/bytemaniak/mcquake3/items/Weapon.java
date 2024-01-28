@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -47,22 +46,24 @@ public abstract class Weapon extends Item implements GeoItem {
     private final SoundEvent firingSound;
     public final boolean hasActiveLoopSound;
 
+    public final Item ammoType;
     public final int startingAmmo;
-    public final int id;
-    protected final Item ammoType;
+    public final int ammoBoxCount;
+    public final int slot;
 
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
     public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3:firing_speed"));
 
-    protected Weapon(WeaponInfo weaponInfo, Identifier id, long refireRateInTicks,
+    protected Weapon(Identifier id, long refireRateInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
-                     Item ammoType) {
+                     Item ammoType, int startingAmmo, int ammoBoxCount, int slot) {
         super(new Item.Settings().maxCount(1));
-        this.startingAmmo = weaponInfo.startingAmmo();
-        this.id = weaponInfo.id();
         this.ammoType = ammoType;
+        this.startingAmmo = startingAmmo;
+        this.ammoBoxCount = ammoBoxCount;
+        this.slot = slot;
 
         this.weaponIdentifier = id;
 
@@ -107,7 +108,7 @@ public abstract class Weapon extends Item implements GeoItem {
         if (playerHaste != null)
             refireModifier = playerHaste.getAmplifier() > 3 ? 0.7f : (1-playerHaste.getAmplifier()*0.1f);
 
-        if (currentTick - player.getWeaponTick(id) >= (long)((float)refireRate * refireModifier)) {
+        if (currentTick - player.getWeaponTick(slot) >= (long)((float)refireRate * refireModifier)) {
             PlayerEntity p = (PlayerEntity) user;
             boolean hasAmmo = false;
 
@@ -135,7 +136,7 @@ public abstract class Weapon extends Item implements GeoItem {
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
                 }
             }
-            player.setWeaponTick(id, currentTick);
+            player.setWeaponTick(slot, currentTick);
         }
     }
 

@@ -2,7 +2,6 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -25,10 +24,10 @@ public class Gauntlet extends HitscanWeapon {
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     public Gauntlet() {
-        super(WeaponInfo.GAUNTLET, new Identifier("mcquake3:gauntlet"),
+        super(new Identifier("mcquake3:gauntlet"),
                 GAUNTLET_REFIRE_RATE, false, null, true,
                 GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
-                GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null);
+                GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null, 0, 0, 0);
     }
 
     @Override

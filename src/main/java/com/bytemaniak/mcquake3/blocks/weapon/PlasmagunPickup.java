@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.blocks.weapon;
 
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,7 +10,6 @@ public class PlasmagunPickup extends WeaponPickup {
     public PlasmagunPickup() {
         super();
         this.weapon = Weapons.PLASMAGUN;
-        this.weaponInfo = WeaponInfo.PLASMA_GUN;
     }
 
     @Nullable

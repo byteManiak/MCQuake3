@@ -2,7 +2,6 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.WeaponInfo;
 import com.bytemaniak.mcquake3.registry.client.Renderers;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
@@ -26,9 +25,8 @@ public class LightningGun extends HitscanWeapon {
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {
-        super(WeaponInfo.LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"),
-                LIGHTNING_REFIRE_RATE, false, null, true,
-                LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE, null);
+        super(new Identifier("mcquake3:lightning_gun"), LIGHTNING_REFIRE_RATE, false, null, true,
+                LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE, null, 100, 60, 5);
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {
@@ -47,7 +45,7 @@ public class LightningGun extends HitscanWeapon {
 
     @Environment(EnvType.CLIENT)
     private void submitLightningGunTrail(LivingEntity user, Vec3d startPos, Vec3d endPos) {
-        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), id);
+        Renderers.trailRenderer.addTrail(startPos, endPos, user.getUuid(), slot);
     }
 
     @Override

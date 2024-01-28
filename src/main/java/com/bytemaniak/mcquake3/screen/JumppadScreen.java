@@ -107,9 +107,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
             }
 
             @Override
-            protected void applyValue() {
-                forward_power = (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
-            }
+            protected void applyValue() { forward_power = .5f + (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX; }
         };
 
         powerUp = new SliderWidgetSettable(baseX + 11, baseY + 20, 85, 20, Text.of(String.format("%.2f", up_power)), up_power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX) {
@@ -119,9 +117,7 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
             }
 
             @Override
-            protected void applyValue() {
-                up_power = (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX;
-            }
+            protected void applyValue() { up_power = .5f + (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX; }
         };
 
         TextWidget powerForwardText = new TextWidget(Text.of("Forward:"), textRenderer);

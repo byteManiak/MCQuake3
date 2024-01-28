@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.UUID;
 
 public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
-    public static final int JUMPPAD_ENTITY_POWER_MAX = 10;
+    public static final float JUMPPAD_ENTITY_POWER_MAX = 9.5f;
 
     public float forward_power = 0, up_power = 0;
 

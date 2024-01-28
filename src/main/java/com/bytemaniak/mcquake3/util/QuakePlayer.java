@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.util;
 
-public interface QuakePlayer {
+public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds {
     void toggleQuakeGui();
     boolean quakeGuiEnabled();
     void setQuakeGui(boolean enabled);
@@ -20,7 +20,4 @@ public interface QuakePlayer {
     void setPlayerVoice(String soundsSet);
 
     void taunt();
-
-    boolean isPlayingHum();
-    boolean isPlayingAttack();
 }

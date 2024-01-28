@@ -2,14 +2,7 @@ package com.bytemaniak.mcquake3.mixin;
 
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.Weapons;
-import com.bytemaniak.mcquake3.sound.WeaponActive;
-import com.bytemaniak.mcquake3.sound.WeaponHum;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.SoundManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -45,13 +38,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     private final long[] weaponTicks = new long[9];
-
-    private boolean isHoldingGauntlet = false;
-    private boolean isHoldingLightning = false;
-    private boolean isHoldingRailgun = false;
-
-    private boolean playingHumSound = false;
-    private boolean playingAttackSound = false;
 
     private ItemStack prevMainHandStack = null;
 
@@ -196,110 +182,4 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             cir.setReturnValue(ActionResult.PASS);
         }
     }
-
-    @Inject(method = "tick", at = @At(value = "RETURN"))
-    private void handleLoopingWeaponSounds(CallbackInfo ci) {
-        if (world.isClient) {
-            ItemStack handStack = getMainHandStack();
-            if (handStack.getItem() instanceof Weapon weapon) {
-                if (handStack.isOf(Weapons.GAUNTLET)) {
-                    if (!isHoldingGauntlet) {
-                        isHoldingGauntlet = true;
-                        playHum(weapon.slot);
-
-                        isHoldingLightning = false;
-                        isHoldingRailgun = false;
-                    }
-                } else if (handStack.isOf(Weapons.LIGHTNING_GUN)) {
-                    if (!isHoldingLightning) {
-                        isHoldingLightning = true;
-                        playHum(weapon.slot);
-
-                        isHoldingGauntlet = false;
-                        isHoldingRailgun = false;
-                    }
-                } else if (handStack.isOf(Weapons.RAILGUN)) {
-                    if (!isHoldingRailgun) {
-                        isHoldingRailgun = true;
-                        playHum(weapon.slot);
-
-                        isHoldingGauntlet = false;
-                        isHoldingLightning = false;
-                    }
-                } else {
-                    isHoldingGauntlet = false;
-                    isHoldingRailgun = false;
-                    isHoldingLightning = false;
-                    stopSounds();
-                }
-
-                if (weapon.hasActiveLoopSound) {
-                    if (!isUsingItem() && playingAttackSound) {
-                        playHum(getCurrentQuakeWeaponId());
-                    } else if (isUsingItem() && !playingAttackSound) {
-                        playAttackSound(getCurrentQuakeWeaponId());
-                    }
-                }
-            } else if (playingHumSound || playingAttackSound) {
-                isHoldingGauntlet = false;
-                isHoldingRailgun = false;
-                isHoldingLightning = false;
-                stopSounds();
-            }
-        }
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void playHum(int id) {
-        stopSounds();
-
-        SoundManager manager = MinecraftClient.getInstance().getSoundManager();
-        WeaponHum humSound = null;
-
-        if (id == Weapons.GAUNTLET.slot)
-            humSound = new WeaponHum(this, Sounds.GAUNTLET_HUM, id);
-        else if (id == Weapons.RAILGUN.slot)
-            humSound = new WeaponHum(this, Sounds.RAILGUN_HUM, id);
-
-        if (humSound != null) {
-            manager.play(humSound);
-            playingHumSound = true;
-        }
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void stopHum() { playingHumSound = false; }
-
-    @Environment(EnvType.CLIENT)
-    public void playAttackSound(int id) {
-        stopSounds();
-
-        SoundManager manager = MinecraftClient.getInstance().getSoundManager();
-        WeaponActive attackSound = null;
-
-        if (id == Weapons.GAUNTLET.slot)
-            attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, id);
-        else if (id == Weapons.LIGHTNING_GUN.slot)
-            attackSound = new WeaponActive(this, Sounds.LIGHTNING_ACTIVE, id);
-
-        if (attackSound != null) {
-            manager.play(attackSound);
-            playingAttackSound = true;
-        }
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void stopAttackSound() { playingAttackSound = false; }
-
-    @Environment(EnvType.CLIENT)
-    private void stopSounds() {
-        stopHum();
-        stopAttackSound();
-    }
-
-    @Environment(EnvType.CLIENT)
-    public boolean isPlayingHum() { return playingHumSound; }
-
-    @Environment(EnvType.CLIENT)
-    public boolean isPlayingAttack() { return playingAttackSound; }
 }

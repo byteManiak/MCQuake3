@@ -10,11 +10,12 @@
     "misc/LivingEntityMixin"
   ],
   "client": [
+    "misc/ClientPlayerInteractionManagerMixin",
     "misc/ClientPlayerMixin",
     "misc/HeldItemRendererMixin",
-    "misc/ClientPlayerInteractionManagerMixin",
     "misc/MouseMixin",
-    "misc/MinecraftClientMixin"
+    "misc/MinecraftClientMixin",
+    "misc/WeaponSoundsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

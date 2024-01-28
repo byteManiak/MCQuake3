@@ -40,7 +40,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
             upVec = upVec.multiply(0.075f);
             Vec3d diffVec = v2.subtract(v1);
             Vec3d dirVec = diffVec.normalize();
-            Vec3d leftVec = dirVec.crossProduct(upVec);//.multiply(.3f);
+            Vec3d leftVec = dirVec.crossProduct(upVec);
             trailData._v1 = v1.add(leftVec).add(upVec);
             trailData._v2 = v1.add(leftVec).add(upVec.negate());
             trailData._v3 = v1.add(leftVec.negate()).add(upVec.negate());

@@ -24,9 +24,6 @@
     "client": [
       "com.bytemaniak.mcquake3.MCQuake3Client"
     ],
-    "server": [
-      "com.bytemaniak.mcquake3.MCQuake3Server"
-    ],
     "preLaunch": [
       "com.bytemaniak.mcquake3.MCQuake3"
     ]

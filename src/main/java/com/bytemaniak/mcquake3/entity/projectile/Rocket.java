@@ -56,8 +56,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     {
         super.onCollision(hitResult);
 
-        if (!world.isClient)
-            despawn();
+        if (!world.isClient) despawn();
     }
 
     @Override

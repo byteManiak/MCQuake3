@@ -41,8 +41,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
 
-        if (!world.isClient)
-            despawn();
+        if (!world.isClient) despawn();
     }
 
     @Override

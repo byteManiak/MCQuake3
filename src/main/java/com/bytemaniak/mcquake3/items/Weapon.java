@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -88,10 +87,6 @@ public abstract class Weapon extends Item implements GeoItem {
     }
 
     @Override
-    // Mimick the animation used to shoot bows. It works pretty well with the weapon models made so far
-    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
-
-    @Override
     // Player can shoot weapon indefinitely
     public int getMaxUseTime(ItemStack stack) { return 1000000; }
 
@@ -163,7 +158,7 @@ public abstract class Weapon extends Item implements GeoItem {
         });
     }
 
-    protected PlayState handle(AnimationState<Weapon> state) { return null; };
+    protected PlayState handle(AnimationState<Weapon> state) { return null; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

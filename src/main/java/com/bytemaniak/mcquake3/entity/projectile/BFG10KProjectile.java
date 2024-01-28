@@ -45,8 +45,7 @@ public class BFG10KProjectile extends SimpleProjectile {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
 
-        if (!world.isClient)
-            doDamage(entity);
+        if (!world.isClient) doDamage(entity);
     }
 
     @Override

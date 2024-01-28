@@ -18,15 +18,15 @@ import net.minecraft.util.Identifier;
 // Code for the quad damage effect was adapted from the EnergySwirlOverlayFeatureRenderer class
 public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M extends PlayerEntityModel<T>>
         extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+    private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
+    private final PlayerEntityModel<AbstractClientPlayerEntity> model;
+
     public QuadDamageGlintRenderer(
             FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext,
             EntityModelLoader loader) {
         super(featureRendererContext);
         this.model = new PlayerEntityModel<>(loader.getModelPart(EntityModelLayers.PLAYER), false);
     }
-
-    private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
-    private final PlayerEntityModel<AbstractClientPlayerEntity> model;
 
     protected float getEnergySwirlX(float partialAge) {
         return partialAge * 0.01f;

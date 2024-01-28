@@ -44,9 +44,8 @@ public class PlasmaBall extends SimpleProjectile {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (!world.isClient) {
-            doDamage(entity);
-        }
+
+        if (!world.isClient) doDamage(entity);
     }
 
     @Override

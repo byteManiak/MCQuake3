@@ -32,7 +32,6 @@ public class Shell extends SimpleProjectile {
     {
         super.onCollision(hitResult);
 
-        if (!world.isClient)
-            despawn();
+        if (!world.isClient) despawn();
     }
 }

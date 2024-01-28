@@ -21,8 +21,6 @@ public class FullArsenalC2SPacket {
             player.giveItemStack(new ItemStack(Weapons.RAILGUN));
             player.giveItemStack(new ItemStack(Weapons.PLASMAGUN));
             player.giveItemStack(new ItemStack(Weapons.BFG10K));
-        } else {
-            player.sendMessageToClient(Text.of("MCQuake3: You do not have access to that command."), false);
-        }
+        } else player.sendMessageToClient(Text.of("MCQuake3: You do not have access to that command."), false);
     }
 }

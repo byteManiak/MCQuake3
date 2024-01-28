@@ -12,8 +12,7 @@ public class PickupVisibilityS2CPacket {
         BlockPos blockPos = buf.readBlockPos();
         boolean shouldRender = buf.readBoolean();
 
-        if (client.world.getBlockEntity(blockPos) instanceof PickupEntity entity) {
+        if (client.world.getBlockEntity(blockPos) instanceof PickupEntity entity)
             entity.lastShouldRender = shouldRender;
-        }
     }
 }

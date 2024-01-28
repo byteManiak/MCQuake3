@@ -12,8 +12,6 @@ public class JumppadPowerS2CPacket {
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         BlockPos pos = buf.readBlockPos();
         BlockEntity entity = MinecraftClient.getInstance().world.getBlockEntity(pos);
-        if (entity instanceof JumppadEntity) {
-            ((JumppadEntity) entity).updatePower(buf.readFloat(), buf.readFloat());
-        }
+        if (entity instanceof JumppadEntity) ((JumppadEntity) entity).updatePower(buf.readFloat(), buf.readFloat());
     }
 }

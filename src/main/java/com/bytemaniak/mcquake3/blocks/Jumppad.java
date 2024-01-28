@@ -67,10 +67,8 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	}
 
 	@Override
-	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-		// Do nothing, so entity does not take fall damage if landing on the jumppad
-	}
-
+	// Do nothing, so entity does not take fall damage if landing on the jumppad
+	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {}
 
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {

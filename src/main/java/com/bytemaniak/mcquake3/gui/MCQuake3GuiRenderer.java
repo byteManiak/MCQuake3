@@ -23,6 +23,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
 
         textRenderer.drawWithShadow(matrixStack, text, x, y - textRenderer.fontHeight, color);
     }
+
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;

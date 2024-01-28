@@ -22,6 +22,7 @@ public abstract class WeaponPickup extends Pickup {
         if (entity instanceof PlayerEntity player && weaponPickup.use()) {
             if (!player.getInventory().containsAny(t -> t.isOf(weapon)))
                 player.giveItemStack(new ItemStack(weapon));
+            // TODO: Limit ammo usage once Quake server mode is implemented
             player.giveItemStack(new ItemStack(weapon.ammoType, weapon.ammoBoxCount));
             world.markDirty(pos);
         }

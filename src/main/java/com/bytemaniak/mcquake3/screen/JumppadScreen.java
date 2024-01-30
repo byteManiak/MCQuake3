@@ -6,12 +6,12 @@ import com.bytemaniak.mcquake3.registry.Packets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
@@ -32,16 +32,16 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        textRenderer.draw(matrices, title, (float)titleX, (float)titleY, 4210752);
+    protected void drawForeground(DrawContext matrices, int mouseX, int mouseY) {
+        matrices.drawText(textRenderer, title, titleX, titleY, 4210752, false);
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext matrices, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        drawTexture(matrices, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
+        matrices.drawTexture(TEXTURE, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
+    public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
+        renderBackground(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
@@ -121,11 +121,9 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         };
 
         TextWidget powerForwardText = new TextWidget(Text.of("Forward:"), textRenderer);
-        powerForwardText.setPosition(baseX - 39, baseY);
-        powerForwardText.setWidth(0);
+        powerForwardText.setPosition(baseX - 60, baseY);
         TextWidget powerUpText = new TextWidget(Text.of("Upward:"), textRenderer);
-        powerUpText.setPosition(baseX - 35, baseY + 22);
-        powerUpText.setWidth(0);
+        powerUpText.setPosition(baseX - 60, baseY + 25);
         addDrawableChild(powerForwardText);
         addDrawableChild(powerUpText);
 

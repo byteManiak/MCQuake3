@@ -9,11 +9,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
@@ -26,10 +26,8 @@ public class PlayerSettingsScreen extends Screen {
 
     private class PlayerVoiceList extends AlwaysSelectedEntryListWidget<PlayerVoiceList.PlayerVoiceEntry> {
         public PlayerVoiceList(MinecraftClient client, int x, int y, int width, int height, int itemHeight) {
-            super(client, width, height, y, 0, itemHeight);
-            this.left = x;
-            this.right = x + width;
-            this.bottom = y + height;
+            super(client, width, height, y, itemHeight);
+            setPosition(x, y);
             addEntry(new PlayerVoiceEntry(Sounds.NONE));
             addEntry(new PlayerVoiceEntry(Sounds.ANGELYSS));
             addEntry(new PlayerVoiceEntry(Sounds.ARACHNA));
@@ -49,14 +47,14 @@ public class PlayerSettingsScreen extends Screen {
             addEntry(new PlayerVoiceEntry(Sounds.SMARINE));
             addEntry(new PlayerVoiceEntry(Sounds.SORCERESS));
             addEntry(new PlayerVoiceEntry(Sounds.TONY));
-            setRenderHorizontalShadows(false);
         }
 
-        @Override
-        public void appendNarrations(NarrationMessageBuilder builder) {}
 
         @Override
-        protected int getScrollbarPositionX() { return right - 5; }
+        public void appendClickableNarrations(NarrationMessageBuilder builder) {}
+
+        @Override
+        protected int getScrollbarPositionX() { return getRight() - 5; }
 
         public int getRowWidth() { return width; }
 
@@ -72,8 +70,8 @@ public class PlayerSettingsScreen extends Screen {
             }
 
             @Override
-            public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-                textRenderer.drawWithShadow(matrices, playerSounds.playerClass, x, y, 0xFFFFFFFF, true);
+            public void render(DrawContext matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+                matrices.drawTextWithShadow(textRenderer, playerSounds.playerClass, x, y, 0xFFFFFFFF);
             }
 
             @Override
@@ -150,9 +148,9 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, textRenderer, title, width / 2, 10, 16777215);
+    public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
+        renderBackground(matrices, mouseX, mouseY, delta);
+        matrices.drawCenteredTextWithShadow(textRenderer, title, width / 2, 10, 16777215);
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

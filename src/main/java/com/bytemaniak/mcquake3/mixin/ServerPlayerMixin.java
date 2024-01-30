@@ -41,7 +41,7 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
             energyShield = 0;
         }
 
-        if (!world.isClient) quakePlayer.setEnergyShield(energyShield);
+        if (!getWorld().isClient) quakePlayer.setEnergyShield(energyShield);
         return super.damage(source, MiscUtils.toMCDamage(damage));
     }
 }

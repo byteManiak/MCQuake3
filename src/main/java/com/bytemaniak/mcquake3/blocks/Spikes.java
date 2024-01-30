@@ -4,7 +4,6 @@ import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +18,7 @@ public class Spikes extends Block {
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 12, 16);
 
     public Spikes() {
-        super(FabricBlockSettings.of(Material.STONE).nonOpaque());
+        super(FabricBlockSettings.create().nonOpaque());
     }
 
     @Override

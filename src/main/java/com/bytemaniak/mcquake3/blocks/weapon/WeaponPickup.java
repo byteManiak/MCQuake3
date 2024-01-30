@@ -3,7 +3,9 @@ package com.bytemaniak.mcquake3.blocks.weapon;
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,6 +14,9 @@ import net.minecraft.world.World;
 
 public abstract class WeaponPickup extends Pickup {
     protected Weapon weapon;
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() { return null; }
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {

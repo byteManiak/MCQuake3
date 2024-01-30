@@ -22,7 +22,7 @@ import java.util.UUID;
 public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
     public static final float JUMPPAD_ENTITY_POWER_MAX = 9.5f;
 
-    public float forward_power = 0, up_power = 0;
+    public float forward_power = 0.5f, up_power = 0.5f;
 
     public long lastTick = 0;
 

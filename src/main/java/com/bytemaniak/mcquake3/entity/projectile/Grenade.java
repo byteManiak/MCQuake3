@@ -41,7 +41,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
 
-        if (!world.isClient) despawn();
+        if (!getWorld().isClient) despawn();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
             };
 
             if (velocity.y > 0 && velocity.y < 0.075f) velocity = velocity.multiply(1, 0, 1);
-            else world.playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
+            else getWorld().playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
 
             setVelocity(velocity);
         }
@@ -71,8 +71,8 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     @Override
     protected void despawn() {
         Vec3d pos = getPos();
-        DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-        Explosion explosion = world.createExplosion(this, damageSource, null,
+        DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
+        Explosion explosion = getWorld().createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
         if (getOwner() != null && !explosion.getAffectedPlayers().isEmpty())
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());

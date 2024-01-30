@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TrailRenderer implements WorldRenderEvents.End {
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/misc/white.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
-    private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(24));
+    private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(64));
     private final static long RAILGUN_TRAIL_LIFETIME = 20;
     private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 3;
 

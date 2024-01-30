@@ -8,6 +8,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class CraftingItems {
@@ -25,8 +28,8 @@ public class CraftingItems {
 
     public static final Item GAUNTLET_BLADE = new Item(new FabricItemSettings());
 
-    private static final ItemGroup MCQUAKE3_CRAFTING_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_crafting"))
-            .icon(() -> new ItemStack(GUN_BASE)).build();
+    public static final RegistryKey<ItemGroup> MCQUAKE3_CRAFTING_GROUP =
+            RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("mcquake3:mcquake3_crafting"));
 
     // Load an item into the item registry and add it to the MCQuake3 creative tab
     private static void loadItem(Item item, Identifier id) {
@@ -35,6 +38,10 @@ public class CraftingItems {
     }
 
     public static void loadCraftingItems() {
+        Registry.register(Registries.ITEM_GROUP, MCQUAKE3_CRAFTING_GROUP,
+                FabricItemGroup.builder().icon(() -> new ItemStack(GUN_BASE))
+                        .displayName(Text.translatable("itemGroup.mcquake3.mcquake3_crafting")).build());
+
         loadItem(IRON_ROD, new Identifier("mcquake3:iron_rod"));
         loadItem(COPPER_NUGGET, new Identifier("mcquake3:copper_nugget"));
         loadItem(GUN_HANDLE, new Identifier("mcquake3:gun_handle"));

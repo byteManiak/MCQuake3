@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -31,9 +32,10 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 
 	private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
 
-	public Jumppad() {
-		super(FabricBlockSettings.of(Material.METAL));
-	}
+	public Jumppad() { super(FabricBlockSettings.create()); }
+
+	@Override
+	protected MapCodec<? extends HorizontalFacingBlock> getCodec() { return null; }
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }

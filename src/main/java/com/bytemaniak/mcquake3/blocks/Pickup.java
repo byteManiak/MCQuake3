@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,8 +20,11 @@ public abstract class Pickup extends BlockWithEntity implements BlockEntityProvi
     private static final VoxelShape SHAPE = Block.createCuboidShape(3, 0, 3, 13, 10, 13);
 
     public Pickup() {
-        super(FabricBlockSettings.of(Material.STONE).strength(-1, 360000).noCollision().requiresTool());
+        super(FabricBlockSettings.create().strength(-1, 360000).noCollision().requiresTool());
     }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() { return null; }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

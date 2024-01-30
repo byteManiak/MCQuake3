@@ -4,28 +4,25 @@ import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
     private static final Identifier QUAKE_FONT = new Identifier("mcquake3:quake_hud");
 
-    private void drawText(MatrixStack matrixStack, String str, float x, float y, int color) {
+    private void drawText(DrawContext matrixStack, String str, float x, float y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-
-        LiteralTextContent textContent = new LiteralTextContent(str);
-        MutableText text = MutableText.of(textContent).setStyle(Style.EMPTY.withFont(QUAKE_FONT));
-
-        textRenderer.drawWithShadow(matrixStack, text, x, y - textRenderer.fontHeight, color);
+        MutableText text = Text.literal(str).setStyle(Style.EMPTY.withFont(QUAKE_FONT));
+        matrixStack.drawTextWithShadow(textRenderer, text, (int)x, (int)y - textRenderer.fontHeight, color);
     }
 
     @Override
-    public void onHudRender(MatrixStack matrixStack, float tickDelta) {
+    public void onHudRender(DrawContext matrixStack, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 

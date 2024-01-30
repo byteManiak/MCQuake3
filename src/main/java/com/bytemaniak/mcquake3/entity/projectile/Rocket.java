@@ -46,7 +46,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
 
     @Override
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        if (world.isClient) playSound();
+        if (getWorld().isClient) playSound();
 
         super.onSpawnPacket(packet);
     }
@@ -56,14 +56,14 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     {
         super.onCollision(hitResult);
 
-        if (!world.isClient) despawn();
+        if (!getWorld().isClient) despawn();
     }
 
     @Override
     protected void despawn() {
         Vec3d pos = getPos();
-        DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
-        Explosion explosion = world.createExplosion(this, damageSource, null,
+        DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
+        Explosion explosion = getWorld().createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
         if (getOwner() != null && !explosion.getAffectedPlayers().isEmpty())
             ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());

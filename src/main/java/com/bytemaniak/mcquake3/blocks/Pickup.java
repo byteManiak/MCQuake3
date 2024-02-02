@@ -31,15 +31,4 @@ public abstract class Pickup extends BlockWithEntity implements BlockEntityProvi
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return PickupEntity::tick;
     }
-
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
-            if (player.getStackInHand(hand).isOf(Weapons.TOOL)) {
-                world.breakBlock(pos, true);
-                return ActionResult.SUCCESS;
-            }
-        }
-        return super.onUse(state, world, pos, player, hand, hit);
-    }
 }

@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.entity.projectile.PlasmaBall;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -18,7 +19,7 @@ public class Plasmagun extends Weapon {
 
     public Plasmagun() {
         super(new Identifier("mcquake3:plasmagun"), PLASMAGUN_REFIRE_TICK_RATE, true,
-                Sounds.PLASMAGUN_FIRE, false, null, 50, 30, 7);
+                Sounds.PLASMAGUN_FIRE, false, Weapons.PLACEHOLDER_PLASMA_AMMO, 50, 30, 7);
     }
 
     @Override

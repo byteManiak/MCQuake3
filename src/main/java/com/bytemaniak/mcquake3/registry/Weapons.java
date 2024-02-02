@@ -19,17 +19,21 @@ public class Weapons {
 
     public static final Item BULLET = new Item(new FabricItemSettings());
     public static final Item SHELL = new Item(new FabricItemSettings());
-    public static final Item ROCKET = new Item(new FabricItemSettings());
     public static final Item GRENADE = new Item(new FabricItemSettings());
+    public static final Item ROCKET = new Item(new FabricItemSettings());
+    public static final Item PLACEHOLDER_LIGHTNING_AMMO = new Item(new FabricItemSettings());
+    public static final Item PLACEHOLDER_RAILGUN_AMMO = new Item(new FabricItemSettings());
+    public static final Item PLACEHOLDER_PLASMA_AMMO = new Item(new FabricItemSettings());
+    public static final Item PLACEHOLDER_BFG10K_AMMO = new Item(new FabricItemSettings());
 
     public static final Weapon GAUNTLET = new Gauntlet();
     public static final Weapon MACHINEGUN = new Machinegun();
     public static final Weapon SHOTGUN = new Shotgun();
     public static final Weapon GRENADE_LAUNCHER = new GrenadeLauncher();
+    public static final Weapon ROCKET_LAUNCHER = new RocketLauncher();
     public static final Weapon LIGHTNING_GUN = new LightningGun();
     public static final Weapon RAILGUN = new Railgun();
     public static final Weapon PLASMAGUN = new Plasmagun();
-    public static final Weapon ROCKET_LAUNCHER = new RocketLauncher();
     public static final Weapon BFG10K = new BFG10K();
 
     public static final RegistryKey<ItemGroup> MCQUAKE3_WEAPONS_GROUP =
@@ -51,12 +55,19 @@ public class Weapons {
         loadItem(GRENADE, new Identifier("mcquake3:grenade"));
         loadItem(GRENADE_LAUNCHER, new Identifier("mcquake3:grenade_launcher"));
 
-        loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
-        loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
-        loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
-
         loadItem(ROCKET, new Identifier("mcquake3:rocket"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
+
+        loadItem(PLACEHOLDER_LIGHTNING_AMMO, new Identifier("mcquake3:placeholder_lightning_ammo"));
+        loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
+
+        loadItem(PLACEHOLDER_RAILGUN_AMMO, new Identifier("mcquake3:placeholder_railgun_ammo"));
+        loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
+
+        loadItem(PLACEHOLDER_PLASMA_AMMO, new Identifier("mcquake3:placeholder_plasma_ammo"));
+        loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
+
+        loadItem(PLACEHOLDER_BFG10K_AMMO, new Identifier("mcquake3:placeholder_bfg10k_ammo"));
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));

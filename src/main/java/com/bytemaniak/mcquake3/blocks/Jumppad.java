@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.blocks;
 
+import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -110,7 +111,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 			}
 		}
 
-		if (mainHandStack.isOf(Weapons.MACHINEGUN) || mainHandStack.isOf(Weapons.PLASMAGUN)) return ActionResult.PASS;
+		if (mainHandStack.getItem() instanceof Weapon) return ActionResult.PASS;
 		else return ActionResult.SUCCESS;
 	}
 }

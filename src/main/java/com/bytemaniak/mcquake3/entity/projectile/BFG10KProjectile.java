@@ -35,7 +35,7 @@ public class BFG10KProjectile extends SimpleProjectile {
 
     @Override
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        if (world.isClient) playSound();
+        if (getWorld().isClient) playSound();
 
         super.onSpawnPacket(packet);
     }
@@ -45,7 +45,7 @@ public class BFG10KProjectile extends SimpleProjectile {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
 
-        if (!world.isClient) doDamage(entity);
+        if (!getWorld().isClient) doDamage(entity);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class BFG10KProjectile extends SimpleProjectile {
     {
         super.onCollision(hitResult);
 
-        if (!world.isClient) {
-            world.playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
+        if (!getWorld().isClient) {
+            getWorld().playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
             despawn();
         }
     }

@@ -21,7 +21,7 @@ public class Shell extends SimpleProjectile {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        if (!world.isClient) {
+        if (!getWorld().isClient) {
             Entity entity = entityHitResult.getEntity();
             doDamage(entity);
         }
@@ -32,6 +32,6 @@ public class Shell extends SimpleProjectile {
     {
         super.onCollision(hitResult);
 
-        if (!world.isClient) despawn();
+        if (!getWorld().isClient) despawn();
     }
 }

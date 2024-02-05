@@ -39,14 +39,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final long[] weaponTicks = new long[9];
 
-    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
-    }
+    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
     public void playWeaponSwitchSound(PlayerEntity playerEntity, Operation<Void> original) {
-        if (!world.isClient && playerEntity.getMainHandStack().getItem() instanceof Weapon)
-            world.playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
+        if (!getWorld().isClient && playerEntity.getMainHandStack().getItem() instanceof Weapon)
+            getWorld().playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
         original.call(playerEntity);
     }
 
@@ -60,7 +58,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     private void playQuakeJumpSound(CallbackInfo ci) {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+            getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
         }
     }
 
@@ -165,7 +163,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public void taunt() {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            world.playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
+            getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
         }
     }
 

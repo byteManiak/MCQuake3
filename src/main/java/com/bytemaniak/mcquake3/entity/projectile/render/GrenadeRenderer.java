@@ -20,7 +20,7 @@ public class GrenadeRenderer extends GeoEntityRenderer<Grenade> {
 
     @Override
     public void actuallyRender(MatrixStack poseStack, Grenade animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        float time = (float)animatable.world.getTime();
+        float time = (float)animatable.getWorld().getTime();
         float timeDeg = time * 18;
 
         poseStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(timeDeg));

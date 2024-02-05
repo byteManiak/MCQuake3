@@ -22,7 +22,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
         super(entityType, world);
-        initTick = world.getTime();
+        initTick = getWorld().getTime();
     }
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
@@ -31,7 +31,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
         this.damageAmount = damageAmount;
         this.damageType = damageType;
         this.lifetimeInTicks = lifetimeInTicks;
-        this.initTick = world.getTime();
+        this.initTick = getWorld().getTime();
     }
 
     protected void despawn() {
@@ -41,7 +41,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!world.isClient && world.getTime() - initTick > lifetimeInTicks) {
+        if (!getWorld().isClient && getWorld().getTime() - initTick > lifetimeInTicks) {
             despawn();
         }
     }
@@ -51,8 +51,8 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     protected void doDamage(Entity entity) {
-        if (!world.isClient) {
-            DamageSource damageSource = Q3DamageSources.of(world, damageType, this, getOwner());
+        if (!getWorld().isClient) {
+            DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
 
             if (getOwner() != null && entity instanceof PlayerEntity)
                 ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());

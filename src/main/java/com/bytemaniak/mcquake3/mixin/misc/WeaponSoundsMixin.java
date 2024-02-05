@@ -33,7 +33,7 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
 
     @Inject(method = "tick", at = @At(value = "RETURN"))
     private void handleLoopingWeaponSounds(CallbackInfo ci) {
-        if (world.isClient) {
+        if (getWorld().isClient) {
             ItemStack handStack = getMainHandStack();
             if (handStack.getItem() instanceof Weapon weapon) {
                 if (handStack.isOf(Weapons.GAUNTLET)) {

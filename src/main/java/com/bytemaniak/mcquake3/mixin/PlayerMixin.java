@@ -39,9 +39,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final long[] weaponTicks = new long[9];
 
-    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
-    }
+    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
     public void playWeaponSwitchSound(PlayerEntity playerEntity, Operation<Void> original) {

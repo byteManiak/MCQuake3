@@ -22,7 +22,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world) {
         super(entityType, world);
-        initTick = world.getTime();
+        initTick = getWorld().getTime();
     }
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
@@ -31,7 +31,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
         this.damageAmount = damageAmount;
         this.damageType = damageType;
         this.lifetimeInTicks = lifetimeInTicks;
-        this.initTick = world.getTime();
+        this.initTick = getWorld().getTime();
     }
 
     protected void despawn() {

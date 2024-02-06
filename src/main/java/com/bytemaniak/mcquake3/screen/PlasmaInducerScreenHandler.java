@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.screen;
 
+import com.bytemaniak.mcquake3.registry.RecipeTypes;
 import com.bytemaniak.mcquake3.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -7,7 +8,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.screen.ArrayPropertyDelegate;
@@ -18,10 +19,12 @@ import net.minecraft.screen.slot.Slot;
 
 public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeType.SMELTING/*RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE*/, RecipeBookCategory.CRAFTING,
+        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.CRAFTING,
                 syncId, playerInventory, inventory, propertyDelegate);
 
         slots.clear();
+        trackedStacks.clear();
+        previousTrackedStacks.clear();
 
         addSlot(new Slot(inventory, 0, 62, 47));
         addSlot(new FurnaceFuelSlot(this, inventory, 1, 62, 83));
@@ -35,6 +38,11 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
                 addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 111 + i * 18));
 
         for (int i = 0; i < 9; ++i) addSlot(new Slot(playerInventory, i, 8 + i * 18, 169));
+    }
+
+    public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.CRAFTING,
+                syncId, playerInventory);
     }
 
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -58,7 +66,9 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
                 if (!insertItem(itemStack2, 1, 2, false)) return ItemStack.EMPTY;
             } else if (slot < 33) {
                 if (!insertItem(itemStack2, 33, 42, false)) return ItemStack.EMPTY;
-            } else if (!this.insertItem(itemStack2, 6, 33, false)) return ItemStack.EMPTY;
+            } else if (slot < 42) {
+                if (!insertItem(itemStack2, 6, 33, false)) return ItemStack.EMPTY;
+            }
 
             if (itemStack2.isEmpty()) slot2.setStack(ItemStack.EMPTY);
             else slot2.markDirty();
@@ -73,4 +83,13 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
 
     @Override
     protected boolean isFuel(ItemStack itemStack) { return itemStack.isOf(Items.LAVA_BUCKET); }
+
+    @Override
+    public void clearCraftingSlots() {
+        this.getSlot(0).setStackNoCallbacks(ItemStack.EMPTY);
+        this.getSlot(2).setStackNoCallbacks(ItemStack.EMPTY);
+        this.getSlot(3).setStackNoCallbacks(ItemStack.EMPTY);
+        this.getSlot(4).setStackNoCallbacks(ItemStack.EMPTY);
+        this.getSlot(5).setStackNoCallbacks(ItemStack.EMPTY);
+    }
 }

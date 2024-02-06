@@ -28,12 +28,8 @@ public class JumppadScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
-        return null;
-    }
+    public ItemStack quickMove(PlayerEntity player, int slot) { return null; }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return !entity.isRemoved();
-    }
+    public boolean canUse(PlayerEntity player) { return !entity.isRemoved(); }
 }

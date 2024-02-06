@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "mcquake3:block/plasma_inducer", "y": 0},
+    "facing=east": {"model": "mcquake3:block/plasma_inducer", "y": 90},
+    "facing=south": {"model": "mcquake3:block/plasma_inducer", "y": 180},
+    "facing=west": {"model": "mcquake3:block/plasma_inducer", "y": 270}
+  }
+}

@@ -24,7 +24,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 		Sounds.loadSounds();
 		MusicDiscs.loadDiscs();
 
-		Screens.loadScreens();
+		Screens.registerScreenHandlers();
 
 		Packets.registerServerPackets();
 	}

@@ -16,6 +16,7 @@
   "block.mcquake3.lightning_pickup": "Lightning Gun Spawner",
   "block.mcquake3.machinegun_ammo_box": "Box of Bullets",
   "block.mcquake3.machinegun_pickup": "Machinegun Spawner",
+  "block.mcquake3.plasma_inducer": "Plasma Inducer",
   "block.mcquake3.plasmagun_ammo_box": "Box of Cells",
   "block.mcquake3.plasmagun_pickup": "Plasmagun Spawner",
   "block.mcquake3.quad_damage": "Quad Damage Spawner",

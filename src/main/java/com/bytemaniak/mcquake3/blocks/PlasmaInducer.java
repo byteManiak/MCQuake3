@@ -14,11 +14,10 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class PlasmaInducer extends HorizontalFacingBlock implements BlockEntityProvider {
-    private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-
+public class PlasmaInducer extends AbstractFurnaceBlock {
     public PlasmaInducer() { super(FabricBlockSettings.of(Material.METAL)); }
 
 	@Override
@@ -27,29 +26,13 @@ public class PlasmaInducer extends HorizontalFacingBlock implements BlockEntityP
 		return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
 	}
 
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { builder.add(FACING); }
-
-    @Override
-	public BlockState getPlacementState(ItemPlacementContext context) {
-		return getDefaultState().with(FACING, context.getHorizontalPlayerFacing());
-	}
-
-	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
-		return state.with(FACING, rotation.rotate(state.get(FACING)));
-	}
-
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new PlasmaInducerEntity(pos, state); }
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof NamedScreenHandlerFactory screenFactory)
-                player.openHandledScreen(screenFactory);
-        }
-        return ActionResult.CONSUME;
+	protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof NamedScreenHandlerFactory screenFactory)
+			player.openHandledScreen(screenFactory);
 	}
 }

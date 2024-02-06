@@ -21,7 +21,7 @@ public abstract class AmmoBox extends Pickup {
 
         if (!world.isClient) {
             PickupEntity ammoBox = (PickupEntity) world.getBlockEntity(pos);
-            if (entity instanceof PlayerEntity player) {
+            if (entity instanceof PlayerEntity player && !player.isCreative()) {
                 if (ammoBox.use()) {
                     // TODO: Limit ammo usage once Quake server mode is implemented
                     PlayerInventory inventory = player.getInventory();

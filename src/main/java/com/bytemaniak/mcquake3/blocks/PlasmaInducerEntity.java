@@ -20,14 +20,14 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     }
 
     @Override
-    public Text getDisplayName() { return Text.translatable(getCachedState().getBlock().getTranslationKey()); }
+    protected Text getContainerName() { return Text.translatable(getCachedState().getBlock().getTranslationKey()); }
 
     @Override
-    protected Text getContainerName() { return getDisplayName(); }
+    public int size() { return 6; }
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new PlasmaInducerScreenHandler(syncId, playerInventory);
+        return new PlasmaInducerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     @Override

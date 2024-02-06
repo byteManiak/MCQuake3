@@ -54,6 +54,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
     }
 
+    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+    private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+        if (getMainHandStack().getItem() instanceof Weapon) {
+            cir.setReturnValue(ActionResult.PASS);
+        }
+    }
+
     @Inject(method = "jump", at = @At("HEAD"))
     private void playQuakeJumpSound(CallbackInfo ci) {
         if (quakePlayerSoundsEnabled()) {
@@ -164,13 +171,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
-        }
-    }
-
-    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-    private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (getMainHandStack().getItem() instanceof Weapon) {
-            cir.setReturnValue(ActionResult.PASS);
         }
     }
 }

@@ -19,7 +19,7 @@ public class Weapons {
     public static final Item GRENADE = new Item(new FabricItemSettings());
     public static final Item ROCKET = new Item(new FabricItemSettings());
     public static final Item PLACEHOLDER_LIGHTNING_AMMO = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_RAILGUN_AMMO = new Item(new FabricItemSettings());
+    public static final Item RAILGUN_ROUND = new Item(new FabricItemSettings());
     public static final Item PLACEHOLDER_PLASMA_AMMO = new Item(new FabricItemSettings());
     public static final Item PLACEHOLDER_BFG10K_AMMO = new Item(new FabricItemSettings());
 
@@ -54,7 +54,7 @@ public class Weapons {
         loadItem(PLACEHOLDER_LIGHTNING_AMMO, new Identifier("mcquake3:placeholder_lightning_ammo"));
         loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
 
-        loadItem(PLACEHOLDER_RAILGUN_AMMO, new Identifier("mcquake3:placeholder_railgun_ammo"));
+        loadItem(RAILGUN_ROUND, new Identifier("mcquake3:railgun_round"));
         loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
 
         loadItem(PLACEHOLDER_PLASMA_AMMO, new Identifier("mcquake3:placeholder_plasma_ammo"));

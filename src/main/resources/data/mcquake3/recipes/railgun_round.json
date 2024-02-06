@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"c",
+		"c",
+		"i"
+	],
+	"key":{
+		"c": {
+			"item": "mcquake3:diamond_nugget"
+		},
+		"i": {
+			"item": "minecraft:gold_nugget"
+		}
+	},
+	"result": {
+		"item": "mcquake3:railgun_round",
+		"count": 1
+	}
+}

@@ -19,7 +19,7 @@ public class Plasmagun extends Weapon {
 
     public Plasmagun() {
         super(new Identifier("mcquake3:plasmagun"), PLASMAGUN_REFIRE_TICK_RATE, true,
-                Sounds.PLASMAGUN_FIRE, false, Weapons.PLACEHOLDER_PLASMA_AMMO, 50, 30, 7);
+                Sounds.PLASMAGUN_FIRE, false, Weapons.PLASMA_BALL, 50, 30, 7);
     }
 
     @Override

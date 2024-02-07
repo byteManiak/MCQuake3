@@ -26,12 +26,12 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
         trackedStacks.clear();
         previousTrackedStacks.clear();
 
-        addSlot(new Slot(inventory, 0, 62, 47));
-        addSlot(new FurnaceFuelSlot(this, inventory, 1, 62, 83));
-        addSlot(new FurnaceOutputSlot(playerInventory.player, inventory, 2, 122, 65));
-        addSlot(new Slot(inventory, 3, 34, 32));
-        addSlot(new Slot(inventory, 4, 62, 18));
-        addSlot(new Slot(inventory, 5, 90, 32));
+        addSlot(new Slot(inventory, 0, 65, 47));
+        addSlot(new FurnaceFuelSlot(this, inventory, 1, 65, 83));
+        addSlot(new FurnaceOutputSlot(playerInventory.player, inventory, 2, 125, 65));
+        addSlot(new Slot(inventory, 3, 37, 30));
+        addSlot(new Slot(inventory, 4, 65, 18));
+        addSlot(new Slot(inventory, 5, 93, 30));
 
         for (int i = 0; i < 3; ++i)
             for (int j = 0; j < 9; ++j)
@@ -41,7 +41,7 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     }
 
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.CRAFTING,
+        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.FURNACE,
                 syncId, playerInventory);
     }
 

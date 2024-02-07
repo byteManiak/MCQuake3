@@ -20,7 +20,7 @@ public class Weapons {
     public static final Item ROCKET = new Item(new FabricItemSettings());
     public static final Item PLACEHOLDER_LIGHTNING_AMMO = new Item(new FabricItemSettings());
     public static final Item RAILGUN_ROUND = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_PLASMA_AMMO = new Item(new FabricItemSettings());
+    public static final Item PLASMA_BALL = new Item(new FabricItemSettings());
     public static final Item PLACEHOLDER_BFG10K_AMMO = new Item(new FabricItemSettings());
 
     public static final Weapon GAUNTLET = new Gauntlet();
@@ -57,7 +57,7 @@ public class Weapons {
         loadItem(RAILGUN_ROUND, new Identifier("mcquake3:railgun_round"));
         loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
 
-        loadItem(PLACEHOLDER_PLASMA_AMMO, new Identifier("mcquake3:placeholder_plasma_ammo"));
+        loadItem(PLASMA_BALL, new Identifier("mcquake3:plasma_ball"));
         loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
 
         loadItem(PLACEHOLDER_BFG10K_AMMO, new Identifier("mcquake3:placeholder_bfg10k_ammo"));

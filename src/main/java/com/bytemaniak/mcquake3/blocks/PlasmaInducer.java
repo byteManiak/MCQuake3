@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.blocks;
 
+import com.bytemaniak.mcquake3.registry.Blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
@@ -21,12 +22,13 @@ public class PlasmaInducer extends AbstractFurnaceBlock {
 		return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
 	}
 
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return PlasmaInducer.checkType(world, type, BlockEntityType.FURNACE);
-    }
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return world.isClient ? null: PlasmaInducer.checkType(type, Blocks.PLASMA_INDUCER_BLOCK_ENTITY, PlasmaInducerEntity::tick);
+	}
 
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new PlasmaInducerEntity(pos, state); }
+	@Override
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new PlasmaInducerEntity(pos, state); }
 
 	@Override
 	protected void openScreen(World world, BlockPos pos, PlayerEntity player) {

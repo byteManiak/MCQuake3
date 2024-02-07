@@ -7,6 +7,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.CookingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -15,12 +16,13 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class PlasmaInducerRecipe implements Recipe<Inventory> {
+public class PlasmaInducerRecipe extends AbstractCookingRecipe {
     private final Identifier id;
     private final ItemStack output;
     private final List<Ingredient> items;
 
     public PlasmaInducerRecipe(Identifier id, List<Ingredient> ingredients, ItemStack itemStack) {
+        super(RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, id, "", CookingRecipeCategory.MISC, null, itemStack, 0, 200);
         this.id = id;
         output = itemStack;
         items = ingredients;

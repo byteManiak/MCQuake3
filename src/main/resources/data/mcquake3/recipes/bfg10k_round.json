@@ -16,5 +16,6 @@
 	],
 	"output": {
 		"item": "mcquake3:bfg10k_round"
-	}
+	},
+	"cookingtime": 50
 }

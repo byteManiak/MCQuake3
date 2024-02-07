@@ -16,5 +16,6 @@
 	],
 	"output": {
 		"item": "mcquake3:plasma_ball"
-	}
+	},
+	"cookingtime": 30
 }

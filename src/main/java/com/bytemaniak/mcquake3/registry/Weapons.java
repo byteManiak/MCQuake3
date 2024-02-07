@@ -18,7 +18,7 @@ public class Weapons {
     public static final Item SHELL = new Item(new FabricItemSettings());
     public static final Item GRENADE = new Item(new FabricItemSettings());
     public static final Item ROCKET = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_LIGHTNING_AMMO = new Item(new FabricItemSettings());
+    public static final Item LIGHTNING_CELL = new Item(new FabricItemSettings());
     public static final Item RAILGUN_ROUND = new Item(new FabricItemSettings());
     public static final Item PLASMA_BALL = new Item(new FabricItemSettings());
     public static final Item BFG10K_ROUND = new Item(new FabricItemSettings());
@@ -51,7 +51,7 @@ public class Weapons {
         loadItem(ROCKET, new Identifier("mcquake3:rocket"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
 
-        loadItem(PLACEHOLDER_LIGHTNING_AMMO, new Identifier("mcquake3:placeholder_lightning_ammo"));
+        loadItem(LIGHTNING_CELL, new Identifier("mcquake3:lightning_cell"));
         loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
 
         loadItem(RAILGUN_ROUND, new Identifier("mcquake3:railgun_round"));

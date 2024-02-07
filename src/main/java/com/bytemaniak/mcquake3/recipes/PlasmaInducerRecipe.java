@@ -21,8 +21,8 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
     private final ItemStack output;
     private final List<Ingredient> items;
 
-    public PlasmaInducerRecipe(Identifier id, List<Ingredient> ingredients, ItemStack itemStack) {
-        super(RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, id, "", CookingRecipeCategory.MISC, null, itemStack, 0, 200);
+    public PlasmaInducerRecipe(Identifier id, List<Ingredient> ingredients, ItemStack itemStack, int cookTime) {
+        super(RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, id, "", CookingRecipeCategory.MISC, null, itemStack, 0, cookTime);
         this.id = id;
         output = itemStack;
         items = ingredients;
@@ -68,10 +68,11 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
         public PlasmaInducerRecipe read(Identifier id, JsonObject json) {
             ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
             JsonArray ingredients = JsonHelper.getArray(json, "ingredients");
+            int cookingtime = JsonHelper.getInt(json, "cookingtime");
             DefaultedList<Ingredient> inputs = DefaultedList.ofSize(4, Ingredient.EMPTY);
             for (int i = 0; i < inputs.size(); i++) inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
 
-            return new PlasmaInducerRecipe(id, inputs, output);
+            return new PlasmaInducerRecipe(id, inputs, output, cookingtime);
         }
 
         @Override
@@ -80,7 +81,7 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
             inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
 
             ItemStack output = buf.readItemStack();
-            return new PlasmaInducerRecipe(id, inputs, output);
+            return new PlasmaInducerRecipe(id, inputs, output, buf.readInt());
         }
 
         @Override
@@ -88,6 +89,7 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
             buf.writeInt(recipe.items.size());
             for (Ingredient i : recipe.getIngredients()) i.write(buf);
             buf.writeItemStack(recipe.output);
+            buf.writeInt(recipe.getCookTime());
         }
     }
 }

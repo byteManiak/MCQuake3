@@ -97,7 +97,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
         boolean isBurning = burnTime > 0;
         boolean dirty = false;
 
-        if (isBurning) blockEntity.propertyDelegate.set(0, burnTime-1);
+        if (isBurning) blockEntity.propertyDelegate.set(BURN_TIME_PROPERTY_INDEX, burnTime-1);
 
         ItemStack itemStack = blockEntity.inventory.get(1);
         boolean hasFuel = itemStack.isOf(Items.LAVA_BUCKET);
@@ -105,12 +105,11 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 !blockEntity.inventory.get(0).isEmpty() && !blockEntity.inventory.get(3).isEmpty() &&
                 !blockEntity.inventory.get(4).isEmpty() && !blockEntity.inventory.get(5).isEmpty();
 
-        if ((isBurning || hasFuel) && hasIngredients) {
+        if (isBurning || (hasFuel && hasIngredients)) {
             PlasmaInducerRecipe recipe = getter.getFirstMatch(blockEntity, world).orElse(null);
             if (!isBurning && canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory)) {
                 blockEntity.propertyDelegate.set(BURN_TIME_PROPERTY_INDEX, blockEntity.getFuelTime(itemStack));
                 blockEntity.propertyDelegate.set(FUEL_TIME_PROPERTY_INDEX, blockEntity.getFuelTime(itemStack));
-                isBurning = true;
                 dirty = true;
 
                 Item item = itemStack.getItem();
@@ -127,23 +126,23 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, cookTime);
                 if (cookTime == cookTimeTotal) {
                     blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
-                    blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, cookTimeTotal);
+                    blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, recipe.getCookTime());
                     if (craftRecipe(world.getRegistryManager(), recipe, blockEntity.inventory)) {
                         blockEntity.setLastRecipe(recipe);
                     }
-                    dirty = true;
                 }
+                dirty = true;
             } else {
                 blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
             }
-        } else if (!isBurning && blockEntity.propertyDelegate.get(2) > 0) {
-            int cookTime = blockEntity.propertyDelegate.get(2);
+        } else if (!isBurning && blockEntity.propertyDelegate.get(COOK_TIME_PROPERTY_INDEX) > 0) {
+            int cookTime = blockEntity.propertyDelegate.get(COOK_TIME_PROPERTY_INDEX);
             blockEntity.propertyDelegate.set(2, MathHelper.clamp(cookTime - 2, 0, blockEntity.propertyDelegate.get(3)));
         }
 
-        if (isBurning != blockEntity.propertyDelegate.get(0) > 0) {
+        if (isBurning != (blockEntity.propertyDelegate.get(BURN_TIME_PROPERTY_INDEX) > 0)) {
             dirty = true;
-            state = state.with(AbstractFurnaceBlock.LIT, blockEntity.propertyDelegate.get(0) > 0);
+            state = state.with(AbstractFurnaceBlock.LIT, blockEntity.propertyDelegate.get(BURN_TIME_PROPERTY_INDEX) > 0);
             world.setBlockState(pos, state, Block.NOTIFY_ALL);
         }
 

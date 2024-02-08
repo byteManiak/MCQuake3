@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -85,6 +86,9 @@ public abstract class Weapon extends Item implements GeoItem {
         user.setCurrentHand(hand);
         return TypedActionResult.pass(user.getStackInHand(hand));
     }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
 
     @Override
     // Player can shoot weapon indefinitely

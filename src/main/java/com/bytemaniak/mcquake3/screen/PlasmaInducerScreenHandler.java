@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.registry.RecipeTypes;
+import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipe;
 import com.bytemaniak.mcquake3.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,7 +19,7 @@ import net.minecraft.screen.slot.Slot;
 
 public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.CRAFTING,
+        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, PlasmaInducerRecipe.PlasmaInducerType.INSTANCE, RecipeBookCategory.CRAFTING,
                 syncId, playerInventory, inventory, propertyDelegate);
 
         slots.clear();
@@ -41,8 +41,8 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     }
 
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, RecipeBookCategory.FURNACE,
-                syncId, playerInventory);
+        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, PlasmaInducerRecipe.PlasmaInducerType.INSTANCE,
+                RecipeBookCategory.FURNACE, syncId, playerInventory);
     }
 
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory) {

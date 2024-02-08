@@ -2,7 +2,6 @@ package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipe;
 import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.registry.RecipeTypes;
 import com.bytemaniak.mcquake3.screen.PlasmaInducerScreenHandler;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
@@ -30,7 +29,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     public static final int COOK_TIME_TOTAL_PROPERTY_INDEX = 3;
 
     public PlasmaInducerEntity(BlockPos pos, BlockState state) {
-        super(Blocks.PLASMA_INDUCER_BLOCK_ENTITY, pos, state, RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE);
+        super(Blocks.PLASMA_INDUCER_BLOCK_ENTITY, pos, state, PlasmaInducerRecipe.PlasmaInducerType.INSTANCE);
         inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
     }
 
@@ -92,7 +91,8 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PlasmaInducerEntity blockEntity) {
-        RecipeManager.MatchGetter<Inventory, PlasmaInducerRecipe> getter = RecipeManager.createCachedMatchGetter(RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE);
+        RecipeManager.MatchGetter<Inventory, PlasmaInducerRecipe> getter =
+                RecipeManager.createCachedMatchGetter(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE);
         int burnTime = blockEntity.propertyDelegate.get(BURN_TIME_PROPERTY_INDEX);
         boolean isBurning = burnTime > 0;
         boolean dirty = false;

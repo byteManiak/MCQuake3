@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.recipes;
 
-import com.bytemaniak.mcquake3.registry.RecipeTypes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
@@ -22,7 +21,7 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
     private final List<Ingredient> items;
 
     public PlasmaInducerRecipe(Identifier id, List<Ingredient> ingredients, ItemStack itemStack, int cookTime) {
-        super(RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE, id, "", CookingRecipeCategory.MISC, null, itemStack, 0, cookTime);
+        super(PlasmaInducerType.INSTANCE, id, "", CookingRecipeCategory.MISC, null, itemStack, 0, cookTime);
         this.id = id;
         output = itemStack;
         items = ingredients;
@@ -57,13 +56,21 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return new PlasmaInducerRecipeSerializer();
+        return PlasmaInducerRecipeSerializer.INSTANCE;
     }
 
     @Override
-    public RecipeType<?> getType() { return RecipeTypes.PLASMA_INDUCER_RECIPE_TYPE; }
+    public RecipeType<?> getType() { return PlasmaInducerType.INSTANCE; }
+
+    public static class PlasmaInducerType implements RecipeType<PlasmaInducerRecipe> {
+        private PlasmaInducerType() {}
+        public static final PlasmaInducerType INSTANCE = new PlasmaInducerType();
+        public static final String ID = "plasma_inducer";
+    }
 
     public static class PlasmaInducerRecipeSerializer implements RecipeSerializer<PlasmaInducerRecipe> {
+        public static final PlasmaInducerRecipeSerializer INSTANCE = new PlasmaInducerRecipeSerializer();
+        public static final String ID = "plasma_inducer";
         @Override
         public PlasmaInducerRecipe read(Identifier id, JsonObject json) {
             ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));

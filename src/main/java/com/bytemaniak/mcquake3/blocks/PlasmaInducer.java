@@ -14,7 +14,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PlasmaInducer extends AbstractFurnaceBlock {
-    public PlasmaInducer() { super(FabricBlockSettings.of(Material.METAL)); }
+    public PlasmaInducer() {
+		super(FabricBlockSettings.of(Material.METAL)
+				.luminance(net.minecraft.block.Blocks.createLightLevelFromLitBlockState(13)));
+	}
 
 	@Override
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {

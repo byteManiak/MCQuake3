@@ -50,7 +50,8 @@ public class LightningGun extends HitscanWeapon {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        world.playSoundFromEntity(null, user, Sounds.LIGHTNING_FIRE, SoundCategory.PLAYERS, 1, 1);
+        if (user.isCreative() || user.getInventory().getSlotWithStack(new ItemStack(Weapons.LIGHTNING_CELL)) > -1)
+            world.playSoundFromEntity(null, user, Sounds.LIGHTNING_FIRE, SoundCategory.PLAYERS, 1, 1);
 
         return super.use(world, user, hand);
     }

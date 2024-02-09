@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.mixin.misc;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.sound.LightningActive;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
 import com.bytemaniak.mcquake3.sound.WeaponSounds;
@@ -114,7 +115,7 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
         if (id == Weapons.GAUNTLET.slot)
             attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, id);
         else if (id == Weapons.LIGHTNING_GUN.slot)
-            attackSound = new WeaponActive(this, Sounds.LIGHTNING_ACTIVE, id);
+            attackSound = new LightningActive(this, id);
 
         if (attackSound != null) {
             manager.play(attackSound);

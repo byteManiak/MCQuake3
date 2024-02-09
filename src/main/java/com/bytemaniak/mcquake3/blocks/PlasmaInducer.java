@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class PlasmaInducer extends AbstractFurnaceBlock {
     public PlasmaInducer() {
-		super(FabricBlockSettings.of(Material.METAL)
+		super(FabricBlockSettings.of(Material.METAL).strength(1.5f, 6.0f)
 				.luminance(net.minecraft.block.Blocks.createLightLevelFromLitBlockState(13)));
 	}
 

@@ -33,7 +33,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
 
 	public Jumppad() {
-		super(FabricBlockSettings.create());
+		super(FabricBlockSettings.create().strength(1.5f, 5.0f));
 	}
 
 	@Override

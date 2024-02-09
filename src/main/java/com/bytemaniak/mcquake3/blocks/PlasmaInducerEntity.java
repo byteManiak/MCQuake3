@@ -111,7 +111,6 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 !blockEntity.inventory.get(0).isEmpty() && !blockEntity.inventory.get(3).isEmpty() &&
                 !blockEntity.inventory.get(4).isEmpty() && !blockEntity.inventory.get(5).isEmpty();
 
-        MCQuake3.LOGGER.info(blockEntity.propertyDelegate.get(COOK_TIME_PROPERTY_INDEX) + "" + blockEntity.propertyDelegate.get(COOK_TIME_TOTAL_PROPERTY_INDEX));
         if (isBurning || (hasFuel && hasIngredients)) {
             RecipeEntry<PlasmaInducerRecipe> recipeEntry = getter.getFirstMatch(blockEntity, world).orElse(null);
             PlasmaInducerRecipe recipe = null;

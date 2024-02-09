@@ -3,6 +3,7 @@
   "textures": {
     "front": "mcquake3:block/plasma_inducer_front_on",
     "side": "minecraft:block/iron_block",
-    "top": "minecraft:block/iron_block"
+    "top": "minecraft:block/iron_block",
+	"particle": "mcquake3:block/plasma_inducer_front"
   }
 }

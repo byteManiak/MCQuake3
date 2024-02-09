@@ -107,6 +107,10 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
 
         if (isBurning || (hasFuel && hasIngredients)) {
             PlasmaInducerRecipe recipe = getter.getFirstMatch(blockEntity, world).orElse(null);
+
+            if (canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory))
+                blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, recipe.getCookTime());
+
             if (!isBurning && canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory)) {
                 blockEntity.propertyDelegate.set(BURN_TIME_PROPERTY_INDEX, blockEntity.getFuelTime(itemStack));
                 blockEntity.propertyDelegate.set(FUEL_TIME_PROPERTY_INDEX, blockEntity.getFuelTime(itemStack));
@@ -126,7 +130,6 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, cookTime);
                 if (cookTime == cookTimeTotal) {
                     blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
-                    blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, recipe.getCookTime());
                     if (craftRecipe(world.getRegistryManager(), recipe, blockEntity.inventory)) {
                         blockEntity.setLastRecipe(recipe);
                     }

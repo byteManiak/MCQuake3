@@ -32,16 +32,16 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    protected void drawForeground(DrawContext matrices, int mouseX, int mouseY) {
-        matrices.drawText(textRenderer, title, titleX, titleY, 4210752, false);
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        context.drawText(textRenderer, title, titleX, titleY, 4210752, false);
     }
 
     @Override
-    protected void drawBackground(DrawContext matrices, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        matrices.drawTexture(TEXTURE, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
+        context.drawTexture(TEXTURE, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
     }
 
     @Override
@@ -52,10 +52,10 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices, mouseX, mouseY, delta);
-        super.render(matrices, mouseX, mouseY, delta);
-        drawMouseoverTooltip(matrices, mouseX, mouseY);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderBackground(context, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
+        drawMouseoverTooltip(context, mouseX, mouseY);
     }
 
     @Override

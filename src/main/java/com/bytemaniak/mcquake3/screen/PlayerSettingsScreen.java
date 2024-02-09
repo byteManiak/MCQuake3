@@ -70,8 +70,8 @@ public class PlayerSettingsScreen extends Screen {
             }
 
             @Override
-            public void render(DrawContext matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-                matrices.drawTextWithShadow(textRenderer, playerSounds.playerClass, x, y, 0xFFFFFFFF);
+            public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+                context.drawTextWithShadow(textRenderer, playerSounds.playerClass, x, y, 0xFFFFFFFF);
             }
 
             @Override
@@ -148,9 +148,9 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices, mouseX, mouseY, delta);
-        matrices.drawCenteredTextWithShadow(textRenderer, title, width / 2, 10, 16777215);
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderBackground(context, mouseX, mouseY, delta);
+        context.drawCenteredTextWithShadow(textRenderer, title, width / 2, 10, 16777215);
+        super.render(context, mouseX, mouseY, delta);
     }
 }

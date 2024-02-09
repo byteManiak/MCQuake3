@@ -19,7 +19,7 @@ public class BFG10K extends Weapon {
 
     public BFG10K() {
         super(new Identifier("mcquake3:bfg10k"), BFG_REFIRE_TICK_RATE, true,
-                Sounds.BFG10K_FIRE, false, Weapons.PLACEHOLDER_BFG10K_AMMO, 20, 15, 8);
+                Sounds.BFG10K_FIRE, false, Weapons.BFG10K_ROUND, 20, 15, 8);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.gui;
 
+import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
@@ -7,6 +8,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -24,6 +26,8 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
     @Override
     public void onHudRender(DrawContext matrixStack, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
+        if (plr == null) return;
+
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
         Window window = MinecraftClient.getInstance().getWindow();
@@ -34,8 +38,17 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         if (id > 0) {
             int slotChar = '\uFFF0'+player.getCurrentQuakeWeaponId();
             drawText(matrixStack, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
-            // TODO: Reimplement ammo tracking
-            // drawText(matrixStack, String.valueOf(player.getCurrentAmmo()), x - 180, y, 0x00FFFFFF);
+            if (plr.getMainHandStack().getItem() instanceof Weapon weapon) {
+                int weaponAmmo = 0;
+
+                for (int i = 0; i < plr.getInventory().size(); i++) {
+                    ItemStack currentStack = plr.getInventory().getStack(i);
+                    if (currentStack.isOf(weapon.ammoType)) {
+                        weaponAmmo += currentStack.getCount();
+                    }
+                }
+                drawText(matrixStack, String.valueOf(weaponAmmo), x - 180, y, 0x00FFFFFF);
+            }
         }
 
         if (player.quakeGuiEnabled()) {

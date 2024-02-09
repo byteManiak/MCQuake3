@@ -1,8 +1,6 @@
 package com.bytemaniak.mcquake3.registry;
 
-import com.bytemaniak.mcquake3.blocks.Jumppad;
-import com.bytemaniak.mcquake3.blocks.JumppadEntity;
-import com.bytemaniak.mcquake3.blocks.Spikes;
+import com.bytemaniak.mcquake3.blocks.*;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
 import com.bytemaniak.mcquake3.blocks.powerup.*;
@@ -25,6 +23,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class Blocks {
+    private static final Identifier PLASMA_INDUCER = new Identifier("mcquake3:plasma_inducer");
+    public static final Block PLASMA_INDUCER_BLOCK = new PlasmaInducer();
+    public static final BlockEntityType<PlasmaInducerEntity> PLASMA_INDUCER_BLOCK_ENTITY;
+
     private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
     public static final Block JUMPPAD_BLOCK = new Jumppad();
     public static final BlockEntityType<JumppadEntity> JUMPPAD_BLOCK_ENTITY;
@@ -135,6 +137,8 @@ public class Blocks {
             RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("mcquake3:mcquake3_blocks"));
 
     static {
+        PLASMA_INDUCER_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PLASMA_INDUCER,
+                FabricBlockEntityTypeBuilder.create(PlasmaInducerEntity::new, PLASMA_INDUCER_BLOCK).build());
         JUMPPAD_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, JUMPPAD,
                 FabricBlockEntityTypeBuilder.create(JumppadEntity::new, JUMPPAD_BLOCK).build());
         MACHINEGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN_AMMO_BOX,
@@ -194,6 +198,7 @@ public class Blocks {
                 FabricItemGroup.builder().icon(() -> new ItemStack(JUMPPAD_BLOCK))
                         .displayName(Text.translatable("itemGroup.mcquake3.mcquake3_blocks")).build());
 
+        loadDefaultBlock(PLASMA_INDUCER_BLOCK, PLASMA_INDUCER);
         loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
         loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcquake3:jumppad"));
         loadDefaultBlock(MACHINEGUN_AMMO_BOX_BLOCK, MACHINEGUN_AMMO_BOX);

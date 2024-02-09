@@ -29,25 +29,27 @@ public abstract class WeaponPickup extends Pickup {
             if (entity instanceof PlayerEntity player && weaponPickup.use()) {
                 if (!player.getInventory().containsAny(t -> t.isOf(weapon)))
                     player.giveItemStack(new ItemStack(weapon));
-                // TODO: Limit ammo usage once Quake server mode is implemented
-                PlayerInventory inventory = player.getInventory();
-                DefaultedList<ItemStack> main = inventory.main;
-                ItemStack ammo = new ItemStack(weapon.ammoType, weapon.ammoBoxCount);
 
-                // Prioritize the non-hotbar inventory for ammo pickup
-                for (int i = 9; i < main.size(); ++i) {
-                    if (ammo.getCount() == 0) break;
+                if (!player.isCreative()) {
+                    // TODO: Limit ammo usage once Quake server mode is implemented
+                    PlayerInventory inventory = player.getInventory();
+                    DefaultedList<ItemStack> main = inventory.main;
+                    ItemStack ammo = new ItemStack(weapon.ammoType, weapon.ammoBoxCount);
 
-                    if (main.get(i).isOf(weapon.ammoType)) {
-                        ammo.setCount(inventory.addStack(i, ammo));
+                    // Prioritize the non-hotbar inventory for ammo pickup
+                    for (int i = 9; i < main.size(); ++i) {
+                        if (ammo.getCount() == 0) break;
+
+                        if (main.get(i).isOf(weapon.ammoType)) {
+                            ammo.setCount(inventory.addStack(i, ammo));
+                        } else if (main.get(i).isEmpty()) {
+                            player.getInventory().insertStack(i, ammo);
+                            break;
+                        }
                     }
-                    else if (main.get(i).isEmpty()) {
-                        player.getInventory().insertStack(i, ammo);
-                        break;
-                    }
+
+                    player.getInventory().insertStack(ammo);
                 }
-
-                player.getInventory().insertStack(ammo);
 
                 world.markDirty(pos);
             }

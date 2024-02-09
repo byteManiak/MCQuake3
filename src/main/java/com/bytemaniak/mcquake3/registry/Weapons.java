@@ -21,10 +21,10 @@ public class Weapons {
     public static final Item SHELL = new Item(new FabricItemSettings());
     public static final Item GRENADE = new Item(new FabricItemSettings());
     public static final Item ROCKET = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_LIGHTNING_AMMO = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_RAILGUN_AMMO = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_PLASMA_AMMO = new Item(new FabricItemSettings());
-    public static final Item PLACEHOLDER_BFG10K_AMMO = new Item(new FabricItemSettings());
+    public static final Item LIGHTNING_CELL = new Item(new FabricItemSettings());
+    public static final Item RAILGUN_ROUND = new Item(new FabricItemSettings());
+    public static final Item PLASMA_BALL = new Item(new FabricItemSettings());
+    public static final Item BFG10K_ROUND = new Item(new FabricItemSettings());
 
     public static final Weapon GAUNTLET = new Gauntlet();
     public static final Weapon MACHINEGUN = new Machinegun();
@@ -58,16 +58,16 @@ public class Weapons {
         loadItem(ROCKET, new Identifier("mcquake3:rocket"));
         loadItem(ROCKET_LAUNCHER, new Identifier("mcquake3:rocket_launcher"));
 
-        loadItem(PLACEHOLDER_LIGHTNING_AMMO, new Identifier("mcquake3:placeholder_lightning_ammo"));
+        loadItem(LIGHTNING_CELL, new Identifier("mcquake3:lightning_cell"));
         loadItem(LIGHTNING_GUN, new Identifier("mcquake3:lightning_gun"));
 
-        loadItem(PLACEHOLDER_RAILGUN_AMMO, new Identifier("mcquake3:placeholder_railgun_ammo"));
+        loadItem(RAILGUN_ROUND, new Identifier("mcquake3:railgun_round"));
         loadItem(RAILGUN, new Identifier("mcquake3:railgun"));
 
-        loadItem(PLACEHOLDER_PLASMA_AMMO, new Identifier("mcquake3:placeholder_plasma_ammo"));
+        loadItem(PLASMA_BALL, new Identifier("mcquake3:plasma_ball"));
         loadItem(PLASMAGUN, new Identifier("mcquake3:plasmagun"));
 
-        loadItem(PLACEHOLDER_BFG10K_AMMO, new Identifier("mcquake3:placeholder_bfg10k_ammo"));
+        loadItem(BFG10K_ROUND, new Identifier("mcquake3:bfg10k_round"));
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));

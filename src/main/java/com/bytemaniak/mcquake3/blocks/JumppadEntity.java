@@ -35,9 +35,7 @@ public class JumppadEntity extends BlockEntity implements ExtendedScreenHandlerF
     }
 
     @Override
-    public Text getDisplayName() {
-        return Text.translatable(getCachedState().getBlock().getTranslationKey());
-    }
+    public Text getDisplayName() { return Text.translatable(getCachedState().getBlock().getTranslationKey()); }
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {

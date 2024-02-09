@@ -27,7 +27,7 @@ public class LightningGun extends HitscanWeapon {
 
     public LightningGun() {
         super(new Identifier("mcquake3:lightning_gun"), LIGHTNING_REFIRE_RATE, false, null, true,
-                LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE, Weapons.PLACEHOLDER_LIGHTNING_AMMO, 100, 60, 5);
+                LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE, LIGHTNING_RANGE, Weapons.LIGHTNING_CELL, 100, 60, 5);
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {
@@ -50,7 +50,8 @@ public class LightningGun extends HitscanWeapon {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        world.playSoundFromEntity(null, user, Sounds.LIGHTNING_FIRE, SoundCategory.PLAYERS, 1, 1);
+        if (user.isCreative() || user.getInventory().getSlotWithStack(new ItemStack(Weapons.LIGHTNING_CELL)) > -1)
+            world.playSoundFromEntity(null, user, Sounds.LIGHTNING_FIRE, SoundCategory.PLAYERS, 1, 1);
 
         return super.use(world, user, hand);
     }

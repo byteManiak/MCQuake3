@@ -1,6 +1,10 @@
 package com.bytemaniak.mcquake3.blocks.render;
 
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
+import com.bytemaniak.mcquake3.blocks.ammo.AmmoBoxEntity;
+import com.bytemaniak.mcquake3.blocks.health.HealthEntity;
+import com.bytemaniak.mcquake3.blocks.powerup.PowerupEntity;
+import com.bytemaniak.mcquake3.blocks.shield.EnergyShieldEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,6 +20,11 @@ public class PickupRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> 
 
     @Override
     public void actuallyRender(MatrixStack poseStack, T animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        if (animatable instanceof AmmoBoxEntity || animatable instanceof HealthEntity ||
+                animatable instanceof PowerupEntity || animatable instanceof EnergyShieldEntity) {
+            poseStack.scale(1.5f, 1.5f, 1.5f);
+            poseStack.translate(-0.15f, -0.025f, -0.15f);
+        }
         if (!animatable.lastShouldRender) alpha = 0.105f;
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }

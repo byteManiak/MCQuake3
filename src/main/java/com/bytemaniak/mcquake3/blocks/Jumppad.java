@@ -46,6 +46,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
 	}
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
 	{

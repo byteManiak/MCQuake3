@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,lit=true": {"model": "mcquake3:block/plasma_inducer_on", "y": 0},
+    "facing=east,lit=true": {"model": "mcquake3:block/plasma_inducer_on", "y": 90},
+    "facing=south,lit=true": {"model": "mcquake3:block/plasma_inducer_on", "y": 180},
+    "facing=west,lit=true": {"model": "mcquake3:block/plasma_inducer_on", "y": 270},
+    "facing=north,lit=false": {"model": "mcquake3:block/plasma_inducer", "y": 0},
+    "facing=east,lit=false": {"model": "mcquake3:block/plasma_inducer", "y": 90},
+    "facing=south,lit=false": {"model": "mcquake3:block/plasma_inducer", "y": 180},
+    "facing=west,lit=false": {"model": "mcquake3:block/plasma_inducer", "y": 270}
+  }
+}

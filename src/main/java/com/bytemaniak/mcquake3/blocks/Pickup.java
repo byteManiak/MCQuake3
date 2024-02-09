@@ -1,23 +1,18 @@
 package com.bytemaniak.mcquake3.blocks;
 
-import com.bytemaniak.mcquake3.registry.Weapons;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public abstract class Pickup extends BlockWithEntity implements BlockEntityProvider {
-    private static final VoxelShape SHAPE = Block.createCuboidShape(3, 0, 3, 13, 10, 13);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 18, 16);
 
     public Pickup() {
         super(FabricBlockSettings.create().strength(-1, 360000).noCollision().requiresTool());

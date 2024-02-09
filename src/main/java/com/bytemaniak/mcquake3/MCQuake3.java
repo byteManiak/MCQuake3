@@ -15,6 +15,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 	public void onInitialize() {
 		GeckoLib.initialize();
 
+		RecipeTypes.registerRecipeTypes();
 		Weapons.loadItems();
 		CraftingItems.loadCraftingItems();
 		Blocks.loadBlocks();
@@ -24,7 +25,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 		Sounds.loadSounds();
 		MusicDiscs.loadDiscs();
 
-		Screens.loadScreens();
+		Screens.registerScreenHandlers();
 
 		Packets.registerServerPackets();
 	}

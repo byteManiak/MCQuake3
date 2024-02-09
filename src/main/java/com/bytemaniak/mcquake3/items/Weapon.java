@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -12,6 +13,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -31,7 +33,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class Weapon extends Item implements GeoItem {
+public abstract class Weapon extends Item implements GeoItem, FabricItem {
     private static final float HITSCAN_HORIZONTAL_OFFSET = .2f;
 
     protected static final float PROJECTILE_VERTICAL_SPAWN_OFFSET = .6f;
@@ -85,6 +87,9 @@ public abstract class Weapon extends Item implements GeoItem {
         user.setCurrentHand(hand);
         return TypedActionResult.pass(user.getStackInHand(hand));
     }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
 
     @Override
     // Player can shoot weapon indefinitely

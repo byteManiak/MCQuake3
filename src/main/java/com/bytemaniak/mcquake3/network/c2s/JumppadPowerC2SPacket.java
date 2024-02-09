@@ -24,7 +24,7 @@ public class JumppadPowerC2SPacket {
             retBuf.writeFloat(entity.forward_power);
             retBuf.writeFloat(entity.up_power);
             entity.markDirty();
-            for (ServerPlayerEntity plr : PlayerLookup.world(player.getWorld()))
+            for (ServerPlayerEntity plr : PlayerLookup.world(player.getServerWorld()))
                 ServerPlayNetworking.send(plr, Packets.JUMPPAD_UPDATED_POWER, retBuf);
         }
     }

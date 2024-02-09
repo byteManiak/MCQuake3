@@ -1,8 +1,8 @@
 package com.bytemaniak.mcquake3.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -16,21 +16,21 @@ public class PlasmaInducerScreen extends AbstractFurnaceScreen<PlasmaInducerScre
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int k;
         RenderSystem.setShaderTexture(0, TEXTURE);
-        AbstractFurnaceScreen.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        context.drawTexture(TEXTURE, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
         if (handler.isBurning()) {
             k = handler.getFuelProgress();
-            AbstractFurnaceScreen.drawTexture(matrices, x + 65, y + 66 + 12 - k, 176, 12 - k, 14, k + 1);
+            context.drawTexture(TEXTURE, x + 65, y + 66 + 12 - k, 176, 12 - k, 14, k + 1);
         }
         k = handler.getCookProgress();
-        AbstractFurnaceScreen.drawTexture(matrices, x + 88, y + 64, 176, 14, k + 1, 16);
+        context.drawTexture(TEXTURE, x + 88, y + 64, 176, 14, k + 1, 16);
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        textRenderer.draw(matrices, title, (float)titleX, (float)titleY, 4210752);
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        context.drawText(textRenderer, title, titleX, titleY, 4210752, false);
     }
 
     @Override

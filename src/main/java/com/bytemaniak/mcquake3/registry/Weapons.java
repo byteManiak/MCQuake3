@@ -9,6 +9,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class Weapons {
@@ -33,10 +36,14 @@ public class Weapons {
     public static final Weapon PLASMAGUN = new Plasmagun();
     public static final Weapon BFG10K = new BFG10K();
 
-    public static final ItemGroup MCQUAKE3_WEAPONS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_weapons"))
-            .icon(() -> new ItemStack(MACHINEGUN)).build();
+    public static final RegistryKey<ItemGroup> MCQUAKE3_WEAPONS_GROUP =
+            RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("mcquake3:mcquake3_weapons"));
 
     public static void loadItems() {
+        Registry.register(Registries.ITEM_GROUP, MCQUAKE3_WEAPONS_GROUP,
+                FabricItemGroup.builder().icon(() -> new ItemStack(MACHINEGUN))
+                        .displayName(Text.translatable("itemGroup.mcquake3.mcquake3_weapons")).build());
+
         loadItem(GAUNTLET, new Identifier("mcquake3:gauntlet"));
 
         loadItem(BULLET, new Identifier("mcquake3:bullet"));

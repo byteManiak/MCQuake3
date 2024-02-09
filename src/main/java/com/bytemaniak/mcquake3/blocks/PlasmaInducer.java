@@ -4,7 +4,6 @@ import com.bytemaniak.mcquake3.registry.Blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -15,7 +14,7 @@ import net.minecraft.world.World;
 
 public class PlasmaInducer extends AbstractFurnaceBlock {
     public PlasmaInducer() {
-		super(FabricBlockSettings.of(Material.METAL)
+		super(FabricBlockSettings.create()
 				.luminance(net.minecraft.block.Blocks.createLightLevelFromLitBlockState(13)));
 	}
 

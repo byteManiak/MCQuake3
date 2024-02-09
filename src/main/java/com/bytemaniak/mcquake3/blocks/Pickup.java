@@ -14,7 +14,7 @@ public abstract class Pickup extends BlockWithEntity implements BlockEntityProvi
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 18, 16);
 
     public Pickup() {
-        super(FabricBlockSettings.of(Material.STONE).strength(-1, 360000).noCollision().requiresTool());
+        super(FabricBlockSettings.create().strength(-1, 360000).noCollision().requiresTool());
     }
 
     @Override

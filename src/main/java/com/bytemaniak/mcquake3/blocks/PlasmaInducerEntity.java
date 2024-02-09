@@ -60,7 +60,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
         ItemStack outputStack = slots.get(2);
         if (outputStack.isEmpty()) return true;
 
-        if (!outputStack.isItemEqual(itemStack)) return false;
+        if (!ItemStack.areItemsEqual(outputStack, itemStack)) return false;
 
         if (outputStack.getCount() < 64)
             return true;

@@ -17,6 +17,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class Blocks {
@@ -130,8 +133,8 @@ public class Blocks {
 
     public static final Block SPIKES_BLOCK = new Spikes();
 
-    public static final ItemGroup MCQUAKE3_BLOCKS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_blocks"))
-            .icon(() -> new ItemStack(JUMPPAD_BLOCK)).build();
+    public static final RegistryKey<ItemGroup> MCQUAKE3_BLOCKS_GROUP =
+            RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("mcquake3:mcquake3_blocks"));
 
     static {
         PLASMA_INDUCER_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PLASMA_INDUCER,
@@ -191,6 +194,10 @@ public class Blocks {
     }
 
     public static void loadBlocks() {
+        Registry.register(Registries.ITEM_GROUP, MCQUAKE3_BLOCKS_GROUP,
+                FabricItemGroup.builder().icon(() -> new ItemStack(JUMPPAD_BLOCK))
+                        .displayName(Text.translatable("itemGroup.mcquake3.mcquake3_blocks")).build());
+
         loadDefaultBlock(PLASMA_INDUCER_BLOCK, PLASMA_INDUCER);
         loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
         loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcquake3:jumppad"));

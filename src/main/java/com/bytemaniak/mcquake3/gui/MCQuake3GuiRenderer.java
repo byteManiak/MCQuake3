@@ -5,9 +5,9 @@ import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
@@ -17,17 +17,17 @@ import net.minecraft.util.Identifier;
 public class MCQuake3GuiRenderer implements HudRenderCallback {
     private static final Identifier QUAKE_FONT = new Identifier("mcquake3:quake_hud");
 
-    private void drawText(MatrixStack matrixStack, String str, float x, float y, int color) {
+    private void drawText(DrawContext context, String str, int x, int y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         LiteralTextContent textContent = new LiteralTextContent(str);
         MutableText text = MutableText.of(textContent).setStyle(Style.EMPTY.withFont(QUAKE_FONT));
 
-        textRenderer.drawWithShadow(matrixStack, text, x, y - textRenderer.fontHeight, color);
+        context.drawText(textRenderer, text, x, y - textRenderer.fontHeight, color, true);
     }
 
     @Override
-    public void onHudRender(MatrixStack matrixStack, float tickDelta) {
+    public void onHudRender(DrawContext context, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         if (plr == null) return;
 
@@ -40,7 +40,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         int id = player.getCurrentQuakeWeaponId();
         if (id > 0) {
             int slotChar = '\uFFF0'+player.getCurrentQuakeWeaponId();
-            drawText(matrixStack, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
+            drawText(context, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
             if (plr.getMainHandStack().getItem() instanceof Weapon weapon) {
                 int weaponAmmo = 0;
 
@@ -50,7 +50,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
                         weaponAmmo += currentStack.getCount();
                     }
                 }
-                drawText(matrixStack, String.valueOf(weaponAmmo), x - 180, y, 0x00FFFFFF);
+                drawText(context, String.valueOf(weaponAmmo), x - 180, y, 0x00FFFFFF);
             }
         }
 
@@ -59,15 +59,15 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
                     (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
-            drawText(matrixStack, "\uFFF0", x - 150, y - 16, 0x00FFFFFF);
-            drawText(matrixStack, String.valueOf(playerHealth), x - 130, y, healthColor);
+            drawText(context, "\uFFF0", x - 150, y - 16, 0x00FFFFFF);
+            drawText(context, String.valueOf(playerHealth), x - 130, y, healthColor);
 
             int playerArmor = player.getEnergyShield();
             int armorColor = (playerArmor < 100) ?
                     (((int)(0xFF * (100-playerArmor)/100.f)  << 16) + ((int)(0xFF * playerArmor/100.f) << 8)) :
                     (((int)(0xFF * (200-playerArmor)/100.f)) << 8)  + ((int)(0xFF * (playerArmor-100)/100.f));
-            drawText(matrixStack, "\uFFF9", x + 105, y - 16, 0x00FFFFFF);
-            drawText(matrixStack, String.valueOf(playerArmor), x + 125, y, armorColor);
+            drawText(context, "\uFFF9", x + 105, y - 16, 0x00FFFFFF);
+            drawText(context, String.valueOf(playerArmor), x + 125, y, armorColor);
         }
     }
 }

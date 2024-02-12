@@ -22,18 +22,18 @@ public class Packets {
 
     public static void registerClientPackets()
     {
-        ClientPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(Packets.DEALT_DAMAGE, DealtDamageS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(Packets.AMMO_BOX_UPDATE, PickupVisibilityS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(Packets.PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(DEALT_DAMAGE, DealtDamageS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(AMMO_BOX_UPDATE, PickupVisibilityS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
     }
 
     public static void registerServerPackets()
     {
-        ServerPlayNetworking.registerGlobalReceiver(Packets.JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(Packets.QUAKE_GUI_UPDATE, QuakeGuiUpdateC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(Packets.PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(Packets.FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(Packets.PLAYER_TAUNT, PlayerTauntC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(QUAKE_GUI_UPDATE, QuakeGuiUpdateC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(PLAYER_TAUNT, PlayerTauntC2SPacket::receive);
     }
 }

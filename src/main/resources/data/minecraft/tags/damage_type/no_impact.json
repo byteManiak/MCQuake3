@@ -1,0 +1,12 @@
+{
+	"values": [
+		"mcquake3:gauntlet",
+		"mcquake3:machinegun",
+		"mcquake3:shotgun",
+		"mcquake3:lightning",
+		"mcquake3:railgun",
+		"mcquake3:plasmagun",
+		"mcquake3:bfg10k",
+		"mcquake3:spikes"
+	]
+}

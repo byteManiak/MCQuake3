@@ -3,6 +3,8 @@
 		"mcquake3:gauntlet",
 		"mcquake3:machinegun",
 		"mcquake3:shotgun",
+		"mcquake3:grenade",
+		"mcquake3:rocket",
 		"mcquake3:lightning",
 		"mcquake3:railgun",
 		"mcquake3:plasmagun",

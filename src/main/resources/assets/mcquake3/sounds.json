@@ -10,6 +10,16 @@
       "mcquake3:hit"
     ]
   },
+  "excellent": {
+    "sounds": [
+      "mcquake3:excellent"
+    ]
+  },
+  "impressive": {
+    "sounds": [
+      "mcquake3:impressive"
+    ]
+  },
 
   "gauntlet_idle": {
     "sounds": [

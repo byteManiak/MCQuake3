@@ -27,8 +27,10 @@ public class Railgun extends HitscanWeapon {
 
     @Override
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, Vec3d upVec, boolean isBlockCollision) {
-        if (world.isClient)
+        if (world.isClient) {
+            if (isBlockCollision) Renderers.feedbacks.lastHitRailgun = false;
             submitRailgunTrail(user, userPos, iterPos, upVec);
+        }
     }
 
     @Environment(EnvType.CLIENT)

@@ -30,7 +30,6 @@ public class FeedbackManager implements HudRenderCallback {
     private long lastUpdateTick = 0;
 
     private static final long FRAG_TIME_THRESHOLD = MiscUtils.toTicks(2);
-    private long prevKillTick = 0;
     private long killTick = 0;
     private int killCount = 0;
 
@@ -42,7 +41,7 @@ public class FeedbackManager implements HudRenderCallback {
 
         switch (ev) {
             case PLAYER_KILL -> {
-                prevKillTick = killTick;
+                long prevKillTick = killTick;
                 killTick = currentTick;
                 if (killTick - prevKillTick <= FRAG_TIME_THRESHOLD) {
                     killCount++;
@@ -65,7 +64,7 @@ public class FeedbackManager implements HudRenderCallback {
 
         Window window = MinecraftClient.getInstance().getWindow();
         String medal = Character.toString(currentMedal.ch).repeat(Math.min(currentMedal.count, 8));
-        MiscUtils.drawText(matrixStack, medal, (float)window.getScaledWidth()/2 - medal.length()*16, 50, 0xFFFFFF);
+        MiscUtils.drawText(matrixStack, medal, (float)window.getScaledWidth()/2 - medal.length()*16, (float)window.getScaledHeight()/15, 0xFFFFFF);
     }
 
     @Override

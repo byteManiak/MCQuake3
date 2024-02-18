@@ -20,6 +20,10 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M ext
     private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
     private final PlayerEntityModel<AbstractClientPlayerEntity> model;
 
+    public interface QuadDamageVisibility {
+        boolean hasQuadDamage();
+    }
+
     public QuadDamageGlintRenderer(
             FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext,
             EntityModelLoader loader) {

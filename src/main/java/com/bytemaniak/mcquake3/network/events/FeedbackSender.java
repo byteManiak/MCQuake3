@@ -17,7 +17,8 @@ import net.minecraft.server.world.ServerWorld;
 public class FeedbackSender implements ServerLivingEntityEvents.AllowDamage, ServerEntityCombatEvents.AfterKilledOtherEntity {
     @Override
     public void afterKilledOtherEntity(ServerWorld world, Entity entity, LivingEntity killedEntity) {
-        ServerPlayNetworking.send((ServerPlayerEntity) entity, Packets.KILLED_PLAYER, PacketByteBufs.empty());
+        if (entity instanceof PlayerEntity && killedEntity instanceof PlayerEntity)
+            ServerPlayNetworking.send((ServerPlayerEntity) entity, Packets.KILLED_PLAYER, PacketByteBufs.empty());
     }
 
     @Override

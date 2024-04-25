@@ -16,6 +16,8 @@ import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 public class RocketLauncher extends Weapon {
     private static final long ROCKET_REFIRE_RATE = 15;
     private static final float ROCKET_PROJECTILE_SPEED = 1.5f;
+    /* Spawn rockets from the centre to allow proper rocket jumps */
+    private static final float ROCKET_HORIZONTAL_SPAWN_OFFSET = .2f;
 
     public RocketLauncher() {
         super(new Identifier("mcquake3:rocket_launcher"), ROCKET_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false,
@@ -32,7 +34,7 @@ public class RocketLauncher extends Weapon {
             Vec3d rightVec = lookDir.crossProduct(upVec).normalize();
             Vec3d offsetWeaponPos = weaponPos
                     .add(upVec.multiply(PROJECTILE_VERTICAL_SPAWN_OFFSET))
-                    .add(rightVec.multiply(PROJECTILE_HORIZONTAL_SPAWN_OFFSET))
+                    .add(rightVec.multiply(ROCKET_HORIZONTAL_SPAWN_OFFSET))
                     .add(lookDir.multiply(PROJECTILE_FORWARD_SPAWN_OFFSET));
 
             // The furthest point, to which the projectile will go towards

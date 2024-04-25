@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.registry.client;
 
 import com.bytemaniak.mcquake3.blocks.render.PickupRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
+import com.bytemaniak.mcquake3.gui.FeedbackManager;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Entities;
@@ -13,6 +14,8 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 
 public class Renderers {
+    public static MCQuake3GuiRenderer hudRenderer = new MCQuake3GuiRenderer();
+    public static FeedbackManager feedbacks = new FeedbackManager();
     public static TrailRenderer trailRenderer;
 
     private static void registerEntityRenderers() {
@@ -103,6 +106,7 @@ public class Renderers {
         trailRenderer = new TrailRenderer();
         WorldRenderEvents.END.register(trailRenderer);
 
-        HudRenderCallback.EVENT.register(new MCQuake3GuiRenderer());
+        HudRenderCallback.EVENT.register(hudRenderer);
+        HudRenderCallback.EVENT.register(feedbacks);
     }
 }

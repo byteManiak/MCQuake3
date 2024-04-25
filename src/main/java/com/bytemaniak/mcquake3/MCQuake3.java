@@ -28,6 +28,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 		Screens.registerScreenHandlers();
 
 		Packets.registerServerPackets();
+		ServerEvents.registerEvents();
 	}
 
 	@Override

@@ -8,8 +8,13 @@ import net.minecraft.util.Identifier;
 public class Sounds {
     private static final Identifier JUMPPAD_BOOST_IDENT = new Identifier("mcquake3:jumppad");
     public static final SoundEvent JUMPPAD_BOOST = SoundEvent.of(JUMPPAD_BOOST_IDENT);
+
     private static final Identifier DAMAGE_DEALT_IDENT = new Identifier("mcquake3:hit");
     public static final SoundEvent DAMAGE_DEALT = SoundEvent.of(DAMAGE_DEALT_IDENT);
+    private static final Identifier EXCELLENT_IDENT = new Identifier("mcquake3:excellent");
+    public static final SoundEvent EXCELLENT = SoundEvent.of(EXCELLENT_IDENT);
+    private static final Identifier IMPRESSIVE_IDENT = new Identifier("mcquake3:impressive");
+    public static final SoundEvent IMPRESSIVE = SoundEvent.of(IMPRESSIVE_IDENT);
 
     private static final Identifier MACHINEGUN_FIRE_IDENT = new Identifier("mcquake3:machinegun");
     public static final SoundEvent MACHINEGUN_FIRE = SoundEvent.of(MACHINEGUN_FIRE_IDENT);
@@ -165,6 +170,8 @@ public class Sounds {
     {
         Registry.register(Registries.SOUND_EVENT, JUMPPAD_BOOST_IDENT, JUMPPAD_BOOST);
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
+        Registry.register(Registries.SOUND_EVENT, EXCELLENT_IDENT, EXCELLENT);
+        Registry.register(Registries.SOUND_EVENT, IMPRESSIVE_IDENT, IMPRESSIVE);
         Registry.register(Registries.SOUND_EVENT, MACHINEGUN_FIRE_IDENT, MACHINEGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, PLASMAGUN_FIRE_IDENT, PLASMAGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, LIGHTNING_FIRE_IDENT, LIGHTNING_FIRE);

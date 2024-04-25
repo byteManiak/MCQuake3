@@ -37,11 +37,11 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
     }
 
     @Override
-    protected void drawBackground(DrawContext drawContext, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        drawContext.drawTexture(TEXTURE, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
+        context.drawTexture(TEXTURE, width/2 - 99, height/2 - 58, 0, 0, 198, 117);
     }
 
     @Override

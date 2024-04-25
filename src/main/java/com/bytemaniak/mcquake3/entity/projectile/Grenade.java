@@ -1,15 +1,11 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
 import com.bytemaniak.mcquake3.registry.Entities;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -72,10 +68,8 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void despawn() {
         Vec3d pos = getPos();
         DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
-        Explosion explosion = getWorld().createExplosion(this, damageSource, null,
+        getWorld().createExplosion(this, damageSource, null,
                 pos.x, pos.y, pos.z, 2.875f, false, World.ExplosionSourceType.NONE);
-        if (getOwner() != null && !explosion.getAffectedPlayers().isEmpty())
-            ServerPlayNetworking.send((ServerPlayerEntity) getOwner(), Packets.DEALT_DAMAGE, PacketByteBufs.empty());
 
         super.despawn();
     }

@@ -1,8 +1,8 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.blocks.JumppadEntity;
-import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import com.bytemaniak.mcquake3.registry.Packets;
+import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;

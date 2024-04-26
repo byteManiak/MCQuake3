@@ -134,9 +134,8 @@ public abstract class Weapon extends Item implements GeoItem {
                 Vec3d weaponPos = user.getEyePos().subtract(rightDir);
                 onWeaponRefire(world, user, stack, lookDir, weaponPos);
 
-                if (hasRepeatedFiringSound) {
+                if (hasRepeatedFiringSound)
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
-                }
             }
             player.setWeaponTick(slot, currentTick);
         }

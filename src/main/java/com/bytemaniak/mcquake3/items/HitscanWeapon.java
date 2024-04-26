@@ -29,12 +29,13 @@ public abstract class HitscanWeapon extends Weapon {
     private final float hitscanRange;
     private final float hitscanNumSteps;
 
-    protected HitscanWeapon(Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(Identifier id, long refireRateQ3InTicks,  long refireRateQLInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance, Item ammoType, int startingAmmo,
                             int ammoBoxCount, int slot) {
-        super(id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
+        super(id, refireRateQ3InTicks, refireRateQLInTicks,
+                hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 ammoType, startingAmmo, ammoBoxCount, slot);
 
         this.damageAmount = damageAmount;
@@ -44,11 +45,11 @@ public abstract class HitscanWeapon extends Weapon {
         this.hitscanNumSteps = hitscanRange/hitscanStepDistance;
     }
 
-    protected HitscanWeapon(Identifier id, long refireRateInTicks,
+    protected HitscanWeapon(Identifier id, long refireRateQ3InTicks, long refireRateQLInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, Item ammoType, int startingAmmo, int ammoBoxCount, int slot) {
-        this(id, refireRateInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
+        this(id, refireRateQ3InTicks, refireRateQLInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 damageAmount, damageType, hitscanRange, .25f, ammoType, startingAmmo, ammoBoxCount, slot);
     }
 

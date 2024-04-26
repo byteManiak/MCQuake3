@@ -15,7 +15,7 @@ import software.bernie.geckolib.animatable.GeoItem;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Shotgun extends Weapon {
-    private static final long SHOTGUN_REFIRE_TICK_RATE = 20;
+    private static final long SHOTGUN_REFIRE_RATE = 20;
 
     private static final float SHOTGUN_RANGE = 20;
     private static final float SHOTGUN_VERTICAL_SPAWN_OFFSET = .5f;
@@ -24,8 +24,8 @@ public class Shotgun extends Weapon {
     private static final float SHOTGUN_PROJECTILE_SPEED = 4.25f;
 
     public Shotgun() {
-        super(new Identifier("mcquake3:shotgun"), SHOTGUN_REFIRE_TICK_RATE, true,
-                Sounds.SHOTGUN_FIRE, false, Weapons.SHELL, 10, 10, 2);
+        super(new Identifier("mcquake3:shotgun"), SHOTGUN_REFIRE_RATE, SHOTGUN_REFIRE_RATE,
+                true, Sounds.SHOTGUN_FIRE, false, Weapons.SHELL, 10, 10, 2);
     }
 
     private void fireProjectile(World world, LivingEntity user, Vec3d upVec, Vec3d rightVec,

@@ -41,7 +41,8 @@ public abstract class Weapon extends Item implements GeoItem {
     protected static final float PROJECTILE_DIRECTION_RANGE = 200;
 
     private final Identifier weaponIdentifier;
-    private final long refireRate;
+    private final long refireRateQ3;
+    private final long refireRateQL;
     private final boolean hasRepeatedFiringSound;
     private final SoundEvent firingSound;
     public final boolean hasActiveLoopSound;
@@ -56,7 +57,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
     public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3:firing_speed"));
 
-    protected Weapon(Identifier id, long refireRateInTicks,
+    protected Weapon(Identifier id, long refireRateQ3InTicks, long refireRateQLInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                      Item ammoType, int startingAmmo, int ammoBoxCount, int slot) {
         super(new Item.Settings().maxCount(1));
@@ -67,7 +68,8 @@ public abstract class Weapon extends Item implements GeoItem {
 
         this.weaponIdentifier = id;
 
-        this.refireRate = refireRateInTicks;
+        this.refireRateQ3 = refireRateQ3InTicks;
+        this.refireRateQL = refireRateQLInTicks;
         this.hasRepeatedFiringSound = hasRepeatedFiringSound;
         this.firingSound = firingSound;
         this.hasActiveLoopSound = hasActiveLoopSound;
@@ -100,6 +102,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
+        long refireRate = player.hasQLRefireRate() ? refireRateQL : refireRateQ3;
 
         StatusEffectInstance playerHaste = user.getStatusEffect(StatusEffects.HASTE);
         float refireModifier = 1;

@@ -101,7 +101,7 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     private ButtonWidget toggleGui;
-    private ButtonWidget toggleCooldowns;
+    private ButtonWidget toggleRefireRates;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -123,9 +123,8 @@ public class PlayerSettingsScreen extends Screen {
         toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {
             user.toggleQuakeGui();
 
-            boolean quakeGuiEnabled = user.quakeGuiEnabled();
             String newButtonText;
-            if (quakeGuiEnabled) {
+            if (user.quakeGuiEnabled()) {
                 SoundUtils.playSoundLocally(Sounds.DAMAGE_DEALT);
                 newButtonText = "Disable Quake GUI";
             } else {
@@ -135,20 +134,19 @@ public class PlayerSettingsScreen extends Screen {
 
             toggleGui.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 140, height - 24, 120, 20).build();
+        }).dimensions(width - 150, height - 24, 130, 20).build();
 
-        String cooldownButtonText = user.hasQLRefireRate() ? "Quake Live weapon cooldowns" : "Quake 3 weapon cooldowns";
-        toggleCooldowns = ButtonWidget.builder(Text.of(cooldownButtonText), (button) -> {
+        String refireRateButtonText = user.hasQLRefireRate() ? "Refire rates: Quake Live" : "Refire rates: Quake 3";
+        toggleRefireRates = ButtonWidget.builder(Text.of(refireRateButtonText), (button) -> {
             user.setQLRefireRate(!user.hasQLRefireRate());
 
-            boolean hasQLCooldowns = user.hasQLRefireRate();
-            String newButtonText;
-            if (hasQLCooldowns) newButtonText = "Quake Live weapon cooldowns";
-            else newButtonText = "Quake 3 weapon cooldowns";
+            String newButtonText = "Refire rates: Quake ";
+            if (user.hasQLRefireRate()) newButtonText += "Live";
+            else newButtonText += "3";
 
-            toggleCooldowns.setMessage(Text.of(newButtonText));
-            ClientPlayNetworking.send(Packets.WEAPON_COOLDOWNS_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 140, height - 48, 120, 20).build();
+            toggleRefireRates.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
+        }).dimensions(width - 150, height - 48, 130, 20).build();
 
         ButtonWidget giveWeapons =
                 ButtonWidget.builder(
@@ -159,7 +157,7 @@ public class PlayerSettingsScreen extends Screen {
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
-        addDrawableChild(toggleCooldowns);
+        addDrawableChild(toggleRefireRates);
         addDrawableChild(giveWeapons);
         super.init();
     }

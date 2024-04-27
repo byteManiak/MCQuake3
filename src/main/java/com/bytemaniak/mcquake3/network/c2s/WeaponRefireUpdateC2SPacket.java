@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class WeaponCooldownsUpdateC2SPacket {
+public class WeaponRefireUpdateC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         QuakePlayer qPlayer = (QuakePlayer) player;
         qPlayer.setQLRefireRate(!qPlayer.hasQLRefireRate());

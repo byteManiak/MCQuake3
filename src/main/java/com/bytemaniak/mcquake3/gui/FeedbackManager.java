@@ -14,7 +14,7 @@ public class FeedbackManager implements HudRenderCallback {
     public enum Event {
         PLAYER_KILL,
         WEAPON_HIT
-    };
+    }
 
     private enum MedalType {
         EXCELLENT,
@@ -59,7 +59,7 @@ public class FeedbackManager implements HudRenderCallback {
         }
     }
 
-    private void renderCurrentMedal(MatrixStack matrixStack, float tickDelta) {
+    private void renderCurrentMedal(MatrixStack matrixStack) {
         if (currentMedal == null) return;
 
         Window window = MinecraftClient.getInstance().getWindow();
@@ -77,18 +77,14 @@ public class FeedbackManager implements HudRenderCallback {
                 lastUpdateTick = currentTick;
                 currentMedal = medals.remove();
                 switch (currentMedal.type) {
-                    case EXCELLENT -> {
-                        SoundUtils.playSoundLocally(Sounds.EXCELLENT);
-                    }
-                    case IMPRESSIVE -> {
-                        SoundUtils.playSoundLocally(Sounds.IMPRESSIVE);
-                    }
+                    case EXCELLENT -> SoundUtils.playSoundLocally(Sounds.EXCELLENT);
+                    case IMPRESSIVE -> SoundUtils.playSoundLocally(Sounds.IMPRESSIVE);
                     case GAUNTLET -> {
                     }
                 }
             }
         }
 
-        renderCurrentMedal(matrixStack, tickDelta);
+        renderCurrentMedal(matrixStack);
     }
 }

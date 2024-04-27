@@ -39,9 +39,6 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
     public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) { return output; }
 
     @Override
-    public boolean fits(int width, int height) { return true; }
-
-    @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) { return output.copy(); }
 
     @Override
@@ -65,12 +62,10 @@ public class PlasmaInducerRecipe extends AbstractCookingRecipe {
     public static class PlasmaInducerType implements RecipeType<PlasmaInducerRecipe> {
         private PlasmaInducerType() {}
         public static final PlasmaInducerType INSTANCE = new PlasmaInducerType();
-        public static final String ID = "plasma_inducer";
     }
 
     public static class PlasmaInducerRecipeSerializer implements RecipeSerializer<PlasmaInducerRecipe> {
         public static final PlasmaInducerRecipeSerializer INSTANCE = new PlasmaInducerRecipeSerializer();
-        public static final String ID = "plasma_inducer";
         @Override
         public PlasmaInducerRecipe read(Identifier id, JsonObject json) {
             ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));

@@ -14,14 +14,15 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 
 public class RocketLauncher extends Weapon {
-    private static final long ROCKET_REFIRE_RATE = 15;
+    private static final long ROCKET_REFIRE_RATE_Q3 = 15;
+    private static final long ROCKET_REFIRE_RATE_QL = 16;
     private static final float ROCKET_PROJECTILE_SPEED = 1.5f;
     /* Spawn rockets from the centre to allow proper rocket jumps */
     private static final float ROCKET_HORIZONTAL_SPAWN_OFFSET = .2f;
 
     public RocketLauncher() {
-        super(new Identifier("mcquake3:rocket_launcher"), ROCKET_REFIRE_RATE, true, Sounds.GRENADE_FIRE, false,
-                Weapons.ROCKET, 5, 5, 4);
+        super(new Identifier("mcquake3:rocket_launcher"), ROCKET_REFIRE_RATE_Q3, ROCKET_REFIRE_RATE_QL,
+                true, Sounds.GRENADE_FIRE, false, Weapons.ROCKET, 5, 5, 4);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

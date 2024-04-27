@@ -13,13 +13,14 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 
 public class BFG10K extends Weapon {
-    private static final long BFG_REFIRE_TICK_RATE = 4;
+    private static final long BFG_REFIRE_RATE_Q3 = 4;
+    private static final long BFG_REFIRE_RATE_QL = 7;
 
     private static final float BFG_PROJECTILE_SPEED = 1.5f;
 
     public BFG10K() {
-        super(new Identifier("mcquake3:bfg10k"), BFG_REFIRE_TICK_RATE, true,
-                Sounds.BFG10K_FIRE, false, Weapons.BFG10K_ROUND, 20, 15, 8);
+        super(new Identifier("mcquake3:bfg10k"), BFG_REFIRE_RATE_Q3, BFG_REFIRE_RATE_QL,
+                true, Sounds.BFG10K_FIRE, false, Weapons.BFG10K_ROUND, 20, 15, 8);
     }
 
     @Override

@@ -16,13 +16,15 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 
 public class Railgun extends HitscanWeapon {
-    private static final int RAILGUN_REFIRE_TICK_RATE = 50;
+    private static final int RAILGUN_REFIRE_RATE_Q3 = 50;
+    private static final int RAILGUN_REFIRE_RATE_QL = 30;
     private static final float RAILGUN_DAMAGE = MiscUtils.toMCDamage(100);
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(new Identifier("mcquake3:railgun"), RAILGUN_REFIRE_TICK_RATE, true, Sounds.RAILGUN_FIRE, false,
-                RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE, RAILGUN_RANGE, Weapons.RAILGUN_ROUND, 10, 10, 6);
+        super(new Identifier("mcquake3:railgun"), RAILGUN_REFIRE_RATE_Q3, RAILGUN_REFIRE_RATE_QL,
+                true, Sounds.RAILGUN_FIRE, false, RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE,
+                RAILGUN_RANGE, Weapons.RAILGUN_ROUND, 10, 10, 6);
     }
 
     @Override

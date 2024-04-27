@@ -12,10 +12,6 @@ public class JumppadScreenHandler extends ScreenHandler {
     public float forward_power, up_power;
     public JumppadEntity entity;
 
-    public JumppadScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
-    }
-
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
         forward_power = buf.readFloat();

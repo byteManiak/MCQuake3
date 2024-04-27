@@ -37,6 +37,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
+    private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final long[] weaponTicks = new long[9];
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
@@ -97,12 +98,14 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
         nbt.putInt("quake_energy_shield", getEnergyShield());
+        nbt.putBoolean("has_ql_refire_rate", hasQLRefireRate());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
+        dataTracker.set(HAS_QL_REFIRE_RATE, nbt.getBoolean("has_ql_refire_rate"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
         setPlayerVoice(quakePlayerSounds);
@@ -113,6 +116,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
         dataTracker.startTracking(QUAKE_ARMOR, 0);
+        dataTracker.startTracking(HAS_QL_REFIRE_RATE, false);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -139,10 +143,11 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
 
     public long getWeaponTick(int id) { return weaponTicks[id]; }
-
     public void setWeaponTick(int id, long tick) {
         weaponTicks[id] = tick;
     }
+    public boolean hasQLRefireRate() { return dataTracker.get(HAS_QL_REFIRE_RATE); }
+    public void setQLRefireRate(boolean hasQLRefire) { dataTracker.set(HAS_QL_REFIRE_RATE, hasQLRefire); }
 
     public int getCurrentQuakeWeaponId() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) {

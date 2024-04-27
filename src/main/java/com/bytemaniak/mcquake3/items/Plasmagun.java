@@ -13,13 +13,13 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 
 public class Plasmagun extends Weapon {
-    private static final long PLASMAGUN_REFIRE_TICK_RATE = 2;
+    private static final long PLASMAGUN_REFIRE_RATE = 2;
 
     private static final float PLASMAGUN_PROJECTILE_SPEED = 1.5f;
 
     public Plasmagun() {
-        super(new Identifier("mcquake3:plasmagun"), PLASMAGUN_REFIRE_TICK_RATE, true,
-                Sounds.PLASMAGUN_FIRE, false, Weapons.PLASMA_BALL, 50, 30, 7);
+        super(new Identifier("mcquake3:plasmagun"), PLASMAGUN_REFIRE_RATE, PLASMAGUN_REFIRE_RATE,
+                true, Sounds.PLASMAGUN_FIRE, false, Weapons.PLASMA_BALL, 50, 30, 7);
     }
 
     @Override

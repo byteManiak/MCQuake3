@@ -18,15 +18,15 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 public class Gauntlet extends HitscanWeapon {
-    private static final long GAUNTLET_REFIRE_RATE = 10;
+    private static final long GAUNTLET_REFIRE_RATE_Q3 = 10;
+    private static final long GAUNTLET_REFIRE_RATE_QL = 8;
     private static final float GAUNTLET_DAMAGE = MiscUtils.toMCDamage(50);
     private static final float GAUNTLET_RANGE = 2.5f;
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     public Gauntlet() {
-        super(new Identifier("mcquake3:gauntlet"),
-                GAUNTLET_REFIRE_RATE, false, null, true,
-                GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
+        super(new Identifier("mcquake3:gauntlet"), GAUNTLET_REFIRE_RATE_Q3, GAUNTLET_REFIRE_RATE_QL,
+                false, null, true, GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
                 GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null, 0, 0, 0);
     }
 

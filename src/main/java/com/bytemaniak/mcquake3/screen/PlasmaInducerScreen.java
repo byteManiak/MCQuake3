@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 
 public class PlasmaInducerScreen extends AbstractFurnaceScreen<PlasmaInducerScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("mcquake3:textures/gui/plasma_inducer.png");
-    private boolean narrow;
 
     public PlasmaInducerScreen(PlasmaInducerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, new PlasmaInducerRecipeBookScreen(), inventory, Text.of("Plasma Inducer"), TEXTURE, new Identifier(""), new Identifier(""));
@@ -38,7 +37,6 @@ public class PlasmaInducerScreen extends AbstractFurnaceScreen<PlasmaInducerScre
         backgroundWidth = 176;
         backgroundHeight = 193;
 
-        narrow = width < 379;
         super.init();
     }
 }

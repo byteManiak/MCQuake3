@@ -8,7 +8,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.screen.ArrayPropertyDelegate;
@@ -38,11 +37,6 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
                 addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 111 + i * 18));
 
         for (int i = 0; i < 9; ++i) addSlot(new Slot(playerInventory, i, 8 + i * 18, 169));
-    }
-
-    public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        super(Screens.PLASMA_INDUCER_SCREEN_HANDLER, PlasmaInducerRecipe.PlasmaInducerType.INSTANCE,
-                RecipeBookCategory.FURNACE, syncId, playerInventory);
     }
 
     public PlasmaInducerScreenHandler(int syncId, PlayerInventory playerInventory) {

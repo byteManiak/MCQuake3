@@ -14,12 +14,13 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 
 public class GrenadeLauncher extends Weapon {
-    private static final long GRENADE_REFIRE_RATE = 15;
+    private static final long GRENADE_REFIRE_RATE_Q3 = 15;
+    private static final long GRENADE_REFIRE_RATE_QL = 16;
     private static final float GRENADE_PROJECTILE_SPEED = .85f;
 
     public GrenadeLauncher() {
-        super(new Identifier("mcquake3:grenade_launcher"), GRENADE_REFIRE_RATE, true,
-                Sounds.GRENADE_FIRE, false, Weapons.GRENADE, 10, 5, 3);
+        super(new Identifier("mcquake3:grenade_launcher"), GRENADE_REFIRE_RATE_Q3, GRENADE_REFIRE_RATE_QL,
+                true, Sounds.GRENADE_FIRE, false, Weapons.GRENADE, 10, 5, 3);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

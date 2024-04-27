@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
-
     @Inject(method = "hasStatusBars", at = @At("RETURN"), cancellable = true)
     private void hideStatusBarsWhenInQuakeGui(CallbackInfoReturnable<Boolean> ci) {
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;

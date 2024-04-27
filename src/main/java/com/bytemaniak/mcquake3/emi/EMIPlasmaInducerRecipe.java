@@ -49,7 +49,6 @@ public class EMIPlasmaInducerRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        Identifier LAVA_BUCKET = new Identifier("minecraft:textures/item/lava_bucket.png");
         widgets.addTexture(TEXTURE, 0, 0, 151, 90, 16, 14);
         widgets.addSlot(items.get(0), 48, 32).drawBack(false);
         widgets.addTexture(EmiTexture.FULL_FLAME, 50, 52);

@@ -101,6 +101,7 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     private ButtonWidget toggleGui;
+    private ButtonWidget toggleRefireRates;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -122,9 +123,8 @@ public class PlayerSettingsScreen extends Screen {
         toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {
             user.toggleQuakeGui();
 
-            boolean quakeGuiEnabled = user.quakeGuiEnabled();
             String newButtonText;
-            if (quakeGuiEnabled) {
+            if (user.quakeGuiEnabled()) {
                 SoundUtils.playSoundLocally(Sounds.DAMAGE_DEALT);
                 newButtonText = "Disable Quake GUI";
             } else {
@@ -134,7 +134,19 @@ public class PlayerSettingsScreen extends Screen {
 
             toggleGui.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 140, height - 24, 120, 20).build();
+        }).dimensions(width - 150, height - 24, 130, 20).build();
+
+        String refireRateButtonText = user.hasQLRefireRate() ? "Refire rates: Quake Live" : "Refire rates: Quake 3";
+        toggleRefireRates = ButtonWidget.builder(Text.of(refireRateButtonText), (button) -> {
+            user.setQLRefireRate(!user.hasQLRefireRate());
+
+            String newButtonText = "Refire rates: Quake ";
+            if (user.hasQLRefireRate()) newButtonText += "Live";
+            else newButtonText += "3";
+
+            toggleRefireRates.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
+        }).dimensions(width - 150, height - 48, 130, 20).build();
 
         ButtonWidget giveWeapons =
                 ButtonWidget.builder(
@@ -145,6 +157,7 @@ public class PlayerSettingsScreen extends Screen {
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
+        addDrawableChild(toggleRefireRates);
         addDrawableChild(giveWeapons);
         super.init();
     }

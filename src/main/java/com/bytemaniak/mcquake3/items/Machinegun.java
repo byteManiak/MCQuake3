@@ -21,13 +21,14 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 public class Machinegun extends HitscanWeapon {
-    private static final long MACHINEGUN_REFIRE_TICK_RATE = 2;
+    private static final long MACHINEGUN_REFIRE_RATE = 2;
     private static final float MACHINEGUN_DAMAGE = MiscUtils.toMCDamage(7);
     private static final float MACHINEGUN_RANGE = 200;
 
     public Machinegun() {
-        super(new Identifier("mcquake3:machinegun"), MACHINEGUN_REFIRE_TICK_RATE, true, Sounds.MACHINEGUN_FIRE, false,
-                MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE, MACHINEGUN_RANGE, Weapons.BULLET, 100, 50, 1);
+        super(new Identifier("mcquake3:machinegun"), MACHINEGUN_REFIRE_RATE, MACHINEGUN_REFIRE_RATE,
+                true, Sounds.MACHINEGUN_FIRE, false, MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE,
+                MACHINEGUN_RANGE, Weapons.BULLET, 100, 50, 1);
     }
 
     @Override

@@ -101,6 +101,7 @@ public class PlayerSettingsScreen extends Screen {
     }
 
     private ButtonWidget toggleGui;
+    private ButtonWidget toggleCooldowns;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
         super(title);
@@ -136,6 +137,19 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 140, height - 24, 120, 20).build();
 
+        String cooldownButtonText = user.hasQLRefireRate() ? "Quake Live weapon cooldowns" : "Quake 3 weapon cooldowns";
+        toggleCooldowns = ButtonWidget.builder(Text.of(cooldownButtonText), (button) -> {
+            user.setQLRefireRate(!user.hasQLRefireRate());
+
+            boolean hasQLCooldowns = user.hasQLRefireRate();
+            String newButtonText;
+            if (hasQLCooldowns) newButtonText = "Quake Live weapon cooldowns";
+            else newButtonText = "Quake 3 weapon cooldowns";
+
+            toggleCooldowns.setMessage(Text.of(newButtonText));
+            ClientPlayNetworking.send(Packets.WEAPON_COOLDOWNS_UPDATE, PacketByteBufs.empty());
+        }).dimensions(width - 140, height - 48, 120, 20).build();
+
         ButtonWidget giveWeapons =
                 ButtonWidget.builder(
                         Text.of("Give me a full arsenal"),
@@ -145,6 +159,7 @@ public class PlayerSettingsScreen extends Screen {
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
+        addDrawableChild(toggleCooldowns);
         addDrawableChild(giveWeapons);
         super.init();
     }

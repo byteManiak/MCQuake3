@@ -1,12 +1,16 @@
 package com.bytemaniak.mcquake3.gui;
 
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
 import com.bytemaniak.mcquake3.util.MiscUtils;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.PacketByteBuf;
 
 import java.util.LinkedList;
 
@@ -17,9 +21,12 @@ public class FeedbackManager implements HudRenderCallback {
     }
 
     private enum MedalType {
-        EXCELLENT,
-        IMPRESSIVE,
-        GAUNTLET
+        EXCELLENT(1),
+        IMPRESSIVE(2),
+        GAUNTLET(3);
+
+        public final byte value;
+        MedalType(int value) { this.value = (byte)value; }
     }
 
     private record Medal(MedalType type, int count, int ch) {}
@@ -37,6 +44,13 @@ public class FeedbackManager implements HudRenderCallback {
     public boolean lastHitRailgun = false;
     private int railHitCount = 0;
 
+    private void addMedal(MedalType medal, int value, int ch) {
+        medals.add(new Medal(medal, value, ch));
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeByte(medal.value);
+        ClientPlayNetworking.send(Packets.ADD_MEDAL, buf);
+    }
+
     public void pushEvent(Event ev, boolean arg) {
         long currentTick = MinecraftClient.getInstance().world.getTime();
 
@@ -46,17 +60,17 @@ public class FeedbackManager implements HudRenderCallback {
                 killTick = currentTick;
                 if (killTick - prevKillTick <= FRAG_TIME_THRESHOLD) {
                     killCount++;
-                    medals.add(new Medal(MedalType.EXCELLENT, killCount, '\uFFFA'));
+                    addMedal(MedalType.EXCELLENT, killCount, '\uFFFA');
                 }
                 if (arg) {
                     gauntletKills++;
-                    medals.add(new Medal(MedalType.GAUNTLET, gauntletKills, '\uFFFC'));
+                    addMedal(MedalType.GAUNTLET, gauntletKills, '\uFFFC');
                 }
             }
             case WEAPON_HIT -> {
                 if (lastHitRailgun && arg) {
                     railHitCount++;
-                    medals.add(new Medal(MedalType.IMPRESSIVE, railHitCount, '\uFFFB'));
+                    addMedal(MedalType.IMPRESSIVE, railHitCount, '\uFFFB');
                 }
 
                 lastHitRailgun = arg;

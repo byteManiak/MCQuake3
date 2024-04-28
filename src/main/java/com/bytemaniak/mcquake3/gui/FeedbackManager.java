@@ -32,6 +32,7 @@ public class FeedbackManager implements HudRenderCallback {
     private static final long FRAG_TIME_THRESHOLD = MiscUtils.toTicks(2);
     private long killTick = 0;
     private int killCount = 0;
+    private int gauntletKills = 0;
 
     public boolean lastHitRailgun = false;
     private int railHitCount = 0;
@@ -46,6 +47,10 @@ public class FeedbackManager implements HudRenderCallback {
                 if (killTick - prevKillTick <= FRAG_TIME_THRESHOLD) {
                     killCount++;
                     medals.add(new Medal(MedalType.EXCELLENT, killCount, '\uFFFA'));
+                }
+                if (arg) {
+                    gauntletKills++;
+                    medals.add(new Medal(MedalType.GAUNTLET, gauntletKills, '\uFFFC'));
                 }
             }
             case WEAPON_HIT -> {
@@ -79,8 +84,7 @@ public class FeedbackManager implements HudRenderCallback {
                 switch (currentMedal.type) {
                     case EXCELLENT -> SoundUtils.playSoundLocally(Sounds.EXCELLENT);
                     case IMPRESSIVE -> SoundUtils.playSoundLocally(Sounds.IMPRESSIVE);
-                    case GAUNTLET -> {
-                    }
+                    case GAUNTLET -> SoundUtils.playSoundLocally(Sounds.GAUNTLET);
                 }
             }
         }

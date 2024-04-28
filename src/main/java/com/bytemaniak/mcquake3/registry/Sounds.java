@@ -15,6 +15,8 @@ public class Sounds {
     public static final SoundEvent EXCELLENT = SoundEvent.of(EXCELLENT_IDENT);
     private static final Identifier IMPRESSIVE_IDENT = new Identifier("mcquake3:impressive");
     public static final SoundEvent IMPRESSIVE = SoundEvent.of(IMPRESSIVE_IDENT);
+    private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
+    public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
 
     private static final Identifier MACHINEGUN_FIRE_IDENT = new Identifier("mcquake3:machinegun");
     public static final SoundEvent MACHINEGUN_FIRE = SoundEvent.of(MACHINEGUN_FIRE_IDENT);
@@ -172,6 +174,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, EXCELLENT_IDENT, EXCELLENT);
         Registry.register(Registries.SOUND_EVENT, IMPRESSIVE_IDENT, IMPRESSIVE);
+        Registry.register(Registries.SOUND_EVENT, GAUNTLET_IDENT, GAUNTLET);
         Registry.register(Registries.SOUND_EVENT, MACHINEGUN_FIRE_IDENT, MACHINEGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, PLASMAGUN_FIRE_IDENT, PLASMAGUN_FIRE);
         Registry.register(Registries.SOUND_EVENT, LIGHTNING_FIRE_IDENT, LIGHTNING_FIRE);

@@ -114,6 +114,15 @@
 			"chars": [
 				"\uFFFB"
 			]
+		},
+		{
+			"type": "bitmap",
+			"file": "mcquake3:font/gauntlet.png",
+			"ascent": -16,
+			"height": 32,
+			"chars": [
+				"\uFFFC"
+			]
 		}
 	]
 }

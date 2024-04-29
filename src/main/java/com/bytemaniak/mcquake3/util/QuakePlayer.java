@@ -15,6 +15,7 @@ public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds 
     void setWeaponTick(int id, long tick);
     boolean hasQLRefireRate();
     void setQLRefireRate(boolean hasQLRefire);
+    void scrollToNextSuitableSlot();
 
     boolean quakePlayerSoundsEnabled();
 

@@ -136,7 +136,11 @@ public abstract class Weapon extends Item implements GeoItem {
 
                 if (hasRepeatedFiringSound)
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
-            }
+            } else if (world.isClient)
+                // Scroll to the next available slot in the hotbar in case
+                // the currently held weapon has run out of ammo
+                player.scrollToNextSuitableSlot();
+
             player.setWeaponTick(slot, currentTick);
         }
     }

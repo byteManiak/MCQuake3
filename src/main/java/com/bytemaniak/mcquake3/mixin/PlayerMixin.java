@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.mixin;
 
+import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
@@ -14,14 +15,19 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -30,6 +36,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
+    @Shadow public abstract PlayerInventory getInventory();
+
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
     private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -39,6 +47,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final long[] weaponTicks = new long[9];
+
+    private final static long TIME_BETWEEN_HURTS = 9;
+    private long lastHurtTick = 0;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -76,10 +87,17 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
             else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
-            else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
-            else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
-            else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
-            else return SoundEvent.of(playerSounds.HURT25);
+            else {
+                long currentTick = getWorld().getTime();
+                if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
+                    lastHurtTick = currentTick;
+                    if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
+                    else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+                    else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
+                    else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
+                    else return SoundEvent.of(playerSounds.HURT25);
+                } else return null;
+            }
         }
         return super.getHurtSound(source);
     }
@@ -148,6 +166,29 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
     public boolean hasQLRefireRate() { return dataTracker.get(HAS_QL_REFIRE_RATE); }
     public void setQLRefireRate(boolean hasQLRefire) { dataTracker.set(HAS_QL_REFIRE_RATE, hasQLRefire); }
+
+    // Scroll to the next available slot in the hotbar in case
+    // the currently held weapon has run out of ammo
+    public void scrollToNextSuitableSlot() {
+        PlayerInventory inv = getInventory();
+        int slot = inv.selectedSlot;
+        int nextSlot = slot;
+
+        search: do {
+            inv.scrollInHotbar(-1);
+            nextSlot = (nextSlot+1)%9;
+
+            ItemStack stack = inv.getMainHandStack();
+            Item item = stack.getItem();
+            if (stack.isOf(Items.AIR)) continue;
+            if (!(item instanceof Weapon) || item instanceof Gauntlet) break;
+
+            for (int i = 0; i < inv.size(); ++i) {
+                ItemStack itemStack = inv.getStack(i);
+                if (itemStack.isOf(((Weapon)item).ammoType)) break search;
+            }
+        } while (nextSlot != slot);
+    }
 
     public int getCurrentQuakeWeaponId() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) {

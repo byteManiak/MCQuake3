@@ -11,6 +11,7 @@ import com.bytemaniak.mcquake3.render.TrailRenderer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 
 public class Renderers {
@@ -27,55 +28,55 @@ public class Renderers {
     }
 
     private static void registerBlockRenderers() {
-        BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.MACHINEGUN_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.MACHINEGUN_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.SHOTGUN_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.SHOTGUN_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.SHOTGUN_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.GRENADE_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.GRENADE_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.GRENADE_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.ROCKET_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.ROCKET_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.ROCKET_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.LIGHTNING_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.LIGHTNING_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.LIGHTNING_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.RAILGUN_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.RAILGUN_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.RAILGUN_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.PLASMAGUN_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.PLASMAGUN_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.PLASMAGUN_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.BFG_AMMO_BOX_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.BFG_AMMO_BOX_ENTITY,
                 context -> new PickupRenderer<>(Blocks.BFG_AMMO_BOX));
-        BlockEntityRendererRegistry.register(Blocks.HASTE_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.HASTE_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HASTE));
-        BlockEntityRendererRegistry.register(Blocks.INVISIBILITY_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.INVISIBILITY_ENTITY,
                 context -> new PickupRenderer<>(Blocks.INVISIBILITY));
-        BlockEntityRendererRegistry.register(Blocks.QUAD_DAMAGE_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.QUAD_DAMAGE_ENTITY,
                 context -> new PickupRenderer<>(Blocks.QUAD_DAMAGE));
-        BlockEntityRendererRegistry.register(Blocks.HEALTH5_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.HEALTH5_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH5));
-        BlockEntityRendererRegistry.register(Blocks.HEALTH25_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.HEALTH25_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH25));
-        BlockEntityRendererRegistry.register(Blocks.HEALTH50_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.HEALTH50_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEALTH50));
-        BlockEntityRendererRegistry.register(Blocks.SHIELD_CELL_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.SHIELD_CELL_ENTITY,
                 context -> new PickupRenderer<>(Blocks.SHIELD_CELL));
-        BlockEntityRendererRegistry.register(Blocks.LIGHT_ENERGY_SHIELD_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.LIGHT_ENERGY_SHIELD_ENTITY,
                 context -> new PickupRenderer<>(Blocks.LIGHT_ENERGY_SHIELD));
-        BlockEntityRendererRegistry.register(Blocks.HEAVY_ENERGY_SHIELD_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.HEAVY_ENERGY_SHIELD_ENTITY,
                 context -> new PickupRenderer<>(Blocks.HEAVY_ENERGY_SHIELD));
-        BlockEntityRendererRegistry.register(Blocks.MACHINEGUN_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.MACHINEGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.MACHINEGUN));
-        BlockEntityRendererRegistry.register(Blocks.SHOTGUN_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.SHOTGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.SHOTGUN));
-        BlockEntityRendererRegistry.register(Blocks.GRENADE_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.GRENADE_ENTITY,
                 context -> new PickupRenderer<>(Blocks.GRENADE));
-        BlockEntityRendererRegistry.register(Blocks.ROCKET_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.ROCKET_ENTITY,
                 context -> new PickupRenderer<>(Blocks.ROCKET));
-        BlockEntityRendererRegistry.register(Blocks.LIGHTNING_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.LIGHTNING_ENTITY,
                 context -> new PickupRenderer<>(Blocks.LIGHTNING));
-        BlockEntityRendererRegistry.register(Blocks.RAILGUN_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.RAILGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.RAILGUN));
-        BlockEntityRendererRegistry.register(Blocks.PLASMAGUN_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.PLASMAGUN_ENTITY,
                 context -> new PickupRenderer<>(Blocks.PLASMAGUN));
-        BlockEntityRendererRegistry.register(Blocks.BFG_ENTITY,
+        BlockEntityRendererFactories.register(Blocks.BFG_ENTITY,
                 context -> new PickupRenderer<>(Blocks.BFG));
 
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.HEALTH5_BLOCK, RenderLayer.getTranslucent());
@@ -87,10 +88,10 @@ public class Renderers {
 
     private static void registerFeatureRenderers() {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
-            if (entityRenderer instanceof PlayerEntityRenderer) {
+            if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
                 registrationHelper.register(
-                        new QuadDamageGlintRenderer(
-                                entityRenderer,
+                        new QuadDamageGlintRenderer<>(
+                                playerEntityRenderer,
                                 context.getModelLoader()
                         )
                 );

@@ -16,6 +16,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
@@ -39,6 +40,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final long[] weaponTicks = new long[9];
+
+    private final static long TIME_BETWEEN_HURTS = 9;
+    private long lastHurtTick = 0;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -76,10 +80,17 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
             else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
-            else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
-            else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
-            else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
-            else return SoundEvent.of(playerSounds.HURT25);
+            else {
+                long currentTick = getWorld().getTime();
+                if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
+                    lastHurtTick = currentTick;
+                    if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
+                    else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+                    else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
+                    else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
+                    else return SoundEvent.of(playerSounds.HURT25);
+                } else return null;
+            }
         }
         return super.getHurtSound(source);
     }

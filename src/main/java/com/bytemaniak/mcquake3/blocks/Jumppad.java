@@ -28,12 +28,12 @@ import net.minecraft.world.World;
 
 public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvider {
 	private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-	private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 4, 16);
+	private static final VoxelShape SHAPE = Block.createCuboidShape(-7, 0, -7, 23, 2, 23);
 
 	private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
 
 	public Jumppad() {
-		super(FabricBlockSettings.of(Material.METAL).strength(1.5f, 5.0f));
+		super(FabricBlockSettings.of(Material.METAL).strength(1.5f, 5.0f).luminance(7));
 	}
 
 	@Override
@@ -46,10 +46,7 @@ public class Jumppad extends HorizontalFacingBlock implements BlockEntityProvide
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
-	{
-		builder.add(FACING);
-	}
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { builder.add(FACING); }
 
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext context) {

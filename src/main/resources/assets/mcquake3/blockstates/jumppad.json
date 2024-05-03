@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": {"model": "mcquake3:block/jumppad", "y": 0},
-    "facing=east": {"model": "mcquake3:block/jumppad", "y": 90},
-    "facing=south": {"model": "mcquake3:block/jumppad", "y": 180},
-    "facing=west": {"model": "mcquake3:block/jumppad", "y": 270}
-  }
-}

@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.blocks.JumppadEntity;
+import com.bytemaniak.mcquake3.entity.JumppadEntity;
 import com.bytemaniak.mcquake3.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,13 +9,12 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
 public class JumppadScreenHandler extends ScreenHandler {
-    public float forward_power, up_power;
+    public float power;
     public JumppadEntity entity;
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
-        forward_power = buf.readFloat();
-        up_power = buf.readFloat();
+        power = buf.readFloat();
     }
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, JumppadEntity entity) {

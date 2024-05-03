@@ -4,18 +4,20 @@
   "package": "com.bytemaniak.mcquake3.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "misc.ExplosiveProjectileEntityMixin",
+    "misc.LivingEntityMixin",
     "PlayerMixin",
     "ServerPlayerMixin",
-    "misc/ExplosiveProjectileEntityMixin",
-    "misc/LivingEntityMixin"
+    "misc.EntityMixin"
   ],
   "client": [
-    "misc/ClientPlayerInteractionManagerMixin",
-    "misc/ClientPlayerMixin",
-    "misc/HeldItemRendererMixin",
-    "misc/MouseMixin",
-    "misc/MinecraftClientMixin",
-    "misc/WeaponSoundsMixin"
+    "misc.ClientPlayerInteractionManagerMixin",
+    "misc.ClientPlayerMixin",
+    "misc.EntityRenderDispatcherMixin",
+    "misc.HeldItemRendererMixin",
+    "misc.MinecraftClientMixin",
+    "misc.MouseMixin",
+    "misc.WeaponSoundsMixin",
   ],
   "injectors": {
     "defaultRequire": 1

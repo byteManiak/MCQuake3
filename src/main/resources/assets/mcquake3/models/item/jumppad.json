@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "mcquake3:block/jumppad",
-		"particle": "mcquake3:block/jumppad"
+		"0": "mcquake3:item/jumppad",
+		"particle": "mcquake3:item/jumppad"
 	},
 	"elements": [
 		{
@@ -300,8 +300,8 @@
 			"scale": [0.33, 0.33, 0.33]
 		},
 		"ground": {
-			"translation": [0, 1.25, 0],
-			"scale": [0.5, 0.5, 0.5]
+			"translation": [0, 3.5, 0],
+			"scale": [0.3, 0.3, 0.3]
 		},
 		"gui": {
 			"rotation": [59.04, 17.38, -17.01],

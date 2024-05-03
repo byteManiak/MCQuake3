@@ -1,16 +1,24 @@
 package com.bytemaniak.mcquake3.registry;
 
-import com.bytemaniak.mcquake3.blocks.*;
+import com.bytemaniak.mcquake3.blocks.PlasmaInducer;
+import com.bytemaniak.mcquake3.blocks.PlasmaInducerEntity;
+import com.bytemaniak.mcquake3.blocks.Spikes;
 import com.bytemaniak.mcquake3.blocks.ammo.*;
 import com.bytemaniak.mcquake3.blocks.health.*;
 import com.bytemaniak.mcquake3.blocks.powerup.*;
 import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
+import com.bytemaniak.mcquake3.entity.JumppadEntity;
+import com.bytemaniak.mcquake3.items.Jumppad;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -25,8 +33,8 @@ public class Blocks {
     public static final BlockEntityType<PlasmaInducerEntity> PLASMA_INDUCER_BLOCK_ENTITY;
 
     private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
-    public static final Block JUMPPAD_BLOCK = new Jumppad();
-    public static final BlockEntityType<JumppadEntity> JUMPPAD_BLOCK_ENTITY;
+    public static final Item JUMPPAD_ITEM = new Jumppad();
+    public static final EntityType<JumppadEntity> JUMPPAD_ENTITY;
 
     public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3:machinegun_ammo_box");
     public static final Block MACHINEGUN_AMMO_BOX_BLOCK = new MachinegunAmmoBox();
@@ -131,13 +139,15 @@ public class Blocks {
     public static final Block SPIKES_BLOCK = new Spikes();
 
     public static final ItemGroup MCQUAKE3_BLOCKS_GROUP = FabricItemGroup.builder(new Identifier("mcquake3:mcquake3_blocks"))
-            .icon(() -> new ItemStack(JUMPPAD_BLOCK)).build();
+            .icon(() -> new ItemStack(JUMPPAD_ITEM)).build();
 
     static {
         PLASMA_INDUCER_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PLASMA_INDUCER,
                 FabricBlockEntityTypeBuilder.create(PlasmaInducerEntity::new, PLASMA_INDUCER_BLOCK).build());
-        JUMPPAD_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, JUMPPAD,
-                FabricBlockEntityTypeBuilder.create(JumppadEntity::new, JUMPPAD_BLOCK).build());
+        JUMPPAD_ENTITY = Registry.register(Registries.ENTITY_TYPE, JUMPPAD,
+                FabricEntityTypeBuilder.create(SpawnGroup.MISC, JumppadEntity::new)
+                        .dimensions(EntityDimensions.changing(1.875f, 1.25f))
+                        .disableSummon().trackRangeBlocks(128).build());
         MACHINEGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN_AMMO_BOX,
                 FabricBlockEntityTypeBuilder.create(MachinegunAmmoBoxEntity::new, MACHINEGUN_AMMO_BOX_BLOCK).build());
         SHOTGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN_AMMO_BOX,
@@ -193,7 +203,8 @@ public class Blocks {
     public static void loadBlocks() {
         loadDefaultBlock(PLASMA_INDUCER_BLOCK, PLASMA_INDUCER);
         loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
-        loadDefaultBlock(JUMPPAD_BLOCK, new Identifier("mcquake3:jumppad"));
+        Registry.register(Registries.ITEM, JUMPPAD, JUMPPAD_ITEM);
+        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_BLOCKS_GROUP).register(content -> content.add(JUMPPAD_ITEM));
         loadDefaultBlock(MACHINEGUN_AMMO_BOX_BLOCK, MACHINEGUN_AMMO_BOX);
         loadDefaultBlock(SHOTGUN_AMMO_BOX_BLOCK, SHOTGUN_AMMO_BOX);
         loadDefaultBlock(GRENADE_AMMO_BOX_BLOCK, GRENADE_AMMO_BOX);

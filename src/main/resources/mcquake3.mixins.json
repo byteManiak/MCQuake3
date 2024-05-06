@@ -7,13 +7,11 @@
     "misc.ExplosiveProjectileEntityMixin",
     "misc.LivingEntityMixin",
     "PlayerMixin",
-    "ServerPlayerMixin",
-    "misc.EntityMixin"
+    "ServerPlayerMixin"
   ],
   "client": [
     "misc.ClientPlayerInteractionManagerMixin",
     "misc.ClientPlayerMixin",
-    "misc.EntityRenderDispatcherMixin",
     "misc.HeldItemRendererMixin",
     "misc.MinecraftClientMixin",
     "misc.MouseMixin",

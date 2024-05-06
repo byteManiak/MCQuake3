@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -19,6 +19,7 @@ repositories {
 	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 	maven { url 'https://jitpack.io' }
 	maven { url 'https://maven.terraformersmc.com' }
+	maven { url 'https://api.modrinth.com/maven' }
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 
+	modImplementation "maven.modrinth:mecha-api:0.1.1+1.19.4"
 }
 
 processResources {

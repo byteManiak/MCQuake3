@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
+import com.bytemaniak.mecha.MultiCollidable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory {
+public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
     public static final float JUMPPAD_ENTITY_POWER_MAX = 9.5f;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

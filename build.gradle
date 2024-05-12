@@ -20,6 +20,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url 'https://maven.terraformersmc.com' }
 	maven { url 'https://api.modrinth.com/maven' }
+	mavenLocal()
 }
 
 dependencies {

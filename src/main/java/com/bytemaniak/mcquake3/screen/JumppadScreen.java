@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.entity.JumppadEntity;
 import com.bytemaniak.mcquake3.gui.SliderWidgetSettable;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -20,8 +19,10 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 
 public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
+    private static final byte JUMPPAD_ENTITY_POWER_MAX = 10;
+
     private SliderWidgetSettable powerAmount;
-    private float power;
+    private byte power;
 
     private static final Identifier TEXTURE = new Identifier("mcquake3:textures/gui/settings.png");
 
@@ -70,34 +71,38 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         ButtonWidget updatePower = ButtonWidget.builder(Text.of("Apply"), (button) -> {
             // Request the server to update the jump pad's stats when pressing the apply button
             PacketByteBuf msg = PacketByteBufs.create();
-            msg.writeFloat(power);
+            msg.writeByte(power);
             ClientPlayNetworking.send(Packets.JUMPPAD_UPDATE_POWER, msg);
         }).dimensions(baseX + 6, baseY + 52, 40, 20).build();
 
         ButtonWidget increment = ButtonWidget.builder(Text.of("+"), (button) -> {
-            int val = (int) (power * 10) + 1;
-            power = val / 10.f;
-            powerAmount.setValue(power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
-        }).dimensions(baseX + 97, baseY - 6, 20, 20).build();
+            if (power < JUMPPAD_ENTITY_POWER_MAX) power++;
+            powerAmount.setValue((double)power / JUMPPAD_ENTITY_POWER_MAX);
+        }).dimensions(baseX + 97, baseY, 20, 20).build();
 
         ButtonWidget decrement = ButtonWidget.builder(Text.of("-"), (button) -> {
-            int val = (int) (power * 10) - 1;
-            power = val / 10.f;
-            powerAmount.setValue(power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX);
-        }).dimensions(baseX - 11, baseY - 6, 20, 20).build();
+            if (power > 0) power--;
+            powerAmount.setValue((double)power / JUMPPAD_ENTITY_POWER_MAX);
+        }).dimensions(baseX - 11, baseY, 20, 20).build();
 
-        powerAmount = new SliderWidgetSettable(baseX + 11, baseY - 6, 85, 20, Text.of(String.format("%.2f", power)), power / JumppadEntity.JUMPPAD_ENTITY_POWER_MAX) {
+        powerAmount = new SliderWidgetSettable(baseX + 11, baseY, 85, 20,
+                power == 0 ? Text.of("Powered off") :
+                        power == 10 ? Text.of("Off to space") :
+                                Text.of(String.format("%d", power)),
+                (double)power / JUMPPAD_ENTITY_POWER_MAX) {
             @Override
             protected void updateMessage() {
-                setMessage(Text.of(String.format("%.2f", power)));
+                if (power == 0) setMessage(Text.of("Powered off"));
+                else if (power == 10) setMessage(Text.of("Off to space"));
+                else setMessage(Text.of(String.format("%d", power)));
             }
 
             @Override
-            protected void applyValue() { power = .5f + (float)value * JumppadEntity.JUMPPAD_ENTITY_POWER_MAX; }
+            protected void applyValue() { power = (byte)(value * JUMPPAD_ENTITY_POWER_MAX); }
         };
 
         TextWidget powerForwardText = new TextWidget(Text.of("Power:"), textRenderer);
-        powerForwardText.setPosition(baseX - 39, baseY);
+        powerForwardText.setPosition(baseX - 39, baseY + 6);
         powerForwardText.setWidth(0);
         addDrawableChild(powerForwardText);
 

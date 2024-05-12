@@ -42,11 +42,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
-    public static final float JUMPPAD_ENTITY_POWER_MAX = 9.5f;
-
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    private final static TrackedData<Float> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Byte> FACING = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
@@ -68,25 +66,25 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
 
     @Override
     protected void initDataTracker() {
-        dataTracker.startTracking(POWER, 0.f);
+        dataTracker.startTracking(POWER, (byte)0);
         dataTracker.startTracking(FACING, (byte)Direction.UP.getId());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
-        dataTracker.set(POWER, nbt.getFloat("power"));
+        dataTracker.set(POWER, nbt.getByte("power"));
         setFacing(Direction.byId(nbt.getByte("facing")));
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
-        nbt.putFloat("power", dataTracker.get(POWER));
+        nbt.putByte("power", dataTracker.get(POWER));
         nbt.putByte("facing", dataTracker.get(FACING));
     }
 
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeFloat(dataTracker.get(POWER));
+        buf.writeByte(dataTracker.get(POWER));
     }
 
     @Override
@@ -215,8 +213,8 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
     }
     public Direction getFacing() { return Direction.byId(dataTracker.get(FACING)); }
 
-    public void updatePower(float power) { dataTracker.set(POWER, power); }
-    public float getPower() { return dataTracker.get(POWER); }
+    public void updatePower(byte power) { dataTracker.set(POWER, power); }
+    public byte getPower() { return dataTracker.get(POWER); }
 
     public PlayerEntity getLastPlayerUser() { return getWorld().getPlayerByUuid(lastPlayerUser); }
 

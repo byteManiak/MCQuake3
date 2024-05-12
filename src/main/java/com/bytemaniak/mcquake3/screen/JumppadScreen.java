@@ -102,8 +102,8 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
         };
 
         TextWidget powerForwardText = new TextWidget(Text.of("Power:"), textRenderer);
-        powerForwardText.setPosition(baseX - 39, baseY + 6);
-        powerForwardText.setWidth(0);
+        powerForwardText.setPosition(baseX - 56, baseY + 6);
+        powerForwardText.setWidth(32);
         addDrawableChild(powerForwardText);
 
         addDrawableChild(updatePower);

@@ -1,10 +1,13 @@
 package com.bytemaniak.mcquake3.entity;
 
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import com.bytemaniak.mecha.MultiCollidable;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -139,7 +142,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (getWorld().isClient && getPower() > 0) {
+        if (getPower() > 0) {
             Box playerBox = player.getBoundingBox().expand(.1f);
             Box box = null;
             boolean intersectsAny = false;
@@ -151,15 +154,22 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 }
             }
             if (intersectsAny && playerBox.minY >= box.minY) {
-                Vec3d v = Vec3d.fromPolar(getPitch()-90, 90-getYaw());
-                v = v.multiply(getPower());
-                v = v.multiply(1, 1/Math.sqrt(v.y), 1);
-                player.setOnGround(false);
-                player.addVelocity(v);
-                player.velocityModified = true;
-                if (getWorld().getTime() - lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
-                    getWorld().playSound(null, getBlockPos(), Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
+                World world = getWorld();
+                if (world.getTime() - lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
                     lastTick = getWorld().getTime();
+                    if (world.isClient) {
+                        Vec3d v = Vec3d.fromPolar(getPitch() - 90, 90 - getYaw());
+                        v = v.multiply(getPower());
+                        v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
+                        player.setOnGround(false);
+                        player.addVelocity(v);
+                        player.velocityModified = true;
+                        world.playSound(player, getBlockPos(), Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
+
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeBlockPos(getBlockPos());
+                        ClientPlayNetworking.send(Packets.JUMPPAD_SOUND, buf);
+                    }
                 }
             }
         }

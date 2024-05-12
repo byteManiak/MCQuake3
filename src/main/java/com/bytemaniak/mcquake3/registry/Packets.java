@@ -20,6 +20,7 @@ public class Packets {
     public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3:full_arsenal_request");
     public static final Identifier PLAYER_TAUNT = new Identifier("mcquake3:player_taunt");
     public static final Identifier ADD_MEDAL = new Identifier("mcquake3:add_medal");
+    public static final Identifier JUMPPAD_SOUND = new Identifier("mcquake3:jumppad_sound");
 
     public static void registerClientPackets()
     {
@@ -39,5 +40,6 @@ public class Packets {
         ServerPlayNetworking.registerGlobalReceiver(FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_TAUNT, PlayerTauntC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(ADD_MEDAL, AddMedalC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_SOUND, JumppadSoundC2SPacket::receive);
     }
 }

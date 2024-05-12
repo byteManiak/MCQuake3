@@ -19,9 +19,9 @@ public class JumppadPowerC2SPacket {
             // and broadcast back to all players
             JumppadEntity entity = ((JumppadScreenHandler)player.currentScreenHandler).entity;
             PacketByteBuf retBuf = PacketByteBufs.create();
-            entity.updatePower(buf.readFloat());
+            entity.updatePower(buf.readByte());
             retBuf.writeInt(entity.getId());
-            retBuf.writeFloat(entity.getPower());
+            retBuf.writeByte(entity.getPower());
             for (ServerPlayerEntity plr : PlayerLookup.world(player.getWorld()))
                 ServerPlayNetworking.send(plr, Packets.JUMPPAD_UPDATED_POWER, retBuf);
         }

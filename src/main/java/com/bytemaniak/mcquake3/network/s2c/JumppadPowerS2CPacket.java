@@ -10,6 +10,6 @@ import net.minecraft.network.PacketByteBuf;
 public class JumppadPowerS2CPacket {
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         Entity entity = MinecraftClient.getInstance().world.getEntityById(buf.readInt());
-        if (entity instanceof JumppadEntity) ((JumppadEntity) entity).updatePower(buf.readFloat());
+        if (entity instanceof JumppadEntity) ((JumppadEntity) entity).updatePower(buf.readByte());
     }
 }

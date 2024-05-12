@@ -9,12 +9,12 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
 public class JumppadScreenHandler extends ScreenHandler {
-    public float power;
+    public byte power;
     public JumppadEntity entity;
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
-        power = buf.readFloat();
+        power = buf.readByte();
     }
 
     public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, JumppadEntity entity) {

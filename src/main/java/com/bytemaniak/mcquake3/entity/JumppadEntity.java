@@ -42,7 +42,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -53,18 +52,13 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
     private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
     public long lastTick = 0;
 
-    private UUID lastPlayerUser;
-    private JumppadScreenHandler lastScreen;
-
     public JumppadEntity(EntityType<JumppadEntity> entityType, World world) {
         super(entityType, world);
-        lastPlayerUser = UUID.randomUUID();
     }
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        lastScreen = new JumppadScreenHandler(syncId, inv, this);
-        return lastScreen;
+        return new JumppadScreenHandler(syncId, inv, this);
     }
 
     @Override
@@ -225,12 +219,6 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
 
     public void updatePower(byte power) { dataTracker.set(POWER, power); }
     public byte getPower() { return dataTracker.get(POWER); }
-
-    public PlayerEntity getLastPlayerUser() { return getWorld().getPlayerByUuid(lastPlayerUser); }
-
-    public void setLastPlayerUser(PlayerEntity playerUser) { lastPlayerUser = playerUser.getUuid(); }
-
-    public JumppadScreenHandler getLastScreen() { return lastScreen; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

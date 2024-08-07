@@ -124,7 +124,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
             }
             case WEST -> {
                 for (int i = 0; i < 6; i++) {
-                    colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z+1.875));
+                    colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z + 1.875));
                     x += hoff;
                     y += voff;
                 }

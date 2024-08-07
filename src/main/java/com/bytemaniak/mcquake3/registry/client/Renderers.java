@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.registry.client;
 
 import com.bytemaniak.mcquake3.blocks.render.PickupRenderer;
 import com.bytemaniak.mcquake3.entity.JumppadRenderer;
+import com.bytemaniak.mcquake3.entity.PortalEntityRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.FeedbackManager;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
@@ -30,6 +31,7 @@ public class Renderers {
         EntityRendererRegistry.register(Entities.ROCKET, RocketRenderer::new);
         EntityRendererRegistry.register(Entities.BFG10K_PROJECTILE, BFG10KProjectileRenderer::new);
         EntityRendererRegistry.register(Blocks.JUMPPAD_ENTITY, JumppadRenderer::new);
+        EntityRendererRegistry.register(Blocks.PORTAL_ENTITY, PortalEntityRenderer::new);
     }
 
     private static void registerBlockRenderers() {

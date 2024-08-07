@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.entity;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.sound.SoundUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,11 +42,12 @@ public class PortalEntity extends Entity implements GeoEntity {
     public void onPlayerCollision(PlayerEntity player) {
         Box playerBox = player.getBoundingBox().expand(.1f);
         if (playerBox.intersects(getBoundingBox())) {
-            if (getWorld().isClient)
+            if (getWorld().isClient) {
                 player.setPosition(getPos().add(0, 50, 0));
-            else {
+                SoundUtils.playSoundLocally(Sounds.TELEPORT_OUT);
+            } else {
                 getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
+                getWorld().playSoundFromEntity(player, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
         }
     }

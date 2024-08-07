@@ -22,7 +22,7 @@ public class JumppadRenderer extends GeoEntityRenderer<JumppadEntity> {
         if (facing != Direction.UP)
             poseStack.translate(0, 0.6, 0);
 
-        poseStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(animatable.getYaw()));
+        poseStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90-animatable.getYaw()));
         poseStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(animatable.getPitch()));
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }

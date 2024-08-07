@@ -99,14 +99,14 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
         double z = pos.getZ()-.875/2;
         switch (getFacing()) {
             case UP -> colliders.add(VoxelShapes.cuboid(x, y, z, x + 1.875, y + voff, z + 1.875));
-            case EAST -> {
+            case NORTH -> {
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x+1.875, y + voff, z+hoff));
                     z += hoff;
                     y += voff;
                 }
             }
-            case NORTH -> {
+            case EAST -> {
                 y += 5*1.25/6;
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z+1.875));
@@ -114,7 +114,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                     y -= voff;
                 }
             }
-            case WEST -> {
+            case SOUTH -> {
                 y += 5*1.25/6;
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x+1.875, y + voff, z+hoff));
@@ -122,7 +122,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                     y -= voff;
                 }
             }
-            case SOUTH -> {
+            case WEST -> {
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z+1.875));
                     x += hoff;
@@ -152,7 +152,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 if (world.getTime() - lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
                     lastTick = getWorld().getTime();
                     if (world.isClient) {
-                        Vec3d v = Vec3d.fromPolar(getPitch() - 90, 90 - getYaw());
+                        Vec3d v = Vec3d.fromPolar(getPitch() - 90, getYaw());
                         v = v.multiply(getPower());
                         v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
                         player.setOnGround(false);

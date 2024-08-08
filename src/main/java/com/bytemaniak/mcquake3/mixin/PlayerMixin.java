@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.mixin;
 
+import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
@@ -50,6 +51,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private final static long TIME_BETWEEN_HURTS = 9;
     private long lastHurtTick = 0;
+
+    private int portalToLink = -1;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -217,6 +220,24 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         if (quakePlayerSoundsEnabled()) {
             Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
             getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
+        }
+    }
+
+    @Override
+    public void setPortalToLink(PortalEntity entity) {
+        portalToLink = entity.getId();
+    }
+
+    @Override
+    public void setLinkedPortalCoords() {
+        if (portalToLink == -1) return;
+
+        Entity entity = getWorld().getEntityById(portalToLink);
+        if (entity instanceof PortalEntity portalEntity) {
+            portalEntity.setActive(true);
+            portalEntity.setTeleportCoords((float)getX(), (float)getY()+.5f, (float)getZ());
+            portalEntity.setTeleportFacing(getHorizontalFacing());
+            portalToLink = -1;
         }
     }
 }

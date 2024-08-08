@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.entity;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
@@ -27,6 +28,11 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private final static TrackedData<Byte> FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
+    private final static TrackedData<Boolean> ACTIVE = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private final static TrackedData<Float> XCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private final static TrackedData<Float> YCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private final static TrackedData<Float> ZCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private final static TrackedData<Byte> TELEPORT_FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     public PortalEntity(EntityType<?> type, World world) {
         super(type, world, Blocks.PORTAL_ITEM);
@@ -35,16 +41,42 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     @Override
     protected void initDataTracker() {
         dataTracker.startTracking(FACING, (byte) Direction.NORTH.getId());
+        dataTracker.startTracking(ACTIVE, false);
+        dataTracker.startTracking(XCOORD, 0f);
+        dataTracker.startTracking(YCOORD, 0f);
+        dataTracker.startTracking(ZCOORD, 0f);
+        dataTracker.startTracking(TELEPORT_FACING, (byte)0);
     }
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         setFacing(Direction.byId(nbt.getByte("facing")));
+        setActive(nbt.getBoolean("active"));
+        setTeleportCoords(nbt.getFloat("x"), nbt.getFloat("y"), nbt.getFloat("z"));
+        setTeleportFacing(Direction.byId(nbt.getByte("teleport_facing")));
     }
 
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
         nbt.putByte("facing", dataTracker.get(FACING));
+        nbt.putBoolean("active", dataTracker.get(ACTIVE));
+        nbt.putFloat("x", dataTracker.get(XCOORD));
+        nbt.putFloat("y", dataTracker.get(YCOORD));
+        nbt.putFloat("z", dataTracker.get(ZCOORD));
+    }
+
+    public void setTeleportFacing(Direction dir) {
+        dataTracker.set(TELEPORT_FACING, (byte)dir.getId());
+    }
+
+    public void setTeleportCoords(float x, float y, float z) {
+        dataTracker.set(XCOORD, x);
+        dataTracker.set(YCOORD, y);
+        dataTracker.set(ZCOORD, z);
+    }
+
+    public void setActive(boolean active) {
+        dataTracker.set(ACTIVE, active);
     }
 
     public void setFacing(Direction direction) {
@@ -60,25 +92,33 @@ public class PortalEntity extends PropEntity implements GeoEntity {
                 Direction facing = Direction.byId(dataTracker.get(FACING));
                 facing = facing.rotateYClockwise();
                 setFacing(facing);
-            }
+            } else ((QuakePlayer)player).setPortalToLink(this);
             return ActionResult.SUCCESS;
         }
     }
 
     public void teleportEntity(Entity entity) {
-        entity.teleport(getX(), getY()+50, getZ());
+        if (dataTracker.get(ACTIVE)) {
+            entity.teleport(dataTracker.get(XCOORD), dataTracker.get(YCOORD), dataTracker.get(ZCOORD));
+
+            float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
+            entity.setHeadYaw(rotation);
+            entity.setBodyYaw(rotation);
+            entity.setYaw(rotation);
+        }
+
     }
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (!getWorld().isClient) {
+        if (dataTracker.get(ACTIVE)) {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
                 teleportEntity(player);
                 getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
                 getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
-        }
+       }
     }
 
     @Override

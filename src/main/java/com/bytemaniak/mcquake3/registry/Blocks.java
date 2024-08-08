@@ -11,7 +11,7 @@ import com.bytemaniak.mcquake3.blocks.weapon.*;
 import com.bytemaniak.mcquake3.entity.JumppadEntity;
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.items.Jumppad;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import com.bytemaniak.mcquake3.items.Portal;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -39,7 +39,7 @@ public class Blocks {
     public static final EntityType<JumppadEntity> JUMPPAD_ENTITY;
 
     private static final Identifier PORTAL = new Identifier("mcquake3:portal");
-    public static final Item PORTAL_ITEM = new Item(new FabricItemSettings());
+    public static final Item PORTAL_ITEM = new Portal();
     public static final EntityType<PortalEntity> PORTAL_ENTITY;
 
     public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3:machinegun_ammo_box");

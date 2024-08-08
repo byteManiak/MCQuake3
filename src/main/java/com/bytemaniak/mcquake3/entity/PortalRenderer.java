@@ -10,8 +10,8 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 @Environment(EnvType.CLIENT)
-public class PortalEntityRenderer extends GeoEntityRenderer<PortalEntity> {
-    public PortalEntityRenderer(EntityRendererFactory.Context ctx) {
+public class PortalRenderer extends GeoEntityRenderer<PortalEntity> {
+    public PortalRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3:portal"), true));
     }
 

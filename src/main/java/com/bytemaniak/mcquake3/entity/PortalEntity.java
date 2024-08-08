@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.entity;
 
+import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,11 +16,11 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class PortalEntity extends Entity implements GeoEntity {
+public class PortalEntity extends PropEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public PortalEntity(EntityType<?> type, World world) {
-        super(type, world);
+        super(type, world, Blocks.PORTAL_ITEM);
     }
 
     @Override
@@ -37,12 +38,16 @@ public class PortalEntity extends Entity implements GeoEntity {
 
     }
 
+    public void teleportEntity(Entity entity) {
+        entity.teleport(getX(), getY()+50, getZ());
+    }
+
     @Override
     public void onPlayerCollision(PlayerEntity player) {
         if (!getWorld().isClient) {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
-                player.teleport(getX(), getY() + 50, getZ());
+                teleportEntity(player);
                 getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
                 getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }

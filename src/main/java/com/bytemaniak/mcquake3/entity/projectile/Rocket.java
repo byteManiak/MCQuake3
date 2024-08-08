@@ -12,7 +12,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -44,14 +43,6 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
         if (getWorld().isClient) playSound();
 
         super.onSpawnPacket(packet);
-    }
-
-    @Override
-    public void onCollision(HitResult hitResult)
-    {
-        super.onCollision(hitResult);
-
-        if (!getWorld().isClient) despawn();
     }
 
     @Override

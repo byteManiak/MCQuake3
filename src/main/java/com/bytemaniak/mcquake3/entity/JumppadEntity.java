@@ -9,18 +9,14 @@ import com.bytemaniak.mecha.MultiCollidable;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -43,7 +39,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
+public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
@@ -53,7 +49,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
     public long lastTick = 0;
 
     public JumppadEntity(EntityType<JumppadEntity> entityType, World world) {
-        super(entityType, world);
+        super(entityType, world, Blocks.JUMPPAD_ITEM);
     }
 
     @Override
@@ -83,12 +79,6 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeByte(dataTracker.get(POWER));
     }
-
-    @Override
-    public ItemStack getPickBlockStack() { return new ItemStack(Blocks.JUMPPAD_ITEM); }
-
-    @Override
-    public boolean canHit() { return !isRemoved(); }
 
     public List<VoxelShape> getColliders() {
         List<VoxelShape> colliders = new ArrayList<>();
@@ -134,6 +124,13 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
         return colliders;
     }
 
+    public Vec3d getVelocityVector() {
+        Vec3d v = Vec3d.fromPolar(getPitch() - 90, getYaw());
+        v = v.multiply(getPower());
+        v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
+        return v;
+    }
+
     @Override
     public void onPlayerCollision(PlayerEntity player) {
         if (getPower() > 0) {
@@ -152,9 +149,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 if (world.getTime() - lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
                     lastTick = getWorld().getTime();
                     if (world.isClient) {
-                        Vec3d v = Vec3d.fromPolar(getPitch() - 90, getYaw());
-                        v = v.multiply(getPower());
-                        v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
+                        Vec3d v = getVelocityVector();
                         player.setOnGround(false);
                         player.addVelocity(v);
                         player.velocityModified = true;
@@ -167,24 +162,6 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 }
             }
         }
-    }
-
-    private void onBreak() {
-        ItemStack itemStack = new ItemStack(Blocks.JUMPPAD_ITEM);
-        if (hasCustomName()) itemStack.setCustomName(this.getCustomName());
-        dropStack(itemStack);
-        kill();
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (getWorld().isClient) return false;
-        if (source.isSourceCreativePlayer() ||
-            (source.isIn(DamageTypeTags.IS_EXPLOSION) && !source.getName().contains("mcquake3"))) {
-            onBreak();
-            return true;
-        }
-        return false;
     }
 
     @Override

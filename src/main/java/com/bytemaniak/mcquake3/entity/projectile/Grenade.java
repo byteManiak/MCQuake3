@@ -1,5 +1,8 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
+import com.bytemaniak.mcquake3.entity.JumppadEntity;
+import com.bytemaniak.mcquake3.entity.PortalEntity;
+import com.bytemaniak.mcquake3.entity.PropEntity;
 import com.bytemaniak.mcquake3.registry.Entities;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
@@ -37,14 +40,12 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
 
-        if (!getWorld().isClient) despawn();
+        if (!getWorld().isClient && !(entityHitResult.getEntity() instanceof PropEntity))
+            despawn();
     }
 
     @Override
-    public void onCollision(HitResult hitResult)
-    {
-        super.onCollision(hitResult);
-
+    protected void onCollision2(HitResult hitResult) {
         if (hitResult.getType() == HitResult.Type.BLOCK) {
             Vec3d velocity = getVelocity();
             BlockHitResult blockHit = (BlockHitResult) hitResult;
@@ -61,6 +62,20 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
             else getWorld().playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
 
             setVelocity(velocity);
+        } else if (hitResult.getType() == HitResult.Type.ENTITY) {
+            EntityHitResult entityHit = (EntityHitResult) hitResult;
+            if (entityHit.getEntity() instanceof PropEntity entity) {
+                Vec3d velocity = getVelocity();
+                if (entity instanceof JumppadEntity jumppadEntity && jumppadEntity.getPower() > 0)
+                    velocity = velocity.add(jumppadEntity.getVelocityVector());
+                else if (!(entity instanceof PortalEntity))
+                    velocity = velocity.multiply(-1, -1, -1);
+
+                if (velocity.y > 0 && velocity.y < 0.075f) velocity = velocity.multiply(1, 0, 1);
+                else getWorld().playSound(null, getBlockPos(), Sounds.GRENADE_BOUNCE, SoundCategory.PLAYERS, 1, 1);
+
+                setVelocity(velocity);
+            }
         }
     }
 

@@ -24,6 +24,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -38,6 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Shadow public abstract PlayerInventory getInventory();
+    @Shadow public abstract void sendMessage(Text message, boolean overlay);
 
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
@@ -225,6 +227,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Override
     public void setPortalToLink(PortalEntity entity) {
+        int x = entity.getBlockX();
+        int y = entity.getBlockY();
+        int z = entity.getBlockZ();
+        sendMessage(Text.of("Portal ["+x+", "+y+", "+z+"] link started"), true);
         portalToLink = entity.getId();
     }
 
@@ -234,9 +240,17 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
         Entity entity = getWorld().getEntityById(portalToLink);
         if (entity instanceof PortalEntity portalEntity) {
+            int px = portalEntity.getBlockX();
+            int py = portalEntity.getBlockY();
+            int pz = portalEntity.getBlockZ();
+            int x = getBlockX();
+            int y = getBlockY();
+            int z = getBlockZ();
+
             portalEntity.setActive(true);
-            portalEntity.setTeleportCoords((float)getX(), (float)getY()+.5f, (float)getZ());
+            portalEntity.setTeleportCoords(x, y, z);
             portalEntity.setTeleportFacing(getHorizontalFacing());
+            sendMessage(Text.of("Portal ["+px+", "+py+", "+pz+"] linked to ["+x+", "+y+", "+z+"], facing "+getHorizontalFacing().asString()), true);
             portalToLink = -1;
         }
     }

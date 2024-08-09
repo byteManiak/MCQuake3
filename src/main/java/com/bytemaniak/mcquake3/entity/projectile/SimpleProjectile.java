@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.minecraft.entity.Entity;
@@ -65,10 +64,11 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     protected void onCollision(HitResult hitResult) {
         if (hitResult.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityHitResult = (EntityHitResult) hitResult;
-            MCQuake3.LOGGER.info("yes");
             if (entityHitResult.getEntity() instanceof PortalEntity portalEntity) {
-                MCQuake3.LOGGER.info("hi");
+                double speed = getVelocity().length();
                 portalEntity.teleportEntity(this);
+                setVelocity(portalEntity.getTeleportFacingVector().multiply(speed));
+                velocityDirty = true;
                 return;
             }
         }

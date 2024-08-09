@@ -11,11 +11,13 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -63,10 +65,15 @@ public class PortalEntity extends PropEntity implements GeoEntity {
         nbt.putFloat("x", dataTracker.get(XCOORD));
         nbt.putFloat("y", dataTracker.get(YCOORD));
         nbt.putFloat("z", dataTracker.get(ZCOORD));
+        nbt.putByte("teleport_facing", dataTracker.get(TELEPORT_FACING));
     }
 
     public void setTeleportFacing(Direction dir) {
         dataTracker.set(TELEPORT_FACING, (byte)dir.getId());
+    }
+
+    public Vec3d getTeleportFacingVector() {
+        return Vec3d.of(Direction.byId(dataTracker.get(TELEPORT_FACING)).getVector());
     }
 
     public void setTeleportCoords(float x, float y, float z) {
@@ -99,12 +106,29 @@ public class PortalEntity extends PropEntity implements GeoEntity {
 
     public void teleportEntity(Entity entity) {
         if (dataTracker.get(ACTIVE)) {
-            entity.teleport(dataTracker.get(XCOORD), dataTracker.get(YCOORD), dataTracker.get(ZCOORD));
+            double x = dataTracker.get(XCOORD);
+            double y = dataTracker.get(YCOORD);
+            double z = dataTracker.get(ZCOORD);
+            if (!(entity instanceof PlayerEntity)) y += 1;
+
+            entity.teleport(x, y, z);
 
             float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
             entity.setHeadYaw(rotation);
             entity.setBodyYaw(rotation);
             entity.setYaw(rotation);
+
+            for (int i = 0; i < 10; i++) {
+                double rx = x+random.nextDouble()*2;
+                double ry = y+random.nextDouble()*2;
+                double rz = z+random.nextDouble()*2;
+                world.addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
+                world.addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
+            }
+
+            PlayerEntity except = entity instanceof PlayerEntity player ? player : null;
+            getWorld().playSound(except, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+            getWorld().playSoundFromEntity(null, entity, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
         }
 
     }
@@ -115,8 +139,6 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
                 teleportEntity(player);
-                getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
        }
     }

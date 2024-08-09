@@ -125,10 +125,6 @@ public class PortalEntity extends PropEntity implements GeoEntity {
                 world.addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
                 world.addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
             }
-
-            PlayerEntity except = entity instanceof PlayerEntity player ? player : null;
-            getWorld().playSound(except, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-            getWorld().playSoundFromEntity(null, entity, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
         }
 
     }
@@ -139,6 +135,8 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
                 teleportEntity(player);
+                getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
        }
     }

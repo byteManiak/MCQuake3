@@ -31,9 +31,9 @@ public class PortalEntity extends PropEntity implements GeoEntity {
 
     private final static TrackedData<Byte> FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Boolean> ACTIVE = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private final static TrackedData<Float> XCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
-    private final static TrackedData<Float> YCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
-    private final static TrackedData<Float> ZCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private final static TrackedData<Integer> XCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private final static TrackedData<Integer> YCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private final static TrackedData<Integer> ZCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final static TrackedData<Byte> TELEPORT_FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     public PortalEntity(EntityType<?> type, World world) {
@@ -44,9 +44,9 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     protected void initDataTracker() {
         dataTracker.startTracking(FACING, (byte) Direction.NORTH.getId());
         dataTracker.startTracking(ACTIVE, false);
-        dataTracker.startTracking(XCOORD, 0f);
-        dataTracker.startTracking(YCOORD, 0f);
-        dataTracker.startTracking(ZCOORD, 0f);
+        dataTracker.startTracking(XCOORD, 0);
+        dataTracker.startTracking(YCOORD, 0);
+        dataTracker.startTracking(ZCOORD, 0);
         dataTracker.startTracking(TELEPORT_FACING, (byte)0);
     }
 
@@ -54,7 +54,7 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         setFacing(Direction.byId(nbt.getByte("facing")));
         setActive(nbt.getBoolean("active"));
-        setTeleportCoords(nbt.getFloat("x"), nbt.getFloat("y"), nbt.getFloat("z"));
+        setTeleportCoords(nbt.getInt("x"), nbt.getInt("y"), nbt.getInt("z"));
         setTeleportFacing(Direction.byId(nbt.getByte("teleport_facing")));
     }
 
@@ -76,7 +76,7 @@ public class PortalEntity extends PropEntity implements GeoEntity {
         return Vec3d.of(Direction.byId(dataTracker.get(TELEPORT_FACING)).getVector());
     }
 
-    public void setTeleportCoords(float x, float y, float z) {
+    public void setTeleportCoords(int x, int y, int z) {
         dataTracker.set(XCOORD, x);
         dataTracker.set(YCOORD, y);
         dataTracker.set(ZCOORD, z);
@@ -106,9 +106,9 @@ public class PortalEntity extends PropEntity implements GeoEntity {
 
     public void teleportEntity(Entity entity) {
         if (dataTracker.get(ACTIVE)) {
-            double x = dataTracker.get(XCOORD);
-            double y = dataTracker.get(YCOORD);
-            double z = dataTracker.get(ZCOORD);
+            double x = dataTracker.get(XCOORD)+.5;
+            double y = dataTracker.get(YCOORD)+.5;
+            double z = dataTracker.get(ZCOORD)+.5;
             if (!(entity instanceof PlayerEntity)) y += 1;
 
             entity.teleport(x, y, z);

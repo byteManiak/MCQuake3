@@ -119,14 +119,13 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             entity.setYaw(rotation);
 
             for (int i = 0; i < 10; i++) {
-                double rx = x+random.nextDouble()*2;
-                double ry = y+random.nextDouble()*2;
-                double rz = z+random.nextDouble()*2;
+                double rx = x+random.nextDouble()*2-1;
+                double ry = y+random.nextDouble()*2-1;
+                double rz = z+random.nextDouble()*2-1;
                 world.addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
                 world.addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
             }
         }
-
     }
 
     @Override

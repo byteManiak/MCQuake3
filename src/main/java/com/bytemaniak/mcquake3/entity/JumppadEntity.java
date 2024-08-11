@@ -30,18 +30,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
     private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Byte> FACING = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
 
@@ -196,12 +189,4 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
 
     public void updatePower(byte power) { dataTracker.set(POWER, power); }
     public byte getPower() { return dataTracker.get(POWER); }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", state -> PlayState.CONTINUE));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 }

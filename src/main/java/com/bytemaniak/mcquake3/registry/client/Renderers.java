@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.registry.client;
 
 import com.bytemaniak.mcquake3.blocks.render.PickupRenderer;
 import com.bytemaniak.mcquake3.entity.JumppadRenderer;
+import com.bytemaniak.mcquake3.entity.PortalRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.FeedbackManager;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
@@ -10,10 +11,7 @@ import com.bytemaniak.mcquake3.registry.Entities;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.render.TrailRenderer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -30,6 +28,7 @@ public class Renderers {
         EntityRendererRegistry.register(Entities.ROCKET, RocketRenderer::new);
         EntityRendererRegistry.register(Entities.BFG10K_PROJECTILE, BFG10KProjectileRenderer::new);
         EntityRendererRegistry.register(Blocks.JUMPPAD_ENTITY, JumppadRenderer::new);
+        EntityRendererRegistry.register(Blocks.PORTAL_ENTITY, PortalRenderer::new);
     }
 
     private static void registerBlockRenderers() {

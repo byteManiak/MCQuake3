@@ -1,5 +1,7 @@
 package com.bytemaniak.mcquake3.util;
 
+import com.bytemaniak.mcquake3.entity.PortalEntity;
+
 public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds {
     void toggleQuakeGui();
     boolean quakeGuiEnabled();
@@ -23,4 +25,7 @@ public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds 
     void setPlayerVoice(String soundsSet);
 
     void taunt();
+
+    void setPortalToLink(PortalEntity entity);
+    void setLinkedPortalCoords();
 }

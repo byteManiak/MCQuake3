@@ -49,10 +49,7 @@ public class BFG10KProjectile extends SimpleProjectile {
     }
 
     @Override
-    public void onCollision(HitResult hitResult)
-    {
-        super.onCollision(hitResult);
-
+    protected void onCollision2(HitResult hitResult) {
         if (!getWorld().isClient) {
             getWorld().playSound(null, getBlockPos(), Sounds.PLASMABALL_HIT, SoundCategory.NEUTRAL);
             despawn();

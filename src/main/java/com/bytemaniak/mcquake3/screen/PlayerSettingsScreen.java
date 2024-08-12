@@ -11,14 +11,17 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import org.joml.Quaternionf;
 
 @Environment(EnvType.CLIENT)
 public class PlayerSettingsScreen extends Screen {
@@ -165,5 +168,30 @@ public class PlayerSettingsScreen extends Screen {
         renderBackground(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, title, width / 2, 10, 16777215);
         super.render(context, mouseX, mouseY, delta);
+
+        PlayerEntity entity = (PlayerEntity) user;
+        long time = -System.currentTimeMillis()/24 % 360;
+        int modelSize = (int)(height/3.5f);
+        float speed = entity.limbAnimator.getSpeed();
+        float bodyYaw = entity.getBodyYaw();
+        float yaw = entity.getYaw();
+        float pitch = entity.getPitch();
+        float headYaw = entity.headYaw;
+
+        entity.limbAnimator.setSpeed(0);
+        entity.setBodyYaw(time);
+        entity.setYaw(time);
+        entity.setPitch(0);
+        entity.headYaw = entity.getYaw();
+
+        InventoryScreen.drawEntity(context, width/2, height/2+modelSize, modelSize,
+                new Quaternionf().rotateZ((float)Math.PI).rotateX(-(float)Math.PI/15),
+                null, entity);
+
+        entity.limbAnimator.setSpeed(speed);
+        entity.setBodyYaw(bodyYaw);
+        entity.setYaw(yaw);
+        entity.setPitch(pitch);
+        entity.headYaw = headYaw;
     }
 }

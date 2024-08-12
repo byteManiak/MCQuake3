@@ -115,15 +115,15 @@ public class PortalEntity extends PropEntity implements GeoEntity {
                 double rx = x+random.nextDouble()*2-1;
                 double ry = y+random.nextDouble()*2-1;
                 double rz = z+random.nextDouble()*2-1;
-                world.addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
-                world.addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
+                getWorld().addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
+                getWorld().addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
             }
         }
     }
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (dataTracker.get(ACTIVE)) {
+        if (!getWorld().isClient && dataTracker.get(ACTIVE)) {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
                 teleportEntity(player);

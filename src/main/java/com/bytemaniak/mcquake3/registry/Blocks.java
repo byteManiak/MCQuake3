@@ -9,7 +9,9 @@ import com.bytemaniak.mcquake3.blocks.powerup.*;
 import com.bytemaniak.mcquake3.blocks.shield.*;
 import com.bytemaniak.mcquake3.blocks.weapon.*;
 import com.bytemaniak.mcquake3.entity.JumppadEntity;
+import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.items.Jumppad;
+import com.bytemaniak.mcquake3.items.Portal;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -38,6 +40,10 @@ public class Blocks {
     private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
     public static final Item JUMPPAD_ITEM = new Jumppad();
     public static final EntityType<JumppadEntity> JUMPPAD_ENTITY;
+
+    private static final Identifier PORTAL = new Identifier("mcquake3:portal");
+    public static final Item PORTAL_ITEM = new Portal();
+    public static final EntityType<PortalEntity> PORTAL_ENTITY;
 
     public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3:machinegun_ammo_box");
     public static final Block MACHINEGUN_AMMO_BOX_BLOCK = new MachinegunAmmoBox();
@@ -151,6 +157,10 @@ public class Blocks {
                 FabricEntityTypeBuilder.create(SpawnGroup.MISC, JumppadEntity::new)
                         .dimensions(EntityDimensions.changing(1.875f, 1.25f))
                         .disableSummon().trackRangeBlocks(128).build());
+        PORTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, PORTAL,
+                FabricEntityTypeBuilder.create(SpawnGroup.MISC, PortalEntity::new)
+                        .dimensions(EntityDimensions.fixed(.5f, 1.5f))
+                        .trackRangeBlocks(128).build());
         MACHINEGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN_AMMO_BOX,
                 FabricBlockEntityTypeBuilder.create(MachinegunAmmoBoxEntity::new, MACHINEGUN_AMMO_BOX_BLOCK).build());
         SHOTGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN_AMMO_BOX,
@@ -211,7 +221,9 @@ public class Blocks {
         loadDefaultBlock(PLASMA_INDUCER_BLOCK, PLASMA_INDUCER);
         loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
         Registry.register(Registries.ITEM, JUMPPAD, JUMPPAD_ITEM);
+        Registry.register(Registries.ITEM, PORTAL, PORTAL_ITEM);
         ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_BLOCKS_GROUP).register(content -> content.add(JUMPPAD_ITEM));
+        ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_BLOCKS_GROUP).register(content -> content.add(PORTAL_ITEM));
         loadDefaultBlock(MACHINEGUN_AMMO_BOX_BLOCK, MACHINEGUN_AMMO_BOX);
         loadDefaultBlock(SHOTGUN_AMMO_BOX_BLOCK, SHOTGUN_AMMO_BOX);
         loadDefaultBlock(GRENADE_AMMO_BOX_BLOCK, GRENADE_AMMO_BOX);

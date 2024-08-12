@@ -26,6 +26,17 @@
     ]
   },
 
+  "telein": {
+    "sounds": [
+      "mcquake3:telein"
+    ]
+  },
+  "teleout": {
+    "sounds": [
+      "mcquake3:teleout"
+    ]
+  },
+
   "gauntlet_idle": {
     "sounds": [
       "mcquake3:gauntlet_idle"

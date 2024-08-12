@@ -9,18 +9,14 @@ import com.bytemaniak.mecha.MultiCollidable;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -34,37 +30,24 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
+public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
     private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Byte> FACING = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     private static final int JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN = 10;
     public long lastTick = 0;
 
-    private UUID lastPlayerUser;
-    private JumppadScreenHandler lastScreen;
-
     public JumppadEntity(EntityType<JumppadEntity> entityType, World world) {
-        super(entityType, world);
-        lastPlayerUser = UUID.randomUUID();
+        super(entityType, world, Blocks.JUMPPAD_ITEM);
     }
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        lastScreen = new JumppadScreenHandler(syncId, inv, this);
-        return lastScreen;
+        return new JumppadScreenHandler(syncId, inv, this);
     }
 
     @Override
@@ -90,12 +73,6 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
         buf.writeByte(dataTracker.get(POWER));
     }
 
-    @Override
-    public ItemStack getPickBlockStack() { return new ItemStack(Blocks.JUMPPAD_ITEM); }
-
-    @Override
-    public boolean canHit() { return !isRemoved(); }
-
     public List<VoxelShape> getColliders() {
         List<VoxelShape> colliders = new ArrayList<>();
         BlockPos pos = getBlockPos();
@@ -105,14 +82,14 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
         double z = pos.getZ()-.875/2;
         switch (getFacing()) {
             case UP -> colliders.add(VoxelShapes.cuboid(x, y, z, x + 1.875, y + voff, z + 1.875));
-            case EAST -> {
+            case NORTH -> {
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x+1.875, y + voff, z+hoff));
                     z += hoff;
                     y += voff;
                 }
             }
-            case NORTH -> {
+            case EAST -> {
                 y += 5*1.25/6;
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z+1.875));
@@ -120,7 +97,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                     y -= voff;
                 }
             }
-            case WEST -> {
+            case SOUTH -> {
                 y += 5*1.25/6;
                 for (int i = 0; i < 6; i++) {
                     colliders.add(VoxelShapes.cuboid(x, y, z, x+1.875, y + voff, z+hoff));
@@ -128,9 +105,9 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                     y -= voff;
                 }
             }
-            case SOUTH -> {
+            case WEST -> {
                 for (int i = 0; i < 6; i++) {
-                    colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z+1.875));
+                    colliders.add(VoxelShapes.cuboid(x, y, z, x + hoff, y + voff, z + 1.875));
                     x += hoff;
                     y += voff;
                 }
@@ -138,6 +115,13 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
         }
 
         return colliders;
+    }
+
+    public Vec3d getVelocityVector() {
+        Vec3d v = Vec3d.fromPolar(getPitch() - 90, getYaw());
+        v = v.multiply(getPower());
+        v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
+        return v;
     }
 
     @Override
@@ -158,9 +142,7 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 if (world.getTime() - lastTick > JUMPPAD_BOOST_SOUND_TICKS_COOLDOWN) {
                     lastTick = getWorld().getTime();
                     if (world.isClient) {
-                        Vec3d v = Vec3d.fromPolar(getPitch() - 90, 90 - getYaw());
-                        v = v.multiply(getPower());
-                        v = v.multiply(1, 1 / Math.sqrt(v.y), 1);
+                        Vec3d v = getVelocityVector();
                         player.setOnGround(false);
                         player.addVelocity(v);
                         player.velocityModified = true;
@@ -173,24 +155,6 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
                 }
             }
         }
-    }
-
-    private void onBreak() {
-        ItemStack itemStack = new ItemStack(Blocks.JUMPPAD_ITEM);
-        if (hasCustomName()) itemStack.setCustomName(this.getCustomName());
-        dropStack(itemStack);
-        kill();
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (getWorld().isClient) return false;
-        if (source.isSourceCreativePlayer() ||
-            (source.isIn(DamageTypeTags.IS_EXPLOSION) && !source.getName().contains("mcquake3"))) {
-            onBreak();
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -225,18 +189,4 @@ public class JumppadEntity extends Entity implements GeoEntity, ExtendedScreenHa
 
     public void updatePower(byte power) { dataTracker.set(POWER, power); }
     public byte getPower() { return dataTracker.get(POWER); }
-
-    public PlayerEntity getLastPlayerUser() { return getWorld().getPlayerByUuid(lastPlayerUser); }
-
-    public void setLastPlayerUser(PlayerEntity playerUser) { lastPlayerUser = playerUser.getUuid(); }
-
-    public JumppadScreenHandler getLastScreen() { return lastScreen; }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", state -> PlayState.CONTINUE));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 }

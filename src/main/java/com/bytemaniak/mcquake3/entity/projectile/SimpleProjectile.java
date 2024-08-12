@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
+import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -7,6 +8,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
@@ -51,6 +54,26 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
             entity.damage(damageSource, damageAmount);
             despawn();
         }
+    }
+
+    protected void onCollision2(HitResult hitResult) {
+        if (!getWorld().isClient) despawn();
+    }
+
+    @Override
+    protected void onCollision(HitResult hitResult) {
+        if (hitResult.getType() == HitResult.Type.ENTITY) {
+            EntityHitResult entityHitResult = (EntityHitResult) hitResult;
+            if (entityHitResult.getEntity() instanceof PortalEntity portalEntity) {
+                double speed = getVelocity().length();
+                portalEntity.teleportEntity(this);
+                setVelocity(portalEntity.getTeleportFacingVector().multiply(speed));
+                velocityDirty = true;
+                return;
+            }
+        }
+        super.onCollision(hitResult);
+        onCollision2(hitResult);
     }
 
     @Override

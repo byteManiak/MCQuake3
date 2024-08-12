@@ -123,12 +123,14 @@ public class PortalEntity extends PropEntity implements GeoEntity {
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (!getWorld().isClient && dataTracker.get(ACTIVE)) {
+        if (dataTracker.get(ACTIVE)) {
             Box playerBox = player.getBoundingBox().expand(.1f);
             if (playerBox.intersects(getBoundingBox())) {
                 teleportEntity(player);
-                getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
+                if (!getWorld().isClient) {
+                    getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+                    getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
+                }
             }
        }
     }

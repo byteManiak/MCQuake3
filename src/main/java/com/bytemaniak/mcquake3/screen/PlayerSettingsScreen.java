@@ -22,6 +22,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 @Environment(EnvType.CLIENT)
 public class PlayerSettingsScreen extends Screen {
@@ -184,8 +185,8 @@ public class PlayerSettingsScreen extends Screen {
         entity.setPitch(0);
         entity.headYaw = entity.getYaw();
 
-        InventoryScreen.drawEntity(context, width/2, height/2+modelSize, modelSize,
-                new Quaternionf().rotateZ((float)Math.PI).rotateX(-(float)Math.PI/15),
+        InventoryScreen.drawEntity(context, (float)width/2, (float)(height/2+modelSize), modelSize,
+                new Vector3f(0,0,0), new Quaternionf().rotateZ((float)Math.PI).rotateX(-(float)Math.PI/15),
                 null, entity);
 
         entity.limbAnimator.setSpeed(speed);

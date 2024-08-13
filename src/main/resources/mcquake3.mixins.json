@@ -4,14 +4,15 @@
   "package": "com.bytemaniak.mcquake3.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "misc.ExplosiveProjectileEntityMixin",
-    "misc.LivingEntityMixin",
     "PlayerMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "misc.ExplosiveProjectileEntityMixin",
+    "misc.LivingEntityMixin"
   ],
   "client": [
     "misc.ClientPlayerInteractionManagerMixin",
     "misc.ClientPlayerMixin",
+    "misc.EntityRendererMixin",
     "misc.HeldItemRendererMixin",
     "misc.MinecraftClientMixin",
     "misc.MouseMixin",

@@ -22,8 +22,7 @@ public class Packets {
     public static final Identifier ADD_MEDAL = new Identifier("mcquake3:add_medal");
     public static final Identifier JUMPPAD_SOUND = new Identifier("mcquake3:jumppad_sound");
 
-    public static void registerClientPackets()
-    {
+    public static void registerClientPackets() {
         ClientPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(DEALT_DAMAGE, DealtDamageS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(KILLED_PLAYER, KilledPlayerS2CPacket::receive);
@@ -31,8 +30,7 @@ public class Packets {
         ClientPlayNetworking.registerGlobalReceiver(PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
     }
 
-    public static void registerServerPackets()
-    {
+    public static void registerServerPackets() {
         ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(QUAKE_GUI_UPDATE, QuakeGuiUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(WEAPON_REFIRE_UPDATE, WeaponRefireUpdateC2SPacket::receive);

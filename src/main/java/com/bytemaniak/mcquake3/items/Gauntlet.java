@@ -56,9 +56,7 @@ public class Gauntlet extends HitscanWeapon {
             }
 
             speed -= 0.1;
-            if (speed < 0.1) {
-                speed = 0.1;
-            }
+            if (speed < 0.1) speed = 0.1;
 
             stack.getOrCreateNbt().putDouble("firing_speed", speed);
             setAnimData(entity, id, SPEED, speed);

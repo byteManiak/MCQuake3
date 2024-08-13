@@ -14,8 +14,7 @@ public class HeldItemRendererMixin {
     @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;"))
     // When shooting a gun, don't play the bow animation as it looks out of place
     private UseAction cancelFirstPersonBowAnimation(ItemStack instance, Operation<UseAction> original) {
-        if (instance.getItem() instanceof Weapon) {
-            return UseAction.NONE;
-        } else return original.call(instance);
+        if (instance.getItem() instanceof Weapon) return UseAction.NONE;
+        return original.call(instance);
     }
 }

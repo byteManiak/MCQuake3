@@ -89,9 +89,8 @@ public class PlayerSettingsScreen extends Screen {
                     buf.writeString(playerSounds.playerClass);
                     ClientPlayNetworking.send(Packets.PLAYER_CLASS_UPDATE, buf);
                     return true;
-                } else {
-                    return false;
                 }
+                return false;
             }
 
             private void onPressed() {

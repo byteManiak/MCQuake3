@@ -39,9 +39,8 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!getWorld().isClient && getWorld().getTime() - initTick > lifetimeInTicks) {
+        if (!getWorld().isClient && getWorld().getTime() - initTick > lifetimeInTicks)
             despawn();
-        }
     }
 
     public void setQuadDamage() {

@@ -61,9 +61,7 @@ public class Machinegun extends HitscanWeapon {
             }
 
             speed -= 0.03;
-            if (speed < 0.4) {
-                speed = 0.0;
-            }
+            if (speed < 0.4) speed = 0.0;
 
             stack.getOrCreateNbt().putDouble("firing_speed", speed);
             setAnimData(entity, id, SPEED, speed);

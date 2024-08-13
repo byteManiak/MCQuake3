@@ -152,9 +152,7 @@ public abstract class Weapon extends Item implements GeoItem {
     protected abstract void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos);
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return cache;
-    }
+    public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
     public Supplier<Object> getRenderProvider() { return renderProvider; }

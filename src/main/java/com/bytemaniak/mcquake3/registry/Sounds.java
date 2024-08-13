@@ -176,8 +176,7 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, playerSounds.TAUNT, SoundEvent.of(playerSounds.TAUNT));
     }
 
-    public static void loadSounds()
-    {
+    public static void loadSounds() {
         Registry.register(Registries.SOUND_EVENT, JUMPPAD_BOOST_IDENT, JUMPPAD_BOOST);
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, EXCELLENT_IDENT, EXCELLENT);

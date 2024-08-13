@@ -12,6 +12,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -98,18 +99,22 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     }
 
     public void teleportEntity(Entity entity) {
-        if (dataTracker.get(ACTIVE)) {
+        if (!getWorld().isClient && dataTracker.get(ACTIVE)) {
+            float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
+            double speed = entity.getVelocity().length();
             double x = dataTracker.get(XCOORD)+.5;
             double y = dataTracker.get(YCOORD)+.5;
             double z = dataTracker.get(ZCOORD)+.5;
-            if (!(entity instanceof PlayerEntity)) y += 1;
 
-            entity.teleport(x, y, z);
-
-            float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
-            entity.setHeadYaw(rotation);
-            entity.setBodyYaw(rotation);
-            entity.setYaw(rotation);
+            if (entity instanceof ServerPlayerEntity player)
+                player.networkHandler.requestTeleport(x, y, z, rotation, 0);
+            else {
+                y += 1;
+                entity.setYaw(rotation);
+                entity.requestTeleport(x, y, z);
+            }
+            entity.setVelocity(getTeleportFacingVector().multiply(speed));
+            entity.velocityDirty = true;
 
             for (int i = 0; i < 10; i++) {
                 double rx = x+random.nextDouble()*2-1;

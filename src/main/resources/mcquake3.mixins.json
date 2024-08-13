@@ -15,7 +15,7 @@
     "misc.HeldItemRendererMixin",
     "misc.MinecraftClientMixin",
     "misc.MouseMixin",
-    "misc.WeaponSoundsMixin",
+    "misc.WeaponSoundsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

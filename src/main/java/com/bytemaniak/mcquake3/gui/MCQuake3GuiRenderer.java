@@ -31,9 +31,8 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
 
                 for (int i = 0; i < plr.getInventory().size(); i++) {
                     ItemStack currentStack = plr.getInventory().getStack(i);
-                    if (currentStack.isOf(weapon.ammoType)) {
+                    if (currentStack.isOf(weapon.ammoType))
                         weaponAmmo += currentStack.getCount();
-                    }
                 }
                 MiscUtils.drawText(context, String.valueOf(weaponAmmo), x - 180, y, 0x00FFFFFF);
             }

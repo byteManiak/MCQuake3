@@ -135,10 +135,10 @@ public class TrailRenderer implements WorldRenderEvents.End {
 
     private void addLightningGunTrail(Vec3d v1, Vec3d v2, Vec3d upVec, UUID playerId) {
         Optional<TrailData> trail = trailList.stream().filter(t -> t.owner.equals(playerId)).findFirst();
-        if (trail.isEmpty()) {
+        if (trail.isEmpty())
             trailList.add(new TrailData(v1, v2, upVec, MinecraftClient.getInstance().world.getTime(),
                     LIGHTNING_GUN_TRAIL_LIFETIME, LIGHTNING_GUN_TRAIL_COLOR, playerId));
-        } else {
+        else {
             TrailData trailData = trail.get();
             TrailData.updateTrailData(trailData, v1, v2, upVec, MinecraftClient.getInstance().world.getTime());
         }

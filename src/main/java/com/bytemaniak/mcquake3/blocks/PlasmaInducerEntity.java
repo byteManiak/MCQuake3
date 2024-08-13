@@ -138,14 +138,11 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, cookTime);
                 if (cookTime == cookTimeTotal) {
                     blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
-                    if (craftRecipe(world.getRegistryManager(), recipe, blockEntity.inventory)) {
+                    if (craftRecipe(world.getRegistryManager(), recipe, blockEntity.inventory))
                         blockEntity.setLastRecipe(recipeEntry);
-                    }
                 }
                 dirty = true;
-            } else {
-                blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
-            }
+            } else blockEntity.propertyDelegate.set(COOK_TIME_PROPERTY_INDEX, 0);
         } else if (!isBurning && blockEntity.propertyDelegate.get(COOK_TIME_PROPERTY_INDEX) > 0) {
             int cookTime = blockEntity.propertyDelegate.get(COOK_TIME_PROPERTY_INDEX);
             blockEntity.propertyDelegate.set(2, MathHelper.clamp(cookTime - 2, 0, blockEntity.propertyDelegate.get(3)));

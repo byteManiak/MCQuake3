@@ -16,9 +16,8 @@ public class WeaponHum extends TrackedSound {
     public void tick() {
         QuakePlayer player = (QuakePlayer) owner;
         int id = player.getCurrentQuakeWeaponId();
-        if (id != this.id || !player.isPlayingHum()) {
+        if (id != this.id || !player.isPlayingHum())
             stopSound();
-        }
         super.tick();
     }
 }

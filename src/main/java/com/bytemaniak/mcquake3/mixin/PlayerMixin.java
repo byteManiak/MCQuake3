@@ -73,9 +73,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (getMainHandStack().getItem() instanceof Weapon) {
+        if (getMainHandStack().getItem() instanceof Weapon)
             cir.setReturnValue(ActionResult.PASS);
-        }
     }
 
     @Inject(method = "jump", at = @At("HEAD"))
@@ -149,9 +148,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
     private ItemStack stopWeaponAnimation(ItemStack stack) {
-        if (stack.getItem() instanceof Weapon) {
+        if (stack.getItem() instanceof Weapon)
             stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
-        }
         return stack;
     }
 
@@ -196,11 +194,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public int getCurrentQuakeWeaponId() {
-        if (getMainHandStack().getItem() instanceof Weapon weapon) {
-            return weapon.slot;
-        } else {
-            return -1;
-        }
+        if (getMainHandStack().getItem() instanceof Weapon weapon) return weapon.slot;
+        return -1;
     }
 
     public int getEnergyShield() { return dataTracker.get(QUAKE_ARMOR); }

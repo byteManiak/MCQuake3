@@ -28,9 +28,8 @@ public class MinecraftClientMixin {
         MinecraftClient client = MinecraftClient.getInstance();
         if (key.getTranslationKey().equals("key.use") &&
                 client.player.getActiveItem().getItem() instanceof Weapon &&
-                client.options.attackKey.isPressed()) {
+                client.options.attackKey.isPressed())
             return true;
-        }
         return original.call(key);
     }
 }

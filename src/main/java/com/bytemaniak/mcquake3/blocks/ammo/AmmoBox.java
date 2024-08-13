@@ -32,9 +32,8 @@ public abstract class AmmoBox extends Pickup {
                     for (int i = 9; i < main.size(); ++i) {
                         if (ammo.getCount() == 0) break;
 
-                        if (main.get(i).isOf(weapon.ammoType)) {
+                        if (main.get(i).isOf(weapon.ammoType))
                             ammo.setCount(inventory.addStack(i, ammo));
-                        }
                         else if (main.get(i).isEmpty()) {
                             player.getInventory().insertStack(i, ammo);
                             break;

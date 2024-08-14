@@ -11,8 +11,10 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -22,6 +24,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 
+import java.util.EnumSet;
+
 public class PortalEntity extends PropEntity implements GeoEntity {
     private final static TrackedData<Byte> FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Boolean> ACTIVE = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -29,6 +33,9 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     private final static TrackedData<Integer> YCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final static TrackedData<Integer> ZCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final static TrackedData<Byte> TELEPORT_FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
+
+    private final static long TELEPORT_COOLDOWN = 10;
+    private long lastTick = 0;
 
     public PortalEntity(EntityType<?> type, World world) {
         super(type, world, Blocks.PORTAL_ITEM);
@@ -106,23 +113,27 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             double y = dataTracker.get(YCOORD)+.5;
             double z = dataTracker.get(ZCOORD)+.5;
 
-            if (entity instanceof ServerPlayerEntity player)
-                player.networkHandler.requestTeleport(x, y, z, rotation, 0);
-            else {
+            if (!(entity instanceof PlayerEntity))
                 y += 1;
-                entity.setYaw(rotation);
-                entity.requestTeleport(x, y, z);
+
+            entity.velocityModified = true;
+
+            if (entity instanceof ServerPlayerEntity player) {
+                if (getWorld().getTime() - lastTick > TELEPORT_COOLDOWN) {
+                    player.networkHandler.requestTeleport(x, y, z, rotation, 0);
+                    getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+                    getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
+
+                    lastTick = getWorld().getTime();
+                }
             }
+            else entity.teleport((ServerWorld)getWorld(), x, y, z, EnumSet.noneOf(PositionFlag.class), rotation, 0);
+
             entity.setVelocity(getTeleportFacingVector().multiply(speed));
             entity.velocityDirty = true;
 
-            for (int i = 0; i < 10; i++) {
-                double rx = x+random.nextDouble()*2-1;
-                double ry = y+random.nextDouble()*2-1;
-                double rz = z+random.nextDouble()*2-1;
-                getWorld().addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
-                getWorld().addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
-            }
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.SMOKE, x, y, z, 10, .1, .1, .1, 0);
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.FLAME, x, y, z, 10, .1, .1, .1, 0);
         }
     }
 
@@ -130,13 +141,7 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     public void onPlayerCollision(PlayerEntity player) {
         if (dataTracker.get(ACTIVE)) {
             Box playerBox = player.getBoundingBox().expand(.1f);
-            if (playerBox.intersects(getBoundingBox())) {
-                teleportEntity(player);
-                if (!getWorld().isClient) {
-                    getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                    getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
-                }
-            }
+            if (playerBox.intersects(getBoundingBox())) teleportEntity(player);
        }
     }
 }

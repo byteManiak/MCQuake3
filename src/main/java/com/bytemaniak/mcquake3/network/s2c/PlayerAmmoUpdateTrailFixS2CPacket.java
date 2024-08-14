@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 
@@ -19,8 +20,11 @@ public class PlayerAmmoUpdateTrailFixS2CPacket {
         if (player != null) {
             ItemStack lightningAmmo = hasLightningAmmo ? new ItemStack(Weapons.LIGHTNING_CELL) : ItemStack.EMPTY;
             ItemStack railgunAmmo = hasRailgunAmmo ? new ItemStack(Weapons.RAILGUN_ROUND) : ItemStack.EMPTY;
-            player.getInventory().setStack(2, lightningAmmo);
-            player.getInventory().setStack(3, railgunAmmo);
+            PlayerInventory inventory = player.getInventory();
+            int hotbarOffset = PlayerInventory.getHotbarSize();
+
+            inventory.setStack(hotbarOffset, lightningAmmo);
+            inventory.setStack(hotbarOffset+1, railgunAmmo);
         }
     }
 }

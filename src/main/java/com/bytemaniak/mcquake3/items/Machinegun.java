@@ -28,7 +28,7 @@ public class Machinegun extends HitscanWeapon {
     public Machinegun() {
         super(new Identifier("mcquake3:machinegun"), MACHINEGUN_REFIRE_RATE, MACHINEGUN_REFIRE_RATE,
                 true, Sounds.MACHINEGUN_FIRE, false, MACHINEGUN_DAMAGE, Q3DamageSources.MACHINEGUN_DAMAGE,
-                MACHINEGUN_RANGE, Weapons.BULLET, 100, 50, 1);
+                MACHINEGUN_RANGE, Weapons.BULLET, 100, 50, 1, false);
     }
 
     @Override

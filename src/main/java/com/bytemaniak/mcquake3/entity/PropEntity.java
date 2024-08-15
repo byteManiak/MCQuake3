@@ -30,12 +30,10 @@ public abstract class PropEntity extends Entity implements GeoEntity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
+        if (source.isSourceCreativePlayer()) return false;
+
         if (source.getAttacker() instanceof PlayerEntity player) {
             ItemStack stack = player.getMainHandStack();
-
-            if (source.isSourceCreativePlayer() && stack == ItemStack.EMPTY)
-                return false;
-
             return !stack.isOf(Weapons.TOOL);
         }
 

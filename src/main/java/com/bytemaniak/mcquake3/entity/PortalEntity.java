@@ -34,9 +34,6 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     private final static TrackedData<Integer> ZCOORD = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final static TrackedData<Byte> TELEPORT_FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
 
-    private final static long TELEPORT_COOLDOWN = 10;
-    private long lastTick = 0;
-
     public PortalEntity(EntityType<?> type, World world) {
         super(type, world, Blocks.PORTAL_ITEM);
     }
@@ -110,25 +107,24 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
             double speed = entity.getVelocity().length();
             double x = dataTracker.get(XCOORD)+.5;
-            double y = dataTracker.get(YCOORD)+.5;
+            double y = dataTracker.get(YCOORD);
             double z = dataTracker.get(ZCOORD)+.5;
 
             if (!(entity instanceof PlayerEntity))
-                y += 1;
-
-            entity.velocityModified = true;
+                y += 1.5;
 
             if (entity instanceof ServerPlayerEntity player) {
-                if (getWorld().getTime() - lastTick > TELEPORT_COOLDOWN) {
-                    player.networkHandler.requestTeleport(x, y, z, rotation, 0);
-                    getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                    getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
+                if (player.isInTeleportationState()) return;
 
-                    lastTick = getWorld().getTime();
-                }
+                double y_off = Math.max(0, player.getY() - getY());
+                player.networkHandler.requestTeleport(x, y+y_off, z, rotation, 0);
+                player.inTeleportationState = true;
+                getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
             else entity.teleport((ServerWorld)getWorld(), x, y, z, EnumSet.noneOf(PositionFlag.class), rotation, 0);
 
+            entity.velocityModified = true;
             entity.setVelocity(getTeleportFacingVector().multiply(speed));
             entity.velocityDirty = true;
 
@@ -144,4 +140,6 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             if (playerBox.intersects(getBoundingBox())) teleportEntity(player);
        }
     }
+
+
 }

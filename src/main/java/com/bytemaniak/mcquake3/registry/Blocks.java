@@ -157,7 +157,7 @@ public class Blocks {
         PORTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, PORTAL,
                 FabricEntityTypeBuilder.create(SpawnGroup.MISC, PortalEntity::new)
                         .dimensions(EntityDimensions.fixed(.5f, 1.5f))
-                        .trackRangeBlocks(128).build());
+                        .disableSummon().trackRangeBlocks(128).build());
         MACHINEGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN_AMMO_BOX,
                 FabricBlockEntityTypeBuilder.create(MachinegunAmmoBoxEntity::new, MACHINEGUN_AMMO_BOX_BLOCK).build());
         SHOTGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN_AMMO_BOX,

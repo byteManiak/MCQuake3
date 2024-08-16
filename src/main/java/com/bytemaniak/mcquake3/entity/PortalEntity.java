@@ -128,8 +128,8 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             entity.setVelocity(getTeleportFacingVector().multiply(speed));
             entity.velocityDirty = true;
 
-            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.SMOKE, x, y, z, 10, .1, .1, .1, 0);
-            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.FLAME, x, y, z, 10, .1, .1, .1, 0);
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.SMOKE, x, y+.5, z, 20, .5, .5, .5, 0);
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.FLAME, x, y+.5, z, 10, .5, .5, .5, 0);
         }
     }
 

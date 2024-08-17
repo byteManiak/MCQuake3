@@ -1166,5 +1166,38 @@
     "sounds": [
       "mcquake3:players/tony/taunt"
     ]
+  },
+
+  "disc_kojinsmokin": {
+    "sounds": [
+      {
+        "name": "mcquake3:kojinsmokin",
+        "stream": true
+      }
+    ]
+  },
+  "disc_ninesix": {
+    "sounds": [
+      {
+        "name": "mcquake3:ninesix",
+        "stream": true
+      }
+    ]
+  },
+  "disc_sixtyfour": {
+    "sounds": [
+      {
+        "name": "mcquake3:sixtyfour",
+        "stream": true
+      }
+    ]
+  },
+  "disc_stairs": {
+    "sounds": [
+      {
+        "name": "mcquake3:stairs",
+        "stream": true
+      }
+    ]
   }
 }

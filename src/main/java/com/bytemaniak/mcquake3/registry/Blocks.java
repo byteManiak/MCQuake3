@@ -27,9 +27,16 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public class Blocks {
+    public static final RegistryKey<World> Q3_DIMENSION = RegistryKey.of(RegistryKeys.WORLD, new Identifier("mcquake3:q3_dimension"));
+    public static final RegistryKey<DimensionType> Q3_DIMENSION_TYPE = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, new Identifier("mcquake3:q3_dimension_type"));
+
     private static final Identifier PLASMA_INDUCER = new Identifier("mcquake3:plasma_inducer");
     public static final Block PLASMA_INDUCER_BLOCK = new PlasmaInducer();
     public static final BlockEntityType<PlasmaInducerEntity> PLASMA_INDUCER_BLOCK_ENTITY;

@@ -1,0 +1,14 @@
+{
+  "generator": {
+    "type": "minecraft:flat",
+    "custom_bool": true,
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:the_void"
+    },
+    "settings": {
+      "layers": []
+    }
+  },
+  "type": "mcquake3:q3_dimension_type"
+}

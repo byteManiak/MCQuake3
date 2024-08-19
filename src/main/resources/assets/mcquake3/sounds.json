@@ -1172,7 +1172,8 @@
     "sounds": [
       {
         "name": "mcquake3:kojinsmokin",
-        "stream": true
+        "stream": true,
+        "volume": 0.4
       }
     ]
   },
@@ -1180,7 +1181,8 @@
     "sounds": [
       {
         "name": "mcquake3:ninesix",
-        "stream": true
+        "stream": true,
+        "volume": 0.4
       }
     ]
   },
@@ -1188,7 +1190,8 @@
     "sounds": [
       {
         "name": "mcquake3:sixtyfour",
-        "stream": true
+        "stream": true,
+        "volume": 0.4
       }
     ]
   },
@@ -1196,7 +1199,28 @@
     "sounds": [
       {
         "name": "mcquake3:stairs",
-        "stream": true
+        "stream": true,
+        "volume": 0.4
+      }
+    ]
+  },
+  "music.q3": {
+    "sounds": [
+      {
+        "name": "mcquake3:disc_kojinsmokin",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_ninesix",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_sixtyfour",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_stairs",
+        "type": "event"
       }
     ]
   }

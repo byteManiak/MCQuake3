@@ -4,10 +4,12 @@
     "custom_bool": true,
     "biome_source": {
       "type": "minecraft:fixed",
-      "biome": "minecraft:the_void"
+      "biome": "mcquake3:q3_biome"
     },
     "settings": {
-      "layers": []
+      "features": false,
+      "layers": [],
+      "structure_overrides": []
     }
   },
   "type": "mcquake3:q3_dimension_type"

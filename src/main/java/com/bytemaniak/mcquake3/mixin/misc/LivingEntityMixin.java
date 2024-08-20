@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
+import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.data.QuakeMapState;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
@@ -16,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -80,7 +82,8 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;onDeath(Lnet/minecraft/entity/damage/DamageSource;)V"))
     // Respawn player to a custom map spawnpoint if playing in Quake dimension instead of killing them
     private void respawnQuakePlayer(LivingEntity entity, DamageSource damageSource, Operation<Void> original) {
-        if (entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).quakeGuiEnabled() &&
+        if (!(damageSource.isOf(DamageTypes.OUT_OF_WORLD) && Float.isInfinite(entity.lastDamageTaken)) &&
+                entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).quakeGuiEnabled() &&
                 player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
                 !player.isCreative() && !player.isSpectator()) {
             ServerWorld world = player.getWorld();

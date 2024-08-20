@@ -1,6 +1,8 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.bytemaniak.mcquake3.data.QuakeMapState;
+import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
+import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
@@ -23,6 +25,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -91,13 +94,26 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
             QuakeMapState.MapData map = state.getActiveMap();
             QuakeMapState.MapData.Spawnpoint spawnpoint = map.spawnpoints.get(ThreadLocalRandom.current().nextInt(map.spawnpoints.size()));
 
+            if (player.getMainHandStack().getItem() instanceof Weapon weapon) {
+                for (int i = PlayerInventory.getHotbarSize(); i < player.getInventory().size(); ++i) {
+                    ItemStack itemStack = player.getInventory().getStack(i);
+                    if (itemStack.isOf(weapon.ammoType)) {
+                        ItemStack ammoDrop = new ItemStack(weapon.ammoType, weapon.ammoBoxCount/2);
+                        ItemEntityGotoNonHotbar ammoEntity = new ItemEntityGotoNonHotbar(world, player.getX(), player.getY(), player.getZ(), ammoDrop);
+                        ammoEntity.setPickupDelay(20);
+                        world.spawnEntity(ammoEntity);
+                        break;
+                    }
+                }
+            }
+
             player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
             player.setHealth(player.getMaxHealth());
 
             player.getInventory().clear();
             player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
             player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
-            MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, 100), player.getInventory());
+            MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
             ServerPlayNetworking.send(player, Packets.SCROLL_NEXT_WEAPON, PacketByteBufs.empty());
 
             // TODO: Add death messages in the chat as this is a fake death

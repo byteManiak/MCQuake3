@@ -19,6 +19,6 @@ public class Tool extends Item{
 
         QuakePlayer player = (QuakePlayer) user;
         player.setLinkedPortalCoords();
-        return super.use(world, user, hand);
+        return TypedActionResult.success(user.getStackInHand(hand));
     }
 }

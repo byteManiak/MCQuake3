@@ -68,7 +68,7 @@ public class MapTool extends Item implements NamedScreenHandlerFactory {
                 break;
         }
         state.markDirty();
-        return super.use(world, user, hand);
+        return TypedActionResult.success(stack);
     }
 
     @Override

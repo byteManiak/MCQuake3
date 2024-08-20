@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.data.QuakeMapState;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;

@@ -107,6 +107,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 }
             }
 
+            player.fallDistance = 0;
             player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
             player.setHealth(player.getMaxHealth());
 

@@ -150,6 +150,12 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
+        ButtonWidget joinMatch =
+                ButtonWidget.builder(
+                                Text.of("Join Quake match"),
+                                (button -> ClientPlayNetworking.send(Packets.REQUEST_JOIN_MATCH, PacketByteBufs.empty())))
+                        .dimensions(width - 150, height - 72, 130, 20).build();
+
         ButtonWidget giveWeapons =
                 ButtonWidget.builder(
                         Text.of("Give me a full arsenal"),
@@ -160,6 +166,7 @@ public class PlayerSettingsScreen extends Screen {
         addDrawableChild(voiceList);
         addDrawableChild(toggleGui);
         addDrawableChild(toggleRefireRates);
+        addDrawableChild(joinMatch);
         addDrawableChild(giveWeapons);
         super.init();
     }

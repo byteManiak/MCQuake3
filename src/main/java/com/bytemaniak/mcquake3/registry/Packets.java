@@ -21,6 +21,7 @@ public class Packets {
     public static final Identifier PLAYER_TAUNT = new Identifier("mcquake3:player_taunt");
     public static final Identifier ADD_MEDAL = new Identifier("mcquake3:add_medal");
     public static final Identifier JUMPPAD_SOUND = new Identifier("mcquake3:jumppad_sound");
+    public static final Identifier REQUEST_JOIN_MATCH = new Identifier("mcquake3:join_match");
 
     public static void registerClientPackets() {
         ClientPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
@@ -39,5 +40,6 @@ public class Packets {
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_TAUNT, PlayerTauntC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(ADD_MEDAL, AddMedalC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_SOUND, JumppadSoundC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(REQUEST_JOIN_MATCH, JoinMatchC2SPacket::receive);
     }
 }

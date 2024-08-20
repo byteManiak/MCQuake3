@@ -109,15 +109,17 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
             }
 
             player.fallDistance = 0;
-            if (!player.isInTeleportationState())
+            if (!player.isInTeleportationState()) {
                 player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
-            player.setHealth(player.getMaxHealth());
 
-            player.getInventory().clear();
-            player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
-            player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
-            MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
-            ServerPlayNetworking.send(player, Packets.SCROLL_NEXT_WEAPON, PacketByteBufs.empty());
+                player.getInventory().clear();
+                player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
+                player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
+                MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
+                ServerPlayNetworking.send(player, Packets.SCROLL_NEXT_WEAPON, PacketByteBufs.empty());
+            }
+
+            player.setHealth(player.getMaxHealth());
 
             // TODO: Add death messages in the chat as this is a fake death
             //  which will not trigger the ingame messages on its own

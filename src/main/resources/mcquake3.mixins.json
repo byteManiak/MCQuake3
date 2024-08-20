@@ -14,6 +14,7 @@
     "misc.ClientPlayerMixin",
     "misc.EntityRendererMixin",
     "misc.HeldItemRendererMixin",
+    "misc.InGameHudMixin",
     "misc.MinecraftClientMixin",
     "misc.MouseMixin",
     "misc.MusicTrackerMixin",

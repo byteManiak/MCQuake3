@@ -4,9 +4,7 @@ import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.sound.WeaponSounds;
 
 public interface QuakePlayer extends WeaponSounds {
-    void toggleQuakeGui();
-    boolean quakeGuiEnabled();
-    void setQuakeGui(boolean enabled);
+    boolean playingQuakeMap();
 
     int getEnergyShield();
     void setEnergyShield(int amount);

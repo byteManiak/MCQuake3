@@ -82,7 +82,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     // Respawn player to a custom map spawnpoint if playing in Quake dimension instead of killing them
     private void respawnQuakePlayer(LivingEntity entity, DamageSource damageSource, Operation<Void> original) {
         if (!(damageSource.isOf(DamageTypes.OUT_OF_WORLD) && Float.isInfinite(entity.lastDamageTaken)) &&
-                entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).quakeGuiEnabled() &&
+                entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).playingQuakeMap() &&
                 player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
                 !player.isCreative() && !player.isSpectator()) {
             ServerWorld world = player.getWorld();

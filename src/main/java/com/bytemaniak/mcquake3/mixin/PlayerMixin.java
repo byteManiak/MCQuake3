@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.mixin;
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -40,10 +41,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Shadow public abstract PlayerInventory getInventory();
     @Shadow public abstract void sendMessage(Text message, boolean overlay);
+    @Shadow public abstract boolean isCreative();
+    @Shadow public abstract boolean isSpectator();
 
     private static final float FALL_DISTANCE_MODIFIER = 4;
 
-    private static final TrackedData<Boolean> QUAKE_GUI_ENABLED = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
     private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
@@ -120,7 +122,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putBoolean("quake_gui_enabled", quakeGuiEnabled());
         nbt.putString("quake_player_sounds", getPlayerVoice());
         nbt.putInt("quake_energy_shield", getEnergyShield());
         nbt.putBoolean("has_ql_refire_rate", hasQLRefireRate());
@@ -128,7 +129,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        dataTracker.set(QUAKE_GUI_ENABLED, nbt.getBoolean("quake_gui_enabled"));
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
         dataTracker.set(HAS_QL_REFIRE_RATE, nbt.getBoolean("has_ql_refire_rate"));
 
@@ -138,15 +138,14 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     public void initQuakeDataTracker(CallbackInfo ci) {
-        dataTracker.startTracking(QUAKE_GUI_ENABLED, false);
         dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
         dataTracker.startTracking(QUAKE_ARMOR, 0);
         dataTracker.startTracking(HAS_QL_REFIRE_RATE, false);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
-    private void noDropInventoryInQuakeMode(CallbackInfo ci) {
-        if (quakeGuiEnabled()) ci.cancel();
+    private void noDropInventoryInQuakeMap(CallbackInfo ci) {
+        if (playingQuakeMap()) ci.cancel();
     }
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
@@ -156,13 +155,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return stack;
     }
 
-    public void toggleQuakeGui() {
-        boolean guiMode = !dataTracker.get(QUAKE_GUI_ENABLED);
-        dataTracker.set(QUAKE_GUI_ENABLED, guiMode);
+    public boolean playingQuakeMap() {
+        return getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE && !isCreative() && !isSpectator();
     }
-
-    public boolean quakeGuiEnabled() { return dataTracker.get(QUAKE_GUI_ENABLED); }
-    public void setQuakeGui(boolean enabled) { dataTracker.set(QUAKE_GUI_ENABLED, enabled); }
 
     public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
 

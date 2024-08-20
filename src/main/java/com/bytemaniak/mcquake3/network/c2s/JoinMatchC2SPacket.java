@@ -24,8 +24,6 @@ public class JoinMatchC2SPacket {
 
         QuakeMapState.MapData activeMap = state.getActiveMap();
         if (!activeMap.spawnpoints.isEmpty()) {
-            QuakePlayer qPlayer = (QuakePlayer)player;
-            qPlayer.setQuakeGui(true);
             player.changeGameMode(GameMode.ADVENTURE);
 
             QuakeMapState.MapData.Spawnpoint spawnpoint = activeMap.spawnpoints.get(ThreadLocalRandom.current().nextInt(activeMap.spawnpoints.size()));

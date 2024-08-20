@@ -14,7 +14,6 @@ public class Packets {
     public static final Identifier PLAYER_AMMO_TRAIL_FIX = new Identifier("mcquake3:trail_fix");
 
     public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3:jumppad_update_power");
-    public static final Identifier QUAKE_GUI_UPDATE = new Identifier("mcquake3:quake_gui_update");
     public static final Identifier WEAPON_REFIRE_UPDATE = new Identifier("mcquake3:weapon_refire_update");
     public static final Identifier PLAYER_CLASS_UPDATE = new Identifier("mcquake3:player_class_update");
     public static final Identifier FULL_ARSENAL_REQUEST = new Identifier("mcquake3:full_arsenal_request");
@@ -34,7 +33,6 @@ public class Packets {
 
     public static void registerServerPackets() {
         ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(QUAKE_GUI_UPDATE, QuakeGuiUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(WEAPON_REFIRE_UPDATE, WeaponRefireUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);

@@ -38,7 +38,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
             }
         }
 
-        if (player.quakeGuiEnabled()) {
+        if (player.playingQuakeMap()) {
             int playerHealth = (int)(plr.getHealth()*5);
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :

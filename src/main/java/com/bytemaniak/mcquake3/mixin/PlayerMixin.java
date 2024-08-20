@@ -184,7 +184,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             if (stack.isOf(Items.AIR)) continue;
             if (!(item instanceof Weapon) || item instanceof Gauntlet) break;
 
-            for (int i = 0; i < inv.size(); ++i) {
+            for (int i = PlayerInventory.getHotbarSize(); i < inv.size(); ++i) {
                 ItemStack itemStack = inv.getStack(i);
                 if (itemStack.isOf(((Weapon)item).ammoType)) break search;
             }

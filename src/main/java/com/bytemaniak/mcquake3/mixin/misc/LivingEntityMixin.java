@@ -6,6 +6,7 @@ import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -92,6 +93,12 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
 
             player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
             player.setHealth(player.getMaxHealth());
+
+            player.getInventory().clear();
+            player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
+            player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
+            MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, 100), player.getInventory());
+            ServerPlayNetworking.send(player, Packets.SCROLL_NEXT_WEAPON, PacketByteBufs.empty());
 
             // TODO: Add death messages in the chat as this is a fake death
             //  which will not trigger the ingame messages on its own

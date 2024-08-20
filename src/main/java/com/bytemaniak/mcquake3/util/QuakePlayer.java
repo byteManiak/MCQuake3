@@ -32,4 +32,6 @@ public interface QuakePlayer extends WeaponSounds {
 
     void setMapToolName(String mapName);
     String getMapToolName();
+    void setMapToolMode(int mode);
+    int getMapToolMode();
 }

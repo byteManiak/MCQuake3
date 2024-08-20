@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
@@ -32,11 +31,15 @@ public class MapTool extends Item implements NamedScreenHandlerFactory {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        if (world.isClient || world.getDimensionKey() != Blocks.Q3_DIMENSION_TYPE) return TypedActionResult.pass(stack);
+        if (world.isClient) return TypedActionResult.pass(stack);
+        if (world.getDimensionKey() != Blocks.Q3_DIMENSION_TYPE) {
+            user.sendMessage(Text.of("You need to be in the Quake3 dimension to use the map tool."), true);
+            return TypedActionResult.pass(stack);
+        }
 
-        String mapName = ((QuakePlayer)user).getMapToolName();
-        NbtCompound nbt = stack.getOrCreateNbt();
-        int mode = nbt.getInt("tool_mode");
+        QuakePlayer player = (QuakePlayer)user;
+        String mapName = player.getMapToolName();
+        int mode = player.getMapToolMode();
 
         if (user.isSneaking()) {
             if (mode == CREATE_INITIAL_MODE && mapName.isEmpty()) {
@@ -44,7 +47,7 @@ public class MapTool extends Item implements NamedScreenHandlerFactory {
                 return TypedActionResult.pass(stack);
             }
             mode = 1-mode;
-            nbt.putInt("tool_mode", mode);
+            player.setMapToolMode(mode);
             user.sendMessage(Text.of("Tool mode: "+modeNames[mode]), true);
             return TypedActionResult.success(stack);
         }

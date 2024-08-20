@@ -9,8 +9,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
-import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,10 +27,10 @@ public class QuakeMapState extends PersistentState {
         }
 
         public String mapName;
-        public List<Spawnpoint> spawnpoints = Lists.newArrayList();
+        public List<Spawnpoint> spawnpoints = new ArrayList<>();
     }
 
-    public final List<MapData> maps = Lists.newArrayList();
+    public List<MapData> maps = new ArrayList<>();
     public int activeMap = 0;
 
     @Override

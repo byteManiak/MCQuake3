@@ -2,11 +2,8 @@
   "generator": {
     "type": "minecraft:flat",
     "custom_bool": true,
-    "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "mcquake3:q3_biome"
-    },
     "settings": {
+      "biome": "mcquake3:q3_biome",
       "features": false,
       "layers": [],
       "structure_overrides": []

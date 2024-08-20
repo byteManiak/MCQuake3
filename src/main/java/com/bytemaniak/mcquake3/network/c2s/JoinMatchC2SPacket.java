@@ -15,10 +15,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class JoinMatchC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         QuakeMapState state = QuakeMapState.getServerState(server);
+        if (state.maps.isEmpty()) {
+            player.sendMessage(Text.of("There are no maps on the server"), true);
+            return;
+        }
+
         QuakeMapState.MapData activeMap = state.getActiveMap();
         if (!activeMap.spawnpoints.isEmpty()) {
-            Vec3d spawnpoint = activeMap.spawnpoints.get(ThreadLocalRandom.current().nextInt(activeMap.spawnpoints.size()));
-            player.teleport(server.getWorld(Blocks.Q3_DIMENSION), spawnpoint.x, spawnpoint.y, spawnpoint.z, 0, 0);
-        } else player.sendMessage(Text.of("Map has no spawnpoints"), true);
+            QuakeMapState.MapData.Spawnpoint spawnpoint = activeMap.spawnpoints.get(ThreadLocalRandom.current().nextInt(activeMap.spawnpoints.size()));
+            Vec3d position = spawnpoint.position;
+            player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
+        } else player.sendMessage(Text.of("Map "+activeMap.mapName+" has no spawnpoints"), true);
     }
 }

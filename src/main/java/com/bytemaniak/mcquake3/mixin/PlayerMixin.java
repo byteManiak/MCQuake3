@@ -56,6 +56,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private int portalToLink = -1;
 
+    private String toolMapName = "";
+
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
@@ -249,4 +251,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
             portalToLink = -1;
         }
     }
+
+    @Override
+    public void setMapToolName(String mapName) { toolMapName = mapName; }
+
+    @Override
+    public String getMapToolName() { return toolMapName; }
 }

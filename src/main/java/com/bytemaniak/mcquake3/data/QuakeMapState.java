@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.data;
 
+import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -15,8 +16,18 @@ import java.util.Objects;
 
 public class QuakeMapState extends PersistentState {
     public static class MapData {
+        public static class Spawnpoint {
+            public Vec3d position;
+            public float yaw;
+
+            public Spawnpoint(Vec3d position, float yaw) {
+                this.position = position;
+                this.yaw = yaw;
+            }
+        }
+
         public String mapName;
-        public List<Vec3d> spawnpoints = Lists.newArrayList();
+        public List<Spawnpoint> spawnpoints = Lists.newArrayList();
     }
 
     public final List<MapData> maps = Lists.newArrayList();
@@ -32,11 +43,12 @@ public class QuakeMapState extends PersistentState {
 
             mapNbt.putString("map_name", map.mapName);
 
-            for (Vec3d i : map.spawnpoints) {
+            for (MapData.Spawnpoint i : map.spawnpoints) {
                 NbtCompound spawnpoint = new NbtCompound();
-                spawnpoint.putDouble("x", i.x);
-                spawnpoint.putDouble("y", i.y);
-                spawnpoint.putDouble("z", i.z);
+                spawnpoint.putDouble("x", i.position.x);
+                spawnpoint.putDouble("y", i.position.y);
+                spawnpoint.putDouble("z", i.position.z);
+                spawnpoint.putFloat("yaw", i.yaw);
                 spawnpoints.add(spawnpoint);
             }
             mapNbt.put("spawnpoints", spawnpoints);
@@ -62,9 +74,10 @@ public class QuakeMapState extends PersistentState {
             NbtList spawnpoints = mapDataNbt.getList("spawnpoints", NbtElement.COMPOUND_TYPE);
             for (int j = 0; j < spawnpoints.size(); j++) {
                 NbtCompound spawnpointNbt = spawnpoints.getCompound(j);
-                Vec3d spawnpoint = new Vec3d(spawnpointNbt.getDouble("x"), spawnpointNbt.getDouble("y"), spawnpointNbt.getDouble("z"));
+                Vec3d position = new Vec3d(spawnpointNbt.getDouble("x"), spawnpointNbt.getDouble("y"), spawnpointNbt.getDouble("z"));
+                float yaw = spawnpointNbt.getFloat("yaw");
 
-                mapData.spawnpoints.add(spawnpoint);
+                mapData.spawnpoints.add(new MapData.Spawnpoint(position, yaw));
             }
 
             state.maps.add(mapData);
@@ -85,6 +98,7 @@ public class QuakeMapState extends PersistentState {
         mapData.mapName = mapName;
 
         maps.add(mapData);
+        logUpdates();
     }
 
     public MapData getMap(String mapName) {
@@ -95,8 +109,22 @@ public class QuakeMapState extends PersistentState {
         return maps.get(activeMap);
     }
 
-    public void addSpawnpoint(String mapName, Vec3d spawnpoint) {
+    public void addSpawnpoint(String mapName, Vec3d spawnpoint, float yaw) {
         MapData map = getMap(mapName);
-        map.spawnpoints.add(spawnpoint);
+        map.spawnpoints.add(new MapData.Spawnpoint(spawnpoint, yaw));
+        logUpdates();
+    }
+
+    public void deleteMap(String mapName) {
+        maps.removeIf(map -> map.mapName.equals(mapName));
+        logUpdates();
+    }
+
+    private void logUpdates() {
+        for (QuakeMapState.MapData data : maps) {
+            MCQuake3.LOGGER.info(data.mapName+":");
+            for (MapData.Spawnpoint spawnpoint : data.spawnpoints)
+                MCQuake3.LOGGER.info("\t"+spawnpoint.position+" "+spawnpoint.yaw);
+        }
     }
 }

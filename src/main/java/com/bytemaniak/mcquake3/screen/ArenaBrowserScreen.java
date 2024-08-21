@@ -76,7 +76,7 @@ public class ArenaBrowserScreen extends Screen {
 
     @Override
     protected void init() {
-        ButtonWidget arenasText = ButtonWidget.builder(Text.of("arenas on server"), (button -> {}))
+        ButtonWidget arenasText = ButtonWidget.builder(Text.of("Arenas on server"), (button -> {}))
                 .dimensions(20, height/7 - 28, (int)(width/3), 20).build();
 
         arenaList = new ArenaList(client, (int)(width/3), (int)(height*2/3), height / 7, (int) (6* height / 6.5f), 18, 20);
@@ -125,9 +125,10 @@ public class ArenaBrowserScreen extends Screen {
         }).dimensions(width*2/3-32, height/3+52, 60, 20).build();
 
         addDrawable(arenasText);
-        addDrawableChild(arenasText);
+        addDrawableChild(arenaList);
         addDrawableChild(selectArena);
         addDrawableChild(deleteArena);
+
         addDrawable(addArenaText);
         addDrawableChild(newArenaName);
         addDrawableChild(addArena);

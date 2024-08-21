@@ -112,13 +112,16 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         if (arena == null) {
             QuakeArenasParameters state = QuakeArenasParameters.getServerState(world.getServer());
-            QuakeArenasParameters.ArenaData newArena = state.getRandomArena();
+            QuakeArenasParameters.ArenaData newArena = state.getRandomArena(null);
             if (newArena == null || newArena.spawnpoints.isEmpty()) return;
             arena = newArena;
         }
 
         // No point getting out of warmup state if there aren't at least 2 players
         if (quakePlayers.size() < 2) {
+            for (ServerPlayerEntity player : quakePlayers)
+                player.sendMessage(Text.of("Waiting for more players..."), true);
+
             matchState = MatchState.WARMUP_STATE;
             return;
         }
@@ -181,25 +184,36 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
                             }
 
-                            ticksLeft = MiscUtils.toTicks(1200);
-
                             // Allow 20 minutes per match
-                            matchState = MatchState.IN_PROGRESS_STATE;
+                            ticksLeft = MiscUtils.toTicks(1200);
 
                             for (ServerPlayerEntity player : getQuakePlayers(world))
                                 spawnQuakePlayer(player, arena);
+
+                            matchState = MatchState.IN_PROGRESS_STATE;
                         }
                     }
                 }
             }
             case IN_PROGRESS_STATE -> {
                 if (highestFrags >= FRAG_LIMIT || ticksLeft == 0) {
+                    // TODO: Announce the winner
+
+                    // Allow 15 seconds before transition to next map
                     ticksLeft = MiscUtils.toTicks(15);
                     matchState = MatchState.ENDMATCH_STATE;
                 }
             }
             case ENDMATCH_STATE -> {
-                // TODO: Go to next arena after the endmatch period ends
+                if (ticksLeft == 0) {
+                    QuakeArenasParameters state = QuakeArenasParameters.getServerState(world.getServer());
+                    arena = state.getRandomArena(arena.arenaName);
+
+                    for (ServerPlayerEntity player : getQuakePlayers(world))
+                        spawnQuakePlayer(player, arena);
+
+                    matchState = MatchState.WARMUP_STATE;
+                }
             }
         }
 

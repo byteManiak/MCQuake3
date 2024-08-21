@@ -109,10 +109,15 @@ public class QuakeArenasParameters extends PersistentState {
         return arenas.stream().filter(e -> Objects.equals(e.arenaName, arenaName)).findFirst().orElse(null);
     }
 
-    public ArenaData getRandomArena() {
+    public ArenaData getRandomArena(String except) {
         if (arenas.isEmpty()) return null;
+        if (arenas.size() == 1) return arenas.get(0);
 
-        return arenas.get(ThreadLocalRandom.current().nextInt(arenas.size()));
+        ArenaData nextArena = arenas.get(ThreadLocalRandom.current().nextInt(arenas.size()));
+        while (nextArena.arenaName.equals(except))
+            nextArena = arenas.get(ThreadLocalRandom.current().nextInt(arenas.size()));
+
+        return nextArena;
     }
 
     public void addSpawnpoint(String arenaName, Vec3d spawnpoint, float yaw) {

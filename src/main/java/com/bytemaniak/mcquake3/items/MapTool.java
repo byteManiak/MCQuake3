@@ -10,12 +10,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 
 public class MapTool extends Item implements NamedScreenHandlerFactory {
@@ -33,8 +35,13 @@ public class MapTool extends Item implements NamedScreenHandlerFactory {
         ItemStack stack = user.getStackInHand(hand);
         if (world.isClient) return TypedActionResult.pass(stack);
         if (world.getDimensionKey() != Blocks.Q3_DIMENSION_TYPE) {
-            user.sendMessage(Text.of("You need to be in the Quake3 dimension to use the map tool."), true);
-            return TypedActionResult.pass(stack);
+            ServerPlayerEntity player = (ServerPlayerEntity)user;
+            ServerWorld quakeDimension = player.server.getWorld(Blocks.Q3_DIMENSION);
+            player.teleport(quakeDimension, 0, 64, 0, 0, 0);
+            player.changeGameMode(GameMode.CREATIVE);
+            player.sendMessage(Text.of("Moved to Quake3 dimension. Have fun building maps!"), true);
+
+            return TypedActionResult.success(stack);
         }
 
         QuakePlayer player = (QuakePlayer)user;

@@ -1,11 +1,10 @@
 package com.bytemaniak.mcquake3.util;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
+import com.bytemaniak.mcquake3.sound.WeaponSounds;
 
-public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds {
-    void toggleQuakeGui();
-    boolean quakeGuiEnabled();
-    void setQuakeGui(boolean enabled);
+public interface QuakePlayer extends WeaponSounds {
+    boolean playingQuakeMap();
 
     int getEnergyShield();
     void setEnergyShield(int amount);
@@ -28,4 +27,9 @@ public interface QuakePlayer extends com.bytemaniak.mcquake3.sound.WeaponSounds 
 
     void setPortalToLink(PortalEntity entity);
     void setLinkedPortalCoords();
+
+    void setMapToolName(String mapName);
+    String getMapToolName();
+    void setMapToolMode(int mode);
+    int getMapToolMode();
 }

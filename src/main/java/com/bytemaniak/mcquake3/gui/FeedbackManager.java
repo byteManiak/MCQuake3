@@ -12,7 +12,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.network.PacketByteBuf;
 
-import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FeedbackManager implements HudRenderCallback {
     public enum Event {
@@ -32,7 +32,7 @@ public class FeedbackManager implements HudRenderCallback {
     private record Medal(MedalType type, int count, int ch) {}
 
     private static final long MEDAL_UPDATE_RATE = MiscUtils.toTicks(3);
-    private final LinkedList<Medal> medals = new LinkedList<>();
+    private final CopyOnWriteArrayList<Medal> medals = new CopyOnWriteArrayList<>();
     private Medal currentMedal = null;
     private long lastUpdateTick = 0;
 
@@ -94,7 +94,7 @@ public class FeedbackManager implements HudRenderCallback {
             if (medals.isEmpty()) currentMedal = null;
             else {
                 lastUpdateTick = currentTick;
-                currentMedal = medals.remove();
+                currentMedal = medals.remove(0);
                 switch (currentMedal.type) {
                     case EXCELLENT -> SoundUtils.playSoundLocally(Sounds.EXCELLENT);
                     case IMPRESSIVE -> SoundUtils.playSoundLocally(Sounds.IMPRESSIVE);

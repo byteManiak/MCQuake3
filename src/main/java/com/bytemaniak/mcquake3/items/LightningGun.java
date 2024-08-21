@@ -28,7 +28,7 @@ public class LightningGun extends HitscanWeapon {
     public LightningGun() {
         super(new Identifier("mcquake3:lightning_gun"), LIGHTNING_REFIRE_RATE, LIGHTNING_REFIRE_RATE,
                 false, null, true, LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE,
-                LIGHTNING_RANGE, Weapons.LIGHTNING_CELL, 100, 60, 5);
+                LIGHTNING_RANGE, Weapons.LIGHTNING_CELL, 100, 60, 5, false);
     }
     @Override
     protected void onDamage(World world, LivingEntity attacked) {

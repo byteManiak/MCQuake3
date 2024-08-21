@@ -19,7 +19,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -101,7 +100,6 @@ public class PlayerSettingsScreen extends Screen {
 
     }
 
-    private ButtonWidget toggleGui;
     private ButtonWidget toggleRefireRates;
 
     public PlayerSettingsScreen(Text title, LivingEntity user) {
@@ -120,23 +118,6 @@ public class PlayerSettingsScreen extends Screen {
                 .filter(e -> e.playerSounds.playerClass.equals(playerVoice))
                 .findFirst().orElse(voiceList.getFirst()));
 
-        String guiButtonText = user.quakeGuiEnabled() ? "Disable Quake GUI" : "Enable Quake GUI";
-        toggleGui = ButtonWidget.builder(Text.of(guiButtonText), (button) -> {
-            user.toggleQuakeGui();
-
-            String newButtonText;
-            if (user.quakeGuiEnabled()) {
-                SoundUtils.playSoundLocally(Sounds.DAMAGE_DEALT);
-                newButtonText = "Disable Quake GUI";
-            } else {
-                SoundUtils.playSoundLocally(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-                newButtonText = "Enable Quake GUI";
-            }
-
-            toggleGui.setMessage(Text.of(newButtonText));
-            ClientPlayNetworking.send(Packets.QUAKE_GUI_UPDATE, PacketByteBufs.empty());
-        }).dimensions(width - 150, height - 24, 130, 20).build();
-
         String refireRateButtonText = user.hasQLRefireRate() ? "Refire rates: Quake Live" : "Refire rates: Quake 3";
         toggleRefireRates = ButtonWidget.builder(Text.of(refireRateButtonText), (button) -> {
             user.setQLRefireRate(!user.hasQLRefireRate());
@@ -149,6 +130,12 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
+        ButtonWidget joinMatch =
+                ButtonWidget.builder(
+                                Text.of("Join Quake match"),
+                                (button -> ClientPlayNetworking.send(Packets.REQUEST_JOIN_MATCH, PacketByteBufs.empty())))
+                        .dimensions(width - 150, height - 72, 130, 20).build();
+
         ButtonWidget giveWeapons =
                 ButtonWidget.builder(
                         Text.of("Give me a full arsenal"),
@@ -157,8 +144,8 @@ public class PlayerSettingsScreen extends Screen {
 
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
-        addDrawableChild(toggleGui);
         addDrawableChild(toggleRefireRates);
+        addDrawableChild(joinMatch);
         addDrawableChild(giveWeapons);
         super.init();
     }

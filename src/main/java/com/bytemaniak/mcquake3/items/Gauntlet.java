@@ -27,7 +27,7 @@ public class Gauntlet extends HitscanWeapon {
     public Gauntlet() {
         super(new Identifier("mcquake3:gauntlet"), GAUNTLET_REFIRE_RATE_Q3, GAUNTLET_REFIRE_RATE_QL,
                 false, null, true, GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
-                GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null, 0, 0, 0);
+                GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null, 0, 0, 0, false);
     }
 
     @Override

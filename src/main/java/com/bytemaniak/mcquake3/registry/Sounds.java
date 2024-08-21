@@ -2,6 +2,8 @@ package com.bytemaniak.mcquake3.registry;
 
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -113,6 +115,11 @@ public class Sounds {
     private static final Identifier HEAVY_ENERGY_SHIELD_IDENT = new Identifier("mcquake3:heavy_energy_shield");
     public static final SoundEvent HEAVY_ENERGY_SHIELD = SoundEvent.of(HEAVY_ENERGY_SHIELD_IDENT);
 
+    private static final Identifier MUSIC_IDENT = new Identifier("mcquake3:music.q3");
+    private static final SoundEvent MUSIC_EVENT = SoundEvent.of(MUSIC_IDENT);
+    private static RegistryEntry.Reference<SoundEvent> MUSIC_SOUNDS;
+    public static MusicSound Q3_MUSIC;
+
     public static class PlayerSounds {
         public Identifier DEATH;
         public Identifier DROWN;
@@ -215,6 +222,9 @@ public class Sounds {
         Registry.register(Registries.SOUND_EVENT, SHIELD_CELL_IDENT, SHIELD_CELL);
         Registry.register(Registries.SOUND_EVENT, LIGHT_ENERGY_SHIELD_IDENT, LIGHT_ENERGY_SHIELD);
         Registry.register(Registries.SOUND_EVENT, HEAVY_ENERGY_SHIELD_IDENT, HEAVY_ENERGY_SHIELD);
+
+        MUSIC_SOUNDS = Registry.registerReference(Registries.SOUND_EVENT, MUSIC_IDENT, MUSIC_EVENT);
+        Q3_MUSIC = new MusicSound(MUSIC_SOUNDS, 0, 0, true);
 
         loadPlayerSounds(ANGELYSS);
         loadPlayerSounds(ARACHNA);

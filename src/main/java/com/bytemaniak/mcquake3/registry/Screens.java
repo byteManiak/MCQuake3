@@ -1,9 +1,6 @@
 package com.bytemaniak.mcquake3.registry;
 
-import com.bytemaniak.mcquake3.screen.JumppadScreen;
-import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
-import com.bytemaniak.mcquake3.screen.PlasmaInducerScreen;
-import com.bytemaniak.mcquake3.screen.PlasmaInducerScreenHandler;
+import com.bytemaniak.mcquake3.screen.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -19,15 +16,19 @@ public class Screens {
             new ScreenHandlerType<>(PlasmaInducerScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
     public static final ScreenHandlerType<JumppadScreenHandler> JUMPPAD_SCREEN_HANDLER =
             new ExtendedScreenHandlerType<>(JumppadScreenHandler::new);
+    public static final ScreenHandlerType<MapNameScreenHandler> MAP_NAME_SCREEN_HANDLER =
+            new ScreenHandlerType<>(MapNameScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
 
     public static void registerScreenHandlers() {
         Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcquake3:plasma_inducer"), PLASMA_INDUCER_SCREEN_HANDLER);
         Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcquake3:jumppad_power"), JUMPPAD_SCREEN_HANDLER);
+        Registry.register(Registries.SCREEN_HANDLER, new Identifier("mcquake3:map_name"), MAP_NAME_SCREEN_HANDLER);
     }
 
     @Environment(EnvType.CLIENT)
     public static void registerScreens() {
         HandledScreens.register(PLASMA_INDUCER_SCREEN_HANDLER, PlasmaInducerScreen::new);
         HandledScreens.register(JUMPPAD_SCREEN_HANDLER, JumppadScreen::new);
+        HandledScreens.register(MAP_NAME_SCREEN_HANDLER, MapNameScreen::new);
     }
 }

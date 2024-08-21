@@ -138,17 +138,10 @@ public class PlayerSettingsScreen extends Screen {
                                 (button -> ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, PacketByteBufs.empty())))
                         .dimensions(width - 150, height - 24, 130, 20).build();
 
-        ButtonWidget giveWeapons =
-                ButtonWidget.builder(
-                        Text.of("Give me a full arsenal"),
-                        (button -> ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty())))
-                .dimensions(width / 4, height - 24, width / 3, 20).build();
-
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleRefireRates);
         addDrawableChild(joinLeaveMatch);
-        addDrawableChild(giveWeapons);
         super.init();
     }
 

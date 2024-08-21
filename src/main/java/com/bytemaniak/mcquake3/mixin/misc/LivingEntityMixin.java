@@ -30,7 +30,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -116,7 +115,10 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
                 player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
                 MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
-                ServerPlayNetworking.send(player, Packets.SCROLL_TO_MACHINEGUN, PacketByteBufs.empty());
+
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(Weapons.MACHINEGUN.slot);
+                ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
             }
 
             player.setHealth(player.getMaxHealth());

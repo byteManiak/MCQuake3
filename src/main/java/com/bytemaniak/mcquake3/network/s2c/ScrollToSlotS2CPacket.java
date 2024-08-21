@@ -5,8 +5,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 
-public class ScrollToMachinegunS2CPacket {
+public class ScrollToSlotS2CPacket {
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        client.player.getInventory().selectedSlot = 1;
+        client.player.getInventory().selectedSlot = buf.readByte();
     }
 }

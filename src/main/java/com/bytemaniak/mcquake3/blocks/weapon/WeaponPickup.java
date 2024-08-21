@@ -37,8 +37,9 @@ public abstract class WeaponPickup extends Pickup {
                 }
 
                 if (!player.isCreative()) {
-                    // TODO: Limit ammo usage once Quake server mode is implemented
-                    ItemStack ammo = new ItemStack(weapon.ammoType, weapon.ammoBoxCount);
+                    int countLeft = Weapon.MAX_AMMO - MiscUtils.getCountOfItemType(player.getInventory(), weapon.ammoType);
+                    int count = Math.min(weapon.ammoBoxCount, countLeft);
+                    ItemStack ammo = new ItemStack(weapon.ammoType, count);
                     MiscUtils.insertInNonHotbarInventory(ammo, player.getInventory());
                 }
 

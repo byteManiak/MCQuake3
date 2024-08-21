@@ -5,7 +5,12 @@
     "settings": {
       "biome": "mcquake3:q3_biome",
       "features": false,
-      "layers": [],
+      "layers": [
+        {
+          "block": "minecraft:barrier",
+          "height": 1
+        }
+      ],
       "structure_overrides": []
     }
   },

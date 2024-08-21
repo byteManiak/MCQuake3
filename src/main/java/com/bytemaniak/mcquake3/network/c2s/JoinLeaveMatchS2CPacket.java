@@ -1,7 +1,8 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
-import com.bytemaniak.mcquake3.data.QuakeMapState;
+import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.ServerEvents;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
@@ -31,24 +32,23 @@ public class JoinLeaveMatchS2CPacket {
 
             player.teleport(world, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0, 0);
         } else {
-            QuakeMapState state = QuakeMapState.getServerState(server);
-            if (state.maps.isEmpty()) {
+            QuakeMapsParameters.MapData map = ServerEvents.QUAKE_MATCH_STATE.map;
+            if (map == null) {
                 player.sendMessage(Text.of("There are no maps on the server"), true);
                 return;
             }
 
-            QuakeMapState.MapData activeMap = state.getActiveMap();
-            if (!activeMap.spawnpoints.isEmpty()) {
+            if (!map.spawnpoints.isEmpty()) {
                 player.changeGameMode(GameMode.ADVENTURE);
 
-                QuakeMapState.MapData.Spawnpoint spawnpoint = activeMap.spawnpoints.get(ThreadLocalRandom.current().nextInt(activeMap.spawnpoints.size()));
+                QuakeMapsParameters.MapData.Spawnpoint spawnpoint = map.spawnpoints.get(ThreadLocalRandom.current().nextInt(map.spawnpoints.size()));
                 Vec3d position = spawnpoint.position;
                 player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
                 player.getInventory().clear();
                 player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
                 player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
                 MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, 100), player.getInventory());
-            } else player.sendMessage(Text.of("Map " + activeMap.mapName + " has no spawnpoints"), true);
+            } else player.sendMessage(Text.of("Map " + map.mapName + " has no spawnpoints"), true);
         }
     }
 }

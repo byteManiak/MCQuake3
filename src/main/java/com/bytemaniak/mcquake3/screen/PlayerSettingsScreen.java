@@ -135,7 +135,10 @@ public class PlayerSettingsScreen extends Screen {
         ButtonWidget joinLeaveMatch =
                 ButtonWidget.builder(
                                 Text.of(joinLeaveText),
-                                (button -> ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, PacketByteBufs.empty())))
+                                (button -> {
+                                    ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, PacketByteBufs.empty());
+                                    PlayerSettingsScreen.this.close();
+                                }))
                         .dimensions(width - 150, height - 24, 130, 20).build();
 
         addDrawable(voiceSelectionText);

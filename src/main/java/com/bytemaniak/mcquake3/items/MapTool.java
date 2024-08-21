@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.data.QuakeMapState;
+import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.screen.MapNameScreenHandler;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
@@ -59,7 +59,7 @@ public class MapTool extends Item implements NamedScreenHandlerFactory {
             return TypedActionResult.success(stack);
         }
 
-        QuakeMapState state = QuakeMapState.getServerState(((ServerWorld) world).getServer());
+        QuakeMapsParameters state = QuakeMapsParameters.getServerState(((ServerWorld) world).getServer());
         switch (mode) {
             case CREATE_INITIAL_MODE:
                 user.openHandledScreen(this);

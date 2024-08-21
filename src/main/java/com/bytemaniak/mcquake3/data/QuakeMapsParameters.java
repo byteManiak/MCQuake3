@@ -13,8 +13,9 @@ import net.minecraft.world.PersistentStateManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class QuakeMapState extends PersistentState {
+public class QuakeMapsParameters extends PersistentState {
     public static class MapData {
         public static class Spawnpoint {
             public Vec3d position;
@@ -61,8 +62,8 @@ public class QuakeMapState extends PersistentState {
         return nbt;
     }
 
-    private static QuakeMapState readNbt(NbtCompound nbt) {
-        QuakeMapState state = new QuakeMapState();
+    private static QuakeMapsParameters readNbt(NbtCompound nbt) {
+        QuakeMapsParameters state = new QuakeMapsParameters();
 
         NbtList mapsData = nbt.getList("q3maps_data", NbtElement.COMPOUND_TYPE);
         for (int i = 0; i < mapsData.size(); i++) {
@@ -88,9 +89,9 @@ public class QuakeMapState extends PersistentState {
         return state;
     }
 
-    public static QuakeMapState getServerState(MinecraftServer server) {
+    public static QuakeMapsParameters getServerState(MinecraftServer server) {
         PersistentStateManager persistentStateManager = server.getWorld(Blocks.Q3_DIMENSION).getPersistentStateManager();
-        return persistentStateManager.getOrCreate(QuakeMapState::readNbt, QuakeMapState::new, "mcquake3");
+        return persistentStateManager.getOrCreate(QuakeMapsParameters::readNbt, QuakeMapsParameters::new, "mcquake3_maps");
     }
 
     public void createInitialMapData(String mapName) {
@@ -103,6 +104,12 @@ public class QuakeMapState extends PersistentState {
 
     public MapData getMap(String mapName) {
         return maps.stream().filter(e -> Objects.equals(e.mapName, mapName)).findFirst().orElse(null);
+    }
+
+    public MapData getRandomMap() {
+        if (maps.isEmpty()) return null;
+
+        return maps.get(ThreadLocalRandom.current().nextInt(maps.size()));
     }
 
     public MapData getActiveMap() {
@@ -121,7 +128,7 @@ public class QuakeMapState extends PersistentState {
     }
 
     private void logUpdates() {
-        for (QuakeMapState.MapData data : maps) {
+        for (QuakeMapsParameters.MapData data : maps) {
             MCQuake3.LOGGER.info(data.mapName+":");
             for (MapData.Spawnpoint spawnpoint : data.spawnpoints)
                 MCQuake3.LOGGER.info("\t"+spawnpoint.position+" "+spawnpoint.yaw);

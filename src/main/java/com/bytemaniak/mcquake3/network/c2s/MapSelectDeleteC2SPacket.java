@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
-import com.bytemaniak.mcquake3.data.QuakeMapState;
+import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.PacketByteBuf;
@@ -15,7 +15,7 @@ public class MapSelectDeleteC2SPacket {
         boolean delete = buf.readBoolean();
         ((QuakePlayer)player).setMapToolName(mapName);
         if (delete) {
-            QuakeMapState state = QuakeMapState.getServerState(server);
+            QuakeMapsParameters state = QuakeMapsParameters.getServerState(server);
             state.deleteMap(mapName);
             player.sendMessage(Text.of("Deleted map "+mapName), true);
         } else player.sendMessage(Text.of("Selected map "+mapName), true);

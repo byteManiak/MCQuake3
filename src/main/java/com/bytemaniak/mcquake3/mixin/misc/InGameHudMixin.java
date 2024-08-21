@@ -12,15 +12,15 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHotbar(FLnet/minecraft/client/util/math/MatrixStack;)V"))
-    private void cancelRenderHotbarOnQuakeMap(InGameHud hud, float tickDelta, MatrixStack matrices, Operation<Void> original) {
-        if (((QuakePlayer)MinecraftClient.getInstance().player).playingQuakeMap()) return;
+    private void cancelRenderHotbarInQuakeArena(InGameHud hud, float tickDelta, MatrixStack matrices, Operation<Void> original) {
+        if (((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena()) return;
 
         original.call(hud, tickDelta, matrices);
     }
 
     @WrapOperation(method = "render", at =@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderExperienceBar(Lnet/minecraft/client/util/math/MatrixStack;I)V"))
-    private void cancelExperienceBarOnQuakeMap(InGameHud hud, MatrixStack matrices, int x, Operation<Void> original) {
-        if (((QuakePlayer)MinecraftClient.getInstance().player).playingQuakeMap()) return;
+    private void cancelExperienceBarInQuakeArena(InGameHud hud, MatrixStack matrices, int x, Operation<Void> original) {
+        if (((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena()) return;
 
         original.call(hud, matrices, x);
     }

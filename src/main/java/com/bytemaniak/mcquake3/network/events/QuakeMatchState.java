@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.network.events;
 
-import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
+import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
@@ -35,7 +35,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         WARMUP_STATE, READY_STATE, IN_PROGRESS_STATE, ENDMATCH_STATE
     }
 
-    public QuakeMapsParameters.MapData map = null;
+    public QuakeArenasParameters.ArenaData arena = null;
     private MatchState matchState = MatchState.WARMUP_STATE;
     private final Map<String, PlayerStat> stats = new HashMap<>();
     private int highestFrags = 0;
@@ -43,7 +43,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private List<ServerPlayerEntity> quakePlayers;
 
     private List<ServerPlayerEntity> getQuakePlayers(ServerWorld world) {
-        return world.getPlayers(player -> ((QuakePlayer)player).playingQuakeMap());
+        return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
     }
 
     public void recordDeath(ServerPlayerEntity player, Entity attacker) {
@@ -55,11 +55,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         stats.get(player.getName().getString()).deaths++;
     }
 
-    public void spawnQuakePlayer(ServerPlayerEntity player, QuakeMapsParameters.MapData map) {
+    public void spawnQuakePlayer(ServerPlayerEntity player, QuakeArenasParameters.ArenaData arena) {
         player.fallDistance = 0;
         if (!player.isInTeleportationState()) {
-            QuakeMapsParameters.MapData.Spawnpoint spawnpoint =
-                    map.spawnpoints.get(ThreadLocalRandom.current().nextInt(map.spawnpoints.size()));
+            QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint =
+                    arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
             player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
 
             player.getInventory().clear();
@@ -110,10 +110,17 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         updatePlayerList(world.getServer().getWorld(Blocks.Q3_DIMENSION));
 
-        if (map == null) {
-            QuakeMapsParameters state = QuakeMapsParameters.getServerState(world.getServer());
-            map = state.getRandomMap();
-            if (map == null) return;
+        if (arena == null) {
+            QuakeArenasParameters state = QuakeArenasParameters.getServerState(world.getServer());
+            QuakeArenasParameters.ArenaData newArena = state.getRandomArena();
+            if (newArena == null || newArena.spawnpoints.isEmpty()) return;
+            arena = newArena;
+        }
+
+        // No point getting out of warmup state if there aren't at least 2 players
+        if (quakePlayers.size() < 2) {
+            matchState = MatchState.WARMUP_STATE;
+            return;
         }
 
         switch (matchState) {
@@ -180,7 +187,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                             matchState = MatchState.IN_PROGRESS_STATE;
 
                             for (ServerPlayerEntity player : getQuakePlayers(world))
-                                spawnQuakePlayer(player, map);
+                                spawnQuakePlayer(player, arena);
                         }
                     }
                 }
@@ -192,7 +199,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                 }
             }
             case ENDMATCH_STATE -> {
-                // TODO: Go to next map after the endmatch period ends
+                // TODO: Go to next arena after the endmatch period ends
             }
         }
 

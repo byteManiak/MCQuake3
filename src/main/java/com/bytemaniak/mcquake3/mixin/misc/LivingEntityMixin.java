@@ -1,9 +1,8 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
+import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.bytemaniak.mcquake3.network.events.QuakeMatchState;
 import com.bytemaniak.mcquake3.registry.*;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.util.MiscUtils;
@@ -36,8 +35,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements QuadDamageGlintRenderer.QuadDamageVisibility {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
@@ -45,6 +42,8 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     @Shadow public abstract boolean damage(DamageSource source, float amount);
 
     @Shadow protected abstract float modifyAppliedDamage(DamageSource source, float amount);
+
+    @Shadow public abstract boolean areItemsDifferent(ItemStack stack, ItemStack stack2);
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -85,14 +84,14 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     }
 
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;onDeath(Lnet/minecraft/entity/damage/DamageSource;)V"))
-    // Respawn player to a custom map spawnpoint if playing in Quake dimension instead of killing them
+    // Respawn player to a custom arena spawnpoint if playing in Quake dimension instead of killing them
     private void respawnQuakePlayer(LivingEntity entity, DamageSource damageSource, Operation<Void> original) {
         if (!(damageSource.isOf(DamageTypes.OUT_OF_WORLD) && Float.isInfinite(entity.lastDamageTaken)) &&
-                entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).playingQuakeMap() &&
+                entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).inQuakeArena() &&
                 player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
                 !player.isCreative() && !player.isSpectator()) {
             ServerWorld world = player.getWorld();
-            QuakeMapsParameters.MapData map = ServerEvents.QUAKE_MATCH_STATE.map;
+            QuakeArenasParameters.ArenaData arena = ServerEvents.QUAKE_MATCH_STATE.arena;
 
             if (player.getMainHandStack().getItem() instanceof Weapon weapon) {
                 for (int i = PlayerInventory.getHotbarSize(); i < player.getInventory().size(); ++i) {
@@ -109,7 +108,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 }
             }
 
-            ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, map);
+            ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, arena);
             ServerEvents.QUAKE_MATCH_STATE.recordDeath(player, damageSource.getAttacker());
 
             // TODO: Add death messages in the chat as this is a fake death

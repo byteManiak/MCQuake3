@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
-import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
+import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -10,16 +10,16 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class GetMapNamesC2SPacket {
+public class GetArenaNamesC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        QuakeMapsParameters mapsData = QuakeMapsParameters.getServerState(server);
-        int size = mapsData.maps.size();
+        QuakeArenasParameters arenasData = QuakeArenasParameters.getServerState(server);
+        int size = arenasData.arenas.size();
 
         PacketByteBuf replyBuf = PacketByteBufs.create();
         replyBuf.writeInt(size);
-        for (QuakeMapsParameters.MapData mapData : mapsData.maps) {
-            replyBuf.writeString(mapData.mapName);
+        for (QuakeArenasParameters.ArenaData arenaData : arenasData.arenas) {
+            replyBuf.writeString(arenaData.arenaName);
         }
-        ServerPlayNetworking.send(player, Packets.SEND_MAP_NAMES, replyBuf);
+        ServerPlayNetworking.send(player, Packets.SEND_ARENA_NAMES, replyBuf);
     }
 }

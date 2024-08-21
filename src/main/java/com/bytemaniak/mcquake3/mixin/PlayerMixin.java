@@ -58,7 +58,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private int portalToLink = -1;
 
-    private String currentlyEditingMap = "";
+    private String currentlyEditingArena = "";
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -70,7 +70,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @WrapOperation(method = "addExhaustion", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;isClient:Z"))
-    private boolean cancelExhaustionOnQuakeMap(World world, Operation<Boolean> original) {
+    private boolean cancelExhaustionInQuakeArena(World world, Operation<Boolean> original) {
         if (world.getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) return true;
 
         return original.call(world);
@@ -150,8 +150,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
-    private void noDropInventoryInQuakeMap(CallbackInfo ci) {
-        if (playingQuakeMap()) ci.cancel();
+    private void noDropInventoryInQuakeArena(CallbackInfo ci) {
+        if (inQuakeArena()) ci.cancel();
     }
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
@@ -161,7 +161,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return stack;
     }
 
-    public boolean playingQuakeMap() {
+    public boolean inQuakeArena() {
         return getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE && !isCreative() && !isSpectator();
     }
 
@@ -255,8 +255,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @Override
-    public void setCurrentlyEditingMap(String mapName) { currentlyEditingMap = mapName; }
+    public void setCurrentlyEditingArena(String arenaName) { currentlyEditingArena = arenaName; }
 
     @Override
-    public String getCurrentlyEditingMap() { return currentlyEditingMap; }
+    public String getCurrentlyEditingArena() { return currentlyEditingArena; }
 }

@@ -27,7 +27,7 @@ public abstract class WeaponPickup extends Pickup {
             PickupEntity weaponPickup = (PickupEntity) world.getBlockEntity(pos);
             if (entity instanceof ServerPlayerEntity player && weaponPickup.use()) {
                 if (!player.getInventory().containsAny(t -> t.isOf(weapon))) {
-                    if (((QuakePlayer) player).playingQuakeMap()) {
+                    if (((QuakePlayer) player).inQuakeArena()) {
                         player.getInventory().insertStack(weapon.slot, new ItemStack(weapon));
 
                         PacketByteBuf buf = PacketByteBufs.create();

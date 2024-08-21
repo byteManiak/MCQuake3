@@ -4,7 +4,7 @@ import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.sound.WeaponSounds;
 
 public interface QuakePlayer extends WeaponSounds {
-    boolean playingQuakeMap();
+    boolean inQuakeArena();
 
     int getEnergyShield();
     void setEnergyShield(int amount);
@@ -28,6 +28,6 @@ public interface QuakePlayer extends WeaponSounds {
     void setPortalToLink(PortalEntity entity);
     void setLinkedPortalCoords();
 
-    void setCurrentlyEditingMap(String mapName);
-    String getCurrentlyEditingMap();
+    void setCurrentlyEditingArena(String arenaName);
+    String getCurrentlyEditingArena();
 }

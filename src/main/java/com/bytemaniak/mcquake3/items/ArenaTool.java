@@ -1,8 +1,8 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
+import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.screen.MapBrowserScreen;
+import com.bytemaniak.mcquake3.screen.ArenaBrowserScreen;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -22,16 +22,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MapTool extends Item {
-    public MapTool() {
-        super(new Settings().maxCount(1));
-    }
+public class ArenaTool extends Item {
+    public ArenaTool() { super(new Settings().maxCount(1)); }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.of("Used to describe properties of Quake3 maps such as"));
-        tooltip.add(Text.of("the name of the map, and the spawnpoints located"));
-        tooltip.add(Text.of("within this map."));
+        tooltip.add(Text.of("Used to describe properties of Quake3 arenas such as"));
+        tooltip.add(Text.of("the name of the arena, and the spawnpoints located"));
+        tooltip.add(Text.of("within this arena."));
         tooltip.add(Text.of("This tool will only function inside the Quake3 dimension."));
     }
 
@@ -39,7 +37,7 @@ public class MapTool extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (world.isClient && !user.isSneaking()) {
-            MinecraftClient.getInstance().setScreen(new MapBrowserScreen(Text.of("Map browser")));
+            MinecraftClient.getInstance().setScreen(new ArenaBrowserScreen(Text.of("Arena browser")));
             return TypedActionResult.success(stack);
         }
 
@@ -48,27 +46,27 @@ public class MapTool extends Item {
             ServerWorld quakeDimension = player.server.getWorld(Blocks.Q3_DIMENSION);
             player.teleport(quakeDimension, 0, 64, 0, 0, 0);
             player.changeGameMode(GameMode.CREATIVE);
-            player.sendMessage(Text.of("Moved to Quake3 dimension. Have fun building maps!"), true);
+            player.sendMessage(Text.of("Moved to Quake3 dimension. Have fun building arenas!"), true);
 
             return TypedActionResult.success(stack);
         }
 
         QuakePlayer player = (QuakePlayer)user;
-        String mapName = player.getCurrentlyEditingMap();
+        String arenaName = player.getCurrentlyEditingArena();
 
         if (user.isSneaking()) {
-            if (mapName.isEmpty()) {
-                user.sendMessage(Text.of("No map chosen yet"), true);
+            if (arenaName.isEmpty()) {
+                user.sendMessage(Text.of("No arena chosen yet"), true);
                 return TypedActionResult.pass(stack);
             }
 
-            QuakeMapsParameters state = QuakeMapsParameters.getServerState(((ServerWorld) world).getServer());
-            if (state.getMap(mapName) == null) state.createInitialMapData(mapName);
+            QuakeArenasParameters state = QuakeArenasParameters.getServerState(((ServerWorld) world).getServer());
+            if (state.getArena(arenaName) == null) state.createInitialArenaData(arenaName);
 
             BlockPos spawnpoint = user.getBlockPos();
             float yaw = Direction.fromRotation(user.getYaw()).asRotation();
-            state.addSpawnpoint(mapName, spawnpoint.toCenterPos(), yaw);
-            user.sendMessage(Text.of("Added spawnpoint "+spawnpoint.toShortString()+", "+yaw+" to map "+mapName), true);
+            state.addSpawnpoint(arenaName, spawnpoint.toCenterPos(), yaw);
+            user.sendMessage(Text.of("Added spawnpoint "+spawnpoint.toShortString()+", "+yaw+" to arena "+arenaName), true);
 
             return TypedActionResult.success(stack);
         }

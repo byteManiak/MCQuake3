@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 public class Weapons {
     public static final Item TOOL = new Tool();
-    public static final Item MAP_TOOL = new MapTool();
+    public static final Item ARENA_TOOL = new ArenaTool();
 
     public static final Item BULLET = new Item(new FabricItemSettings());
     public static final Item SHELL = new Item(new FabricItemSettings());
@@ -65,7 +65,7 @@ public class Weapons {
         loadItem(BFG10K, new Identifier("mcquake3:bfg10k"));
 
         loadItem(TOOL, new Identifier("mcquake3:tool"));
-        loadItem(MAP_TOOL, new Identifier("mcquake3:map_tool"));
+        loadItem(ARENA_TOOL, new Identifier("mcquake3:arena_tool"));
     }
 
     // Load an item into the item registry and add it to the MCQuake3 creative tab

@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
-import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
+import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class JoinLeaveMatchS2CPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        if (((QuakePlayer)player).playingQuakeMap()) {
+        if (((QuakePlayer)player).inQuakeArena()) {
             RegistryKey<World> dimension = player.getSpawnPointDimension();
             ServerWorld world = server.getWorld(dimension);
             BlockPos spawnPos = player.getSpawnPointPosition();
@@ -35,16 +35,16 @@ public class JoinLeaveMatchS2CPacket {
 
             player.teleport(world, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0, 0);
         } else {
-            QuakeMapsParameters.MapData map = ServerEvents.QUAKE_MATCH_STATE.map;
-            if (map == null) {
-                player.sendMessage(Text.of("There are no maps on the server"), true);
+            QuakeArenasParameters.ArenaData arena = ServerEvents.QUAKE_MATCH_STATE.arena;
+            if (arena == null) {
+                player.sendMessage(Text.of("There are no arenas on the server"), true);
                 return;
             }
 
-            if (!map.spawnpoints.isEmpty()) {
+            if (!arena.spawnpoints.isEmpty()) {
                 player.changeGameMode(GameMode.ADVENTURE);
 
-                QuakeMapsParameters.MapData.Spawnpoint spawnpoint = map.spawnpoints.get(ThreadLocalRandom.current().nextInt(map.spawnpoints.size()));
+                QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint = arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
                 Vec3d position = spawnpoint.position;
                 player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
                 player.getInventory().clear();
@@ -55,7 +55,7 @@ public class JoinLeaveMatchS2CPacket {
                 PacketByteBuf replyBuf = PacketByteBufs.create();
                 replyBuf.writeByte(Weapons.MACHINEGUN.slot);
                 ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, replyBuf);
-            } else player.sendMessage(Text.of("Map " + map.mapName + " has no spawnpoints"), true);
+            } else player.sendMessage(Text.of("Arena " + arena.arenaName + " has no spawnpoints"), true);
         }
     }
 }

@@ -131,7 +131,7 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
-        String joinLeaveText = user.playingQuakeMap() ? "Leave Quake match" : "Join Quake match";
+        String joinLeaveText = user.inQuakeArena() ? "Leave Quake match" : "Join Quake match";
         ButtonWidget joinLeaveMatch =
                 ButtonWidget.builder(
                                 Text.of(joinLeaveText),

@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.data;
 
 import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.ServerEvents;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -124,12 +125,20 @@ public class QuakeArenasParameters extends PersistentState {
         ArenaData arena = getArena(arenaName);
         arena.spawnpoints.add(new ArenaData.Spawnpoint(spawnpoint, yaw));
         markDirty();
+
+        ArenaData matchArena = ServerEvents.QUAKE_MATCH_STATE.arena;
+        if (matchArena != null && arenaName.equals(matchArena.arenaName))
+            ServerEvents.QUAKE_MATCH_STATE.arena = arena;
+
         logUpdates();
     }
 
     public void deleteArena(String arenaName) {
         arenas.removeIf(arena -> arena.arenaName.equals(arenaName));
         markDirty();
+
+        if (arenaName.equals(ServerEvents.QUAKE_MATCH_STATE.arena.arenaName))
+            ServerEvents.QUAKE_MATCH_STATE.arena = getRandomArena(null);
         logUpdates();
     }
 

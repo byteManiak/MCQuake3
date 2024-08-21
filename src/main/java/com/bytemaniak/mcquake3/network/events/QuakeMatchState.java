@@ -115,6 +115,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             QuakeArenasParameters.ArenaData newArena = state.getRandomArena(null);
             if (newArena == null || newArena.spawnpoints.isEmpty()) return;
             arena = newArena;
+
+            matchState = MatchState.WARMUP_STATE;
         }
 
         // No point getting out of warmup state if there aren't at least 2 players

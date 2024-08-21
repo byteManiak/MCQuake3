@@ -8,9 +8,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class Sounds {
-    private static final Identifier JUMPPAD_BOOST_IDENT = new Identifier("mcquake3:jumppad");
-    public static final SoundEvent JUMPPAD_BOOST = SoundEvent.of(JUMPPAD_BOOST_IDENT);
-
     private static final Identifier DAMAGE_DEALT_IDENT = new Identifier("mcquake3:hit");
     public static final SoundEvent DAMAGE_DEALT = SoundEvent.of(DAMAGE_DEALT_IDENT);
     private static final Identifier EXCELLENT_IDENT = new Identifier("mcquake3:excellent");
@@ -19,6 +16,18 @@ public class Sounds {
     public static final SoundEvent IMPRESSIVE = SoundEvent.of(IMPRESSIVE_IDENT);
     private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
     public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
+
+    private static final Identifier ONE_IDENT = new Identifier("mcquake3:announcer.1");
+    public static final SoundEvent ONE = SoundEvent.of(ONE_IDENT);
+    private static final Identifier TWO_IDENT = new Identifier("mcquake3:announcer.2");
+    public static final SoundEvent TWO = SoundEvent.of(TWO_IDENT);
+    private static final Identifier THREE_IDENT = new Identifier("mcquake3:announcer.3");
+    public static final SoundEvent THREE = SoundEvent.of(THREE_IDENT);
+    private static final Identifier FIGHT_IDENT = new Identifier("mcquake3:announcer.fight");
+    public static final SoundEvent FIGHT = SoundEvent.of(FIGHT_IDENT);
+
+    private static final Identifier JUMPPAD_BOOST_IDENT = new Identifier("mcquake3:jumppad");
+    public static final SoundEvent JUMPPAD_BOOST = SoundEvent.of(JUMPPAD_BOOST_IDENT);
 
     private static final Identifier TELEPORT_IN_IDENT = new Identifier("mcquake3:telein");
     public static final SoundEvent TELEPORT_IN = SoundEvent.of(TELEPORT_IN_IDENT);

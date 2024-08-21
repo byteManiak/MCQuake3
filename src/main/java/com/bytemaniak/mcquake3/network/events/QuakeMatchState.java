@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.network.events;
 import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
+import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
@@ -39,6 +40,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private final Map<String, PlayerStat> stats = new HashMap<>();
     private int highestFrags = 0;
     private int ticksLeft;
+    private List<ServerPlayerEntity> quakePlayers;
 
     private List<ServerPlayerEntity> getQuakePlayers(ServerWorld world) {
         return world.getPlayers(player -> ((QuakePlayer)player).playingQuakeMap());
@@ -74,13 +76,13 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     }
 
     private void updatePlayerList(ServerWorld world) {
-        List<ServerPlayerEntity> players = getQuakePlayers(world).stream().toList();
-        List<String> playerNames = players.stream().map(plr -> plr.getName().getString()).toList();
+        quakePlayers = getQuakePlayers(world).stream().toList();
+        List<String> playerNames = quakePlayers.stream().map(plr -> plr.getName().getString()).toList();
 
         // First establish if there are any new players
         for (String name : playerNames) {
             if (stats.get(name) == null) {
-                for (ServerPlayerEntity player : players)
+                for (ServerPlayerEntity player : quakePlayers)
                     player.sendMessage(Text.of(name+" has joined the arena"));
 
                 stats.put(name, new PlayerStat());
@@ -91,10 +93,15 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         stats.entrySet().removeIf(plr -> {
             boolean remove = playerNames.stream().noneMatch(name -> name.equals(plr.getKey()));
             if (remove)
-                for (ServerPlayerEntity player : players)
+                for (ServerPlayerEntity player : quakePlayers)
                     player.sendMessage(Text.of(plr.getKey()+" has left the arena"));
             return remove;
         });
+
+        if (quakePlayers.isEmpty()) {
+            highestFrags = 0;
+            matchState = MatchState.WARMUP_STATE;
+        }
     }
 
     @Override
@@ -128,10 +135,30 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                 if (ticksLeft % MiscUtils.toTicks(1) == 0) {
                     switch (ticksLeft / MiscUtils.toTicks(1)) {
                         // TODO: Play countdown sounds to players
-                        case 3 -> {break;}
-                        case 2 -> {break;}
-                        case 1 -> {break;}
+                        case 3 -> {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeIdentifier(Sounds.THREE.getId());
+                            for (ServerPlayerEntity player : quakePlayers)
+                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                        }
+                        case 2 -> {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeIdentifier(Sounds.TWO.getId());
+                            for (ServerPlayerEntity player : quakePlayers)
+                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                        }
+                        case 1 -> {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeIdentifier(Sounds.ONE.getId());
+                            for (ServerPlayerEntity player : quakePlayers)
+                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                        }
                         case 0 -> {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeIdentifier(Sounds.FIGHT.getId());
+                            for (ServerPlayerEntity player : quakePlayers)
+                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+
                             ticksLeft = MiscUtils.toTicks(1200);
 
                             // Allow 20 minutes per match

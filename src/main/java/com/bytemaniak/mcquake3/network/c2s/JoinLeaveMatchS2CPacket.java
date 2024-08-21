@@ -2,11 +2,14 @@ package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.data.QuakeMapsParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.RegistryKey;
@@ -45,9 +48,13 @@ public class JoinLeaveMatchS2CPacket {
                 Vec3d position = spawnpoint.position;
                 player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
                 player.getInventory().clear();
-                player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
-                player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
+                player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
+                player.getInventory().insertStack(Weapons.MACHINEGUN.slot, new ItemStack(Weapons.MACHINEGUN));
                 MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, 100), player.getInventory());
+
+                PacketByteBuf replyBuf = PacketByteBufs.create();
+                replyBuf.writeByte(Weapons.MACHINEGUN.slot);
+                ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, replyBuf);
             } else player.sendMessage(Text.of("Map " + map.mapName + " has no spawnpoints"), true);
         }
     }

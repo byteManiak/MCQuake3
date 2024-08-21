@@ -1,7 +1,12 @@
 {
-  "announcer.1": {
+  "announcer.prepare": {
     "sounds": [
-      "mcquake3:announcer/1"
+      "mcquake3:announcer/prepare"
+    ]
+  },
+  "announcer.3": {
+    "sounds": [
+      "mcquake3:announcer/3"
     ]
   },
   "announcer.2": {
@@ -9,9 +14,9 @@
       "mcquake3:announcer/2"
     ]
   },
-  "announcer.3": {
+  "announcer.1": {
     "sounds": [
-      "mcquake3:announcer/3"
+      "mcquake3:announcer/1"
     ]
   },
   "announcer.fight": {

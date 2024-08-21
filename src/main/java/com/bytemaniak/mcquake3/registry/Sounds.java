@@ -17,12 +17,14 @@ public class Sounds {
     private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
     public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
 
-    private static final Identifier ONE_IDENT = new Identifier("mcquake3:announcer.1");
-    public static final SoundEvent ONE = SoundEvent.of(ONE_IDENT);
-    private static final Identifier TWO_IDENT = new Identifier("mcquake3:announcer.2");
-    public static final SoundEvent TWO = SoundEvent.of(TWO_IDENT);
+    private static final Identifier PREPARE_IDENT = new Identifier("mcquake3:announcer.prepare");
+    public static final SoundEvent PREPARE = SoundEvent.of(PREPARE_IDENT);
     private static final Identifier THREE_IDENT = new Identifier("mcquake3:announcer.3");
     public static final SoundEvent THREE = SoundEvent.of(THREE_IDENT);
+    private static final Identifier TWO_IDENT = new Identifier("mcquake3:announcer.2");
+    public static final SoundEvent TWO = SoundEvent.of(TWO_IDENT);
+    private static final Identifier ONE_IDENT = new Identifier("mcquake3:announcer.1");
+    public static final SoundEvent ONE = SoundEvent.of(ONE_IDENT);
     private static final Identifier FIGHT_IDENT = new Identifier("mcquake3:announcer.fight");
     public static final SoundEvent FIGHT = SoundEvent.of(FIGHT_IDENT);
 
@@ -193,6 +195,11 @@ public class Sounds {
     }
 
     public static void loadSounds() {
+        Registry.register(Registries.SOUND_EVENT, PREPARE_IDENT, PREPARE);
+        Registry.register(Registries.SOUND_EVENT, THREE_IDENT, THREE);
+        Registry.register(Registries.SOUND_EVENT, TWO_IDENT, TWO);
+        Registry.register(Registries.SOUND_EVENT, ONE_IDENT, ONE);
+        Registry.register(Registries.SOUND_EVENT, FIGHT_IDENT, FIGHT);
         Registry.register(Registries.SOUND_EVENT, JUMPPAD_BOOST_IDENT, JUMPPAD_BOOST);
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, EXCELLENT_IDENT, EXCELLENT);

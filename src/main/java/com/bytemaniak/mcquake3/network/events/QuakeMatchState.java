@@ -63,12 +63,12 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
 
             player.getInventory().clear();
-            player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
-            player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
+            player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
+            player.getInventory().insertStack(Weapons.MACHINEGUN.slot, new ItemStack(Weapons.MACHINEGUN));
             MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
 
             PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeInt(Weapons.MACHINEGUN.slot);
+            buf.writeByte(Weapons.MACHINEGUN.slot);
             ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
         }
 
@@ -127,37 +127,52 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     }*/
 
                 if (allReady) {
-                    ticksLeft = MiscUtils.toTicks(3)+1;
+                    ticksLeft = MiscUtils.toTicks(11);
                     matchState = MatchState.READY_STATE;
                 }
             }
             case READY_STATE -> {
                 if (ticksLeft % MiscUtils.toTicks(1) == 0) {
                     switch (ticksLeft / MiscUtils.toTicks(1)) {
-                        // TODO: Play countdown sounds to players
+                        case 10 -> {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeIdentifier(Sounds.PREPARE.getId());
+                            for (ServerPlayerEntity player : quakePlayers) {
+                                player.sendMessage(Text.of("Prepare to fight"), true);
+                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                            }
+                        }
                         case 3 -> {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.THREE.getId());
-                            for (ServerPlayerEntity player : quakePlayers)
+                            for (ServerPlayerEntity player : quakePlayers) {
+                                player.sendMessage(Text.of(3+""), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                            }
                         }
                         case 2 -> {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.TWO.getId());
-                            for (ServerPlayerEntity player : quakePlayers)
+                            for (ServerPlayerEntity player : quakePlayers) {
+                                player.sendMessage(Text.of(2+""), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                            }
                         }
                         case 1 -> {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.ONE.getId());
-                            for (ServerPlayerEntity player : quakePlayers)
+                            for (ServerPlayerEntity player : quakePlayers) {
+                                player.sendMessage(Text.of(1+""), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                            }
                         }
                         case 0 -> {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.FIGHT.getId());
-                            for (ServerPlayerEntity player : quakePlayers)
+                            for (ServerPlayerEntity player : quakePlayers) {
+                                player.sendMessage(Text.of("Fight"), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+                            }
 
                             ticksLeft = MiscUtils.toTicks(1200);
 

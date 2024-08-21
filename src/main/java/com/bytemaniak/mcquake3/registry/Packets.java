@@ -12,7 +12,7 @@ public class Packets {
     public static final Identifier KILLED_PLAYER = new Identifier("mcquake3:killed_player");
     public static final Identifier AMMO_BOX_UPDATE = new Identifier("mcquake3:ammo_box_update");
     public static final Identifier PLAYER_AMMO_TRAIL_FIX = new Identifier("mcquake3:trail_fix");
-    public static final Identifier SCROLL_NEXT_WEAPON = new Identifier("mcquake3:scroll_next_weapon");
+    public static final Identifier SCROLL_TO_MACHINEGUN = new Identifier("mcquake3:scroll_to_machinegun");
 
     public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3:jumppad_update_power");
     public static final Identifier WEAPON_REFIRE_UPDATE = new Identifier("mcquake3:weapon_refire_update");
@@ -30,7 +30,7 @@ public class Packets {
         ClientPlayNetworking.registerGlobalReceiver(KILLED_PLAYER, KilledPlayerS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(AMMO_BOX_UPDATE, PickupVisibilityS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(SCROLL_NEXT_WEAPON, ScrollNextWeaponS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(SCROLL_TO_MACHINEGUN, ScrollToMachinegunS2CPacket::receive);
     }
 
     public static void registerServerPackets() {

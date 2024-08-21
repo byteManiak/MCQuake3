@@ -116,7 +116,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 player.giveItemStack(new ItemStack(Weapons.GAUNTLET));
                 player.giveItemStack(new ItemStack(Weapons.MACHINEGUN));
                 MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
-                ServerPlayNetworking.send(player, Packets.SCROLL_NEXT_WEAPON, PacketByteBufs.empty());
+                ServerPlayNetworking.send(player, Packets.SCROLL_TO_MACHINEGUN, PacketByteBufs.empty());
             }
 
             player.setHealth(player.getMaxHealth());

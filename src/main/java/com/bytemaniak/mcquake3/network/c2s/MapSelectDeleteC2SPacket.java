@@ -13,11 +13,18 @@ public class MapSelectDeleteC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         String mapName = buf.readString();
         boolean delete = buf.readBoolean();
-        ((QuakePlayer)player).setMapToolName(mapName);
+        QuakeMapsParameters state = QuakeMapsParameters.getServerState(server);
+
         if (delete) {
-            QuakeMapsParameters state = QuakeMapsParameters.getServerState(server);
             state.deleteMap(mapName);
             player.sendMessage(Text.of("Deleted map "+mapName), true);
-        } else player.sendMessage(Text.of("Selected map "+mapName), true);
+        } else {
+            boolean startEditing = buf.readBoolean();
+            state.createInitialMapData(mapName);
+            if (startEditing) {
+                ((QuakePlayer) player).setCurrentlyEditingMap(mapName);
+                player.sendMessage(Text.of("Selected map " + mapName), true);
+            }
+        }
     }
 }

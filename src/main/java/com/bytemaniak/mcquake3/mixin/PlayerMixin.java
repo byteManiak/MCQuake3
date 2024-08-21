@@ -58,8 +58,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     private int portalToLink = -1;
 
-    private String toolMapName = "";
-    private int mapToolMode;
+    private String currentlyEditingMap = "";
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -256,14 +255,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @Override
-    public void setMapToolName(String mapName) { toolMapName = mapName; }
+    public void setCurrentlyEditingMap(String mapName) { currentlyEditingMap = mapName; }
 
     @Override
-    public String getMapToolName() { return toolMapName; }
-
-    @Override
-    public void setMapToolMode(int mode) { mapToolMode = mode; }
-
-    @Override
-    public int getMapToolMode() { return mapToolMode; }
+    public String getCurrentlyEditingMap() { return currentlyEditingMap; }
 }

@@ -95,11 +95,14 @@ public class QuakeMapsParameters extends PersistentState {
     }
 
     public void createInitialMapData(String mapName) {
-        MapData mapData = new MapData();
-        mapData.mapName = mapName;
+        if (getMap(mapName) == null) {
+            MapData mapData = new MapData();
+            mapData.mapName = mapName;
 
-        maps.add(mapData);
-        logUpdates();
+            maps.add(mapData);
+            markDirty();
+            logUpdates();
+        }
     }
 
     public MapData getMap(String mapName) {
@@ -119,11 +122,13 @@ public class QuakeMapsParameters extends PersistentState {
     public void addSpawnpoint(String mapName, Vec3d spawnpoint, float yaw) {
         MapData map = getMap(mapName);
         map.spawnpoints.add(new MapData.Spawnpoint(spawnpoint, yaw));
+        markDirty();
         logUpdates();
     }
 
     public void deleteMap(String mapName) {
         maps.removeIf(map -> map.mapName.equals(mapName));
+        markDirty();
         logUpdates();
     }
 

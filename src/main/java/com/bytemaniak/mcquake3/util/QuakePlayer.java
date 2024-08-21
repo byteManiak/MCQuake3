@@ -28,8 +28,6 @@ public interface QuakePlayer extends WeaponSounds {
     void setPortalToLink(PortalEntity entity);
     void setLinkedPortalCoords();
 
-    void setMapToolName(String mapName);
-    String getMapToolName();
-    void setMapToolMode(int mode);
-    int getMapToolMode();
+    void setCurrentlyEditingMap(String mapName);
+    String getCurrentlyEditingMap();
 }

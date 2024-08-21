@@ -14,6 +14,7 @@ public class Packets {
     public static final Identifier PLAYER_AMMO_TRAIL_FIX = new Identifier("mcquake3:trail_fix");
     public static final Identifier SCROLL_TO_SLOT = new Identifier("mcquake3:scroll_to_slot");
     public static final Identifier PLAY_ANNOUNCER_SOUND = new Identifier("mcquake3:announcer_sound");
+    public static final Identifier SEND_MAP_NAMES = new Identifier("mcquake3:send_map_names");
 
     public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3:jumppad_update_power");
     public static final Identifier WEAPON_REFIRE_UPDATE = new Identifier("mcquake3:weapon_refire_update");
@@ -24,6 +25,7 @@ public class Packets {
     public static final Identifier JUMPPAD_SOUND = new Identifier("mcquake3:jumppad_sound");
     public static final Identifier JOIN_LEAVE_MATCH = new Identifier("mcquake3:join_leave_match");
     public static final Identifier MAP_SELECT_DELETE = new Identifier("mcquake3:map_select_delete");
+    public static final Identifier GET_MAP_NAMES = new Identifier("mcquake3:get_map_names");
 
     public static void registerClientPackets() {
         ClientPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
@@ -33,6 +35,7 @@ public class Packets {
         ClientPlayNetworking.registerGlobalReceiver(PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(SCROLL_TO_SLOT, ScrollToSlotS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(PLAY_ANNOUNCER_SOUND, PlayAnnouncerSoundS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(SEND_MAP_NAMES, SendMapNamesS2CPacket::receive);
     }
 
     public static void registerServerPackets() {
@@ -45,5 +48,6 @@ public class Packets {
         ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_SOUND, JumppadSoundC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(JOIN_LEAVE_MATCH, JoinLeaveMatchS2CPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(MAP_SELECT_DELETE, MapSelectDeleteC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(GET_MAP_NAMES, GetMapNamesC2SPacket::receive);
     }
 }

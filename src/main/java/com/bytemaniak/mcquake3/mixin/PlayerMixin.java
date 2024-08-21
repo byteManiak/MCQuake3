@@ -70,6 +70,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         original.call(playerEntity);
     }
 
+    @WrapOperation(method = "addExhaustion", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;isClient:Z"))
+    private boolean cancelExhaustionOnQuakeMap(World world, Operation<Boolean> original) {
+        if (world.getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) return true;
+
+        return original.call(world);
+    }
+
     @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",
             at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public float reduceFallDistance(float fallDistance) {

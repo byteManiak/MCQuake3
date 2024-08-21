@@ -23,7 +23,6 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
     private void copyFromQuakePlayer(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
         QuakePlayer thisQuakePlayer = (QuakePlayer) this;
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
-        thisQuakePlayer.setQuakeGui(oldQuakePlayer.quakeGuiEnabled());
         thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
     }
 

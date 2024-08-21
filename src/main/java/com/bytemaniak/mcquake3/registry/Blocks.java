@@ -31,8 +31,13 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public class Blocks {
+    public static final RegistryKey<World> Q3_DIMENSION = RegistryKey.of(RegistryKeys.WORLD, new Identifier("mcquake3:q3_dimension"));
+    public static final RegistryKey<DimensionType> Q3_DIMENSION_TYPE = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, new Identifier("mcquake3:q3_dimension_type"));
+
     private static final Identifier PLASMA_INDUCER = new Identifier("mcquake3:plasma_inducer");
     public static final Block PLASMA_INDUCER_BLOCK = new PlasmaInducer();
     public static final BlockEntityType<PlasmaInducerEntity> PLASMA_INDUCER_BLOCK_ENTITY;
@@ -160,7 +165,7 @@ public class Blocks {
         PORTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, PORTAL,
                 FabricEntityTypeBuilder.create(SpawnGroup.MISC, PortalEntity::new)
                         .dimensions(EntityDimensions.fixed(.5f, 1.5f))
-                        .trackRangeBlocks(128).build());
+                        .disableSummon().trackRangeBlocks(128).build());
         MACHINEGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, MACHINEGUN_AMMO_BOX,
                 FabricBlockEntityTypeBuilder.create(MachinegunAmmoBoxEntity::new, MACHINEGUN_AMMO_BOX_BLOCK).build());
         SHOTGUN_AMMO_BOX_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, SHOTGUN_AMMO_BOX,

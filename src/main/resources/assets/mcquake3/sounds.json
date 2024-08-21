@@ -1166,5 +1166,62 @@
     "sounds": [
       "mcquake3:players/tony/taunt"
     ]
+  },
+
+  "disc_kojinsmokin": {
+    "sounds": [
+      {
+        "name": "mcquake3:kojinsmokin",
+        "stream": true,
+        "volume": 0.4
+      }
+    ]
+  },
+  "disc_ninesix": {
+    "sounds": [
+      {
+        "name": "mcquake3:ninesix",
+        "stream": true,
+        "volume": 0.4
+      }
+    ]
+  },
+  "disc_sixtyfour": {
+    "sounds": [
+      {
+        "name": "mcquake3:sixtyfour",
+        "stream": true,
+        "volume": 0.4
+      }
+    ]
+  },
+  "disc_stairs": {
+    "sounds": [
+      {
+        "name": "mcquake3:stairs",
+        "stream": true,
+        "volume": 0.4
+      }
+    ]
+  },
+  "music.q3": {
+    "sounds": [
+      {
+        "name": "mcquake3:disc_kojinsmokin",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_ninesix",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_sixtyfour",
+        "type": "event"
+      },
+      {
+        "name": "mcquake3:disc_stairs",
+        "type": "event"
+      }
+    ]
   }
 }

@@ -11,7 +11,10 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -20,6 +23,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
+
+import java.util.EnumSet;
 
 public class PortalEntity extends PropEntity implements GeoEntity {
     private final static TrackedData<Byte> FACING = DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.BYTE);
@@ -98,26 +103,33 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     }
 
     public void teleportEntity(Entity entity) {
-        if (dataTracker.get(ACTIVE)) {
-            double x = dataTracker.get(XCOORD)+.5;
-            double y = dataTracker.get(YCOORD)+.5;
-            double z = dataTracker.get(ZCOORD)+.5;
-            if (!(entity instanceof PlayerEntity)) y += 1;
-
-            entity.teleport(x, y, z);
-
+        if (!getWorld().isClient && dataTracker.get(ACTIVE)) {
             float rotation = Direction.byId(dataTracker.get(TELEPORT_FACING)).asRotation();
-            entity.setHeadYaw(rotation);
-            entity.setBodyYaw(rotation);
-            entity.setYaw(rotation);
+            double speed = entity.getVelocity().length();
+            double x = dataTracker.get(XCOORD)+.5;
+            double y = dataTracker.get(YCOORD);
+            double z = dataTracker.get(ZCOORD)+.5;
 
-            for (int i = 0; i < 10; i++) {
-                double rx = x+random.nextDouble()*2-1;
-                double ry = y+random.nextDouble()*2-1;
-                double rz = z+random.nextDouble()*2-1;
-                getWorld().addParticle(ParticleTypes.SMOKE, rx, ry, rz, 0.0, 0.0, 0.0);
-                getWorld().addParticle(ParticleTypes.FLAME, rx, ry, rz, 0.0, 0.0, 0.0);
+            if (!(entity instanceof PlayerEntity))
+                y += 1.5;
+
+            if (entity instanceof ServerPlayerEntity player) {
+                if (player.isInTeleportationState()) return;
+
+                double y_off = Math.max(0, player.getY() - getY());
+                player.networkHandler.requestTeleport(x, y+y_off, z, rotation, 0);
+                player.inTeleportationState = true;
+                getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
+                getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
             }
+            else entity.teleport((ServerWorld)getWorld(), x, y, z, EnumSet.noneOf(PositionFlag.class), rotation, 0);
+
+            entity.velocityModified = true;
+            entity.setVelocity(getTeleportFacingVector().multiply(speed));
+            entity.velocityDirty = true;
+
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.SMOKE, x, y+.5, z, 20, .5, .5, .5, 0);
+            ((ServerWorld) getWorld()).spawnParticles(ParticleTypes.FLAME, x, y+.5, z, 10, .5, .5, .5, 0);
         }
     }
 
@@ -125,13 +137,9 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     public void onPlayerCollision(PlayerEntity player) {
         if (dataTracker.get(ACTIVE)) {
             Box playerBox = player.getBoundingBox().expand(.1f);
-            if (playerBox.intersects(getBoundingBox())) {
-                teleportEntity(player);
-                if (!getWorld().isClient) {
-                    getWorld().playSound(player, getBlockPos(), Sounds.TELEPORT_IN, SoundCategory.NEUTRAL);
-                    getWorld().playSoundFromEntity(null, player, Sounds.TELEPORT_OUT, SoundCategory.NEUTRAL, 1, 1);
-                }
-            }
+            if (playerBox.intersects(getBoundingBox())) teleportEntity(player);
        }
     }
+
+
 }

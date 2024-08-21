@@ -29,11 +29,13 @@ public abstract class HitscanWeapon extends Weapon {
     private final float hitscanRange;
     private final float hitscanNumSteps;
 
+    private final boolean pierceTarget;
+
     protected HitscanWeapon(Identifier id, long refireRateQ3InTicks,  long refireRateQLInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
                             float hitscanRange, float hitscanStepDistance, Item ammoType, int startingAmmo,
-                            int ammoBoxCount, int slot) {
+                            int ammoBoxCount, int slot, boolean pierceTarget) {
         super(id, refireRateQ3InTicks, refireRateQLInTicks,
                 hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
                 ammoType, startingAmmo, ammoBoxCount, slot);
@@ -43,14 +45,16 @@ public abstract class HitscanWeapon extends Weapon {
 
         this.hitscanRange = hitscanRange;
         this.hitscanNumSteps = hitscanRange/hitscanStepDistance;
+
+        this.pierceTarget = pierceTarget;
     }
 
     protected HitscanWeapon(Identifier id, long refireRateQ3InTicks, long refireRateQLInTicks,
                             boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
                             float damageAmount, RegistryKey<DamageType> damageType,
-                            float hitscanRange, Item ammoType, int startingAmmo, int ammoBoxCount, int slot) {
+                            float hitscanRange, Item ammoType, int startingAmmo, int ammoBoxCount, int slot, boolean pierceTarget) {
         this(id, refireRateQ3InTicks, refireRateQLInTicks, hasRepeatedFiringSound, firingSound, hasActiveLoopSound,
-                damageAmount, damageType, hitscanRange, .25f, ammoType, startingAmmo, ammoBoxCount, slot);
+                damageAmount, damageType, hitscanRange, .25f, ammoType, startingAmmo, ammoBoxCount, slot, pierceTarget);
     }
 
     protected void onProjectileCollision(World world, LivingEntity user, Vec3d userPos, Vec3d iterPos, Vec3d upVec, boolean isBlockCollision) {}
@@ -72,6 +76,7 @@ public abstract class HitscanWeapon extends Weapon {
         // Optional offset used to draw the weapon's projectile
         Vec3d upDir = Vec3d.fromPolar(user.getPitch() + 90, user.getYaw());
         Vec3d offsetWeaponPos = weaponPos.add(upDir.multiply(HITSCAN_VERTICAL_OFFSET));
+        boolean isBlockCollision = true;
 
         for (int i = 0; i < hitscanNumSteps; i++) {
             pos = pos.add(step);
@@ -92,8 +97,10 @@ public abstract class HitscanWeapon extends Weapon {
                     collided.damage(damageSource, damage);
                     onDamage(world, collided);
                 }
-                onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, false);
-                return;
+                if (!pierceTarget) {
+                    onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, false);
+                    return;
+                } else isBlockCollision = false;
             }
 
             if (world.isChunkLoaded(blockPos)) {
@@ -101,13 +108,13 @@ public abstract class HitscanWeapon extends Weapon {
                 if (collisionShape != VoxelShapes.empty()) {
                     Box blockCollisionBox = collisionShape.getBoundingBox().offset(blockPos);
                     if (blockCollisionBox.intersects(collisionBox)) {
-                        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, true);
+                        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, isBlockCollision);
                         return;
                     }
                 }
             }
         }
 
-        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, true);
+        onProjectileCollision(world, user, offsetWeaponPos, pos, upDir, isBlockCollision);
     }
 }

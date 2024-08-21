@@ -1,0 +1,13 @@
+{
+  "generator": {
+    "type": "minecraft:flat",
+    "custom_bool": true,
+    "settings": {
+      "biome": "mcquake3:q3_biome",
+      "features": false,
+      "layers": [],
+      "structure_overrides": []
+    }
+  },
+  "type": "mcquake3:q3_dimension_type"
+}

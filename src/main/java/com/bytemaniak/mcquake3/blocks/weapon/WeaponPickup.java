@@ -3,12 +3,16 @@ package com.bytemaniak.mcquake3.blocks.weapon;
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.bytemaniak.mcquake3.registry.Packets;
+import com.bytemaniak.mcquake3.util.MiscUtils;
+import com.bytemaniak.mcquake3.util.QuakePlayer;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -21,29 +25,21 @@ public abstract class WeaponPickup extends Pickup {
 
         if (!world.isClient) {
             PickupEntity weaponPickup = (PickupEntity) world.getBlockEntity(pos);
-            if (entity instanceof PlayerEntity player && weaponPickup.use()) {
-                if (!player.getInventory().containsAny(t -> t.isOf(weapon)))
-                    player.giveItemStack(new ItemStack(weapon));
+            if (entity instanceof ServerPlayerEntity player && weaponPickup.use()) {
+                if (!player.getInventory().containsAny(t -> t.isOf(weapon))) {
+                    if (((QuakePlayer) player).playingQuakeMap()) {
+                        player.getInventory().insertStack(weapon.slot, new ItemStack(weapon));
+
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeByte(weapon.slot);
+                        ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
+                    } else player.giveItemStack(new ItemStack(weapon));
+                }
 
                 if (!player.isCreative()) {
                     // TODO: Limit ammo usage once Quake server mode is implemented
-                    PlayerInventory inventory = player.getInventory();
-                    DefaultedList<ItemStack> main = inventory.main;
                     ItemStack ammo = new ItemStack(weapon.ammoType, weapon.ammoBoxCount);
-
-                    // Prioritize the non-hotbar inventory for ammo pickup
-                    for (int i = 9; i < main.size(); ++i) {
-                        if (ammo.getCount() == 0) break;
-
-                        if (main.get(i).isOf(weapon.ammoType)) {
-                            ammo.setCount(inventory.addStack(i, ammo));
-                        } else if (main.get(i).isEmpty()) {
-                            player.getInventory().insertStack(i, ammo);
-                            break;
-                        }
-                    }
-
-                    player.getInventory().insertStack(ammo);
+                    MiscUtils.insertInNonHotbarInventory(ammo, player.getInventory());
                 }
 
                 world.markDirty(pos);

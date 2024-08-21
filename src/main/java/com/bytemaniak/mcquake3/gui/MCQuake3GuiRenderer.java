@@ -3,9 +3,11 @@ package com.bytemaniak.mcquake3.gui;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.ItemStack;
@@ -25,7 +27,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
         int id = player.getCurrentQuakeWeaponId();
         if (id > 0) {
             int slotChar = '\uFFF0'+player.getCurrentQuakeWeaponId();
-            MiscUtils.drawText(context, Character.toString((char)slotChar), x - 200, y - 16, 0x00FFFFFF);
+            MiscUtils.drawText(context, Character.toString((char)slotChar), x - 150, y - 16, 0x00FFFFFF);
             if (plr.getMainHandStack().getItem() instanceof Weapon weapon) {
                 int weaponAmmo = 0;
 
@@ -34,17 +36,19 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
                     if (currentStack.isOf(weapon.ammoType))
                         weaponAmmo += currentStack.getCount();
                 }
-                MiscUtils.drawText(context, String.valueOf(weaponAmmo), x - 180, y, 0x00FFFFFF);
+                MiscUtils.drawText(context, String.valueOf(weaponAmmo), x - 130, y, 0x00FFFFFF);
             }
         }
 
-        if (player.quakeGuiEnabled()) {
+        if (player.playingQuakeMap()) {
             int playerHealth = (int)(plr.getHealth()*5);
             int healthColor = (playerHealth < 100) ?
                     (((int)(0xFF * (100-playerHealth)/100.f)  << 16) + ((int)(0xFF * playerHealth/100.f) << 8)) :
                     (((int)(0xFF * (200-playerHealth)/100.f)) << 8)  + ((int)(0xFF * (playerHealth-100)/100.f));
-            MiscUtils.drawText(context, "\uFFF0", x - 150, y - 16, 0x00FFFFFF);
-            MiscUtils.drawText(context, String.valueOf(playerHealth), x - 130, y, healthColor);
+            MiscUtils.drawText(context, "\uFFF0", x - 20, y - 16, 0x00FFFFFF);
+            MiscUtils.drawText(context, String.valueOf(playerHealth), x, y, healthColor);
+
+            PlayerSkinDrawer.draw(context, plr.getSkinTexture(), x - 50, y-9, 16, false, false);
 
             int playerArmor = player.getEnergyShield();
             int armorColor = (playerArmor < 100) ?

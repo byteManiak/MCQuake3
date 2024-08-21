@@ -24,7 +24,7 @@ public class Railgun extends HitscanWeapon {
     public Railgun() {
         super(new Identifier("mcquake3:railgun"), RAILGUN_REFIRE_RATE_Q3, RAILGUN_REFIRE_RATE_QL,
                 true, Sounds.RAILGUN_FIRE, false, RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE,
-                RAILGUN_RANGE, Weapons.RAILGUN_ROUND, 10, 10, 6);
+                RAILGUN_RANGE, Weapons.RAILGUN_ROUND, 10, 10, 6, true);
     }
 
     @Override

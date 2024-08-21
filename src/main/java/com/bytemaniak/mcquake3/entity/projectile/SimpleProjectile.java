@@ -64,10 +64,7 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
         if (hitResult.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityHitResult = (EntityHitResult) hitResult;
             if (entityHitResult.getEntity() instanceof PortalEntity portalEntity) {
-                double speed = getVelocity().length();
                 portalEntity.teleportEntity(this);
-                setVelocity(portalEntity.getTeleportFacingVector().multiply(speed));
-                velocityDirty = true;
                 return;
             }
         }

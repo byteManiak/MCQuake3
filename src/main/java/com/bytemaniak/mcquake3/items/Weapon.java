@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.sound.SoundUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -138,11 +137,12 @@ public abstract class Weapon extends Item implements GeoItem {
 
                 if (hasRepeatedFiringSound)
                     world.playSoundFromEntity(null, user, firingSound, SoundCategory.PLAYERS, 1, 1);
-            } else if (world.isClient) {
-                // Scroll to the next available slot in the hotbar in case
-                // the currently held weapon has run out of ammo
-                player.scrollToNextSuitableSlot();
-                SoundUtils.playSoundLocally(Sounds.NO_AMMO);
+            } else {
+                if (world.isClient)
+                    // Scroll to the next available slot in the hotbar in case
+                    // the currently held weapon has run out of ammo
+                    player.scrollToNextSuitableSlot();
+                world.playSoundFromEntity(null, user, Sounds.NO_AMMO, SoundCategory.PLAYERS, 1, 1);
             }
 
             player.setWeaponTick(slot, currentTick);

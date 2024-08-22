@@ -107,8 +107,6 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
             ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, arena);
             ServerEvents.QUAKE_MATCH_STATE.recordDeath(player, damageSource);
 
-            // TODO: Add death messages in the chat as this is a fake death
-            //  which will not trigger the ingame messages on its own
             return;
         }
 

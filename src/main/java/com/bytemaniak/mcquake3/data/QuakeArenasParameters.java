@@ -137,7 +137,8 @@ public class QuakeArenasParameters extends PersistentState {
         arenas.removeIf(arena -> arena.arenaName.equals(arenaName));
         markDirty();
 
-        if (arenaName.equals(ServerEvents.QUAKE_MATCH_STATE.arena.arenaName))
+        ArenaData matchArena = ServerEvents.QUAKE_MATCH_STATE.arena;
+        if (matchArena != null && arenaName.equals(matchArena.arenaName))
             ServerEvents.QUAKE_MATCH_STATE.arena = getRandomArena(null);
         logUpdates();
     }

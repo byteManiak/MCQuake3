@@ -46,6 +46,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     }
 
     public void recordDeath(ServerPlayerEntity player, Entity attacker) {
+        if (matchState != MatchState.IN_PROGRESS_STATE) return;
+
         if (attacker instanceof ServerPlayerEntity attackerPlayer && attackerPlayer != player) {
             int frags = ++stats.get(attackerPlayer.getName().getString()).frags;
             if (frags > highestFrags) highestFrags = frags;

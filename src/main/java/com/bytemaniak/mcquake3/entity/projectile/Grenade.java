@@ -31,7 +31,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Grenade(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, GRENADE_DAMAGE, Q3DamageSources.GRENADE_DAMAGE, 50);
+        super(entityType, world, GRENADE_DAMAGE, Q3DamageSources.GRENADE_DAMAGE, Q3DamageSources.GRENADE_DAMAGE_SELF, 50);
     }
 
     public Grenade(World world) { this(Entities.GRENADE, world); }

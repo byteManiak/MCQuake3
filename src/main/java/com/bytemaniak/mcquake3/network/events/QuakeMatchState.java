@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -48,24 +49,26 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
     }
 
-    public void recordDeath(ServerPlayerEntity player, Entity attacker) {
-        if (matchState != MatchState.IN_PROGRESS_STATE) return;
-
-        if (attacker instanceof ServerPlayerEntity attackerPlayer && attackerPlayer != player) {
-            int frags = ++stats.get(attackerPlayer.getName().getString()).frags;
-            if (frags > highestFrags) {
-                int fragsLeft = FRAG_LIMIT - frags;
-                switch (fragsLeft) {
-                    case 3 -> sendGlobalSound(Sounds.THREE_FRAGS);
-                    case 2 -> sendGlobalSound(Sounds.TWO_FRAGS);
-                    case 1 -> sendGlobalSound(Sounds.ONE_FRAG);
-                    case 0 -> winner = attacker.getName().getString();
+    public void recordDeath(ServerPlayerEntity player, DamageSource damageSource) {
+        if (matchState == MatchState.IN_PROGRESS_STATE) {
+            if (damageSource.getAttacker() instanceof ServerPlayerEntity attackerPlayer && attackerPlayer != player) {
+                int frags = ++stats.get(attackerPlayer.getName().getString()).frags;
+                if (frags > highestFrags) {
+                    int fragsLeft = FRAG_LIMIT - frags;
+                    switch (fragsLeft) {
+                        case 3 -> sendGlobalSound(Sounds.THREE_FRAGS);
+                        case 2 -> sendGlobalSound(Sounds.TWO_FRAGS);
+                        case 1 -> sendGlobalSound(Sounds.ONE_FRAG);
+                        case 0 -> winner = attackerPlayer.getName().getString();
+                    }
+                    highestFrags = frags;
                 }
-                highestFrags = frags;
             }
+
+            stats.get(player.getName().getString()).deaths++;
         }
 
-        stats.get(player.getName().getString()).deaths++;
+        sendGlobalMessage(damageSource.getDeathMessage(player), false);
     }
 
     public void spawnQuakePlayer(ServerPlayerEntity player, QuakeArenasParameters.ArenaData arena) {
@@ -128,10 +131,13 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             sendSound(player, sound);
     }
 
-    private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
+    private void sendGlobalMessage(Text message, boolean overlay) {
         for (ServerPlayerEntity player : quakePlayers)
-            player.sendMessage(Text.of(message), true);
+            player.sendMessage(message, overlay);
+    }
 
+    private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
+        sendGlobalMessage(Text.of(message), true);
         sendGlobalSound(sound);
     }
 

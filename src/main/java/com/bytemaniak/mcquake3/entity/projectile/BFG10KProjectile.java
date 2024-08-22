@@ -22,7 +22,7 @@ public class BFG10KProjectile extends SimpleProjectile {
     private static final float BFG10K_DAMAGE = MiscUtils.toMCDamage(100);
 
     public BFG10KProjectile(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, BFG10K_DAMAGE, Q3DamageSources.BFG10K_DAMAGE, 75);
+        super(entityType, world, BFG10K_DAMAGE, Q3DamageSources.BFG10K_DAMAGE, Q3DamageSources.BFG10K_DAMAGE_SELF, 75);
     }
 
     public BFG10KProjectile(World world) { this(Entities.BFG10K_PROJECTILE, world); }

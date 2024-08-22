@@ -26,7 +26,6 @@ public abstract class ServerPlayerMixin extends PlayerEntity {
         thisQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
     }
 
-
     @Override
     public boolean damage(DamageSource source, float amount) {
         QuakePlayer quakePlayer = (QuakePlayer) this;

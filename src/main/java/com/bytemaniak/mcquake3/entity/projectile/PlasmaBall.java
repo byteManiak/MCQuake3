@@ -22,7 +22,7 @@ public class PlasmaBall extends SimpleProjectile {
     private static final float PLASMAGUN_DAMAGE = MiscUtils.toMCDamage(20);
 
     public PlasmaBall(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, PLASMAGUN_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, 75);
+        super(entityType, world, PLASMAGUN_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE, Q3DamageSources.PLASMAGUN_DAMAGE_SELF, 75);
     }
 
     public PlasmaBall(World world) { this(Entities.PLASMA_BALL, world); }

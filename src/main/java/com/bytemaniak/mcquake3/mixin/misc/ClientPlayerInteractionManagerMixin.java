@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
     @Inject(method = "hasStatusBars", at = @At("RETURN"), cancellable = true)
-    private void hideStatusBarsOnQuakeMap(CallbackInfoReturnable<Boolean> ci) {
+    private void hideStatusBarsInQuakeArena(CallbackInfoReturnable<Boolean> ci) {
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
-        if (player.playingQuakeMap()) ci.setReturnValue(false);
+        if (player.inQuakeArena()) ci.setReturnValue(false);
     }
 }

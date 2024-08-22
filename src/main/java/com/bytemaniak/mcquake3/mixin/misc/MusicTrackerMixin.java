@@ -15,7 +15,7 @@ public abstract class MusicTrackerMixin {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getMusicType()Lnet/minecraft/sound/MusicSound;"))
     private MusicSound playQuakeMusic(MinecraftClient instance, Operation<MusicSound> original) {
         QuakePlayer player = (QuakePlayer) instance.player;
-        if (player != null && player.playingQuakeMap()) return Sounds.Q3_MUSIC;
+        if (player != null && player.inQuakeArena()) return Sounds.Q3_MUSIC;
 
         return original.call(instance);
     }

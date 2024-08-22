@@ -1,117 +1,28 @@
 {
-  "ding": {
-    "sounds": [
-      "mcquake3:ding"
-    ]
-  },
-  "announcer.prepare": {
-    "sounds": [
-      "mcquake3:announcer/prepare"
-    ]
-  },
-  "announcer.3": {
-    "sounds": [
-      "mcquake3:announcer/3"
-    ]
-  },
-  "announcer.2": {
-    "sounds": [
-      "mcquake3:announcer/2"
-    ]
-  },
-  "announcer.1": {
-    "sounds": [
-      "mcquake3:announcer/1"
-    ]
-  },
-  "announcer.fight": {
-    "sounds": [
-      "mcquake3:announcer/fight"
-    ]
-  },
-  "announcer.3_frags": {
-    "sounds": [
-      "mcquake3:announcer/3_frags"
-    ]
-  },
-  "announcer.2_frags": {
-    "sounds": [
-      "mcquake3:announcer/2_frags"
-    ]
-  },
-  "announcer.1_frag": {
-    "sounds": [
-      "mcquake3:announcer/1_frag"
-    ]
-  },
-  "announcer.match_win": {
-    "sounds": [
-      "mcquake3:announcer/match_win"
-    ]
-  },
-  "announcer.match_loss": {
-    "sounds": [
-      "mcquake3:announcer/match_loss"
-    ]
-  },
-  "hit": {
-    "sounds": [
-      "mcquake3:hit"
-    ]
-  },
-  "excellent": {
-    "sounds": [
-      "mcquake3:excellent"
-    ]
-  },
-  "impressive": {
-    "sounds": [
-      "mcquake3:impressive"
-    ]
-  },
-  "gauntlet": {
-    "sounds": [
-      "mcquake3:gauntlet"
-    ]
-  },
+  "ding": {"sounds": ["mcquake3:ding"]},
+  "announcer.prepare": {"sounds": ["mcquake3:announcer/prepare"]},
+  "announcer.3": {"sounds": ["mcquake3:announcer/3"]},
+  "announcer.2": {"sounds": ["mcquake3:announcer/2"]},
+  "announcer.1": {"sounds": ["mcquake3:announcer/1"]},
+  "announcer.fight": {"sounds": ["mcquake3:announcer/fight"]},
+  "announcer.3_frags": {"sounds": ["mcquake3:announcer/3_frags"]},
+  "announcer.2_frags": {"sounds": ["mcquake3:announcer/2_frags"]},
+  "announcer.1_frag": {"sounds": ["mcquake3:announcer/1_frag"]},
+  "announcer.match_win": {"sounds": ["mcquake3:announcer/match_win"]},
+  "announcer.match_loss": {"sounds": ["mcquake3:announcer/match_loss"]},
+  "hit": {"sounds": ["mcquake3:hit"]},
+  "excellent": {"sounds": ["mcquake3:excellent"]},
+  "impressive": {"sounds": ["mcquake3:impressive"]},
+  "gauntlet": {"sounds": ["mcquake3:gauntlet"]},
 
-  "jumppad": {
-    "sounds": [
-      "mcquake3:jumppad"
-    ]
-  },
+  "jumppad": {"sounds": ["mcquake3:jumppad"]},
+  "telein": {"sounds": ["mcquake3:telein"]},
+  "teleout": {"sounds": ["mcquake3:teleout"]},
 
-  "telein": {
-    "sounds": [
-      "mcquake3:telein"
-    ]
-  },
-  "teleout": {
-    "sounds": [
-      "mcquake3:teleout"
-    ]
-  },
-
-  "no_ammo": {
-    "sounds": [
-      "mcquake3:no_ammo"
-    ]
-  },
-  "gauntlet_idle": {
-    "sounds": [
-      "mcquake3:gauntlet_idle"
-    ]
-  },
-  "gauntlet_active": {
-    "sounds": [
-      "mcquake3:gauntlet_active"
-    ]
-  },
-  "gauntlet_damage": {
-    "sounds": [
-      "mcquake3:gauntlet_damage"
-    ]
-  },
+  "no_ammo": {"sounds": ["mcquake3:no_ammo"]},
+  "gauntlet_idle": {"sounds": ["mcquake3:gauntlet_idle"]},
+  "gauntlet_active": {"sounds": ["mcquake3:gauntlet_active"]},
+  "gauntlet_damage": {"sounds": ["mcquake3:gauntlet_damage"]},
 
   "machinegun": {
     "sounds": [
@@ -121,75 +32,24 @@
       "mcquake3:machinegun4"
     ]
   },
-  "plasmagun": {
-    "sounds": [
-      "mcquake3:plasmagun"
-    ]
-  },
+  "plasmagun": {"sounds": ["mcquake3:plasmagun"]},
+  "railgun": {"sounds": ["mcquake3:railgun"]},
+  "railgun_idle": {"sounds": ["mcquake3:railgun_idle"]},
+  "shotgun": {"sounds": ["mcquake3:shotgun"]},
+  "lightning_gun": {"sounds": ["mcquake3:lightning_gun"]},
+  "lightning_active": {"sounds": ["mcquake3:lightning_active"]},
+  "bfg10k": {"sounds": ["mcquake3:bfg10k"]},
+  "grenade_launcher": {"sounds": ["mcquake3:grenade_launcher"]},
 
-  "railgun": {
-    "sounds": [
-      "mcquake3:railgun"
-    ]
-  },
-  "railgun_idle": {
-    "sounds": [
-      "mcquake3:railgun_idle"
-    ]
-  },
-
-  "shotgun": {
-    "sounds": [
-      "mcquake3:shotgun"
-    ]
-  },
-
-  "lightning_gun": {
-    "sounds": [
-      "mcquake3:lightning_gun"
-    ]
-  },
-  "lightning_active": {
-    "sounds": [
-      "mcquake3:lightning_active"
-    ]
-  },
-
-  "bfg10k": {
-    "sounds": [
-      "mcquake3:bfg10k"
-    ]
-  },
-
-  "grenade_launcher": {
-    "sounds": [
-      "mcquake3:grenade_launcher"
-    ]
-  },
   "grenade_bounce": {
     "sounds": [
       "mcquake3:grenade_bounce1",
       "mcquake3:grenade_bounce2"
     ]
   },
-
-  "rocket_flying": {
-    "sounds": [
-      "mcquake3:rocket_flying"
-    ]
-  },
-
-  "plasmaball_flying": {
-    "sounds": [
-      "mcquake3:plasmaball_flying"
-    ]
-  },
-  "plasmaball_hit": {
-    "sounds": [
-      "mcquake3:plasmaball_hit"
-    ]
-  },
-
+  "rocket_flying": {"sounds": ["mcquake3:rocket_flying"]},
+  "plasmaball_flying": {"sounds": ["mcquake3:plasmaball_flying"]},
+  "plasmaball_hit": {"sounds": ["mcquake3:plasmaball_hit"]},
   "lightning_hit": {
     "sounds": [
       "mcquake3:lightning_hit1",
@@ -197,7 +57,6 @@
       "mcquake3:lightning_hit3"
     ]
   },
-
   "bullet_miss": {
     "sounds": [
       "mcquake3:bullet_miss1",
@@ -206,85 +65,20 @@
     ]
   },
 
-  "weapon_change": {
-    "sounds": [
-      "mcquake3:weapon_change"
-    ]
-  },
-
-  "regen": {
-    "sounds": [
-      "mcquake3:regen"
-    ]
-  },
-
-  "powerup_regen": {
-    "sounds": [
-      "mcquake3:powerup_regen"
-    ]
-  },
-
-  "haste": {
-    "sounds": [
-      "mcquake3:haste"
-    ]
-  },
-  "invisibility": {
-    "sounds": [
-      "mcquake3:invisibility"
-    ]
-  },
-  "quad_damage": {
-    "sounds": [
-      "mcquake3:quad_damage"
-    ]
-  },
-
-  "ammo_pickup": {
-    "sounds": [
-      "mcquake3:ammo_pickup"
-    ]
-  },
-
-  "weapon_pickup": {
-    "sounds": [
-      "mcquake3:weapon_pickup"
-    ]
-  },
-
-  "5health": {
-    "sounds": [
-      "mcquake3:5health"
-    ]
-  },
-
-  "25health": {
-    "sounds": [
-      "mcquake3:25health"
-    ]
-  },
-
-  "50health": {
-    "sounds": [
-      "mcquake3:50health"
-    ]
-  },
-
-  "energy_shield_cell": {
-    "sounds": [
-      "mcquake3:energy_shield_cell"
-    ]
-  },
-  "light_energy_shield": {
-    "sounds": [
-      "mcquake3:light_energy_shield"
-    ]
-  },
-  "heavy_energy_shield": {
-    "sounds": [
-      "mcquake3:heavy_energy_shield"
-    ]
-  },
+  "weapon_change": {"sounds": ["mcquake3:weapon_change"]},
+  "regen": {"sounds": ["mcquake3:regen"]},
+  "powerup_regen": {"sounds": ["mcquake3:powerup_regen"]},
+  "haste": {"sounds": ["mcquake3:haste"]},
+  "invisibility": {"sounds": ["mcquake3:invisibility"]},
+  "quad_damage": {"sounds": ["mcquake3:quad_damage"]},
+  "ammo_pickup": {"sounds": ["mcquake3:ammo_pickup"]},
+  "weapon_pickup": {"sounds": ["mcquake3:weapon_pickup"]},
+  "5health": {"sounds": ["mcquake3:5health"]},
+  "25health": {"sounds": ["mcquake3:25health"]},
+  "50health": {"sounds": ["mcquake3:50health"]},
+  "energy_shield_cell": {"sounds": ["mcquake3:energy_shield_cell"]},
+  "light_energy_shield": {"sounds": ["mcquake3:light_energy_shield"]},
+  "heavy_energy_shield": {"sounds": ["mcquake3:heavy_energy_shield"]},
 
   "angelyss_death": {
     "sounds": [
@@ -293,51 +87,16 @@
       "mcquake3:players/angelyss/death3"
     ]
   },
-  "angelyss_drown": {
-    "sounds": [
-      "mcquake3:players/angelyss/drown"
-    ]
-  },
-  "angelyss_fall": {
-    "sounds": [
-      "mcquake3:players/angelyss/fall1"
-    ]
-  },
-  "angelyss_gasp": {
-    "sounds": [
-      "mcquake3:players/angelyss/gasp"
-    ]
-  },
-  "angelyss_jump": {
-    "sounds": [
-      "mcquake3:players/angelyss/jump1"
-    ]
-  },
-  "angelyss_hurt100": {
-    "sounds": [
-      "mcquake3:players/angelyss/pain100_1"
-    ]
-  },
-  "angelyss_hurt75": {
-    "sounds": [
-      "mcquake3:players/angelyss/pain75_1"
-    ]
-  },
-  "angelyss_hurt50": {
-    "sounds": [
-      "mcquake3:players/angelyss/pain50_1"
-    ]
-  },
-  "angelyss_hurt25": {
-    "sounds": [
-      "mcquake3:players/angelyss/pain25_1"
-    ]
-  },
-  "angelyss_taunt": {
-    "sounds": [
-      "mcquake3:players/angelyss/taunt"
-    ]
-  },
+  "angelyss_drown": {"sounds": ["mcquake3:players/angelyss/drown"]},
+  "angelyss_fall": {"sounds": ["mcquake3:players/angelyss/fall1"]},
+  "angelyss_gasp": {"sounds": ["mcquake3:players/angelyss/gasp"]},
+  "angelyss_jump": {"sounds": ["mcquake3:players/angelyss/jump1"]},
+  "angelyss_hurt100": {"sounds": ["mcquake3:players/angelyss/pain100_1"]},
+  "angelyss_hurt75": {"sounds": ["mcquake3:players/angelyss/pain75_1"]},
+  "angelyss_hurt50": {"sounds": ["mcquake3:players/angelyss/pain50_1"]},
+  "angelyss_hurt25": {"sounds": ["mcquake3:players/angelyss/pain25_1"]},
+  "angelyss_taunt": {"sounds": ["mcquake3:players/angelyss/taunt"]},
+
   "arachna_death": {
     "sounds": [
       "mcquake3:players/arachna/death1",
@@ -345,51 +104,16 @@
       "mcquake3:players/arachna/death3"
     ]
   },
-  "arachna_drown": {
-    "sounds": [
-      "mcquake3:players/arachna/drown"
-    ]
-  },
-  "arachna_fall": {
-    "sounds": [
-      "mcquake3:players/arachna/fall1"
-    ]
-  },
-  "arachna_gasp": {
-    "sounds": [
-      "mcquake3:players/arachna/gasp"
-    ]
-  },
-  "arachna_jump": {
-    "sounds": [
-      "mcquake3:players/arachna/jump1"
-    ]
-  },
-  "arachna_hurt100": {
-    "sounds": [
-      "mcquake3:players/arachna/pain100_1"
-    ]
-  },
-  "arachna_hurt75": {
-    "sounds": [
-      "mcquake3:players/arachna/pain75_1"
-    ]
-  },
-  "arachna_hurt50": {
-    "sounds": [
-      "mcquake3:players/arachna/pain50_1"
-    ]
-  },
-  "arachna_hurt25": {
-    "sounds": [
-      "mcquake3:players/arachna/pain25_1"
-    ]
-  },
-  "arachna_taunt": {
-    "sounds": [
-      "mcquake3:players/arachna/taunt"
-    ]
-  },
+  "arachna_drown": {"sounds": ["mcquake3:players/arachna/drown"]},
+  "arachna_fall": {"sounds": ["mcquake3:players/arachna/fall1"]},
+  "arachna_gasp": {"sounds": ["mcquake3:players/arachna/gasp"]},
+  "arachna_jump": {"sounds": ["mcquake3:players/arachna/jump1"]},
+  "arachna_hurt100": {"sounds": ["mcquake3:players/arachna/pain100_1"]},
+  "arachna_hurt75": {"sounds": ["mcquake3:players/arachna/pain75_1"]},
+  "arachna_hurt50": {"sounds": ["mcquake3:players/arachna/pain50_1"]},
+  "arachna_hurt25": {"sounds": ["mcquake3:players/arachna/pain25_1"]},
+  "arachna_taunt": {"sounds": ["mcquake3:players/arachna/taunt"]},
+
   "assassin_death": {
     "sounds": [
       "mcquake3:players/assassin/death1",
@@ -397,51 +121,16 @@
       "mcquake3:players/assassin/death3"
     ]
   },
-  "assassin_drown": {
-    "sounds": [
-      "mcquake3:players/assassin/drown"
-    ]
-  },
-  "assassin_fall": {
-    "sounds": [
-      "mcquake3:players/assassin/fall1"
-    ]
-  },
-  "assassin_gasp": {
-    "sounds": [
-      "mcquake3:players/assassin/gasp"
-    ]
-  },
-  "assassin_jump": {
-    "sounds": [
-      "mcquake3:players/assassin/jump1"
-    ]
-  },
-  "assassin_hurt100": {
-    "sounds": [
-      "mcquake3:players/assassin/pain100_1"
-    ]
-  },
-  "assassin_hurt75": {
-    "sounds": [
-      "mcquake3:players/assassin/pain75_1"
-    ]
-  },
-  "assassin_hurt50": {
-    "sounds": [
-      "mcquake3:players/assassin/pain50_1"
-    ]
-  },
-  "assassin_hurt25": {
-    "sounds": [
-      "mcquake3:players/assassin/pain25_1"
-    ]
-  },
-  "assassin_taunt": {
-    "sounds": [
-      "mcquake3:players/assassin/taunt"
-    ]
-  },
+  "assassin_drown": {"sounds": ["mcquake3:players/assassin/drown"]},
+  "assassin_fall": {"sounds": ["mcquake3:players/assassin/fall1"]},
+  "assassin_gasp": {"sounds": ["mcquake3:players/assassin/gasp"]},
+  "assassin_jump": {"sounds": ["mcquake3:players/assassin/jump1"]},
+  "assassin_hurt100": {"sounds": ["mcquake3:players/assassin/pain100_1"]},
+  "assassin_hurt75": {"sounds": ["mcquake3:players/assassin/pain75_1"]},
+  "assassin_hurt50": {"sounds": ["mcquake3:players/assassin/pain50_1"]},
+  "assassin_hurt25": {"sounds": ["mcquake3:players/assassin/pain25_1"]},
+  "assassin_taunt": {"sounds": ["mcquake3:players/assassin/taunt"]},
+
   "ayumi_death": {
     "sounds": [
       "mcquake3:players/ayumi/death1",
@@ -449,51 +138,16 @@
       "mcquake3:players/ayumi/death3"
     ]
   },
-  "ayumi_drown": {
-    "sounds": [
-      "mcquake3:players/ayumi/drown"
-    ]
-  },
-  "ayumi_fall": {
-    "sounds": [
-      "mcquake3:players/ayumi/fall1"
-    ]
-  },
-  "ayumi_gasp": {
-    "sounds": [
-      "mcquake3:players/ayumi/gasp"
-    ]
-  },
-  "ayumi_jump": {
-    "sounds": [
-      "mcquake3:players/ayumi/jump1"
-    ]
-  },
-  "ayumi_hurt100": {
-    "sounds": [
-      "mcquake3:players/ayumi/pain100_1"
-    ]
-  },
-  "ayumi_hurt75": {
-    "sounds": [
-      "mcquake3:players/ayumi/pain75_1"
-    ]
-  },
-  "ayumi_hurt50": {
-    "sounds": [
-      "mcquake3:players/ayumi/pain50_1"
-    ]
-  },
-  "ayumi_hurt25": {
-    "sounds": [
-      "mcquake3:players/ayumi/pain25_1"
-    ]
-  },
-  "ayumi_taunt": {
-    "sounds": [
-      "mcquake3:players/ayumi/taunt"
-    ]
-  },
+  "ayumi_drown": {"sounds": ["mcquake3:players/ayumi/drown"]},
+  "ayumi_fall": {"sounds": ["mcquake3:players/ayumi/fall1"]},
+  "ayumi_gasp": {"sounds": ["mcquake3:players/ayumi/gasp"]},
+  "ayumi_jump": {"sounds": ["mcquake3:players/ayumi/jump1"]},
+  "ayumi_hurt100": {"sounds": ["mcquake3:players/ayumi/pain100_1"]},
+  "ayumi_hurt75": {"sounds": ["mcquake3:players/ayumi/pain75_1"]},
+  "ayumi_hurt50": {"sounds": ["mcquake3:players/ayumi/pain50_1"]},
+  "ayumi_hurt25": {"sounds": ["mcquake3:players/ayumi/pain25_1"]},
+  "ayumi_taunt": {"sounds": ["mcquake3:players/ayumi/taunt"]},
+
   "beret_death": {
     "sounds": [
       "mcquake3:players/beret/death1",
@@ -501,51 +155,16 @@
       "mcquake3:players/beret/death3"
     ]
   },
-  "beret_drown": {
-    "sounds": [
-      "mcquake3:players/beret/drown"
-    ]
-  },
-  "beret_fall": {
-    "sounds": [
-      "mcquake3:players/beret/fall1"
-    ]
-  },
-  "beret_gasp": {
-    "sounds": [
-      "mcquake3:players/beret/gasp"
-    ]
-  },
-  "beret_jump": {
-    "sounds": [
-      "mcquake3:players/beret/jump1"
-    ]
-  },
-  "beret_hurt100": {
-    "sounds": [
-      "mcquake3:players/beret/pain100_1"
-    ]
-  },
-  "beret_hurt75": {
-    "sounds": [
-      "mcquake3:players/beret/pain75_1"
-    ]
-  },
-  "beret_hurt50": {
-    "sounds": [
-      "mcquake3:players/beret/pain50_1"
-    ]
-  },
-  "beret_hurt25": {
-    "sounds": [
-      "mcquake3:players/beret/pain25_1"
-    ]
-  },
-  "beret_taunt": {
-    "sounds": [
-      "mcquake3:players/beret/taunt"
-    ]
-  },
+  "beret_drown": {"sounds": ["mcquake3:players/beret/drown"]},
+  "beret_fall": {"sounds": ["mcquake3:players/beret/fall1"]},
+  "beret_gasp": {"sounds": ["mcquake3:players/beret/gasp"]},
+  "beret_jump": {"sounds": ["mcquake3:players/beret/jump1"]},
+  "beret_hurt100": {"sounds": ["mcquake3:players/beret/pain100_1"]},
+  "beret_hurt75": {"sounds": ["mcquake3:players/beret/pain75_1"]},
+  "beret_hurt50": {"sounds": ["mcquake3:players/beret/pain50_1"]},
+  "beret_hurt25": {"sounds": ["mcquake3:players/beret/pain25_1"]},
+  "beret_taunt": {"sounds": ["mcquake3:players/beret/taunt"]},
+
   "gargoyle_death": {
     "sounds": [
       "mcquake3:players/gargoyle/death1",
@@ -553,51 +172,16 @@
       "mcquake3:players/gargoyle/death3"
     ]
   },
-  "gargoyle_drown": {
-    "sounds": [
-      "mcquake3:players/gargoyle/drown"
-    ]
-  },
-  "gargoyle_fall": {
-    "sounds": [
-      "mcquake3:players/gargoyle/fall1"
-    ]
-  },
-  "gargoyle_gasp": {
-    "sounds": [
-      "mcquake3:players/gargoyle/gasp"
-    ]
-  },
-  "gargoyle_jump": {
-    "sounds": [
-      "mcquake3:players/gargoyle/jump1"
-    ]
-  },
-  "gargoyle_hurt100": {
-    "sounds": [
-      "mcquake3:players/gargoyle/pain100_1"
-    ]
-  },
-  "gargoyle_hurt75": {
-    "sounds": [
-      "mcquake3:players/gargoyle/pain75_1"
-    ]
-  },
-  "gargoyle_hurt50": {
-    "sounds": [
-      "mcquake3:players/gargoyle/pain50_1"
-    ]
-  },
-  "gargoyle_hurt25": {
-    "sounds": [
-      "mcquake3:players/gargoyle/pain25_1"
-    ]
-  },
-  "gargoyle_taunt": {
-    "sounds": [
-      "mcquake3:players/gargoyle/taunt"
-    ]
-  },
+  "gargoyle_drown": {"sounds": ["mcquake3:players/gargoyle/drown"]},
+  "gargoyle_fall": {"sounds": ["mcquake3:players/gargoyle/fall1"]},
+  "gargoyle_gasp": {"sounds": ["mcquake3:players/gargoyle/gasp"]},
+  "gargoyle_jump": {"sounds": ["mcquake3:players/gargoyle/jump1"]},
+  "gargoyle_hurt100": {"sounds": ["mcquake3:players/gargoyle/pain100_1"]},
+  "gargoyle_hurt75": {"sounds": ["mcquake3:players/gargoyle/pain75_1"]},
+  "gargoyle_hurt50": {"sounds": ["mcquake3:players/gargoyle/pain50_1"]},
+  "gargoyle_hurt25": {"sounds": ["mcquake3:players/gargoyle/pain25_1"]},
+  "gargoyle_taunt": {"sounds": ["mcquake3:players/gargoyle/taunt"]},
+
   "kyonshi_death": {
     "sounds": [
       "mcquake3:players/kyonshi/death1",
@@ -605,51 +189,16 @@
       "mcquake3:players/kyonshi/death3"
     ]
   },
-  "kyonshi_drown": {
-    "sounds": [
-      "mcquake3:players/kyonshi/drown"
-    ]
-  },
-  "kyonshi_fall": {
-    "sounds": [
-      "mcquake3:players/kyonshi/fall1"
-    ]
-  },
-  "kyonshi_gasp": {
-    "sounds": [
-      "mcquake3:players/kyonshi/gasp"
-    ]
-  },
-  "kyonshi_jump": {
-    "sounds": [
-      "mcquake3:players/kyonshi/jump1"
-    ]
-  },
-  "kyonshi_hurt100": {
-    "sounds": [
-      "mcquake3:players/kyonshi/pain100_1"
-    ]
-  },
-  "kyonshi_hurt75": {
-    "sounds": [
-      "mcquake3:players/kyonshi/pain75_1"
-    ]
-  },
-  "kyonshi_hurt50": {
-    "sounds": [
-      "mcquake3:players/kyonshi/pain50_1"
-    ]
-  },
-  "kyonshi_hurt25": {
-    "sounds": [
-      "mcquake3:players/kyonshi/pain25_1"
-    ]
-  },
-  "kyonshi_taunt": {
-    "sounds": [
-      "mcquake3:players/kyonshi/taunt"
-    ]
-  },
+  "kyonshi_drown": {"sounds": ["mcquake3:players/kyonshi/drown"]},
+  "kyonshi_fall": {"sounds": ["mcquake3:players/kyonshi/fall1"]},
+  "kyonshi_gasp": {"sounds": ["mcquake3:players/kyonshi/gasp"]},
+  "kyonshi_jump": {"sounds": ["mcquake3:players/kyonshi/jump1"]},
+  "kyonshi_hurt100": {"sounds": ["mcquake3:players/kyonshi/pain100_1"]},
+  "kyonshi_hurt75": {"sounds": ["mcquake3:players/kyonshi/pain75_1"]},
+  "kyonshi_hurt50": {"sounds": ["mcquake3:players/kyonshi/pain50_1"]},
+  "kyonshi_hurt25": {"sounds": ["mcquake3:players/kyonshi/pain25_1"]},
+  "kyonshi_taunt": {"sounds": ["mcquake3:players/kyonshi/taunt"]},
+
   "liz_death": {
     "sounds": [
       "mcquake3:players/liz/death1",
@@ -657,51 +206,16 @@
       "mcquake3:players/liz/death3"
     ]
   },
-  "liz_drown": {
-    "sounds": [
-      "mcquake3:players/liz/drown"
-    ]
-  },
-  "liz_fall": {
-    "sounds": [
-      "mcquake3:players/liz/fall1"
-    ]
-  },
-  "liz_gasp": {
-    "sounds": [
-      "mcquake3:players/liz/gasp"
-    ]
-  },
-  "liz_jump": {
-    "sounds": [
-      "mcquake3:players/liz/jump1"
-    ]
-  },
-  "liz_hurt100": {
-    "sounds": [
-      "mcquake3:players/liz/pain100_1"
-    ]
-  },
-  "liz_hurt75": {
-    "sounds": [
-      "mcquake3:players/liz/pain75_1"
-    ]
-  },
-  "liz_hurt50": {
-    "sounds": [
-      "mcquake3:players/liz/pain50_1"
-    ]
-  },
-  "liz_hurt25": {
-    "sounds": [
-      "mcquake3:players/liz/pain25_1"
-    ]
-  },
-  "liz_taunt": {
-    "sounds": [
-      "mcquake3:players/liz/taunt"
-    ]
-  },
+  "liz_drown": {"sounds": ["mcquake3:players/liz/drown"]},
+  "liz_fall": {"sounds": ["mcquake3:players/liz/fall1"]},
+  "liz_gasp": {"sounds": ["mcquake3:players/liz/gasp"]},
+  "liz_jump": {"sounds": ["mcquake3:players/liz/jump1"]},
+  "liz_hurt100": {"sounds": ["mcquake3:players/liz/pain100_1"]},
+  "liz_hurt75": {"sounds": ["mcquake3:players/liz/pain75_1"]},
+  "liz_hurt50": {"sounds": ["mcquake3:players/liz/pain50_1"]},
+  "liz_hurt25": {"sounds": ["mcquake3:players/liz/pain25_1"]},
+  "liz_taunt": {"sounds": ["mcquake3:players/liz/taunt"]},
+
   "major_death": {
     "sounds": [
       "mcquake3:players/major/death1",
@@ -709,51 +223,16 @@
       "mcquake3:players/major/death3"
     ]
   },
-  "major_drown": {
-    "sounds": [
-      "mcquake3:players/major/drown"
-    ]
-  },
-  "major_fall": {
-    "sounds": [
-      "mcquake3:players/major/fall1"
-    ]
-  },
-  "major_gasp": {
-    "sounds": [
-      "mcquake3:players/major/gasp"
-    ]
-  },
-  "major_jump": {
-    "sounds": [
-      "mcquake3:players/major/jump1"
-    ]
-  },
-  "major_hurt100": {
-    "sounds": [
-      "mcquake3:players/major/pain100_1"
-    ]
-  },
-  "major_hurt75": {
-    "sounds": [
-      "mcquake3:players/major/pain75_1"
-    ]
-  },
-  "major_hurt50": {
-    "sounds": [
-      "mcquake3:players/major/pain50_1"
-    ]
-  },
-  "major_hurt25": {
-    "sounds": [
-      "mcquake3:players/major/pain25_1"
-    ]
-  },
-  "major_taunt": {
-    "sounds": [
-      "mcquake3:players/major/taunt"
-    ]
-  },
+  "major_drown": {"sounds": ["mcquake3:players/major/drown"]},
+  "major_fall": {"sounds": ["mcquake3:players/major/fall1"]},
+  "major_gasp": {"sounds": ["mcquake3:players/major/gasp"]},
+  "major_jump": {"sounds": ["mcquake3:players/major/jump1"]},
+  "major_hurt100": {"sounds": ["mcquake3:players/major/pain100_1"]},
+  "major_hurt75": {"sounds": ["mcquake3:players/major/pain75_1"]},
+  "major_hurt50": {"sounds": ["mcquake3:players/major/pain50_1"]},
+  "major_hurt25": {"sounds": ["mcquake3:players/major/pain25_1"]},
+  "major_taunt": {"sounds": ["mcquake3:players/major/taunt"]},
+  
   "merman_death": {
     "sounds": [
       "mcquake3:players/merman/death1",
@@ -761,51 +240,16 @@
       "mcquake3:players/merman/death3"
     ]
   },
-  "merman_drown": {
-    "sounds": [
-      "mcquake3:players/merman/drown"
-    ]
-  },
-  "merman_fall": {
-    "sounds": [
-      "mcquake3:players/merman/fall1"
-    ]
-  },
-  "merman_gasp": {
-    "sounds": [
-      "mcquake3:players/merman/gasp"
-    ]
-  },
-  "merman_jump": {
-    "sounds": [
-      "mcquake3:players/merman/jump1"
-    ]
-  },
-  "merman_hurt100": {
-    "sounds": [
-      "mcquake3:players/merman/pain100_1"
-    ]
-  },
-  "merman_hurt75": {
-    "sounds": [
-      "mcquake3:players/merman/pain75_1"
-    ]
-  },
-  "merman_hurt50": {
-    "sounds": [
-      "mcquake3:players/merman/pain50_1"
-    ]
-  },
-  "merman_hurt25": {
-    "sounds": [
-      "mcquake3:players/merman/pain25_1"
-    ]
-  },
-  "merman_taunt": {
-    "sounds": [
-      "mcquake3:players/merman/taunt"
-    ]
-  },
+  "merman_drown": {"sounds": ["mcquake3:players/merman/drown"]},
+  "merman_fall": {"sounds": ["mcquake3:players/merman/fall1"]},
+  "merman_gasp": {"sounds": ["mcquake3:players/merman/gasp"]},
+  "merman_jump": {"sounds": ["mcquake3:players/merman/jump1"]},
+  "merman_hurt100": {"sounds": ["mcquake3:players/merman/pain100_1"]},
+  "merman_hurt75": {"sounds": ["mcquake3:players/merman/pain75_1"]},
+  "merman_hurt50": {"sounds": ["mcquake3:players/merman/pain50_1"]},
+  "merman_hurt25": {"sounds": ["mcquake3:players/merman/pain25_1"]},
+  "merman_taunt": {"sounds": ["mcquake3:players/merman/taunt"]},
+  
   "neko_death": {
     "sounds": [
       "mcquake3:players/neko/death1",
@@ -813,51 +257,16 @@
       "mcquake3:players/neko/death3"
     ]
   },
-  "neko_drown": {
-    "sounds": [
-      "mcquake3:players/neko/drown"
-    ]
-  },
-  "neko_fall": {
-    "sounds": [
-      "mcquake3:players/neko/fall1"
-    ]
-  },
-  "neko_gasp": {
-    "sounds": [
-      "mcquake3:players/neko/gasp"
-    ]
-  },
-  "neko_jump": {
-    "sounds": [
-      "mcquake3:players/neko/jump1"
-    ]
-  },
-  "neko_hurt100": {
-    "sounds": [
-      "mcquake3:players/neko/pain100_1"
-    ]
-  },
-  "neko_hurt75": {
-    "sounds": [
-      "mcquake3:players/neko/pain75_1"
-    ]
-  },
-  "neko_hurt50": {
-    "sounds": [
-      "mcquake3:players/neko/pain50_1"
-    ]
-  },
-  "neko_hurt25": {
-    "sounds": [
-      "mcquake3:players/neko/pain25_1"
-    ]
-  },
-  "neko_taunt": {
-    "sounds": [
-      "mcquake3:players/neko/taunt"
-    ]
-  },
+  "neko_drown": {"sounds": ["mcquake3:players/neko/drown"]},
+  "neko_fall": {"sounds": ["mcquake3:players/neko/fall1"]},
+  "neko_gasp": {"sounds": ["mcquake3:players/neko/gasp"]},
+  "neko_jump": {"sounds": ["mcquake3:players/neko/jump1"]},
+  "neko_hurt100": {"sounds": ["mcquake3:players/neko/pain100_1"]},
+  "neko_hurt75": {"sounds": ["mcquake3:players/neko/pain75_1"]},
+  "neko_hurt50": {"sounds": ["mcquake3:players/neko/pain50_1"]},
+  "neko_hurt25": {"sounds": ["mcquake3:players/neko/pain25_1"]},
+  "neko_taunt": {"sounds": ["mcquake3:players/neko/taunt"]},
+  
   "penguin_death": {
     "sounds": [
       "mcquake3:players/penguin/death1",
@@ -865,51 +274,16 @@
       "mcquake3:players/penguin/death3"
     ]
   },
-  "penguin_drown": {
-    "sounds": [
-      "mcquake3:players/penguin/drown"
-    ]
-  },
-  "penguin_fall": {
-    "sounds": [
-      "mcquake3:players/penguin/fall1"
-    ]
-  },
-  "penguin_gasp": {
-    "sounds": [
-      "mcquake3:players/penguin/gasp"
-    ]
-  },
-  "penguin_jump": {
-    "sounds": [
-      "mcquake3:players/penguin/jump1"
-    ]
-  },
-  "penguin_hurt100": {
-    "sounds": [
-      "mcquake3:players/penguin/pain100_1"
-    ]
-  },
-  "penguin_hurt75": {
-    "sounds": [
-      "mcquake3:players/penguin/pain75_1"
-    ]
-  },
-  "penguin_hurt50": {
-    "sounds": [
-      "mcquake3:players/penguin/pain50_1"
-    ]
-  },
-  "penguin_hurt25": {
-    "sounds": [
-      "mcquake3:players/penguin/pain25_1"
-    ]
-  },
-  "penguin_taunt": {
-    "sounds": [
-      "mcquake3:players/penguin/taunt"
-    ]
-  },
+  "penguin_drown": {"sounds": ["mcquake3:players/penguin/drown"]},
+  "penguin_fall": {"sounds": ["mcquake3:players/penguin/fall1"]},
+  "penguin_gasp": {"sounds": ["mcquake3:players/penguin/gasp"]},
+  "penguin_jump": {"sounds": ["mcquake3:players/penguin/jump1"]},
+  "penguin_hurt100": {"sounds": ["mcquake3:players/penguin/pain100_1"]},
+  "penguin_hurt75": {"sounds": ["mcquake3:players/penguin/pain75_1"]},
+  "penguin_hurt50": {"sounds": ["mcquake3:players/penguin/pain50_1"]},
+  "penguin_hurt25": {"sounds": ["mcquake3:players/penguin/pain25_1"]},
+  "penguin_taunt": {"sounds": ["mcquake3:players/penguin/taunt"]},
+  
   "sarge_death": {
     "sounds": [
       "mcquake3:players/sarge/death1",
@@ -917,51 +291,16 @@
       "mcquake3:players/sarge/death3"
     ]
   },
-  "sarge_drown": {
-    "sounds": [
-      "mcquake3:players/sarge/drown"
-    ]
-  },
-  "sarge_fall": {
-    "sounds": [
-      "mcquake3:players/sarge/fall1"
-    ]
-  },
-  "sarge_gasp": {
-    "sounds": [
-      "mcquake3:players/sarge/gasp"
-    ]
-  },
-  "sarge_jump": {
-    "sounds": [
-      "mcquake3:players/sarge/jump1"
-    ]
-  },
-  "sarge_hurt100": {
-    "sounds": [
-      "mcquake3:players/sarge/pain100_1"
-    ]
-  },
-  "sarge_hurt75": {
-    "sounds": [
-      "mcquake3:players/sarge/pain75_1"
-    ]
-  },
-  "sarge_hurt50": {
-    "sounds": [
-      "mcquake3:players/sarge/pain50_1"
-    ]
-  },
-  "sarge_hurt25": {
-    "sounds": [
-      "mcquake3:players/sarge/pain25_1"
-    ]
-  },
-  "sarge_taunt": {
-    "sounds": [
-      "mcquake3:players/sarge/taunt"
-    ]
-  },
+  "sarge_drown": {"sounds": ["mcquake3:players/sarge/drown"]},
+  "sarge_fall": {"sounds": ["mcquake3:players/sarge/fall1"]},
+  "sarge_gasp": {"sounds": ["mcquake3:players/sarge/gasp"]},
+  "sarge_jump": {"sounds": ["mcquake3:players/sarge/jump1"]},
+  "sarge_hurt100": {"sounds": ["mcquake3:players/sarge/pain100_1"]},
+  "sarge_hurt75": {"sounds": ["mcquake3:players/sarge/pain75_1"]},
+  "sarge_hurt50": {"sounds": ["mcquake3:players/sarge/pain50_1"]},
+  "sarge_hurt25": {"sounds": ["mcquake3:players/sarge/pain25_1"]},
+  "sarge_taunt": {"sounds": ["mcquake3:players/sarge/taunt"]},
+  
   "sergei_death": {
     "sounds": [
       "mcquake3:players/sergei/death1",
@@ -969,51 +308,16 @@
       "mcquake3:players/sergei/death3"
     ]
   },
-  "sergei_drown": {
-    "sounds": [
-      "mcquake3:players/sergei/drown"
-    ]
-  },
-  "sergei_fall": {
-    "sounds": [
-      "mcquake3:players/sergei/fall1"
-    ]
-  },
-  "sergei_gasp": {
-    "sounds": [
-      "mcquake3:players/sergei/gasp"
-    ]
-  },
-  "sergei_jump": {
-    "sounds": [
-      "mcquake3:players/sergei/jump1"
-    ]
-  },
-  "sergei_hurt100": {
-    "sounds": [
-      "mcquake3:players/sergei/pain100_1"
-    ]
-  },
-  "sergei_hurt75": {
-    "sounds": [
-      "mcquake3:players/sergei/pain75_1"
-    ]
-  },
-  "sergei_hurt50": {
-    "sounds": [
-      "mcquake3:players/sergei/pain50_1"
-    ]
-  },
-  "sergei_hurt25": {
-    "sounds": [
-      "mcquake3:players/sergei/pain25_1"
-    ]
-  },
-  "sergei_taunt": {
-    "sounds": [
-      "mcquake3:players/sergei/taunt"
-    ]
-  },
+  "sergei_drown": {"sounds": ["mcquake3:players/sergei/drown"]},
+  "sergei_fall": {"sounds": ["mcquake3:players/sergei/fall1"]},
+  "sergei_gasp": {"sounds": ["mcquake3:players/sergei/gasp"]},
+  "sergei_jump": {"sounds": ["mcquake3:players/sergei/jump1"]},
+  "sergei_hurt100": {"sounds": ["mcquake3:players/sergei/pain100_1"]},
+  "sergei_hurt75": {"sounds": ["mcquake3:players/sergei/pain75_1"]},
+  "sergei_hurt50": {"sounds": ["mcquake3:players/sergei/pain50_1"]},
+  "sergei_hurt25": {"sounds": ["mcquake3:players/sergei/pain25_1"]},
+  "sergei_taunt": {"sounds": ["mcquake3:players/sergei/taunt"]},
+  
   "skelebot_death": {
     "sounds": [
       "mcquake3:players/skelebot/death1",
@@ -1021,51 +325,16 @@
       "mcquake3:players/skelebot/death3"
     ]
   },
-  "skelebot_drown": {
-    "sounds": [
-      "mcquake3:players/skelebot/drown"
-    ]
-  },
-  "skelebot_fall": {
-    "sounds": [
-      "mcquake3:players/skelebot/fall1"
-    ]
-  },
-  "skelebot_gasp": {
-    "sounds": [
-      "mcquake3:players/skelebot/gasp"
-    ]
-  },
-  "skelebot_jump": {
-    "sounds": [
-      "mcquake3:players/skelebot/jump1"
-    ]
-  },
-  "skelebot_hurt100": {
-    "sounds": [
-      "mcquake3:players/skelebot/pain100_1"
-    ]
-  },
-  "skelebot_hurt75": {
-    "sounds": [
-      "mcquake3:players/skelebot/pain75_1"
-    ]
-  },
-  "skelebot_hurt50": {
-    "sounds": [
-      "mcquake3:players/skelebot/pain50_1"
-    ]
-  },
-  "skelebot_hurt25": {
-    "sounds": [
-      "mcquake3:players/skelebot/pain25_1"
-    ]
-  },
-  "skelebot_taunt": {
-    "sounds": [
-      "mcquake3:players/skelebot/taunt"
-    ]
-  },
+  "skelebot_drown": {"sounds": ["mcquake3:players/skelebot/drown"]},
+  "skelebot_fall": {"sounds": ["mcquake3:players/skelebot/fall1"]},
+  "skelebot_gasp": {"sounds": ["mcquake3:players/skelebot/gasp"]},
+  "skelebot_jump": {"sounds": ["mcquake3:players/skelebot/jump1"]},
+  "skelebot_hurt100": {"sounds": ["mcquake3:players/skelebot/pain100_1"]},
+  "skelebot_hurt75": {"sounds": ["mcquake3:players/skelebot/pain75_1"]},
+  "skelebot_hurt50": {"sounds": ["mcquake3:players/skelebot/pain50_1"]},
+  "skelebot_hurt25": {"sounds": ["mcquake3:players/skelebot/pain25_1"]},
+  "skelebot_taunt": {"sounds": ["mcquake3:players/skelebot/taunt"]},
+  
   "smarine_death": {
     "sounds": [
       "mcquake3:players/smarine/death1",
@@ -1073,51 +342,16 @@
       "mcquake3:players/smarine/death3"
     ]
   },
-  "smarine_drown": {
-    "sounds": [
-      "mcquake3:players/smarine/drown"
-    ]
-  },
-  "smarine_fall": {
-    "sounds": [
-      "mcquake3:players/smarine/fall1"
-    ]
-  },
-  "smarine_gasp": {
-    "sounds": [
-      "mcquake3:players/smarine/gasp"
-    ]
-  },
-  "smarine_jump": {
-    "sounds": [
-      "mcquake3:players/smarine/jump1"
-    ]
-  },
-  "smarine_hurt100": {
-    "sounds": [
-      "mcquake3:players/smarine/pain100_1"
-    ]
-  },
-  "smarine_hurt75": {
-    "sounds": [
-      "mcquake3:players/smarine/pain75_1"
-    ]
-  },
-  "smarine_hurt50": {
-    "sounds": [
-      "mcquake3:players/smarine/pain50_1"
-    ]
-  },
-  "smarine_hurt25": {
-    "sounds": [
-      "mcquake3:players/smarine/pain25_1"
-    ]
-  },
-  "smarine_taunt": {
-    "sounds": [
-      "mcquake3:players/smarine/taunt"
-    ]
-  },
+  "smarine_drown": {"sounds": ["mcquake3:players/smarine/drown"]},
+  "smarine_fall": {"sounds": ["mcquake3:players/smarine/fall1"]},
+  "smarine_gasp": {"sounds": ["mcquake3:players/smarine/gasp"]},
+  "smarine_jump": {   "sounds": ["mcquake3:players/smarine/jump1"]},
+  "smarine_hurt100": {"sounds": ["mcquake3:players/smarine/pain100_1"]},
+  "smarine_hurt75": {"sounds": ["mcquake3:players/smarine/pain75_1"]},
+  "smarine_hurt50": {"sounds": ["mcquake3:players/smarine/pain50_1"]},
+  "smarine_hurt25": {"sounds": ["mcquake3:players/smarine/pain25_1"]},
+  "smarine_taunt": {"sounds": ["mcquake3:players/smarine/taunt"]},
+  
   "sorceress_death": {
     "sounds": [
       "mcquake3:players/sorceress/death1",
@@ -1125,51 +359,16 @@
       "mcquake3:players/sorceress/death3"
     ]
   },
-  "sorceress_drown": {
-    "sounds": [
-      "mcquake3:players/sorceress/drown"
-    ]
-  },
-  "sorceress_fall": {
-    "sounds": [
-      "mcquake3:players/sorceress/fall1"
-    ]
-  },
-  "sorceress_gasp": {
-    "sounds": [
-      "mcquake3:players/sorceress/gasp"
-    ]
-  },
-  "sorceress_jump": {
-    "sounds": [
-      "mcquake3:players/sorceress/jump1"
-    ]
-  },
-  "sorceress_hurt100": {
-    "sounds": [
-      "mcquake3:players/sorceress/pain100_1"
-    ]
-  },
-  "sorceress_hurt75": {
-    "sounds": [
-      "mcquake3:players/sorceress/pain75_1"
-    ]
-  },
-  "sorceress_hurt50": {
-    "sounds": [
-      "mcquake3:players/sorceress/pain50_1"
-    ]
-  },
-  "sorceress_hurt25": {
-    "sounds": [
-      "mcquake3:players/sorceress/pain25_1"
-    ]
-  },
-  "sorceress_taunt": {
-    "sounds": [
-      "mcquake3:players/sorceress/taunt"
-    ]
-  },
+  "sorceress_drown": {"sounds": ["mcquake3:players/sorceress/drown"]},
+  "sorceress_fall": {"sounds": ["mcquake3:players/sorceress/fall1"]},
+  "sorceress_gasp": {"sounds": ["mcquake3:players/sorceress/gasp"]},
+  "sorceress_jump": {"sounds": ["mcquake3:players/sorceress/jump1"]},
+  "sorceress_hurt100": {"sounds": ["mcquake3:players/sorceress/pain100_1"]},
+  "sorceress_hurt75": {"sounds": ["mcquake3:players/sorceress/pain75_1"]},
+  "sorceress_hurt50": {"sounds": ["mcquake3:players/sorceress/pain50_1"]},
+  "sorceress_hurt25": {"sounds": ["mcquake3:players/sorceress/pain25_1"]},
+  "sorceress_taunt": {"sounds": ["mcquake3:players/sorceress/taunt"]},
+  
   "tony_death": {
     "sounds": [
       "mcquake3:players/tony/death1",
@@ -1177,51 +376,15 @@
       "mcquake3:players/tony/death3"
     ]
   },
-  "tony_drown": {
-    "sounds": [
-      "mcquake3:players/tony/drown"
-    ]
-  },
-  "tony_fall": {
-    "sounds": [
-      "mcquake3:players/tony/fall1"
-    ]
-  },
-  "tony_gasp": {
-    "sounds": [
-      "mcquake3:players/tony/gasp"
-    ]
-  },
-  "tony_jump": {
-    "sounds": [
-      "mcquake3:players/tony/jump1"
-    ]
-  },
-  "tony_hurt100": {
-    "sounds": [
-      "mcquake3:players/tony/pain100_1"
-    ]
-  },
-  "tony_hurt75": {
-    "sounds": [
-      "mcquake3:players/tony/pain75_1"
-    ]
-  },
-  "tony_hurt50": {
-    "sounds": [
-      "mcquake3:players/tony/pain50_1"
-    ]
-  },
-  "tony_hurt25": {
-    "sounds": [
-      "mcquake3:players/tony/pain25_1"
-    ]
-  },
-  "tony_taunt": {
-    "sounds": [
-      "mcquake3:players/tony/taunt"
-    ]
-  },
+  "tony_drown": {"sounds": ["mcquake3:players/tony/drown"]},
+  "tony_fall": {"sounds": ["mcquake3:players/tony/fall1"]},
+  "tony_gasp": {"sounds": ["mcquake3:players/tony/gasp"]},
+  "tony_jump": {"sounds": ["mcquake3:players/tony/jump1"]},
+  "tony_hurt100": {"sounds": ["mcquake3:players/tony/pain100_1"]},
+  "tony_hurt75": {"sounds": ["mcquake3:players/tony/pain75_1"]},
+  "tony_hurt50": {"sounds": ["mcquake3:players/tony/pain50_1"]},
+  "tony_hurt25": {"sounds": ["mcquake3:players/tony/pain25_1"]},
+  "tony_taunt": {"sounds": ["mcquake3:players/tony/taunt"]},
 
   "disc_kojinsmokin": {
     "sounds": [

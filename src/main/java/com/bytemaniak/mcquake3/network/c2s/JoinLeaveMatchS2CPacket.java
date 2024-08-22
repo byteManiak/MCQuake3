@@ -56,6 +56,11 @@ public class JoinLeaveMatchS2CPacket {
                 PacketByteBuf replyBuf = PacketByteBufs.create();
                 replyBuf.writeByte(Weapons.MACHINEGUN.slot);
                 ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, replyBuf);
+
+                replyBuf = PacketByteBufs.create();
+                replyBuf.writeInt(0);
+                replyBuf.writeInt(0);
+                ServerPlayNetworking.send(player, Packets.FRAGS, replyBuf);
             } else player.sendMessage(Text.of("Arena " + arena.arenaName + " has no spawnpoints"), true);
         }
     }

@@ -23,7 +23,7 @@ public class ArenaSelectDeleteC2SPacket {
             state.createInitialArenaData(arenaName);
             if (startEditing) {
                 ((QuakePlayer) player).setCurrentlyEditingArena(arenaName);
-                player.sendMessage(Text.of("Selected arena " + arenaName), true);
+                player.sendMessage(Text.of("Selected arena " + arenaName + " to add spawnpoints to"), true);
             }
         }
     }

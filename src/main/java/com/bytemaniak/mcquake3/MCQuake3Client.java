@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3;
 
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.bytemaniak.mcquake3.registry.ClientEvents;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Screens;
 import com.bytemaniak.mcquake3.registry.client.Keybindings;
@@ -16,6 +17,8 @@ public class MCQuake3Client implements ClientModInitializer {
         Screens.registerScreens();
         Renderers.registerRenderers();
         Keybindings.registerKeybinds();
+
+        ClientEvents.registerEvents();
 
         GeckoLibUtil.addDataTicket(Weapon.SPEED);
     }

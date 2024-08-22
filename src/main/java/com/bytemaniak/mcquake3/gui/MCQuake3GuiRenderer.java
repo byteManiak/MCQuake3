@@ -1,9 +1,9 @@
 package com.bytemaniak.mcquake3.gui;
 
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.bytemaniak.mcquake3.network.events.QuakeMatchState;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -11,8 +11,12 @@ import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.compress.compressors.z.ZCompressorInputStream;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
+    public int frags = 0;
+    public int highestFrags = 0;
+
     @Override
     public void onHudRender(DrawContext context, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
@@ -56,6 +60,26 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
                     (((int)(0xFF * (200-playerArmor)/100.f)) << 8)  + ((int)(0xFF * (playerArmor-100)/100.f));
             MiscUtils.drawText(context, "\uFFF9", x + 105, y - 16, 0x00FFFFFF);
             MiscUtils.drawText(context, String.valueOf(playerArmor), x + 125, y, armorColor);
+
+            int w = window.getScaledWidth() - 32;
+
+            MiscUtils.drawText(context, String.valueOf(QuakeMatchState.FRAG_LIMIT), w - 60, y - 28, 0x00FFFFFF);
+
+            if (frags < highestFrags) {
+                context.fill(w - 34, y - 39, w + 17, y - 19, 0x88888888);
+                MiscUtils.drawText(context, String.valueOf(highestFrags), w - 32, y - 28, 0x00FFFFFF);
+
+                context.fill(w - 8, y - 39, w + 17, y - 19, 0x88FF0022);
+                context.drawBorder( w - 8, y - 39, 25, 20, 0xFFFFDD22);
+                MiscUtils.drawText(context, String.valueOf(frags), w - 6, y - 28, 0x00FFFFFF);
+            } else {
+                context.fill(w - 34, y - 39, w - 9, y - 19, 0x882200FF);
+                context.drawBorder( w - 34, y - 39, 25, 20, 0xFFFFDD22);
+                MiscUtils.drawText(context, String.valueOf(frags), w - 32, y - 28, 0x00FFFFFF);
+
+                context.fill(w - 8, y - 39, w + 17, y - 19, 0x88888888);
+                MiscUtils.drawText(context, String.valueOf(highestFrags), w - 6, y - 28, 0x00FFFFFF);
+            }
         }
     }
 }

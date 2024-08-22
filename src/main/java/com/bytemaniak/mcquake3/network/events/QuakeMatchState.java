@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.network.events;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
@@ -11,7 +10,6 @@ import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -40,6 +38,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     public QuakeArenasParameters.ArenaData arena = null;
     private MatchState matchState = MatchState.WARMUP_STATE;
     private final Map<String, PlayerStat> stats = new HashMap<>();
+
+    // TODO: Also add stat for second best player
     private int highestFrags = 0;
     private String winner;
     private int ticksLeft;
@@ -66,6 +66,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(frags);
+                buf.writeInt(highestFrags);
                 ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
             }
 
@@ -181,6 +182,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                     for (ServerPlayerEntity player : quakePlayers) {
                         PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeInt(0);
                         buf.writeInt(0);
                         ServerPlayNetworking.send(player, Packets.FRAGS, buf);
                     }

@@ -17,6 +17,8 @@ public class Sounds {
     private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
     public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
 
+    private static final Identifier DING_IDENT = new Identifier("mcquake3:ding");
+    public static final SoundEvent DING = SoundEvent.of(DING_IDENT);
     private static final Identifier PREPARE_IDENT = new Identifier("mcquake3:announcer.prepare");
     public static final SoundEvent PREPARE = SoundEvent.of(PREPARE_IDENT);
     private static final Identifier THREE_IDENT = new Identifier("mcquake3:announcer.3");
@@ -206,6 +208,7 @@ public class Sounds {
     }
 
     public static void loadSounds() {
+        Registry.register(Registries.SOUND_EVENT, DING_IDENT, DING);
         Registry.register(Registries.SOUND_EVENT, PREPARE_IDENT, PREPARE);
         Registry.register(Registries.SOUND_EVENT, THREE_IDENT, THREE);
         Registry.register(Registries.SOUND_EVENT, TWO_IDENT, TWO);

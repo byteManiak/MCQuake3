@@ -1,4 +1,9 @@
 {
+  "ding": {
+    "sounds": [
+      "mcquake3:ding"
+    ]
+  },
   "announcer.prepare": {
     "sounds": [
       "mcquake3:announcer/prepare"

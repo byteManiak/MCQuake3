@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                         int countLeft = Weapon.MAX_AMMO - MiscUtils.getCountOfItemType(player.getInventory(), weapon.ammoType);
                         int count = Math.min(weapon.ammoBoxCount/2, countLeft);
                         ItemStack ammoDrop = new ItemStack(weapon.ammoType, count);
-                        ItemEntityGotoNonHotbar ammoEntity = new ItemEntityGotoNonHotbar(world, player.getX(), player.getY(), player.getZ(), ammoDrop);
+                        ItemEntityGotoNonHotbar ammoEntity = new ItemEntityGotoNonHotbar(world, player.getX(), player.getY(), player.getZ(), ammoDrop, 198);
                         ammoEntity.setPickupDelay(20);
                         world.spawnEntity(ammoEntity);
                         break;

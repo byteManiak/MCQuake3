@@ -9,8 +9,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 
 public class ItemEntityGotoNonHotbar extends ItemEntity {
-    public ItemEntityGotoNonHotbar(ServerWorld world, double x, double y, double z, ItemStack stack) {
+    private int maxAmountInInventory;
+
+    public ItemEntityGotoNonHotbar(ServerWorld world, double x, double y, double z, ItemStack stack, int maxAmountInInventory) {
         super(world, x, y, z, stack);
+        this.maxAmountInInventory = maxAmountInInventory;
     }
 
     @Override
@@ -19,13 +22,16 @@ public class ItemEntityGotoNonHotbar extends ItemEntity {
 
         ItemStack itemStack = getStack();
         Item item = itemStack.getItem();
-        int i = itemStack.getCount();
+        int countLeft = maxAmountInInventory - MiscUtils.getCountOfItemType(player.getInventory(), item);
+        int count = Math.min(itemStack.getCount(), countLeft);
+        itemStack.setCount(count);
+
         MiscUtils.insertInNonHotbarInventory(itemStack, player.getInventory());
 
-        player.sendPickup(this, i);
+        player.sendPickup(this, count);
         discard();
 
-        player.increaseStat(Stats.PICKED_UP.getOrCreateStat(item), i);
+        player.increaseStat(Stats.PICKED_UP.getOrCreateStat(item), count);
         player.triggerItemPickedUpByEntityCriteria(this);
     }
 }

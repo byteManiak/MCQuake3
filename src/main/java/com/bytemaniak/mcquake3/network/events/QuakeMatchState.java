@@ -158,7 +158,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.THREE.getId());
                             for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(3+""), true);
+                                player.sendMessage(Text.of("3"), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
                             }
                         }
@@ -166,7 +166,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.TWO.getId());
                             for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(2+""), true);
+                                player.sendMessage(Text.of("2"), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
                             }
                         }
@@ -174,7 +174,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeIdentifier(Sounds.ONE.getId());
                             for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(1+""), true);
+                                player.sendMessage(Text.of("1"), true);
                                 ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
                             }
                         }

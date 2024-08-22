@@ -120,14 +120,18 @@ public class QuakeArenasParameters extends PersistentState {
         return nextArena;
     }
 
-    public void addSpawnpoint(String arenaName, Vec3d spawnpoint, float yaw) {
+    public boolean addSpawnpoint(String arenaName, Vec3d spawnpoint, float yaw) {
         ArenaData arena = getArena(arenaName);
+        if (arena == null) return false;
+
         arena.spawnpoints.add(new ArenaData.Spawnpoint(spawnpoint, yaw));
         markDirty();
 
         ArenaData matchArena = ServerEvents.QUAKE_MATCH_STATE.arena;
         if (matchArena != null && arenaName.equals(matchArena.arenaName))
             ServerEvents.QUAKE_MATCH_STATE.arena = arena;
+
+        return true;
     }
 
     public void deleteArena(String arenaName) {

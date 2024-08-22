@@ -6,6 +6,7 @@
   "mixins": [
     "PlayerMixin",
     "ServerPlayerMixin",
+    "misc.DimensionArgumentTypeMixin",
     "misc.ExplosiveProjectileEntityMixin",
     "misc.KillCommandMixin",
     "misc.LivingEntityMixin"

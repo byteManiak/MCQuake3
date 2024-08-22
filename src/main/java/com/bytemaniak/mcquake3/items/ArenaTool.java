@@ -4,6 +4,8 @@ import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.screen.ArenaBrowserScreen;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,11 +35,16 @@ public class ArenaTool extends Item {
         tooltip.add(Text.of("This tool will only function inside the Quake3 dimension."));
     }
 
+    @Environment(EnvType.CLIENT)
+    private void openArenaBrowser() {
+        MinecraftClient.getInstance().setScreen(new ArenaBrowserScreen(Text.of("Arena browser")));
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (world.isClient && !user.isSneaking()) {
-            MinecraftClient.getInstance().setScreen(new ArenaBrowserScreen(Text.of("Arena browser")));
+            openArenaBrowser();
             return TypedActionResult.success(stack);
         }
 

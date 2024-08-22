@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
-    private final int FRAG_LIMIT = 30;
+    public static final int FRAG_LIMIT = 30;
 
     private static class PlayerStat {
         int frags = 0;
@@ -63,6 +63,10 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     }
                     highestFrags = frags;
                 }
+
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(frags);
+                ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
             }
 
             stats.get(player.getName().getString()).deaths++;
@@ -174,6 +178,12 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     stats.replaceAll((k, v) -> v = new PlayerStat());
                     highestFrags = 0;
                     winner = "";
+
+                    for (ServerPlayerEntity player : quakePlayers) {
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        buf.writeInt(0);
+                        ServerPlayNetworking.send(player, Packets.FRAGS, buf);
+                    }
                 }
 
                 ticksLeft = MiscUtils.toTicks(11);

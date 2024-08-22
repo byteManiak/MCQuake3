@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.gui;
 
 import com.bytemaniak.mcquake3.items.Weapon;
+import com.bytemaniak.mcquake3.network.events.QuakeMatchState;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,6 +14,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
+    public int frags = 0;
+
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
@@ -57,6 +60,10 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
                     (((int)(0xFF * (200-playerArmor)/100.f)) << 8)  + ((int)(0xFF * (playerArmor-100)/100.f));
             MiscUtils.drawText(matrixStack, "\uFFF9", x + 105, y - 16, 0x00FFFFFF);
             MiscUtils.drawText(matrixStack, String.valueOf(playerArmor), x + 125, y, armorColor);
+
+            int w = window.getScaledWidth();
+            MiscUtils.drawText(matrixStack, String.valueOf(QuakeMatchState.FRAG_LIMIT), w - 64, y - 28, 0x00FFFFFF);
+            MiscUtils.drawText(matrixStack, String.valueOf(frags), w - 32, y - 28, 0x0000FF00);
         }
     }
 }

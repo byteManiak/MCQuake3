@@ -27,7 +27,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public Rocket(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, ROCKET_DAMAGE, Q3DamageSources.ROCKET_DAMAGE, 75);
+        super(entityType, world, ROCKET_DAMAGE, Q3DamageSources.ROCKET_DAMAGE, Q3DamageSources.ROCKET_DAMAGE_SELF, 75);
     }
 
     public Rocket(World world) { this(Entities.ROCKET, world); }
@@ -47,6 +47,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
 
     @Override
     protected void despawn() {
+        // TODO: Don't create a vanilla explosion
         Vec3d pos = getPos();
         DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
         getWorld().createExplosion(this, damageSource, null,

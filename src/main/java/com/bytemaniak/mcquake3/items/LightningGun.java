@@ -8,6 +8,7 @@ import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -37,6 +38,15 @@ public class LightningGun extends HitscanWeapon {
             creeper.onStruckByLightning((ServerWorld) world, null);
         }
         world.playSoundFromEntity(null, attacked, Sounds.LIGHTNING_HIT, SoundCategory.NEUTRAL, .5f, 1);
+    }
+
+    @Override
+    protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
+        if (user.isSubmergedInWater()) {
+            DamageSource selfDamage = Q3DamageSources.of(world, Q3DamageSources.LIGHTNING_DAMAGE_SELF, user, user);
+            user.damage(selfDamage, LIGHTNING_DAMAGE*3);
+            onDamage(world, user);
+        } else super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
     }
 
     @Override

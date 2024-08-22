@@ -26,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,12 +38,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements QuadDamageGlintRenderer.QuadDamageVisibility {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
-
     @Shadow public abstract boolean damage(DamageSource source, float amount);
-
-    @Shadow protected abstract float modifyAppliedDamage(DamageSource source, float amount);
-
-    @Shadow public abstract boolean areItemsDifferent(ItemStack stack, ItemStack stack2);
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -106,11 +102,11 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 }
             }
 
-            ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, arena);
-            ServerEvents.QUAKE_MATCH_STATE.recordDeath(player, damageSource.getAttacker());
+            world.playSound(null, player.getBlockPos(), ((QuakePlayer)player).getPlayerDeathSound(), SoundCategory.PLAYERS);
 
-            // TODO: Add death messages in the chat as this is a fake death
-            //  which will not trigger the ingame messages on its own
+            ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, arena);
+            ServerEvents.QUAKE_MATCH_STATE.recordDeath(player, damageSource);
+
             return;
         }
 

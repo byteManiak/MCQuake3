@@ -107,7 +107,6 @@ public class QuakeArenasParameters extends PersistentState {
 
             arenas.add(arenaData);
             markDirty();
-            logUpdates();
         }
     }
 
@@ -134,8 +133,6 @@ public class QuakeArenasParameters extends PersistentState {
         ArenaData matchArena = ServerEvents.QUAKE_MATCH_STATE.arena;
         if (matchArena != null && arenaName.equals(matchArena.arenaName))
             ServerEvents.QUAKE_MATCH_STATE.arena = arena;
-
-        logUpdates();
     }
 
     public void deleteArena(String arenaName) {
@@ -145,14 +142,5 @@ public class QuakeArenasParameters extends PersistentState {
         ArenaData matchArena = ServerEvents.QUAKE_MATCH_STATE.arena;
         if (matchArena != null && arenaName.equals(matchArena.arenaName))
             ServerEvents.QUAKE_MATCH_STATE.arena = getRandomArena(null);
-        logUpdates();
-    }
-
-    private void logUpdates() {
-        for (QuakeArenasParameters.ArenaData data : arenas) {
-            MCQuake3.LOGGER.info(data.arenaName +":");
-            for (ArenaData.Spawnpoint spawnpoint : data.spawnpoints)
-                MCQuake3.LOGGER.info("\t"+spawnpoint.position+" "+spawnpoint.yaw);
-        }
     }
 }

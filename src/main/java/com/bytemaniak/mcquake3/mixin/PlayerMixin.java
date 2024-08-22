@@ -126,6 +126,11 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         return super.getDeathSound();
     }
 
+    @Override
+    public SoundEvent getPlayerDeathSound() {
+        return this.getDeathSound();
+    }
+
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
         nbt.putString("quake_player_sounds", getPlayerVoice());

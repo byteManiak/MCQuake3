@@ -17,6 +17,8 @@ public class Sounds {
     private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
     public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
 
+    private static final Identifier DING_IDENT = new Identifier("mcquake3:ding");
+    public static final SoundEvent DING = SoundEvent.of(DING_IDENT);
     private static final Identifier PREPARE_IDENT = new Identifier("mcquake3:announcer.prepare");
     public static final SoundEvent PREPARE = SoundEvent.of(PREPARE_IDENT);
     private static final Identifier THREE_IDENT = new Identifier("mcquake3:announcer.3");
@@ -27,6 +29,17 @@ public class Sounds {
     public static final SoundEvent ONE = SoundEvent.of(ONE_IDENT);
     private static final Identifier FIGHT_IDENT = new Identifier("mcquake3:announcer.fight");
     public static final SoundEvent FIGHT = SoundEvent.of(FIGHT_IDENT);
+    private static final Identifier MATCH_WIN_IDENT = new Identifier("mcquake3:announcer.match_win");
+    public static final SoundEvent MATCH_WIN = SoundEvent.of(MATCH_WIN_IDENT);
+    private static final Identifier MATCH_LOSS_IDENT = new Identifier("mcquake3:announcer.match_loss");
+    public static final SoundEvent MATCH_LOSS = SoundEvent.of(MATCH_LOSS_IDENT);
+
+    private static final Identifier THREE_FRAGS_IDENT = new Identifier("mcquake3:announcer.3_frags");
+    public static final SoundEvent THREE_FRAGS = SoundEvent.of(THREE_FRAGS_IDENT);
+    private static final Identifier TWO_FRAGS_IDENT = new Identifier("mcquake3:announcer.2_frags");
+    public static final SoundEvent TWO_FRAGS = SoundEvent.of(TWO_FRAGS_IDENT);
+    private static final Identifier ONE_FRAG_IDENT = new Identifier("mcquake3:announcer.1_frag");
+    public static final SoundEvent ONE_FRAG = SoundEvent.of(ONE_FRAG_IDENT);
 
     private static final Identifier JUMPPAD_BOOST_IDENT = new Identifier("mcquake3:jumppad");
     public static final SoundEvent JUMPPAD_BOOST = SoundEvent.of(JUMPPAD_BOOST_IDENT);
@@ -195,11 +208,17 @@ public class Sounds {
     }
 
     public static void loadSounds() {
+        Registry.register(Registries.SOUND_EVENT, DING_IDENT, DING);
         Registry.register(Registries.SOUND_EVENT, PREPARE_IDENT, PREPARE);
         Registry.register(Registries.SOUND_EVENT, THREE_IDENT, THREE);
         Registry.register(Registries.SOUND_EVENT, TWO_IDENT, TWO);
         Registry.register(Registries.SOUND_EVENT, ONE_IDENT, ONE);
         Registry.register(Registries.SOUND_EVENT, FIGHT_IDENT, FIGHT);
+        Registry.register(Registries.SOUND_EVENT, THREE_FRAGS_IDENT, THREE_FRAGS);
+        Registry.register(Registries.SOUND_EVENT, TWO_FRAGS_IDENT, TWO_FRAGS);
+        Registry.register(Registries.SOUND_EVENT, ONE_FRAG_IDENT, ONE_FRAG);
+        Registry.register(Registries.SOUND_EVENT, MATCH_WIN_IDENT, MATCH_WIN);
+        Registry.register(Registries.SOUND_EVENT, MATCH_LOSS_IDENT, MATCH_LOSS);
         Registry.register(Registries.SOUND_EVENT, JUMPPAD_BOOST_IDENT, JUMPPAD_BOOST);
         Registry.register(Registries.SOUND_EVENT, DAMAGE_DEALT_IDENT, DAMAGE_DEALT);
         Registry.register(Registries.SOUND_EVENT, EXCELLENT_IDENT, EXCELLENT);

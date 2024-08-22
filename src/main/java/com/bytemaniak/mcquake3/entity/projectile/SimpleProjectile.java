@@ -7,7 +7,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -15,6 +17,7 @@ import net.minecraft.world.World;
 public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     private float damageAmount;
     protected RegistryKey<DamageType> damageType;
+    protected RegistryKey<DamageType> damageTypeSelf;
     protected long lifetimeInTicks;
     protected long initTick;
 
@@ -24,10 +27,11 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
     }
 
     public SimpleProjectile(EntityType<? extends ExplosiveProjectileEntity> entityType, World world,
-                            float damageAmount, RegistryKey<DamageType> damageType, int lifetimeInTicks) {
+                            float damageAmount, RegistryKey<DamageType> damageType, RegistryKey<DamageType> damageTypeSelf, int lifetimeInTicks) {
         this(entityType, world);
         this.damageAmount = damageAmount;
         this.damageType = damageType;
+        this.damageTypeSelf = damageTypeSelf;
         this.lifetimeInTicks = lifetimeInTicks;
         this.initTick = getWorld().getTime();
     }
@@ -49,7 +53,9 @@ public abstract class SimpleProjectile extends ExplosiveProjectileEntity {
 
     protected void doDamage(Entity entity) {
         if (!getWorld().isClient) {
-            DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
+            DamageSource damageSource = (entity == getOwner()) ?
+                    Q3DamageSources.of(getWorld(), damageTypeSelf, this, getOwner()) :
+                    Q3DamageSources.of(getWorld(), damageType, this, getOwner());
             entity.damage(damageSource, damageAmount);
             despawn();
         }

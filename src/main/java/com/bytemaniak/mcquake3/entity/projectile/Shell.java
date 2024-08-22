@@ -12,7 +12,7 @@ public class Shell extends SimpleProjectile {
     private static final float SHOTGUN_DAMAGE = MiscUtils.toMCDamage(10);
 
     public Shell(EntityType<? extends SimpleProjectile> entityType, World world) {
-        super(entityType, world, SHOTGUN_DAMAGE, Q3DamageSources.SHOTGUN_DAMAGE, 3);
+        super(entityType, world, SHOTGUN_DAMAGE, Q3DamageSources.SHOTGUN_DAMAGE, Q3DamageSources.SHOTGUN_DAMAGE_SELF, 3);
     }
 
     public Shell(World world) { this(Entities.SHELL, world); }

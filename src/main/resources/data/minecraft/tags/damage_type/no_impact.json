@@ -3,12 +3,18 @@
 		"mcquake3:gauntlet",
 		"mcquake3:machinegun",
 		"mcquake3:shotgun",
+		"mcquake3:shotgun_self",
 		"mcquake3:grenade",
+		"mcquake3:grenade_self",
 		"mcquake3:rocket",
+		"mcquake3:rocket_self",
 		"mcquake3:lightning",
+		"mcquake3:lightning_self",
 		"mcquake3:railgun",
 		"mcquake3:plasmagun",
+		"mcquake3:plasmagun_self",
 		"mcquake3:bfg10k",
+		"mcquake3:bfg10k_self",
 		"mcquake3:spikes"
 	]
 }

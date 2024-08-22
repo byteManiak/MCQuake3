@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.network.events;
 
+import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
@@ -11,10 +12,12 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 
 import java.util.HashMap;
@@ -25,10 +28,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private final int FRAG_LIMIT = 30;
 
-    private class PlayerStat {
+    private static class PlayerStat {
         int frags = 0;
         int deaths = 0;
-        boolean ready = false;
     }
 
     private enum MatchState {
@@ -39,6 +41,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private MatchState matchState = MatchState.WARMUP_STATE;
     private final Map<String, PlayerStat> stats = new HashMap<>();
     private int highestFrags = 0;
+    private String winner;
     private int ticksLeft;
     private List<ServerPlayerEntity> quakePlayers;
 
@@ -46,13 +49,26 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
     }
 
-    public void recordDeath(ServerPlayerEntity player, Entity attacker) {
-        if (attacker instanceof ServerPlayerEntity attackerPlayer && attackerPlayer != player) {
-            int frags = ++stats.get(attackerPlayer.getName().getString()).frags;
-            if (frags > highestFrags) highestFrags = frags;
+    public void recordDeath(ServerPlayerEntity player, DamageSource damageSource) {
+        if (matchState == MatchState.IN_PROGRESS_STATE) {
+            if (damageSource.getAttacker() instanceof ServerPlayerEntity attackerPlayer && attackerPlayer != player) {
+                int frags = ++stats.get(attackerPlayer.getName().getString()).frags;
+                if (frags > highestFrags) {
+                    int fragsLeft = FRAG_LIMIT - frags;
+                    switch (fragsLeft) {
+                        case 3 -> sendGlobalSound(Sounds.THREE_FRAGS);
+                        case 2 -> sendGlobalSound(Sounds.TWO_FRAGS);
+                        case 1 -> sendGlobalSound(Sounds.ONE_FRAG);
+                        case 0 -> winner = attackerPlayer.getName().getString();
+                    }
+                    highestFrags = frags;
+                }
+            }
+
+            stats.get(player.getName().getString()).deaths++;
         }
 
-        stats.get(player.getName().getString()).deaths++;
+        sendGlobalMessage(damageSource.getDeathMessage(player), false);
     }
 
     public void spawnQuakePlayer(ServerPlayerEntity player, QuakeArenasParameters.ArenaData arena) {
@@ -104,6 +120,27 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         }
     }
 
+    private void sendSound(ServerPlayerEntity player, SoundEvent sound) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeIdentifier(sound.getId());
+        ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+    }
+
+    private void sendGlobalSound(SoundEvent sound) {
+        for (ServerPlayerEntity player : quakePlayers)
+            sendSound(player, sound);
+    }
+
+    private void sendGlobalMessage(Text message, boolean overlay) {
+        for (ServerPlayerEntity player : quakePlayers)
+            player.sendMessage(message, overlay);
+    }
+
+    private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
+        sendGlobalMessage(Text.of(message), true);
+        sendGlobalSound(sound);
+    }
+
     @Override
     public void onStartTick(ServerWorld world) {
         if (world.getDimensionKey() != Blocks.Q3_DIMENSION_TYPE) return;
@@ -130,61 +167,27 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         switch (matchState) {
             case WARMUP_STATE -> {
-                boolean allReady = true;
-                // TODO: Implement ready button
-                /*for (PlayerStat stat : stats.values())
-                    if (!stat.ready) {
-                        allReady = false;
-                        break;
-                    }*/
+                // TODO: Implement player readiness
 
-                if (allReady) {
-                    ticksLeft = MiscUtils.toTicks(11);
-                    matchState = MatchState.READY_STATE;
+                if (highestFrags > 0) {
+                    // Reset player stats for match start
+                    stats.replaceAll((k, v) -> v = new PlayerStat());
+                    highestFrags = 0;
+                    winner = "";
                 }
+
+                ticksLeft = MiscUtils.toTicks(11);
+                matchState = MatchState.READY_STATE;
             }
             case READY_STATE -> {
                 if (ticksLeft % MiscUtils.toTicks(1) == 0) {
                     switch (ticksLeft / MiscUtils.toTicks(1)) {
-                        case 10 -> {
-                            PacketByteBuf buf = PacketByteBufs.create();
-                            buf.writeIdentifier(Sounds.PREPARE.getId());
-                            for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of("Prepare to fight"), true);
-                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
-                            }
-                        }
-                        case 3 -> {
-                            PacketByteBuf buf = PacketByteBufs.create();
-                            buf.writeIdentifier(Sounds.THREE.getId());
-                            for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(3+""), true);
-                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
-                            }
-                        }
-                        case 2 -> {
-                            PacketByteBuf buf = PacketByteBufs.create();
-                            buf.writeIdentifier(Sounds.TWO.getId());
-                            for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(2+""), true);
-                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
-                            }
-                        }
-                        case 1 -> {
-                            PacketByteBuf buf = PacketByteBufs.create();
-                            buf.writeIdentifier(Sounds.ONE.getId());
-                            for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of(1+""), true);
-                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
-                            }
-                        }
+                        case 10 -> sendGlobalMessageWithSound("Prepare to fight", Sounds.PREPARE);
+                        case 3 -> sendGlobalMessageWithSound("3", Sounds.THREE);
+                        case 2 -> sendGlobalMessageWithSound("2", Sounds.TWO);
+                        case 1 -> sendGlobalMessageWithSound("1", Sounds.ONE);
                         case 0 -> {
-                            PacketByteBuf buf = PacketByteBufs.create();
-                            buf.writeIdentifier(Sounds.FIGHT.getId());
-                            for (ServerPlayerEntity player : quakePlayers) {
-                                player.sendMessage(Text.of("Fight"), true);
-                                ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
-                            }
+                            sendGlobalMessageWithSound("Fight", Sounds.FIGHT);
 
                             // Allow 20 minutes per match
                             ticksLeft = MiscUtils.toTicks(1200);
@@ -199,10 +202,14 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             }
             case IN_PROGRESS_STATE -> {
                 if (highestFrags >= FRAG_LIMIT || ticksLeft == 0) {
-                    // TODO: Announce the winner
+                    for (ServerPlayerEntity player : getQuakePlayers(world)) {
+                        if (player.getName().getString().equals(winner))
+                            sendSound(player, Sounds.MATCH_WIN);
+                        else sendSound(player, Sounds.MATCH_LOSS);
+                    }
 
-                    // Allow 15 seconds before transition to next map
-                    ticksLeft = MiscUtils.toTicks(15);
+                    // Allow 10 seconds before transition to next map
+                    ticksLeft = MiscUtils.toTicks(10);
                     matchState = MatchState.ENDMATCH_STATE;
                 }
             }

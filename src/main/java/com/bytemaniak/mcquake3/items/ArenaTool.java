@@ -71,9 +71,10 @@ public class ArenaTool extends Item {
             if (state.getArena(arenaName) == null) state.createInitialArenaData(arenaName);
 
             BlockPos spawnpoint = user.getBlockPos();
-            float yaw = Direction.fromRotation(user.getYaw()).asRotation();
+            Direction dir = Direction.fromRotation(user.getYaw());
+            float yaw = dir.asRotation();
             state.addSpawnpoint(arenaName, spawnpoint.toCenterPos(), yaw);
-            user.sendMessage(Text.of("Added spawnpoint "+spawnpoint.toShortString()+", "+yaw+" to arena "+arenaName), true);
+            user.sendMessage(Text.of("Added spawnpoint "+spawnpoint.toShortString()+", "+dir.asString()+" to arena "+arenaName), true);
 
             return TypedActionResult.success(stack);
         }

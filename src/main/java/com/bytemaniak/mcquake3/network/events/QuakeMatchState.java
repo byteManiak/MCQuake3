@@ -129,6 +129,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         switch (matchState) {
             case WARMUP_STATE -> {
+                // TODO: Implement player readiness
+
                 ticksLeft = MiscUtils.toTicks(11);
                 matchState = MatchState.READY_STATE;
             }

@@ -2,6 +2,7 @@ package com.bytemaniak.mcquake3.util;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.sound.WeaponSounds;
+import net.minecraft.sound.SoundEvent;
 
 public interface QuakePlayer extends WeaponSounds {
     boolean inQuakeArena();
@@ -22,6 +23,7 @@ public interface QuakePlayer extends WeaponSounds {
 
     String getPlayerVoice();
     void setPlayerVoice(String soundsSet);
+    SoundEvent getPlayerDeathSound();
 
     void taunt();
 

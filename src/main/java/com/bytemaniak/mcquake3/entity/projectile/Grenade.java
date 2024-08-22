@@ -81,6 +81,7 @@ public class Grenade extends SimpleProjectile implements GeoEntity {
 
     @Override
     protected void despawn() {
+        // TODO: Don't create a vanilla explosion
         Vec3d pos = getPos();
         DamageSource damageSource = Q3DamageSources.of(getWorld(), damageType, this, getOwner());
         getWorld().createExplosion(this, damageSource, null,

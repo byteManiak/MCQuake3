@@ -24,6 +24,31 @@
       "mcquake3:announcer/fight"
     ]
   },
+  "announcer.3_frags": {
+    "sounds": [
+      "mcquake3:announcer/3_frags"
+    ]
+  },
+  "announcer.2_frags": {
+    "sounds": [
+      "mcquake3:announcer/2_frags"
+    ]
+  },
+  "announcer.1_frag": {
+    "sounds": [
+      "mcquake3:announcer/1_frag"
+    ]
+  },
+  "announcer.match_win": {
+    "sounds": [
+      "mcquake3:announcer/match_win"
+    ]
+  },
+  "announcer.match_loss": {
+    "sounds": [
+      "mcquake3:announcer/match_loss"
+    ]
+  },
   "hit": {
     "sounds": [
       "mcquake3:hit"

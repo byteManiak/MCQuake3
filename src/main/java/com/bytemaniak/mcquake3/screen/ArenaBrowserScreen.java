@@ -103,8 +103,8 @@ public class ArenaBrowserScreen extends Screen {
         }).dimensions(34+(int)(width/6.5), (int)(5.75f*height/7) + 4, (int)(width/6.5), 20).build();
 
         TextWidget addArenaText = new TextWidget(Text.of("Add new arena:"), textRenderer);
-        addArenaText.setPosition(width*2/3, height/3);
-        addArenaText.setWidth(0);
+        addArenaText.setPosition(width*2/3-48, height/3);
+        addArenaText.setWidth(96);
 
         TextFieldWidget newArenaName = new TextFieldWidget(textRenderer, width*2/3-58, height/3+24, 116, 20, Text.empty());
 

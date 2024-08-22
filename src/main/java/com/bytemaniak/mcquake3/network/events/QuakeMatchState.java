@@ -28,7 +28,6 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private class PlayerStat {
         int frags = 0;
         int deaths = 0;
-        boolean ready = false;
     }
 
     private enum MatchState {
@@ -130,18 +129,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         switch (matchState) {
             case WARMUP_STATE -> {
-                boolean allReady = true;
-                // TODO: Implement ready button
-                /*for (PlayerStat stat : stats.values())
-                    if (!stat.ready) {
-                        allReady = false;
-                        break;
-                    }*/
-
-                if (allReady) {
-                    ticksLeft = MiscUtils.toTicks(11);
-                    matchState = MatchState.READY_STATE;
-                }
+                ticksLeft = MiscUtils.toTicks(11);
+                matchState = MatchState.READY_STATE;
             }
             case READY_STATE -> {
                 if (ticksLeft % MiscUtils.toTicks(1) == 0) {

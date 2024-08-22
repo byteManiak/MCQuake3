@@ -18,6 +18,7 @@ public class Q3DamageSources {
     public static final RegistryKey<DamageType> ROCKET_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:rocket"));
     public static final RegistryKey<DamageType> ROCKET_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:rocket_self"));
     public static final RegistryKey<DamageType> LIGHTNING_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:lightning"));
+    public static final RegistryKey<DamageType> LIGHTNING_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:lightning_self"));
     public static final RegistryKey<DamageType> RAILGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:railgun"));
     public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:plasmagun"));
     public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:plasmagun_self"));

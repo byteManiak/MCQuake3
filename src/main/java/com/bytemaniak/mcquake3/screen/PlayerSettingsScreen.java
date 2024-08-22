@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.screen;
 
+import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
@@ -136,7 +137,9 @@ public class PlayerSettingsScreen extends Screen {
                 ButtonWidget.builder(
                                 Text.of(joinLeaveText),
                                 (button -> {
-                                    ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, PacketByteBufs.empty());
+                                    PacketByteBuf buf = PacketByteBufs.create();
+                                    buf.writeBoolean(user.inQuakeArena());
+                                    ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
                                     PlayerSettingsScreen.this.close();
                                 }))
                         .dimensions(width - 150, height - 24, 130, 20).build();
@@ -145,6 +148,19 @@ public class PlayerSettingsScreen extends Screen {
         addDrawableChild(voiceList);
         addDrawableChild(toggleRefireRates);
         addDrawableChild(joinLeaveMatch);
+
+        PlayerEntity player = (PlayerEntity) user;
+        if (player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
+                (player.isCreative() || player.isSpectator())) {
+            ButtonWidget leaveQuakeDimension = ButtonWidget.builder(Text.of("Leave Quake dimension"), (button -> {
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeBoolean(true);
+                ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
+                PlayerSettingsScreen.this.close();
+            })).dimensions(width - 150, height - 72, 130, 20).build();
+
+            addDrawableChild(leaveQuakeDimension);
+        }
         super.init();
     }
 

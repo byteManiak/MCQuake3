@@ -124,6 +124,13 @@ public class ArenaBrowserScreen extends Screen {
             ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
         }).dimensions(width*2/3-32, height/3+52, 60, 20).build();
 
+        ButtonWidget leaveQuakeDimension = ButtonWidget.builder(Text.of("Leave Quake dimension"), (button) -> {
+            PacketByteBuf msg = PacketByteBufs.create();
+            msg.writeBoolean(true);
+            ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, msg);
+            ArenaBrowserScreen.this.close();
+        }).dimensions(width*2/3-64, height/3+104, 128, 20).build();
+
         addDrawable(arenasText);
         addDrawableChild(arenaList);
         addDrawableChild(selectArena);
@@ -132,6 +139,9 @@ public class ArenaBrowserScreen extends Screen {
         addDrawable(addArenaText);
         addDrawableChild(newArenaName);
         addDrawableChild(addArena);
+
+        addDrawableChild(leaveQuakeDimension);
+
         super.init();
     }
 

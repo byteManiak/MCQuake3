@@ -6,7 +6,6 @@ import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -27,7 +26,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class JoinLeaveMatchS2CPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        if (((QuakePlayer)player).inQuakeArena()) {
+        boolean leave = buf.readBoolean();
+
+        if (leave) {
             RegistryKey<World> dimension = player.getSpawnPointDimension();
             ServerWorld world = server.getWorld(dimension);
             BlockPos spawnPos = player.getSpawnPointPosition();

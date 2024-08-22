@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
     @ModifyVariable(method = "renderLabelIfPresent", at = @At(value = "STORE", ordinal = 0))
-    private boolean hidePlayerNamesOnQuakeMap(boolean hide) {
-        return !((QuakePlayer)MinecraftClient.getInstance().player).playingQuakeMap() && hide;
+    private boolean hidePlayerNamesInQuakeArena(boolean hide) {
+        return !((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena() && hide;
     }
 }

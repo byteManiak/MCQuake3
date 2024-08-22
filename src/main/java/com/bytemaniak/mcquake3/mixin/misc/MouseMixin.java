@@ -21,7 +21,7 @@ public class MouseMixin {
                 break;
             }
 
-        if (hotbarEmpty || !qPlayer.playingQuakeMap()) original.call(inventory, scrollAmount);
+        if (hotbarEmpty || !qPlayer.inQuakeArena()) original.call(inventory, scrollAmount);
         else {
             int i = (int) Math.signum(scrollAmount);
             int slot = inventory.selectedSlot - i;

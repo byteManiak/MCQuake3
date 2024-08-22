@@ -35,6 +35,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class Weapon extends Item implements GeoItem, FabricItem {
+    public static final int MAX_AMMO = 198;
+
     private static final float HITSCAN_HORIZONTAL_OFFSET = .2f;
 
     protected static final float PROJECTILE_VERTICAL_SPAWN_OFFSET = .6f;

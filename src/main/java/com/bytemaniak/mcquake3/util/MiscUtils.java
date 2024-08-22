@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -38,5 +39,18 @@ public class MiscUtils {
                 inventory.insertStack(i, stack);
             }
         }
+    }
+
+    public static int getCountOfItemType(PlayerInventory inventory, Item item) {
+        DefaultedList<ItemStack> main = inventory.main;
+        int count = 0;
+
+        for (int i = PlayerInventory.getHotbarSize(); i < main.size(); i++) {
+            ItemStack stack = main.get(i);
+            if (stack.isEmpty()) continue;
+            if (stack.isOf(item)) count += stack.getCount();
+        }
+
+        return count;
     }
 }

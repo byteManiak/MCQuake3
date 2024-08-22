@@ -7,6 +7,7 @@
     "PlayerMixin",
     "ServerPlayerMixin",
     "misc.ExplosiveProjectileEntityMixin",
+    "misc.KillCommandMixin",
     "misc.LivingEntityMixin"
   ],
   "client": [

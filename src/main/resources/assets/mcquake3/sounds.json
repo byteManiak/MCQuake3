@@ -1,10 +1,29 @@
 {
-  "jumppad": {
+  "announcer.prepare": {
     "sounds": [
-      "mcquake3:jumppad"
+      "mcquake3:announcer/prepare"
     ]
   },
-
+  "announcer.3": {
+    "sounds": [
+      "mcquake3:announcer/3"
+    ]
+  },
+  "announcer.2": {
+    "sounds": [
+      "mcquake3:announcer/2"
+    ]
+  },
+  "announcer.1": {
+    "sounds": [
+      "mcquake3:announcer/1"
+    ]
+  },
+  "announcer.fight": {
+    "sounds": [
+      "mcquake3:announcer/fight"
+    ]
+  },
   "hit": {
     "sounds": [
       "mcquake3:hit"
@@ -23,6 +42,12 @@
   "gauntlet": {
     "sounds": [
       "mcquake3:gauntlet"
+    ]
+  },
+
+  "jumppad": {
+    "sounds": [
+      "mcquake3:jumppad"
     ]
   },
 

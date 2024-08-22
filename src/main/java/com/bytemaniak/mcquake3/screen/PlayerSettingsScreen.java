@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.screen;
 
+import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
@@ -130,23 +131,35 @@ public class PlayerSettingsScreen extends Screen {
             ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
-        ButtonWidget joinMatch =
+        String joinLeaveText = user.inQuakeArena() ? "Leave Quake match" : "Join Quake match";
+        ButtonWidget joinLeaveMatch =
                 ButtonWidget.builder(
-                                Text.of("Join Quake match"),
-                                (button -> ClientPlayNetworking.send(Packets.REQUEST_JOIN_MATCH, PacketByteBufs.empty())))
-                        .dimensions(width - 150, height - 72, 130, 20).build();
-
-        ButtonWidget giveWeapons =
-                ButtonWidget.builder(
-                        Text.of("Give me a full arsenal"),
-                        (button -> ClientPlayNetworking.send(Packets.FULL_ARSENAL_REQUEST, PacketByteBufs.empty())))
-                .dimensions(width / 4, height - 24, width / 3, 20).build();
+                                Text.of(joinLeaveText),
+                                (button -> {
+                                    PacketByteBuf buf = PacketByteBufs.create();
+                                    buf.writeBoolean(user.inQuakeArena());
+                                    ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
+                                    PlayerSettingsScreen.this.close();
+                                }))
+                        .dimensions(width - 150, height - 24, 130, 20).build();
 
         addDrawable(voiceSelectionText);
         addDrawableChild(voiceList);
         addDrawableChild(toggleRefireRates);
-        addDrawableChild(joinMatch);
-        addDrawableChild(giveWeapons);
+        addDrawableChild(joinLeaveMatch);
+
+        PlayerEntity player = (PlayerEntity) user;
+        if (player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
+                (player.isCreative() || player.isSpectator())) {
+            ButtonWidget leaveQuakeDimension = ButtonWidget.builder(Text.of("Leave Quake dimension"), (button -> {
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeBoolean(true);
+                ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
+                PlayerSettingsScreen.this.close();
+            })).dimensions(width - 150, height - 72, 130, 20).build();
+
+            addDrawableChild(leaveQuakeDimension);
+        }
         super.init();
     }
 

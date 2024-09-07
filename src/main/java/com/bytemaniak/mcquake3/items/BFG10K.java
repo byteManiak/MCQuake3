@@ -1,10 +1,12 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.projectile.BFG10KProjectile;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -44,7 +46,7 @@ public class BFG10K extends Weapon {
             bfg10KProjectile.setPosition(offsetWeaponPos);
             bfg10KProjectile.setVelocity(destDir.x, destDir.y, destDir.z, BFG_PROJECTILE_SPEED, 0);
 
-            ///if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) bfg10KProjectile.setQuadDamage();
+            if (user.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(Q3StatusEffects.QUAD_DAMAGE))) bfg10KProjectile.setQuadDamage();
             world.spawnEntity(bfg10KProjectile);
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");

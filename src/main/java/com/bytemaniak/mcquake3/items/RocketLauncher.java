@@ -1,10 +1,12 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.projectile.Rocket;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -48,7 +50,7 @@ public class RocketLauncher extends Weapon {
             rocket.setPosition(offsetWeaponPos);
             rocket.setVelocity(destDir.x, destDir.y, destDir.z, ROCKET_PROJECTILE_SPEED, 0);
 
-            ///if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) rocket.setQuadDamage();
+            if (user.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(Q3StatusEffects.QUAD_DAMAGE))) rocket.setQuadDamage();
             world.spawnEntity(rocket);
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");

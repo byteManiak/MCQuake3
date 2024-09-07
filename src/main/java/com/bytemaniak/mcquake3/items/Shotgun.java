@@ -1,10 +1,12 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.projectile.Shell;
+import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -48,7 +50,7 @@ public class Shotgun extends Weapon {
         shell.setPosition(weaponPos);
         shell.setVelocity(spread.x, spread.y, spread.z, SHOTGUN_PROJECTILE_SPEED, 0);
 
-        ///if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) shell.setQuadDamage();
+        if (user.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(Q3StatusEffects.QUAD_DAMAGE))) shell.setQuadDamage();
         world.spawnEntity(shell);
     }
 

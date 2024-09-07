@@ -1,11 +1,11 @@
 package com.bytemaniak.mcquake3.data;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.PersistentState;
@@ -36,7 +36,7 @@ public class QuakeArenasParameters extends PersistentState {
     public int activeArena = 0;
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         NbtList arenasNbt = new NbtList();
 
         for (ArenaData arena : arenas) {
@@ -63,7 +63,7 @@ public class QuakeArenasParameters extends PersistentState {
         return nbt;
     }
 
-    private static QuakeArenasParameters readNbt(NbtCompound nbt) {
+    private static QuakeArenasParameters readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         QuakeArenasParameters state = new QuakeArenasParameters();
 
         NbtList arenasData = nbt.getList("q3Arenas_data", NbtElement.COMPOUND_TYPE);
@@ -116,7 +116,7 @@ public class QuakeArenasParameters extends PersistentState {
 
     public ArenaData getRandomArena(String except) {
         if (arenas.isEmpty()) return null;
-        if (arenas.size() == 1) return arenas.get(0);
+        if (arenas.size() == 1) return arenas.getFirst();
 
         ArenaData nextArena = arenas.get(ThreadLocalRandom.current().nextInt(arenas.size()));
         while (nextArena.arenaName.equals(except))

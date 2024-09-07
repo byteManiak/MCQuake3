@@ -1,27 +1,20 @@
 package com.bytemaniak.mcquake3.blocks;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipe;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.screen.PlasmaInducerScreenHandler;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -97,7 +90,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PlasmaInducerEntity blockEntity) {
-        RecipeManager.MatchGetter<Inventory, PlasmaInducerRecipe> getter =
+        /*RecipeManager.MatchGetter<RecipeInput, PlasmaInducerRecipe> getter =
                 RecipeManager.createCachedMatchGetter(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE);
         int burnTime = blockEntity.propertyDelegate.get(BURN_TIME_PROPERTY_INDEX);
         boolean isBurning = burnTime > 0;
@@ -154,7 +147,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
             world.setBlockState(pos, state, Block.NOTIFY_ALL);
         }
 
-        if (dirty) AbstractFurnaceBlockEntity.markDirty(world, pos, state);
+        if (dirty) AbstractFurnaceBlockEntity.markDirty(world, pos, state);*/
     }
 
     @Override

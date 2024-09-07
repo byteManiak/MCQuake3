@@ -37,15 +37,14 @@
   "accessWidener": "mcquake3.accessWidener",
 
   "depends": {
-    "fabricloader": ">=0.15.6",
+    "fabricloader": ">=0.15.11",
     "fabric-api": "*",
-    "minecraft": "~1.20.4",
-    "geckolib": ">=4.4.2",
-    "mecha": ">=0.1.1",
-    "java": ">=17"
+    "minecraft": "~1.21.1",
+    "geckolib": ">=4.6",
+    "java": ">=21"
   },
   "suggests": {
-    "emi": ">=1.1.0",
+    "emi": ">=1.1.12",
     "another-mod": "*"
   }
 }

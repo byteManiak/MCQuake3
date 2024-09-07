@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
-import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
@@ -89,7 +88,7 @@ public abstract class HitscanWeapon extends Weapon {
             Box collisionBox = new Box(minPos, maxPos);
 
             LivingEntity collided = world.getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT, user, eyePos.x, eyePos.y, eyePos.z, collisionBox);
-            float damage = user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE) ? damageAmount*3 : damageAmount;
+            float damage = damageAmount;
 
             if (collided != null) {
                 if (!world.isClient) {

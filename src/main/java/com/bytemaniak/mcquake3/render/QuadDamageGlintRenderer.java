@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 // Code for the quad damage effect was adapted from the EnergySwirlOverlayFeatureRenderer class
 public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M extends PlayerEntityModel<T>>
         extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-    private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
+    private static final Identifier OVERLAY = Identifier.of("textures/entity/creeper/creeper_armor.png");
     private final PlayerEntityModel<AbstractClientPlayerEntity> model;
 
     public interface QuadDamageVisibility {
@@ -49,6 +49,6 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M ext
         this.getContextModel().copyStateTo(entityModel);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEnergySwirl(OVERLAY, this.getEnergySwirlX(f) % 1.0f, f * 0.01f % 1.0f));
         entityModel.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-        entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 0.5f, 0.5f, 0.5f, 1.0f);
+        entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 0xFF888888);
     }
 }

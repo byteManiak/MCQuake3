@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.projectile.Grenade;
-import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +11,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
 
 public class GrenadeLauncher extends Weapon {
     private static final long GRENADE_REFIRE_RATE_Q3 = 15;
@@ -19,7 +20,7 @@ public class GrenadeLauncher extends Weapon {
     private static final float GRENADE_PROJECTILE_SPEED = .85f;
 
     public GrenadeLauncher() {
-        super(new Identifier("mcquake3:grenade_launcher"), GRENADE_REFIRE_RATE_Q3, GRENADE_REFIRE_RATE_QL,
+        super(Identifier.of("mcquake3:grenade_launcher"), GRENADE_REFIRE_RATE_Q3, GRENADE_REFIRE_RATE_QL,
                 true, Sounds.GRENADE_FIRE, false, Weapons.GRENADE, 10, 5, 3);
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -45,10 +46,15 @@ public class GrenadeLauncher extends Weapon {
             grenade.setPosition(offsetWeaponPos);
             grenade.setVelocity(destDir.x, destDir.y, destDir.z, GRENADE_PROJECTILE_SPEED, 0);
 
-            if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) grenade.setQuadDamage();
+            ///if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) grenade.setQuadDamage();
             world.spawnEntity(grenade);
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
         }
+    }
+
+    @Override
+    public PlayState handle(AnimationState<Weapon> state) {
+        return null;
     }
 }

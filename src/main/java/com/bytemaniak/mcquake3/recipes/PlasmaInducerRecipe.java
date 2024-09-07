@@ -1,23 +1,18 @@
 package com.bytemaniak.mcquake3.recipes;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class PlasmaInducerRecipe implements Recipe<Inventory> {
+public class PlasmaInducerRecipe implements Recipe<RecipeInput> {
     private final List<Ingredient> items;
     public final ItemStack output;
     public final int cookingTime;
@@ -29,21 +24,21 @@ public class PlasmaInducerRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public boolean matches(Inventory inventory, World world) {
+    public boolean matches(RecipeInput inventory, World world) {
         if (world.isClient) return false;
 
-        return items.get(0).test(inventory.getStack(0)) && items.get(1).test(inventory.getStack(3)) &&
-                items.get(2).test(inventory.getStack(4)) && items.get(3).test(inventory.getStack(5));
+        return items.get(0).test(inventory.getStackInSlot(0)) && items.get(1).test(inventory.getStackInSlot(3)) &&
+                items.get(2).test(inventory.getStackInSlot(4)) && items.get(3).test(inventory.getStackInSlot(5));
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) { return output; }
+    public ItemStack craft(RecipeInput input, RegistryWrapper.WrapperLookup lookup) { return output; }
 
     @Override
     public boolean fits(int width, int height) { return true; }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registryManager) { return output.copy(); }
+    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) { return output.copy(); }
 
     @Override
     public DefaultedList<Ingredient> getIngredients() {
@@ -53,9 +48,12 @@ public class PlasmaInducerRecipe implements Recipe<Inventory> {
     }
 
     @Override
+    public RecipeSerializer<?> getSerializer() { return null; }
+
+    /*@Override
     public RecipeSerializer<?> getSerializer() {
         return PlasmaInducerRecipeSerializer.INSTANCE;
-    }
+    }*/
 
     @Override
     public RecipeType<?> getType() { return PlasmaInducerType.INSTANCE; }
@@ -65,9 +63,9 @@ public class PlasmaInducerRecipe implements Recipe<Inventory> {
         public static final PlasmaInducerType INSTANCE = new PlasmaInducerType();
     }
 
-    public static class PlasmaInducerRecipeSerializer implements RecipeSerializer<PlasmaInducerRecipe> {
+    /*public static class PlasmaInducerRecipeSerializer implements RecipeSerializer<PlasmaInducerRecipe> {
         public static final PlasmaInducerRecipeSerializer INSTANCE = new PlasmaInducerRecipeSerializer();
-        public static final Codec<PlasmaInducerRecipe> CODEC = RecordCodecBuilder.create(in -> in.group(
+        public static final MapCodec<PlasmaInducerRecipe> CODEC = RecordCodecBuilder.create(in -> in.group(
                 validateAmount(Ingredient.DISALLOW_EMPTY_CODEC, 4).fieldOf("ingredients").forGetter(PlasmaInducerRecipe::getIngredients),
                 ItemStack.RECIPE_RESULT_CODEC.fieldOf("output").forGetter(r -> r.output),
                 Codec.INT.fieldOf("cookingtime").orElse(200).forGetter(r -> r.cookingTime)
@@ -80,7 +78,12 @@ public class PlasmaInducerRecipe implements Recipe<Inventory> {
         }
 
         @Override
-        public Codec<PlasmaInducerRecipe> codec() { return CODEC; }
+        public MapCodec<PlasmaInducerRecipe> codec() { return CODEC; }
+
+        @Override
+        public PacketCodec<RegistryByteBuf, PlasmaInducerRecipe> packetCodec() {
+            return null;
+        }
 
         @Override
         public PlasmaInducerRecipe read(PacketByteBuf buf) {
@@ -98,5 +101,5 @@ public class PlasmaInducerRecipe implements Recipe<Inventory> {
             buf.writeItemStack(recipe.output);
             buf.writeInt(recipe.cookingTime);
         }
-    }
+    }*/
 }

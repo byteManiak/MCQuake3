@@ -19,7 +19,7 @@ public class Entities {
     public static void loadEntities() {
         PLASMA_BALL = Registry.register(
                 Registries.ENTITY_TYPE,
-                new Identifier("mcquake3:plasmaball"),
+                Identifier.of("mcquake3:plasmaball"),
                 FabricEntityTypeBuilder.<PlasmaBall>create(SpawnGroup.MISC, PlasmaBall::new)
                         .dimensions(EntityDimensions.fixed(0.3f, 0.3f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)
@@ -27,7 +27,7 @@ public class Entities {
 
         SHELL = Registry.register(
                 Registries.ENTITY_TYPE,
-                new Identifier("mcquake3:shell"),
+                Identifier.of("mcquake3:shell"),
                 FabricEntityTypeBuilder.<Shell>create(SpawnGroup.MISC, Shell::new)
                         .dimensions(EntityDimensions.fixed(0.05f, 0.05f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)
@@ -35,7 +35,7 @@ public class Entities {
 
         GRENADE = Registry.register(
                 Registries.ENTITY_TYPE,
-                new Identifier("mcquake3:grenade"),
+                Identifier.of("mcquake3:grenade"),
                 FabricEntityTypeBuilder.<Grenade>create(SpawnGroup.MISC, Grenade::new)
                         .dimensions(EntityDimensions.fixed(0.3f, 0.3f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)
@@ -43,7 +43,7 @@ public class Entities {
 
         ROCKET = Registry.register(
                 Registries.ENTITY_TYPE,
-                new Identifier("mcquake3:rocket"),
+                Identifier.of("mcquake3:rocket"),
                 FabricEntityTypeBuilder.<Rocket>create(SpawnGroup.MISC, Rocket::new)
                         .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)
@@ -51,7 +51,7 @@ public class Entities {
 
         BFG10K_PROJECTILE = Registry.register(
                 Registries.ENTITY_TYPE,
-                new Identifier("mcquake3:bfg10k"),
+                Identifier.of("mcquake3:bfg10k"),
                 FabricEntityTypeBuilder.<BFG10KProjectile>create(SpawnGroup.MISC, BFG10KProjectile::new)
                         .dimensions(EntityDimensions.fixed(0.75f, 0.75f))
                         .trackRangeBlocks(128).trackedUpdateRate(10)

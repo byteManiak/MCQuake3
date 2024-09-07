@@ -1,12 +1,9 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.entity.JumppadEntity;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -22,8 +19,8 @@ public class JumppadPowerC2SPacket {
             entity.updatePower(buf.readByte());
             retBuf.writeInt(entity.getId());
             retBuf.writeByte(entity.getPower());
-            for (ServerPlayerEntity plr : PlayerLookup.world(player.getServerWorld()))
-                ServerPlayNetworking.send(plr, Packets.JUMPPAD_UPDATED_POWER, retBuf);
+            ///for (ServerPlayerEntity plr : PlayerLookup.world(player.getServerWorld()))
+                ///ServerPlayNetworking.send(plr, Packets.JUMPPAD_UPDATED_POWER, retBuf);
         }
     }
 }

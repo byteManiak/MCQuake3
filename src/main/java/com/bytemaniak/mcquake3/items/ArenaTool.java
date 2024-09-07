@@ -7,10 +7,10 @@ import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class ArenaTool extends Item {
     public ArenaTool() { super(new Settings().maxCount(1)); }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.of("Used to describe properties of Quake3 arenas such as"));
         tooltip.add(Text.of("the name of the arena, and the spawnpoints located"));
         tooltip.add(Text.of("within this arena."));
@@ -48,7 +47,7 @@ public class ArenaTool extends Item {
             return TypedActionResult.success(stack);
         }
 
-        if (world.getDimensionKey() != Blocks.Q3_DIMENSION_TYPE) {
+        if (!world.getDimensionEntry().matchesKey(Blocks.Q3_DIMENSION_TYPE)) {
             ServerPlayerEntity player = (ServerPlayerEntity)user;
             ServerWorld quakeDimension = player.server.getWorld(Blocks.Q3_DIMENSION);
             player.teleport(quakeDimension, 0, 64, 0, 0, 0);

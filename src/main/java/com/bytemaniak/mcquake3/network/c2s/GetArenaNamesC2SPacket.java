@@ -1,10 +1,8 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
-import com.bytemaniak.mcquake3.registry.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -20,6 +18,6 @@ public class GetArenaNamesC2SPacket {
         for (QuakeArenasParameters.ArenaData arenaData : arenasData.arenas) {
             replyBuf.writeString(arenaData.arenaName);
         }
-        ServerPlayNetworking.send(player, Packets.SEND_ARENA_NAMES, replyBuf);
+        ///ServerPlayNetworking.send(player, Packets.SEND_ARENA_NAMES, replyBuf);
     }
 }

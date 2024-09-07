@@ -3,6 +3,8 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -17,24 +19,23 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.constant.DefaultAnimations;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.constant.dataticket.SerializableDataTicket;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
-import software.bernie.geckolib.network.SerializableDataTicket;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-public abstract class Weapon extends Item implements GeoItem, FabricItem {
+public abstract class Weapon extends Item implements GeoItem, FabricItem, AnimationController.AnimationStateHandler<Weapon> {
     public static final int MAX_AMMO = 198;
 
     private static final float HITSCAN_HORIZONTAL_OFFSET = .2f;
@@ -57,9 +58,8 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem {
     public final int slot;
 
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(new Identifier("mcquake3:firing_speed"));
+    public static final SerializableDataTicket<Double> SPEED = SerializableDataTicket.ofDouble(Identifier.of("mcquake3:firing_speed"));
 
     protected Weapon(Identifier id, long refireRateQ3InTicks, long refireRateQLInTicks,
                      boolean hasRepeatedFiringSound, SoundEvent firingSound, boolean hasActiveLoopSound,
@@ -82,7 +82,7 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem {
     }
 
     @Override
-    public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+    public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
         return false;
     }
 
@@ -98,7 +98,7 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem {
 
     @Override
     // Player can shoot weapon indefinitely
-    public int getMaxUseTime(ItemStack stack) { return 1000000; }
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) { return 1000000; }
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
@@ -158,26 +158,24 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem {
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
-    public Supplier<Object> getRenderProvider() { return renderProvider; }
+    public Object getRenderProvider() { return cache.getRenderProvider(); }
 
     @Override
-    public void createRenderer(Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
             private final GeoItemRenderer<?> renderer =
                     new GeoItemRenderer<>(new DefaultedItemGeoModel<>(weaponIdentifier));
 
             @Override
-            public GeoItemRenderer<?> getCustomRenderer() {
-                return renderer;
-            }
+            public @Nullable BuiltinModelItemRenderer getGeoItemRenderer() { return renderer; }
         });
     }
 
-    protected PlayState handle(AnimationState<Weapon> state) { return null; }
+    protected PlayState handle(AnimationState state) { return null; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", this::handle)
+        controllers.add(new AnimationController<>(this, "controller", this)
                 .triggerableAnim("shoot", DefaultAnimations.ATTACK_SHOOT)
                 .triggerableAnim("idle", DefaultAnimations.IDLE));
     }

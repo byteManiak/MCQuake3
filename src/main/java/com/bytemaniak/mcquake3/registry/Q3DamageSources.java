@@ -9,23 +9,23 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class Q3DamageSources {
-    public static final RegistryKey<DamageType> GAUNTLET_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:gauntlet"));
-    public static final RegistryKey<DamageType> MACHINEGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:machinegun"));
-    public static final RegistryKey<DamageType> SHOTGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:shotgun"));
-    public static final RegistryKey<DamageType> SHOTGUN_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:shotgun_self"));
-    public static final RegistryKey<DamageType> GRENADE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:grenade"));
-    public static final RegistryKey<DamageType> GRENADE_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:grenade_self"));
-    public static final RegistryKey<DamageType> ROCKET_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:rocket"));
-    public static final RegistryKey<DamageType> ROCKET_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:rocket_self"));
-    public static final RegistryKey<DamageType> LIGHTNING_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:lightning"));
-    public static final RegistryKey<DamageType> LIGHTNING_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:lightning_self"));
-    public static final RegistryKey<DamageType> RAILGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:railgun"));
-    public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:plasmagun"));
-    public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:plasmagun_self"));
-    public static final RegistryKey<DamageType> BFG10K_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:bfg10k"));
-    public static final RegistryKey<DamageType> BFG10K_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:bfg10k_self"));
+    public static final RegistryKey<DamageType> GAUNTLET_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:gauntlet"));
+    public static final RegistryKey<DamageType> MACHINEGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:machinegun"));
+    public static final RegistryKey<DamageType> SHOTGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:shotgun"));
+    public static final RegistryKey<DamageType> SHOTGUN_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:shotgun_self"));
+    public static final RegistryKey<DamageType> GRENADE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:grenade"));
+    public static final RegistryKey<DamageType> GRENADE_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:grenade_self"));
+    public static final RegistryKey<DamageType> ROCKET_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:rocket"));
+    public static final RegistryKey<DamageType> ROCKET_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:rocket_self"));
+    public static final RegistryKey<DamageType> LIGHTNING_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:lightning"));
+    public static final RegistryKey<DamageType> LIGHTNING_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:lightning_self"));
+    public static final RegistryKey<DamageType> RAILGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:railgun"));
+    public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:plasmagun"));
+    public static final RegistryKey<DamageType> PLASMAGUN_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:plasmagun_self"));
+    public static final RegistryKey<DamageType> BFG10K_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:bfg10k"));
+    public static final RegistryKey<DamageType> BFG10K_DAMAGE_SELF = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:bfg10k_self"));
 
-    public static final RegistryKey<DamageType> SPIKES = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("mcquake3:spikes"));
+    public static final RegistryKey<DamageType> SPIKES = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("mcquake3:spikes"));
 
     public static DamageSource of(World world, RegistryKey<DamageType> type, Entity source, Entity attacker) {
         return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(type), source, attacker);

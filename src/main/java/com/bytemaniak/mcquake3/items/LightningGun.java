@@ -20,6 +20,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
 
 public class LightningGun extends HitscanWeapon {
     private static final long LIGHTNING_REFIRE_RATE = 1;
@@ -27,7 +29,7 @@ public class LightningGun extends HitscanWeapon {
     private static final float LIGHTNING_RANGE = 30;
 
     public LightningGun() {
-        super(new Identifier("mcquake3:lightning_gun"), LIGHTNING_REFIRE_RATE, LIGHTNING_REFIRE_RATE,
+        super(Identifier.of("mcquake3:lightning_gun"), LIGHTNING_REFIRE_RATE, LIGHTNING_REFIRE_RATE,
                 false, null, true, LIGHTNING_DAMAGE, Q3DamageSources.LIGHTNING_DAMAGE,
                 LIGHTNING_RANGE, Weapons.LIGHTNING_CELL, 100, 60, 5, false);
     }
@@ -65,5 +67,10 @@ public class LightningGun extends HitscanWeapon {
             world.playSoundFromEntity(null, user, Sounds.LIGHTNING_FIRE, SoundCategory.PLAYERS, 1, 1);
 
         return super.use(world, user, hand);
+    }
+
+    @Override
+    public PlayState handle(AnimationState<Weapon> state) {
+        return null;
     }
 }

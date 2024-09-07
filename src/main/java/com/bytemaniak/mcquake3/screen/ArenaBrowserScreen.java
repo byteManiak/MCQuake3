@@ -1,7 +1,5 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.registry.Packets;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -37,7 +35,7 @@ public class ArenaBrowserScreen extends Screen {
         public void clearList() { clearEntries(); }
 
         @Override
-        protected int getScrollbarPositionX() { return getRight() - 5; }
+        protected int getScrollbarX() { return getRight() - 5; }
 
         public int getRowWidth() { return width; }
 
@@ -76,7 +74,7 @@ public class ArenaBrowserScreen extends Screen {
                 .dimensions(20, height/7 - 28, (int)(width/3), 20).build();
 
         arenaList = new ArenaList(client, (int)(width/3), (int)(height*2/3), height / 7, 18, 20);
-        ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
+        ///ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
 
         ButtonWidget selectArena = ButtonWidget.builder(Text.of("Select"), (button) -> {
             ArenaList.ArenaEntry focused = arenaList.getSelectedOrNull();
@@ -86,7 +84,7 @@ public class ArenaBrowserScreen extends Screen {
             msg.writeString(focused.arenaName);
             msg.writeBoolean(false);
             msg.writeBoolean(true);
-            ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
+            ///ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
             ArenaBrowserScreen.this.close();
         }).dimensions(20, (int)(5.75f*height/7) + 4, (int)(width/6.5), 20).build();
 
@@ -98,8 +96,8 @@ public class ArenaBrowserScreen extends Screen {
             msg.writeString(focused.arenaName);
             msg.writeBoolean(true);
             arenaList.clearList();
-            ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
-            ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
+            ///ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
+            ///ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
         }).dimensions(34+(int)(width/6.5), (int)(5.75f*height/7) + 4, (int)(width/6.5), 20).build();
 
         TextWidget addArenaText = new TextWidget(Text.of("Add new arena:"), textRenderer);
@@ -116,14 +114,14 @@ public class ArenaBrowserScreen extends Screen {
             msg.writeBoolean(false);
             msg.writeBoolean(false);
             arenaList.clearList();
-            ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
-            ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
+            ///ClientPlayNetworking.send(Packets.ARENA_SELECT_DELETE, msg);
+            ///ClientPlayNetworking.send(Packets.GET_ARENA_NAMES, PacketByteBufs.empty());
         }).dimensions(width*2/3-32, height/3+52, 60, 20).build();
 
         ButtonWidget leaveQuakeDimension = ButtonWidget.builder(Text.of("Leave Quake dimension"), (button) -> {
             PacketByteBuf msg = PacketByteBufs.create();
             msg.writeBoolean(true);
-            ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, msg);
+            ///ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, msg);
             ArenaBrowserScreen.this.close();
         }).dimensions(width*2/3-64, height/3+104, 128, 20).build();
 

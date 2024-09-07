@@ -3,12 +3,10 @@ package com.bytemaniak.mcquake3.blocks.weapon;
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.mojang.serialization.MapCodec;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.entity.Entity;
@@ -37,7 +35,7 @@ public abstract class WeaponPickup extends Pickup {
 
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeByte(weapon.slot);
-                        ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
+                        ///ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
                     } else player.giveItemStack(new ItemStack(weapon));
                 }
 

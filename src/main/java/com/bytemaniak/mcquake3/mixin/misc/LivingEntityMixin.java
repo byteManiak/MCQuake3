@@ -3,15 +3,15 @@ package com.bytemaniak.mcquake3.mixin.misc;
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.bytemaniak.mcquake3.registry.*;
+import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.ServerEvents;
+import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +19,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -37,7 +36,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements QuadDamageGlintRenderer.QuadDamageVisibility {
-    @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public abstract boolean damage(DamageSource source, float amount);
 
     public LivingEntityMixin(EntityType<?> type, World world) {
@@ -64,8 +62,8 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
             buf.writeBoolean(player.getInventory().getSlotWithStack(new ItemStack(Weapons.LIGHTNING_CELL)) > -1);
             buf.writeBoolean(player.getInventory().getSlotWithStack(new ItemStack(Weapons.RAILGUN_ROUND)) > -1);
 
-            for (ServerPlayerEntity plr : PlayerLookup.tracking(player))
-                ServerPlayNetworking.send(plr, Packets.PLAYER_AMMO_TRAIL_FIX, buf);
+            ///for (ServerPlayerEntity plr : PlayerLookup.tracking(player))
+                ///ServerPlayNetworking.send(plr, Packets.PLAYER_AMMO_TRAIL_FIX, buf);
         }
 
         original.call(entity);
@@ -74,7 +72,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     @WrapOperation(method = "tickStatusEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updatePotionVisibility()V"))
     // Update visibility of Quake damage effect when the visibility for other effects is changed as well
     private void updateQuadDamageVisibility(LivingEntity entity, Operation<Void> original) {
-        dataTracker.set(QUAD_DAMAGE_VISIBLE, hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE));
+        ///dataTracker.set(QUAD_DAMAGE_VISIBLE, hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE));
         original.call(entity);
     }
 
@@ -82,7 +80,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     // Respawn player to a custom arena spawnpoint if playing in Quake dimension instead of killing them
     private void respawnQuakePlayer(LivingEntity entity, DamageSource damageSource, Operation<Void> original) {
         if (entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).inQuakeArena() &&
-                player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
+                player.getWorld().getDimensionEntry().matchesKey(Blocks.Q3_DIMENSION_TYPE) &&
                 !player.isCreative() && !player.isSpectator()) {
             ServerWorld world = player.getServerWorld();
             QuakeArenasParameters.ArenaData arena = ServerEvents.QUAKE_MATCH_STATE.arena;
@@ -114,8 +112,8 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void initQuadDamageTracker(CallbackInfo ci) {
-        dataTracker.startTracking(QUAD_DAMAGE_VISIBLE, false);
+    private void initQuadDamageTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(QUAD_DAMAGE_VISIBLE, false);
     }
 
     public boolean hasQuadDamage() {

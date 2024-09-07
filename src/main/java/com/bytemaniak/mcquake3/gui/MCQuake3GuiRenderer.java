@@ -9,16 +9,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.ItemStack;
-import org.apache.commons.compress.compressors.z.ZCompressorInputStream;
 
 public class MCQuake3GuiRenderer implements HudRenderCallback {
     public int frags = 0;
     public int highestFrags = 0;
 
     @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
+    public void onHudRender(DrawContext context, RenderTickCounter tickCounter) {
         ClientPlayerEntity plr = MinecraftClient.getInstance().player;
         if (plr == null) return;
 

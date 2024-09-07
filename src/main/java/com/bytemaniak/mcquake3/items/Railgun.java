@@ -14,6 +14,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
 
 public class Railgun extends HitscanWeapon {
     private static final int RAILGUN_REFIRE_RATE_Q3 = 50;
@@ -22,7 +24,7 @@ public class Railgun extends HitscanWeapon {
     private static final float RAILGUN_RANGE = 200;
 
     public Railgun() {
-        super(new Identifier("mcquake3:railgun"), RAILGUN_REFIRE_RATE_Q3, RAILGUN_REFIRE_RATE_QL,
+        super(Identifier.of("mcquake3:railgun"), RAILGUN_REFIRE_RATE_Q3, RAILGUN_REFIRE_RATE_QL,
                 true, Sounds.RAILGUN_FIRE, false, RAILGUN_DAMAGE, Q3DamageSources.RAILGUN_DAMAGE,
                 RAILGUN_RANGE, Weapons.RAILGUN_ROUND, 10, 10, 6, true);
     }
@@ -46,5 +48,10 @@ public class Railgun extends HitscanWeapon {
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
 
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
+    }
+
+    @Override
+    public PlayState handle(AnimationState<Weapon> state) {
+        return null;
     }
 }

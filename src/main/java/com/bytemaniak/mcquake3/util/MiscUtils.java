@@ -19,7 +19,7 @@ public class MiscUtils {
     public static float fromMCDamage(float amount) { return amount*5; }
     public static int toTicks(float seconds) { return (int)(seconds * 20); }
 
-    private static final Identifier QUAKE_FONT = new Identifier("mcquake3:quake_hud");
+    private static final Identifier QUAKE_FONT = Identifier.of("mcquake3:quake_hud");
 
     public static void drawText(DrawContext context, String str, int x, int y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;

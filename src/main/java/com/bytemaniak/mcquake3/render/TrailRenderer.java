@@ -19,9 +19,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Environment(EnvType.CLIENT)
 public class TrailRenderer implements WorldRenderEvents.End {
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/misc/white.png");
+    private static final Identifier TEXTURE = Identifier.of("minecraft", "textures/misc/white.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
-    private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(64));
+    ///private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(64));
     private final static long RAILGUN_TRAIL_LIFETIME = 20;
     private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 3;
 
@@ -74,7 +74,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         float x = (float)vec.x;
         float y = (float)vec.y;
         float z = (float)vec.z;
-        vertexConsumer.vertex(positionMatrix, x, y, z).color((float)col.x, (float)col.y, (float)col.z, 1-alpha).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(1).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(positionMatrix, x, y, z).color((float)col.x, (float)col.y, (float)col.z, 1-alpha).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(1).normal(0, 1, 0);
     }
 
     private void genQuad(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, Vec3d color, float alpha) {
@@ -96,7 +96,7 @@ public class TrailRenderer implements WorldRenderEvents.End {
         matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
+        /*VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
 
         for (TrailData trail : trailList) {
             long currentTick = worldTime - trail.startTick;
@@ -117,10 +117,10 @@ public class TrailRenderer implements WorldRenderEvents.End {
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v2, trail.v3, trail.v7, trail.v6, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v3, trail.v4, trail.v8, trail.v7, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v4, trail.v1, trail.v5, trail.v8, trail.color, alpha);
-        }
+        }*/
 
         matrices.pop();
-        vertexConsumerProvider.draw();
+        ///vertexConsumerProvider.draw();
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, Vec3d upVec, UUID playerId, int type) {

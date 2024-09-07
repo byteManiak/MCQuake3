@@ -17,7 +17,7 @@ import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class ShellRenderer extends EntityRenderer<Shell> {
-    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/entity/shell.png");
+    private static final Identifier TEXTURE = Identifier.of("mcquake3:textures/entity/shell.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
 
     public ShellRenderer(EntityRendererFactory.Context context) {
@@ -49,6 +49,6 @@ public class ShellRenderer extends EntityRenderer<Shell> {
     }
 
     private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, int light, float x, float y, int textureU, int textureV) {
-        vertexConsumer.vertex(positionMatrix, x - 0.5F, y - 0.25F, 0.0F).color(255, 255, 255, 255).texture((float)textureU, (float)textureV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0.0F, 1.0F, 0.0F).next();
+        vertexConsumer.vertex(positionMatrix, x - 0.5F, y - 0.25F, 0.0F).color(255, 255, 255, 255).texture((float)textureU, (float)textureV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(0.0F, 1.0F, 0.0F);
     }
 }

@@ -2,29 +2,27 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.JumppadEntity;
 import com.bytemaniak.mcquake3.registry.Blocks;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Jumppad extends Item {
-    public Jumppad() { super(new FabricItemSettings()); }
+    public Jumppad() { super(new Item.Settings()); }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.of("Change orientation and strength"));
         tooltip.add(Text.of("by using the [MCQuake3 Tool]."));
     }

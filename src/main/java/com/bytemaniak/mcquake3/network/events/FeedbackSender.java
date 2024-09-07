@@ -1,11 +1,9 @@
 package com.bytemaniak.mcquake3.network.events;
 
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -24,7 +22,7 @@ public class FeedbackSender implements ServerLivingEntityEvents.AllowDamage, Ser
 
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeBoolean(gauntletKill);
-            ServerPlayNetworking.send((ServerPlayerEntity) entity, Packets.KILLED_PLAYER, buf);
+            ///ServerPlayNetworking.send((ServerPlayerEntity) entity, Packets.KILLED_PLAYER, buf);
         }
     }
 
@@ -35,7 +33,7 @@ public class FeedbackSender implements ServerLivingEntityEvents.AllowDamage, Ser
             if (entity.getUuid() != player.getUuid() && source.getName().contains("mcquake3")) {
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeBoolean(source.isOf(Q3DamageSources.RAILGUN_DAMAGE));
-                ServerPlayNetworking.send(player, Packets.DEALT_DAMAGE, buf);
+                ///ServerPlayNetworking.send(player, Packets.DEALT_DAMAGE, buf);
             }
         }
 

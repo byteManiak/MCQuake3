@@ -8,138 +8,138 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class Sounds {
-    private static final Identifier DAMAGE_DEALT_IDENT = new Identifier("mcquake3:hit");
+    private static final Identifier DAMAGE_DEALT_IDENT = Identifier.of("mcquake3:hit");
     public static final SoundEvent DAMAGE_DEALT = SoundEvent.of(DAMAGE_DEALT_IDENT);
-    private static final Identifier EXCELLENT_IDENT = new Identifier("mcquake3:excellent");
+    private static final Identifier EXCELLENT_IDENT = Identifier.of("mcquake3:excellent");
     public static final SoundEvent EXCELLENT = SoundEvent.of(EXCELLENT_IDENT);
-    private static final Identifier IMPRESSIVE_IDENT = new Identifier("mcquake3:impressive");
+    private static final Identifier IMPRESSIVE_IDENT = Identifier.of("mcquake3:impressive");
     public static final SoundEvent IMPRESSIVE = SoundEvent.of(IMPRESSIVE_IDENT);
-    private static final Identifier GAUNTLET_IDENT = new Identifier("mcquake3:gauntlet");
+    private static final Identifier GAUNTLET_IDENT = Identifier.of("mcquake3:gauntlet");
     public static final SoundEvent GAUNTLET = SoundEvent.of(GAUNTLET_IDENT);
 
-    private static final Identifier DING_IDENT = new Identifier("mcquake3:ding");
+    private static final Identifier DING_IDENT = Identifier.of("mcquake3:ding");
     public static final SoundEvent DING = SoundEvent.of(DING_IDENT);
-    private static final Identifier PREPARE_IDENT = new Identifier("mcquake3:announcer.prepare");
+    private static final Identifier PREPARE_IDENT = Identifier.of("mcquake3:announcer.prepare");
     public static final SoundEvent PREPARE = SoundEvent.of(PREPARE_IDENT);
-    private static final Identifier THREE_IDENT = new Identifier("mcquake3:announcer.3");
+    private static final Identifier THREE_IDENT = Identifier.of("mcquake3:announcer.3");
     public static final SoundEvent THREE = SoundEvent.of(THREE_IDENT);
-    private static final Identifier TWO_IDENT = new Identifier("mcquake3:announcer.2");
+    private static final Identifier TWO_IDENT = Identifier.of("mcquake3:announcer.2");
     public static final SoundEvent TWO = SoundEvent.of(TWO_IDENT);
-    private static final Identifier ONE_IDENT = new Identifier("mcquake3:announcer.1");
+    private static final Identifier ONE_IDENT = Identifier.of("mcquake3:announcer.1");
     public static final SoundEvent ONE = SoundEvent.of(ONE_IDENT);
-    private static final Identifier FIGHT_IDENT = new Identifier("mcquake3:announcer.fight");
+    private static final Identifier FIGHT_IDENT = Identifier.of("mcquake3:announcer.fight");
     public static final SoundEvent FIGHT = SoundEvent.of(FIGHT_IDENT);
-    private static final Identifier MATCH_WIN_IDENT = new Identifier("mcquake3:announcer.match_win");
+    private static final Identifier MATCH_WIN_IDENT = Identifier.of("mcquake3:announcer.match_win");
     public static final SoundEvent MATCH_WIN = SoundEvent.of(MATCH_WIN_IDENT);
-    private static final Identifier MATCH_LOSS_IDENT = new Identifier("mcquake3:announcer.match_loss");
+    private static final Identifier MATCH_LOSS_IDENT = Identifier.of("mcquake3:announcer.match_loss");
     public static final SoundEvent MATCH_LOSS = SoundEvent.of(MATCH_LOSS_IDENT);
 
-    private static final Identifier THREE_FRAGS_IDENT = new Identifier("mcquake3:announcer.3_frags");
+    private static final Identifier THREE_FRAGS_IDENT = Identifier.of("mcquake3:announcer.3_frags");
     public static final SoundEvent THREE_FRAGS = SoundEvent.of(THREE_FRAGS_IDENT);
-    private static final Identifier TWO_FRAGS_IDENT = new Identifier("mcquake3:announcer.2_frags");
+    private static final Identifier TWO_FRAGS_IDENT = Identifier.of("mcquake3:announcer.2_frags");
     public static final SoundEvent TWO_FRAGS = SoundEvent.of(TWO_FRAGS_IDENT);
-    private static final Identifier ONE_FRAG_IDENT = new Identifier("mcquake3:announcer.1_frag");
+    private static final Identifier ONE_FRAG_IDENT = Identifier.of("mcquake3:announcer.1_frag");
     public static final SoundEvent ONE_FRAG = SoundEvent.of(ONE_FRAG_IDENT);
 
-    private static final Identifier JUMPPAD_BOOST_IDENT = new Identifier("mcquake3:jumppad");
+    private static final Identifier JUMPPAD_BOOST_IDENT = Identifier.of("mcquake3:jumppad");
     public static final SoundEvent JUMPPAD_BOOST = SoundEvent.of(JUMPPAD_BOOST_IDENT);
 
-    private static final Identifier TELEPORT_IN_IDENT = new Identifier("mcquake3:telein");
+    private static final Identifier TELEPORT_IN_IDENT = Identifier.of("mcquake3:telein");
     public static final SoundEvent TELEPORT_IN = SoundEvent.of(TELEPORT_IN_IDENT);
-    private static final Identifier TELEPORT_OUT_IDENT = new Identifier("mcquake3:teleout");
+    private static final Identifier TELEPORT_OUT_IDENT = Identifier.of("mcquake3:teleout");
     public static final SoundEvent TELEPORT_OUT = SoundEvent.of(TELEPORT_OUT_IDENT);
 
-    private static final Identifier NO_AMMO_IDENT = new Identifier("mcquake3:no_ammo");
+    private static final Identifier NO_AMMO_IDENT = Identifier.of("mcquake3:no_ammo");
     public static final SoundEvent NO_AMMO = SoundEvent.of(NO_AMMO_IDENT);
 
-    private static final Identifier MACHINEGUN_FIRE_IDENT = new Identifier("mcquake3:machinegun");
+    private static final Identifier MACHINEGUN_FIRE_IDENT = Identifier.of("mcquake3:machinegun");
     public static final SoundEvent MACHINEGUN_FIRE = SoundEvent.of(MACHINEGUN_FIRE_IDENT);
 
-    private static final Identifier PLASMAGUN_FIRE_IDENT = new Identifier("mcquake3:plasmagun");
+    private static final Identifier PLASMAGUN_FIRE_IDENT = Identifier.of("mcquake3:plasmagun");
     public static final SoundEvent PLASMAGUN_FIRE = SoundEvent.of(PLASMAGUN_FIRE_IDENT);
 
-    private static final Identifier LIGHTNING_FIRE_IDENT = new Identifier("mcquake3:lightning_gun");
+    private static final Identifier LIGHTNING_FIRE_IDENT = Identifier.of("mcquake3:lightning_gun");
     public static final SoundEvent LIGHTNING_FIRE = SoundEvent.of(LIGHTNING_FIRE_IDENT);
-    private static final Identifier LIGHTNING_ACTIVE_IDENT = new Identifier("mcquake3:lightning_active");
+    private static final Identifier LIGHTNING_ACTIVE_IDENT = Identifier.of("mcquake3:lightning_active");
     public static final SoundEvent LIGHTNING_ACTIVE = SoundEvent.of(LIGHTNING_ACTIVE_IDENT);
 
-    private static final Identifier RAILGUN_FIRE_IDENT = new Identifier("mcquake3:railgun");
+    private static final Identifier RAILGUN_FIRE_IDENT = Identifier.of("mcquake3:railgun");
     public static final SoundEvent RAILGUN_FIRE = SoundEvent.of(RAILGUN_FIRE_IDENT);
-    private static final Identifier RAILGUN_HUM_IDENT = new Identifier("mcquake3:railgun_idle");
+    private static final Identifier RAILGUN_HUM_IDENT = Identifier.of("mcquake3:railgun_idle");
     public static final SoundEvent RAILGUN_HUM = SoundEvent.of(RAILGUN_HUM_IDENT);
 
-    private static final Identifier SHOTGUN_FIRE_IDENT = new Identifier("mcquake3:shotgun");
+    private static final Identifier SHOTGUN_FIRE_IDENT = Identifier.of("mcquake3:shotgun");
     public static final SoundEvent SHOTGUN_FIRE = SoundEvent.of(SHOTGUN_FIRE_IDENT);
 
-    private static final Identifier GAUNTLET_DAMAGE_IDENT = new Identifier("mcquake3:gauntlet_damage");
+    private static final Identifier GAUNTLET_DAMAGE_IDENT = Identifier.of("mcquake3:gauntlet_damage");
     public static final SoundEvent GAUNTLET_DAMAGE = SoundEvent.of(GAUNTLET_DAMAGE_IDENT);
-    private static final Identifier GAUNTLET_ACTIVE_IDENT = new Identifier("mcquake3:gauntlet_active");
+    private static final Identifier GAUNTLET_ACTIVE_IDENT = Identifier.of("mcquake3:gauntlet_active");
     public static final SoundEvent GAUNTLET_ACTIVE = SoundEvent.of(GAUNTLET_ACTIVE_IDENT);
-    private static final Identifier GAUNTLET_HUM_IDENT = new Identifier("mcquake3:gauntlet_idle");
+    private static final Identifier GAUNTLET_HUM_IDENT = Identifier.of("mcquake3:gauntlet_idle");
     public static final SoundEvent GAUNTLET_HUM = SoundEvent.of(GAUNTLET_HUM_IDENT);
 
-    private static final Identifier BFG10K_FIRE_IDENT = new Identifier("mcquake3:bfg10k");
+    private static final Identifier BFG10K_FIRE_IDENT = Identifier.of("mcquake3:bfg10k");
     public static final SoundEvent BFG10K_FIRE = SoundEvent.of(BFG10K_FIRE_IDENT);
 
-    private static final Identifier GRENADE_FIRE_IDENT = new Identifier("mcquake3:grenade_launcher");
+    private static final Identifier GRENADE_FIRE_IDENT = Identifier.of("mcquake3:grenade_launcher");
     public static final SoundEvent GRENADE_FIRE = SoundEvent.of(GRENADE_FIRE_IDENT);
-    private static final Identifier GRENADE_BOUNCE_IDENT = new Identifier("mcquake3:grenade_bounce");
+    private static final Identifier GRENADE_BOUNCE_IDENT = Identifier.of("mcquake3:grenade_bounce");
     public static final SoundEvent GRENADE_BOUNCE = SoundEvent.of(GRENADE_BOUNCE_IDENT);
 
-    private static final Identifier ROCKET_FLYING_IDENT = new Identifier("mcquake3:rocket_flying");
+    private static final Identifier ROCKET_FLYING_IDENT = Identifier.of("mcquake3:rocket_flying");
     public static final SoundEvent ROCKET_FLYING = SoundEvent.of(ROCKET_FLYING_IDENT);
 
-    private static final Identifier PLASMABALL_FLYING_IDENT = new Identifier("mcquake3:plasmaball_flying");
+    private static final Identifier PLASMABALL_FLYING_IDENT = Identifier.of("mcquake3:plasmaball_flying");
     public static final SoundEvent PLASMABALL_FLYING = SoundEvent.of(PLASMABALL_FLYING_IDENT);
-    private static final Identifier PLASMABALL_HIT_IDENT = new Identifier("mcquake3:plasmaball_hit");
+    private static final Identifier PLASMABALL_HIT_IDENT = Identifier.of("mcquake3:plasmaball_hit");
     public static final SoundEvent PLASMABALL_HIT = SoundEvent.of(PLASMABALL_HIT_IDENT);
 
-    private static final Identifier LIGHTNING_HIT_IDENT = new Identifier("mcquake3:lightning_hit");
+    private static final Identifier LIGHTNING_HIT_IDENT = Identifier.of("mcquake3:lightning_hit");
     public static final SoundEvent LIGHTNING_HIT = SoundEvent.of(LIGHTNING_HIT_IDENT);
 
-    private static final Identifier BULLET_MISS_IDENT = new Identifier("mcquake3:bullet_miss");
+    private static final Identifier BULLET_MISS_IDENT = Identifier.of("mcquake3:bullet_miss");
     public static final SoundEvent BULLET_MISS = SoundEvent.of(BULLET_MISS_IDENT);
 
-    private static final Identifier WEAPON_CHANGE_IDENT = new Identifier("mcquake3:weapon_change");
+    private static final Identifier WEAPON_CHANGE_IDENT = Identifier.of("mcquake3:weapon_change");
     public static final SoundEvent WEAPON_CHANGE = SoundEvent.of(WEAPON_CHANGE_IDENT);
 
-    private static final Identifier REGEN_IDENT = new Identifier("mcquake3:regen");
+    private static final Identifier REGEN_IDENT = Identifier.of("mcquake3:regen");
     public static final SoundEvent REGEN = SoundEvent.of(REGEN_IDENT);
-    private static final Identifier POWERUP_REGEN_IDENT = new Identifier("mcquake3:powerup_regen");
+    private static final Identifier POWERUP_REGEN_IDENT = Identifier.of("mcquake3:powerup_regen");
     public static final SoundEvent POWERUP_REGEN = SoundEvent.of(POWERUP_REGEN_IDENT);
 
-    private static final Identifier HASTE_IDENT = new Identifier("mcquake3:haste");
+    private static final Identifier HASTE_IDENT = Identifier.of("mcquake3:haste");
     public static final SoundEvent HASTE = SoundEvent.of(HASTE_IDENT);
-    private static final Identifier INVISIBILITY_IDENT = new Identifier("mcquake3:invisibility");
+    private static final Identifier INVISIBILITY_IDENT = Identifier.of("mcquake3:invisibility");
     public static final SoundEvent INVISIBILITY = SoundEvent.of(INVISIBILITY_IDENT);
-    private static final Identifier QUAD_DAMAGE_IDENT = new Identifier("mcquake3:quad_damage");
+    private static final Identifier QUAD_DAMAGE_IDENT = Identifier.of("mcquake3:quad_damage");
     public static final SoundEvent QUAD_DAMAGE = SoundEvent.of(QUAD_DAMAGE_IDENT);
 
-    private static final Identifier AMMO_PICKUP_IDENT = new Identifier("mcquake3:ammo_pickup");
+    private static final Identifier AMMO_PICKUP_IDENT = Identifier.of("mcquake3:ammo_pickup");
     public static final SoundEvent AMMO_PICKUP = SoundEvent.of(AMMO_PICKUP_IDENT);
 
-    private static final Identifier WEAPON_PICKUP_IDENT = new Identifier("mcquake3:weapon_pickup");
+    private static final Identifier WEAPON_PICKUP_IDENT = Identifier.of("mcquake3:weapon_pickup");
     public static final SoundEvent WEAPON_PICKUP = SoundEvent.of(WEAPON_PICKUP_IDENT);
 
-    private static final Identifier HEALTH5_IDENT = new Identifier("mcquake3:5health");
+    private static final Identifier HEALTH5_IDENT = Identifier.of("mcquake3:5health");
     public static final SoundEvent HEALTH5 = SoundEvent.of(HEALTH5_IDENT);
 
-    private static final Identifier HEALTH25_IDENT = new Identifier("mcquake3:25health");
+    private static final Identifier HEALTH25_IDENT = Identifier.of("mcquake3:25health");
     public static final SoundEvent HEALTH25 = SoundEvent.of(HEALTH25_IDENT);
 
-    private static final Identifier HEALTH50_IDENT = new Identifier("mcquake3:50health");
+    private static final Identifier HEALTH50_IDENT = Identifier.of("mcquake3:50health");
     public static final SoundEvent HEALTH50 = SoundEvent.of(HEALTH50_IDENT);
 
-    private static final Identifier SHIELD_CELL_IDENT = new Identifier("mcquake3:energy_shield_cell");
+    private static final Identifier SHIELD_CELL_IDENT = Identifier.of("mcquake3:energy_shield_cell");
     public static final SoundEvent SHIELD_CELL = SoundEvent.of(SHIELD_CELL_IDENT);
 
-    private static final Identifier LIGHT_ENERGY_SHIELD_IDENT = new Identifier("mcquake3:light_energy_shield");
+    private static final Identifier LIGHT_ENERGY_SHIELD_IDENT = Identifier.of("mcquake3:light_energy_shield");
     public static final SoundEvent LIGHT_ENERGY_SHIELD = SoundEvent.of(LIGHT_ENERGY_SHIELD_IDENT);
 
-    private static final Identifier HEAVY_ENERGY_SHIELD_IDENT = new Identifier("mcquake3:heavy_energy_shield");
+    private static final Identifier HEAVY_ENERGY_SHIELD_IDENT = Identifier.of("mcquake3:heavy_energy_shield");
     public static final SoundEvent HEAVY_ENERGY_SHIELD = SoundEvent.of(HEAVY_ENERGY_SHIELD_IDENT);
 
-    private static final Identifier MUSIC_IDENT = new Identifier("mcquake3:music.q3");
+    private static final Identifier MUSIC_IDENT = Identifier.of("mcquake3:music.q3");
     private static final SoundEvent MUSIC_EVENT = SoundEvent.of(MUSIC_IDENT);
     private static RegistryEntry.Reference<SoundEvent> MUSIC_SOUNDS;
     public static MusicSound Q3_MUSIC;
@@ -161,16 +161,16 @@ public class Sounds {
         public PlayerSounds(String playerClass) {
             this.playerClass = playerClass;
             String ident = playerClass.toLowerCase();
-            DEATH = new Identifier("mcquake3", ident + "_death");
-            DROWN = new Identifier("mcquake3", ident + "_drown");
-            FALL = new Identifier("mcquake3", ident + "_fall");
-            GASP = new Identifier("mcquake3", ident + "_gasp");
-            JUMP = new Identifier("mcquake3", ident + "_jump");
-            HURT100 = new Identifier("mcquake3", ident + "_hurt100");
-            HURT75 = new Identifier("mcquake3", ident + "_hurt75");
-            HURT50 = new Identifier("mcquake3", ident + "_hurt50");
-            HURT25 = new Identifier("mcquake3", ident + "_hurt25");
-            TAUNT = new Identifier("mcquake3", ident + "_taunt");
+            DEATH = Identifier.of("mcquake3", ident + "_death");
+            DROWN = Identifier.of("mcquake3", ident + "_drown");
+            FALL = Identifier.of("mcquake3", ident + "_fall");
+            GASP = Identifier.of("mcquake3", ident + "_gasp");
+            JUMP = Identifier.of("mcquake3", ident + "_jump");
+            HURT100 = Identifier.of("mcquake3", ident + "_hurt100");
+            HURT75 = Identifier.of("mcquake3", ident + "_hurt75");
+            HURT50 = Identifier.of("mcquake3", ident + "_hurt50");
+            HURT25 = Identifier.of("mcquake3", ident + "_hurt25");
+            TAUNT = Identifier.of("mcquake3", ident + "_taunt");
         }
     }
 

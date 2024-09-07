@@ -3,6 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.MiscUtils;
+import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -12,10 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.constant.DefaultAnimations;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animation.PlayState;
 
 public class Gauntlet extends HitscanWeapon {
     private static final long GAUNTLET_REFIRE_RATE_Q3 = 10;
@@ -25,7 +23,7 @@ public class Gauntlet extends HitscanWeapon {
     private static final float GAUNTLET_HITSCAN_STEP = 0.15f;
 
     public Gauntlet() {
-        super(new Identifier("mcquake3:gauntlet"), GAUNTLET_REFIRE_RATE_Q3, GAUNTLET_REFIRE_RATE_QL,
+        super(Identifier.of("mcquake3:gauntlet"), GAUNTLET_REFIRE_RATE_Q3, GAUNTLET_REFIRE_RATE_QL,
                 false, null, true, GAUNTLET_DAMAGE, Q3DamageSources.GAUNTLET_DAMAGE,
                 GAUNTLET_RANGE, GAUNTLET_HITSCAN_STEP, null, 0, 0, 0, false);
     }
@@ -38,7 +36,7 @@ public class Gauntlet extends HitscanWeapon {
     @Override
     protected void onWeaponRefire(World world, LivingEntity user, ItemStack stack, Vec3d lookDir, Vec3d weaponPos) {
         if (!world.isClient) {
-            stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
+            ///stack.getOrCreateNbt().putDouble("firing_speed", 3.0);
             setAnimData(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), SPEED, 3.0);
         }
         super.onWeaponRefire(world, user, stack, lookDir, weaponPos);
@@ -47,10 +45,10 @@ public class Gauntlet extends HitscanWeapon {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient) {
-            double speed;
+            double speed = 0;
             long id = GeoItem.getOrAssignId(stack, (ServerWorld) world);
             try {
-                speed = stack.getOrCreateNbt().getDouble("firing_speed");
+                ///speed = stack.getOrCreateNbt().getDouble("firing_speed");
             } catch (NullPointerException e) {
                 speed = 0.0;
             }
@@ -58,25 +56,28 @@ public class Gauntlet extends HitscanWeapon {
             speed -= 0.1;
             if (speed < 0.1) speed = 0.1;
 
-            stack.getOrCreateNbt().putDouble("firing_speed", speed);
+            ///stack.getOrCreateNbt().putDouble("firing_speed", speed);
             setAnimData(entity, id, SPEED, speed);
         }
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Override
-    protected PlayState handle(AnimationState<Weapon> state) {
-        state.getController().setAnimation(DefaultAnimations.ATTACK_SHOOT);
-        ItemStack stack = state.getData(DataTickets.ITEMSTACK);
+    protected PlayState handle(AnimationState state) {
+        ///state.getController().setAnimation(DefaultAnimations.ATTACK_SHOOT);
+        ///ItemStack stack = state.getData(DataTickets.ITEMSTACK);
 
-        double speed;
+        double speed = 0;
         try {
-            speed = getAnimData(GeoItem.getId(stack), SPEED);
+            ///speed = getAnimData(GeoItem.getId(stack), SPEED);
         } catch (NullPointerException e) {
             speed = 0.1;
         }
 
-        state.getController().setAnimationSpeed(speed);
+        ///state.getController().setAnimationSpeed(speed);
         return PlayState.CONTINUE;
     }
+
+    @Override
+    public PlayState handle(software.bernie.geckolib.animation.AnimationState<Weapon> state) { return null; }
 }

@@ -1,26 +1,29 @@
 package com.bytemaniak.mcquake3.screen;
 
 import com.bytemaniak.mcquake3.entity.JumppadEntity;
-import com.bytemaniak.mcquake3.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import org.jetbrains.annotations.Nullable;
 
 public class JumppadScreenHandler extends ScreenHandler {
     public byte power;
     public JumppadEntity entity;
 
-    public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+    protected JumppadScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId) {
+        super(type, syncId);
+    }
+
+    /*public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
         power = buf.readByte();
     }
 
-    public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, JumppadEntity entity) {
+    public JumppadScreenHandler(int syncId, PlayerInventory playerInventory, Object entity) {
         super(Screens.JUMPPAD_SCREEN_HANDLER, syncId);
-        this.entity = entity;
-    }
+        this.entity = (JumppadEntity) entity;
+    }*/
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int slot) { return null; }

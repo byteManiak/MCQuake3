@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -16,7 +17,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 @Environment(EnvType.CLIENT)
 public class PortalRenderer extends GeoEntityRenderer<PortalEntity> {
     public PortalRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3:portal"), true));
+        super(ctx, new DefaultedEntityGeoModel<>(Identifier.of("mcquake3:portal"), true));
     }
 
     @Override
@@ -25,8 +26,8 @@ public class PortalRenderer extends GeoEntityRenderer<PortalEntity> {
     }
 
     @Override
-    public void preRender(MatrixStack poseStack, PortalEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void preRender(MatrixStack poseStack, PortalEntity animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
         poseStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90-animatable.getYaw()));
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
     }
 }

@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.screen;
 
-import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipe;
 import com.bytemaniak.mcquake3.registry.Screens;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -45,7 +44,8 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
 
     @Override
     protected boolean isSmeltable(ItemStack itemStack) {
-        return this.world.getRecipeManager().getFirstMatch(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE, new SimpleInventory(itemStack), this.world).isPresent();
+        return true;
+        ///return this.world.getRecipeManager().getFirstMatch(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE, new SimpleInventory(itemStack), this.world).isPresent();
     }
 
     @Override

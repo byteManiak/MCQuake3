@@ -39,13 +39,13 @@ public class PortalEntity extends PropEntity implements GeoEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        dataTracker.startTracking(FACING, (byte) Direction.NORTH.getId());
-        dataTracker.startTracking(ACTIVE, false);
-        dataTracker.startTracking(XCOORD, 0);
-        dataTracker.startTracking(YCOORD, 0);
-        dataTracker.startTracking(ZCOORD, 0);
-        dataTracker.startTracking(TELEPORT_FACING, (byte)0);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(FACING, (byte) Direction.NORTH.getId());
+        builder.add(ACTIVE, false);
+        builder.add(XCOORD, 0);
+        builder.add(YCOORD, 0);
+        builder.add(ZCOORD, 0);
+        builder.add(TELEPORT_FACING, (byte)0);
     }
 
     @Override
@@ -140,6 +140,4 @@ public class PortalEntity extends PropEntity implements GeoEntity {
             if (playerBox.intersects(getBoundingBox())) teleportEntity(player);
        }
     }
-
-
 }

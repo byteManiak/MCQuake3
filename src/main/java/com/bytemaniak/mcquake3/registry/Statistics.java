@@ -8,13 +8,13 @@ import net.minecraft.util.Identifier;
 
 public class Statistics {
     private static final String EXCELLENT = "excellent_medals";
-    public static final Identifier EXCELLENT_MEDALS = new Identifier("mcquake3:"+EXCELLENT);
+    public static final Identifier EXCELLENT_MEDALS = Identifier.of("mcquake3:"+EXCELLENT);
     public static final ScoreboardCriterion EXCELLENT_CRITERIA = ScoreboardCriterion.create("mcquake3."+EXCELLENT);
     private static final String IMPRESSIVE = "impressive_medals";
-    public static final Identifier IMPRESSIVE_MEDALS = new Identifier("mcquake3:"+IMPRESSIVE);
+    public static final Identifier IMPRESSIVE_MEDALS = Identifier.of("mcquake3:"+IMPRESSIVE);
     public static final ScoreboardCriterion IMPRESSIVE_CRITERIA = ScoreboardCriterion.create("mcquake3."+IMPRESSIVE);
     private static final String GAUNTLET = "gauntlet_medals";
-    public static final Identifier GAUNTLET_MEDALS = new Identifier("mcquake3:"+GAUNTLET);
+    public static final Identifier GAUNTLET_MEDALS = Identifier.of("mcquake3:"+GAUNTLET);
     public static final ScoreboardCriterion GAUNTLET_CRITERIA = ScoreboardCriterion.create("mcquake3."+GAUNTLET);
 
     private static void registerStat(String s, Identifier id) {

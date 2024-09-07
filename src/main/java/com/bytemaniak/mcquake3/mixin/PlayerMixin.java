@@ -71,7 +71,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @WrapOperation(method = "addExhaustion", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;isClient:Z"))
     private boolean cancelExhaustionInQuakeArena(World world, Operation<Boolean> original) {
-        if (world.getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) return true;
+        if (world.getDimensionEntry().matchesKey(Blocks.Q3_DIMENSION_TYPE)) return true;
 
         return original.call(world);
     }
@@ -148,10 +148,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    public void initQuakeDataTracker(CallbackInfo ci) {
-        dataTracker.startTracking(QUAKE_PLAYER_SOUNDS, "Vanilla");
-        dataTracker.startTracking(QUAKE_ARMOR, 0);
-        dataTracker.startTracking(HAS_QL_REFIRE_RATE, false);
+    public void initQuakeDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(QUAKE_PLAYER_SOUNDS, "Vanilla");
+        builder.add(QUAKE_ARMOR, 0);
+        builder.add(HAS_QL_REFIRE_RATE, false);
     }
 
     @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
@@ -161,13 +161,13 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
     private ItemStack stopWeaponAnimation(ItemStack stack) {
-        if (stack.getItem() instanceof Weapon)
-            stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
+        ///if (stack.getItem() instanceof Weapon)
+            ///stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
         return stack;
     }
 
     public boolean inQuakeArena() {
-        return getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE && !isCreative() && !isSpectator();
+        return getWorld().getDimensionEntry().matchesKey(Blocks.Q3_DIMENSION_TYPE) && !isCreative() && !isSpectator();
     }
 
     public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }

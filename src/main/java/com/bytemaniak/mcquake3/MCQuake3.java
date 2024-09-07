@@ -6,15 +6,12 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import software.bernie.geckolib.GeckoLib;
 
 public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 	public static final Logger LOGGER = LoggerFactory.getLogger("mcquake3");
 
 	@Override
 	public void onInitialize() {
-		GeckoLib.initialize();
-
 		RecipeTypes.registerRecipeTypes();
 		Weapons.loadItems();
 		CraftingItems.loadCraftingItems();

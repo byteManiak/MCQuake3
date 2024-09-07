@@ -2,14 +2,14 @@ package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.registry.Blocks;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -19,22 +19,20 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.client.RenderProvider;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class Portal extends Item implements GeoItem {
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    public Portal() { super(new FabricItemSettings()); }
+    public Portal() { super(new Item.Settings()); }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -60,26 +58,24 @@ public class Portal extends Item implements GeoItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.of("Link to a destination position"));
         tooltip.add(Text.of("by using the [MCQuake3 Tool]."));
     }
 
     @Override
-    public void createRenderer(Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
             private final GeoItemRenderer<?> renderer =
-                    new GeoItemRenderer<>(new DefaultedItemGeoModel<>(new Identifier("mcquake3:portal")));
+                    new GeoItemRenderer<>(new DefaultedItemGeoModel<>(Identifier.of("mcquake3:portal")));
 
             @Override
-            public GeoItemRenderer<?> getCustomRenderer() {
-                return renderer;
-            }
+            public @Nullable BuiltinModelItemRenderer getGeoItemRenderer() { return renderer; }
         });
     }
 
     @Override
-    public Supplier<Object> getRenderProvider() { return renderProvider; }
+    public Object getRenderProvider() { return cache.getRenderProvider(); }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}

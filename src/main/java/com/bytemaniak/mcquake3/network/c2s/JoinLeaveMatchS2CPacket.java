@@ -2,13 +2,11 @@ package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.RegistryKey;
@@ -55,12 +53,12 @@ public class JoinLeaveMatchS2CPacket {
 
                 PacketByteBuf replyBuf = PacketByteBufs.create();
                 replyBuf.writeByte(Weapons.MACHINEGUN.slot);
-                ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, replyBuf);
+                ///ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, replyBuf);
 
                 replyBuf = PacketByteBufs.create();
                 replyBuf.writeInt(0);
                 replyBuf.writeInt(0);
-                ServerPlayNetworking.send(player, Packets.FRAGS, replyBuf);
+                ///ServerPlayNetworking.send(player, Packets.FRAGS, replyBuf);
             } else player.sendMessage(Text.of("Arena " + arena.arenaName + " has no spawnpoints"), true);
         }
     }

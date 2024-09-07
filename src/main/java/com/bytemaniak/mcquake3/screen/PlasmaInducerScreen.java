@@ -8,10 +8,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class PlasmaInducerScreen extends AbstractFurnaceScreen<PlasmaInducerScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier("mcquake3:textures/gui/plasma_inducer.png");
+    private static final Identifier TEXTURE = Identifier.of("mcquake3:textures/gui/plasma_inducer.png");
 
     public PlasmaInducerScreen(PlasmaInducerScreenHandler handler, PlayerInventory inventory, Text title) {
-        super(handler, new PlasmaInducerRecipeBookScreen(), inventory, Text.of("Plasma Inducer"), TEXTURE, new Identifier(""), new Identifier(""));
+        super(handler, new PlasmaInducerRecipeBookScreen(), inventory, Text.of("Plasma Inducer"), TEXTURE, Identifier.of(""), Identifier.of(""));
     }
 
     @Override

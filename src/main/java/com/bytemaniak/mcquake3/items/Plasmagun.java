@@ -1,7 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.entity.projectile.PlasmaBall;
-import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +10,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
 
 public class Plasmagun extends Weapon {
     private static final long PLASMAGUN_REFIRE_RATE = 2;
@@ -18,7 +19,7 @@ public class Plasmagun extends Weapon {
     private static final float PLASMAGUN_PROJECTILE_SPEED = 1.5f;
 
     public Plasmagun() {
-        super(new Identifier("mcquake3:plasmagun"), PLASMAGUN_REFIRE_RATE, PLASMAGUN_REFIRE_RATE,
+        super(Identifier.of("mcquake3:plasmagun"), PLASMAGUN_REFIRE_RATE, PLASMAGUN_REFIRE_RATE,
                 true, Sounds.PLASMAGUN_FIRE, false, Weapons.PLASMA_BALL, 50, 30, 7);
     }
 
@@ -42,10 +43,15 @@ public class Plasmagun extends Weapon {
             plasmaBall.setPosition(offsetWeaponPos);
             plasmaBall.setVelocity(destDir.x, destDir.y, destDir.z, PLASMAGUN_PROJECTILE_SPEED, 0);
 
-            if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) plasmaBall.setQuadDamage();
+            ///if (user.hasStatusEffect(Q3StatusEffects.QUAD_DAMAGE)) plasmaBall.setQuadDamage();
             world.spawnEntity(plasmaBall);
 
             triggerAnim(user, GeoItem.getOrAssignId(stack, (ServerWorld) world), "controller", "shoot");
         }
+    }
+
+    @Override
+    public PlayState handle(AnimationState<Weapon> state) {
+        return null;
     }
 }

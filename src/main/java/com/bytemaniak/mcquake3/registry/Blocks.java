@@ -35,125 +35,125 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
 public class Blocks {
-    public static final RegistryKey<World> Q3_DIMENSION = RegistryKey.of(RegistryKeys.WORLD, new Identifier("mcquake3:q3_dimension"));
-    public static final RegistryKey<DimensionType> Q3_DIMENSION_TYPE = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, new Identifier("mcquake3:q3_dimension_type"));
+    public static final RegistryKey<World> Q3_DIMENSION = RegistryKey.of(RegistryKeys.WORLD, Identifier.of("mcquake3:q3_dimension"));
+    public static final RegistryKey<DimensionType> Q3_DIMENSION_TYPE = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Identifier.of("mcquake3:q3_dimension_type"));
 
-    private static final Identifier PLASMA_INDUCER = new Identifier("mcquake3:plasma_inducer");
+    private static final Identifier PLASMA_INDUCER = Identifier.of("mcquake3:plasma_inducer");
     public static final Block PLASMA_INDUCER_BLOCK = new PlasmaInducer();
     public static final BlockEntityType<PlasmaInducerEntity> PLASMA_INDUCER_BLOCK_ENTITY;
 
-    private static final Identifier JUMPPAD = new Identifier("mcquake3:jumppad");
+    private static final Identifier JUMPPAD = Identifier.of("mcquake3:jumppad");
     public static final Item JUMPPAD_ITEM = new Jumppad();
     public static final EntityType<JumppadEntity> JUMPPAD_ENTITY;
 
-    private static final Identifier PORTAL = new Identifier("mcquake3:portal");
+    private static final Identifier PORTAL = Identifier.of("mcquake3:portal");
     public static final Item PORTAL_ITEM = new Portal();
     public static final EntityType<PortalEntity> PORTAL_ENTITY;
 
-    public static final Identifier MACHINEGUN_AMMO_BOX = new Identifier("mcquake3:machinegun_ammo_box");
+    public static final Identifier MACHINEGUN_AMMO_BOX = Identifier.of("mcquake3:machinegun_ammo_box");
     public static final Block MACHINEGUN_AMMO_BOX_BLOCK = new MachinegunAmmoBox();
     public static final BlockEntityType<MachinegunAmmoBoxEntity> MACHINEGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier SHOTGUN_AMMO_BOX = new Identifier("mcquake3:shotgun_ammo_box");
+    public static final Identifier SHOTGUN_AMMO_BOX = Identifier.of("mcquake3:shotgun_ammo_box");
     public static final Block SHOTGUN_AMMO_BOX_BLOCK = new ShotgunAmmoBox();
     public static final BlockEntityType<ShotgunAmmoBoxEntity> SHOTGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier GRENADE_AMMO_BOX = new Identifier("mcquake3:grenade_ammo_box");
+    public static final Identifier GRENADE_AMMO_BOX = Identifier.of("mcquake3:grenade_ammo_box");
     public static final Block GRENADE_AMMO_BOX_BLOCK = new GrenadeAmmoBox();
     public static final BlockEntityType<GrenadeAmmoBoxEntity> GRENADE_AMMO_BOX_ENTITY;
 
-    public static final Identifier ROCKET_AMMO_BOX = new Identifier("mcquake3:rocket_ammo_box");
+    public static final Identifier ROCKET_AMMO_BOX = Identifier.of("mcquake3:rocket_ammo_box");
     public static final Block ROCKET_AMMO_BOX_BLOCK = new RocketAmmoBox();
     public static final BlockEntityType<RocketAmmoBoxEntity> ROCKET_AMMO_BOX_ENTITY;
 
-    public static final Identifier LIGHTNING_AMMO_BOX = new Identifier("mcquake3:lightning_ammo_box");
+    public static final Identifier LIGHTNING_AMMO_BOX = Identifier.of("mcquake3:lightning_ammo_box");
     public static final Block LIGHTNING_AMMO_BOX_BLOCK = new LightningAmmoBox();
     public static final BlockEntityType<LightningAmmoBoxEntity> LIGHTNING_AMMO_BOX_ENTITY;
 
-    public static final Identifier RAILGUN_AMMO_BOX = new Identifier("mcquake3:railgun_ammo_box");
+    public static final Identifier RAILGUN_AMMO_BOX = Identifier.of("mcquake3:railgun_ammo_box");
     public static final Block RAILGUN_AMMO_BOX_BLOCK = new RailgunAmmoBox();
     public static final BlockEntityType<RailgunAmmoBoxEntity> RAILGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier PLASMAGUN_AMMO_BOX = new Identifier("mcquake3:plasmagun_ammo_box");
+    public static final Identifier PLASMAGUN_AMMO_BOX = Identifier.of("mcquake3:plasmagun_ammo_box");
     public static final Block PLASMAGUN_AMMO_BOX_BLOCK = new PlasmagunAmmoBox();
     public static final BlockEntityType<PlasmagunAmmoBoxEntity> PLASMAGUN_AMMO_BOX_ENTITY;
 
-    public static final Identifier BFG_AMMO_BOX = new Identifier("mcquake3:bfg_ammo_box");
+    public static final Identifier BFG_AMMO_BOX = Identifier.of("mcquake3:bfg_ammo_box");
     public static final Block BFG_AMMO_BOX_BLOCK = new BFGAmmoBox();
     public static final BlockEntityType<BFGAmmoBoxEntity> BFG_AMMO_BOX_ENTITY;
 
-    public static final Identifier HASTE = new Identifier("mcquake3:haste");
+    public static final Identifier HASTE = Identifier.of("mcquake3:haste");
     public static final Block HASTE_BLOCK = new Haste();
     public static final BlockEntityType<HasteEntity> HASTE_ENTITY;
 
-    public static final Identifier INVISIBILITY = new Identifier("mcquake3:invisibility");
+    public static final Identifier INVISIBILITY = Identifier.of("mcquake3:invisibility");
     public static final Block INVISIBILITY_BLOCK = new Invisibility();
     public static final BlockEntityType<InvisibilityEntity> INVISIBILITY_ENTITY;
 
-    public static final Identifier QUAD_DAMAGE = new Identifier("mcquake3:quad_damage");
+    public static final Identifier QUAD_DAMAGE = Identifier.of("mcquake3:quad_damage");
     public static final Block QUAD_DAMAGE_BLOCK = new QuadDamage();
     public static final BlockEntityType<QuadDamageEntity> QUAD_DAMAGE_ENTITY;
 
-    public static final Identifier HEALTH5 = new Identifier("mcquake3:5health");
+    public static final Identifier HEALTH5 = Identifier.of("mcquake3:5health");
     public static final Block HEALTH5_BLOCK = new Health5();
     public static final BlockEntityType<Health5Entity> HEALTH5_ENTITY;
 
-    public static final Identifier HEALTH25 = new Identifier("mcquake3:25health");
+    public static final Identifier HEALTH25 = Identifier.of("mcquake3:25health");
     public static final Block HEALTH25_BLOCK = new Health25();
     public static final BlockEntityType<Health25Entity> HEALTH25_ENTITY;
 
-    public static final Identifier HEALTH50 = new Identifier("mcquake3:50health");
+    public static final Identifier HEALTH50 = Identifier.of("mcquake3:50health");
     public static final Block HEALTH50_BLOCK = new Health50();
     public static final BlockEntityType<Health50Entity> HEALTH50_ENTITY;
 
-    public static final Identifier SHIELD_CELL = new Identifier("mcquake3:energy_shield_cell");
+    public static final Identifier SHIELD_CELL = Identifier.of("mcquake3:energy_shield_cell");
     public static final Block SHIELD_CELL_BLOCK = new ShieldCell();
     public static final BlockEntityType<ShieldCellEntity> SHIELD_CELL_ENTITY;
 
-    public static final Identifier LIGHT_ENERGY_SHIELD = new Identifier("mcquake3:light_energy_shield");
+    public static final Identifier LIGHT_ENERGY_SHIELD = Identifier.of("mcquake3:light_energy_shield");
     public static final Block LIGHT_ENERGY_SHIELD_BLOCK = new LightEnergyShield();
     public static final BlockEntityType<LightEnergyShieldEntity> LIGHT_ENERGY_SHIELD_ENTITY;
 
-    public static final Identifier HEAVY_ENERGY_SHIELD = new Identifier("mcquake3:heavy_energy_shield");
+    public static final Identifier HEAVY_ENERGY_SHIELD = Identifier.of("mcquake3:heavy_energy_shield");
     public static final Block HEAVY_ENERGY_SHIELD_BLOCK = new HeavyEnergyShield();
     public static final BlockEntityType<HeavyEnergyShieldEntity> HEAVY_ENERGY_SHIELD_ENTITY;
 
-    public static final Identifier MACHINEGUN = new Identifier("mcquake3:machinegun_pickup");
+    public static final Identifier MACHINEGUN = Identifier.of("mcquake3:machinegun_pickup");
 	public static final Block MACHINEGUN_BLOCK = new MachinegunPickup();
 	public static final BlockEntityType<MachinegunPickupEntity> MACHINEGUN_ENTITY;
 
-	public static final Identifier SHOTGUN = new Identifier("mcquake3:shotgun_pickup");
+	public static final Identifier SHOTGUN = Identifier.of("mcquake3:shotgun_pickup");
 	public static final Block SHOTGUN_BLOCK = new ShotgunPickup();
 	public static final BlockEntityType<ShotgunPickupEntity> SHOTGUN_ENTITY;
 
-	public static final Identifier GRENADE = new Identifier("mcquake3:grenade_pickup");
+	public static final Identifier GRENADE = Identifier.of("mcquake3:grenade_pickup");
 	public static final Block GRENADE_BLOCK = new GrenadePickup();
 	public static final BlockEntityType<GrenadePickupEntity> GRENADE_ENTITY;
 
-	public static final Identifier ROCKET = new Identifier("mcquake3:rocket_pickup");
+	public static final Identifier ROCKET = Identifier.of("mcquake3:rocket_pickup");
 	public static final Block ROCKET_BLOCK = new RocketPickup();
 	public static final BlockEntityType<RocketPickupEntity> ROCKET_ENTITY;
 
-	public static final Identifier LIGHTNING = new Identifier("mcquake3:lightning_pickup");
+	public static final Identifier LIGHTNING = Identifier.of("mcquake3:lightning_pickup");
 	public static final Block LIGHTNING_BLOCK = new LightningPickup();
 	public static final BlockEntityType<LightningPickupEntity> LIGHTNING_ENTITY;
 
-	public static final Identifier RAILGUN = new Identifier("mcquake3:railgun_pickup");
+	public static final Identifier RAILGUN = Identifier.of("mcquake3:railgun_pickup");
 	public static final Block RAILGUN_BLOCK = new RailgunPickup();
 	public static final BlockEntityType<RailgunPickupEntity> RAILGUN_ENTITY;
 
-	public static final Identifier PLASMAGUN = new Identifier("mcquake3:plasmagun_pickup");
+	public static final Identifier PLASMAGUN = Identifier.of("mcquake3:plasmagun_pickup");
 	public static final Block PLASMAGUN_BLOCK = new PlasmagunPickup();
 	public static final BlockEntityType<PlasmagunPickupEntity> PLASMAGUN_ENTITY;
 
-	public static final Identifier BFG = new Identifier("mcquake3:bfg_pickup");
+	public static final Identifier BFG = Identifier.of("mcquake3:bfg_pickup");
 	public static final Block BFG_BLOCK = new BFGPickup();
 	public static final BlockEntityType<BFGPickupEntity> BFG_ENTITY;
 
     public static final Block SPIKES_BLOCK = new Spikes();
 
     public static final RegistryKey<ItemGroup> MCQUAKE3_BLOCKS_GROUP =
-            RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("mcquake3:mcquake3_blocks"));
+            RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier.of("mcquake3:mcquake3_blocks"));
 
     static {
         PLASMA_INDUCER_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PLASMA_INDUCER,
@@ -224,7 +224,7 @@ public class Blocks {
                         .displayName(Text.translatable("itemGroup.mcquake3.mcquake3_blocks")).build());
 
         loadDefaultBlock(PLASMA_INDUCER_BLOCK, PLASMA_INDUCER);
-        loadDefaultBlock(SPIKES_BLOCK, new Identifier("mcquake3:spikes"));
+        loadDefaultBlock(SPIKES_BLOCK, Identifier.of("mcquake3:spikes"));
         Registry.register(Registries.ITEM, JUMPPAD, JUMPPAD_ITEM);
         Registry.register(Registries.ITEM, PORTAL, PORTAL_ITEM);
         ItemGroupEvents.modifyEntriesEvent(MCQUAKE3_BLOCKS_GROUP).register(content -> content.add(JUMPPAD_ITEM));

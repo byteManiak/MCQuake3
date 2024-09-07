@@ -1,12 +1,9 @@
 package com.bytemaniak.mcquake3.entity;
 
 import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
-import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
-import com.bytemaniak.mecha.MultiCollidable;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+///import com.bytemaniak.mecha.MultiCollidable;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityType;
@@ -34,7 +31,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
+public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory {
     private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Byte> FACING = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
 
@@ -47,13 +44,13 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new JumppadScreenHandler(syncId, inv, this);
+        return null;///new JumppadScreenHandler(syncId, inv, this);
     }
 
     @Override
-    protected void initDataTracker() {
-        dataTracker.startTracking(POWER, (byte)0);
-        dataTracker.startTracking(FACING, (byte)Direction.UP.getId());
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(POWER, (byte)0);
+        builder.add(FACING, (byte)Direction.UP.getId());
     }
 
     @Override
@@ -69,9 +66,14 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
     }
 
     @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeByte(dataTracker.get(POWER));
+    public Object getScreenOpeningData(ServerPlayerEntity player) {
+        return null;
     }
+
+    ///@Override
+    ///public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+    ///    buf.writeByte(dataTracker.get(POWER));
+    ///}
 
     public List<VoxelShape> getColliders() {
         List<VoxelShape> colliders = new ArrayList<>();
@@ -150,7 +152,7 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
 
                         PacketByteBuf buf = PacketByteBufs.create();
                         buf.writeBlockPos(getBlockPos());
-                        ClientPlayNetworking.send(Packets.JUMPPAD_SOUND, buf);
+                        ///ClientPlayNetworking.send(Packets.JUMPPAD_SOUND, buf);
                     }
                 }
             }

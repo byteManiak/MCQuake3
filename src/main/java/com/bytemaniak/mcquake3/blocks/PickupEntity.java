@@ -1,7 +1,10 @@
 package com.bytemaniak.mcquake3.blocks;
 
+import com.bytemaniak.mcquake3.network.s2c.PickupVisibilityS2CPacket;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -11,6 +14,8 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -69,11 +74,9 @@ public class PickupEntity extends BlockEntity implements GeoBlockEntity {
     @Override
     public void markDirty() {
         if (!world.isClient) {
-            PacketByteBuf data = PacketByteBufs.create();
-            data.writeBlockPos(getPos());
-            data.writeBoolean(shouldRender());
-            ///for (ServerPlayerEntity plr : PlayerLookup.tracking((ServerWorld) world, getPos()))
-                ///ServerPlayNetworking.send(plr, Packets.AMMO_BOX_UPDATE, data);
+            PickupVisibilityS2CPacket data = new PickupVisibilityS2CPacket(getPos(), shouldRender());
+            for (ServerPlayerEntity plr : PlayerLookup.tracking((ServerWorld) world, getPos()))
+                ServerPlayNetworking.send(plr, data);
             super.markDirty();
         }
     }

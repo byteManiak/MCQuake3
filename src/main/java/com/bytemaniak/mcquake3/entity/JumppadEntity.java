@@ -1,10 +1,10 @@
 package com.bytemaniak.mcquake3.entity;
 
+import com.bytemaniak.mcquake3.network.c2s.JumppadSoundC2SPacket;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
-///import com.bytemaniak.mecha.MultiCollidable;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
@@ -13,7 +13,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -150,9 +149,8 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
                         player.velocityModified = true;
                         world.playSound(player, getBlockPos(), Sounds.JUMPPAD_BOOST, SoundCategory.BLOCKS, 1, 1);
 
-                        PacketByteBuf buf = PacketByteBufs.create();
-                        buf.writeBlockPos(getBlockPos());
-                        ///ClientPlayNetworking.send(Packets.JUMPPAD_SOUND, buf);
+                        JumppadSoundC2SPacket buf = new JumppadSoundC2SPacket(getBlockPos());
+                        ClientPlayNetworking.send(buf);
                     }
                 }
             }

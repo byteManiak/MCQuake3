@@ -1,9 +1,12 @@
 package com.bytemaniak.mcquake3.network.events;
 
+import com.bytemaniak.mcquake3.network.s2c.DealtDamageS2CPacket;
+import com.bytemaniak.mcquake3.network.s2c.KilledPlayerS2CPacket;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -20,9 +23,8 @@ public class FeedbackSender implements ServerLivingEntityEvents.AllowDamage, Ser
             if (killedEntity.getRecentDamageSource() != null)
                 gauntletKill = killedEntity.getRecentDamageSource().isOf(Q3DamageSources.GAUNTLET_DAMAGE);
 
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeBoolean(gauntletKill);
-            ///ServerPlayNetworking.send((ServerPlayerEntity) entity, Packets.KILLED_PLAYER, buf);
+            KilledPlayerS2CPacket buf = new KilledPlayerS2CPacket(gauntletKill);
+            ServerPlayNetworking.send((ServerPlayerEntity) entity, buf);
         }
     }
 
@@ -31,9 +33,8 @@ public class FeedbackSender implements ServerLivingEntityEvents.AllowDamage, Ser
         if (entity instanceof PlayerEntity &&
                 source.getAttacker() instanceof ServerPlayerEntity player) {
             if (entity.getUuid() != player.getUuid() && source.getName().contains("mcquake3")) {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeBoolean(source.isOf(Q3DamageSources.RAILGUN_DAMAGE));
-                ///ServerPlayNetworking.send(player, Packets.DEALT_DAMAGE, buf);
+                DealtDamageS2CPacket buf = new DealtDamageS2CPacket(source.isOf(Q3DamageSources.RAILGUN_DAMAGE));
+                ServerPlayNetworking.send(player, buf);
             }
         }
 

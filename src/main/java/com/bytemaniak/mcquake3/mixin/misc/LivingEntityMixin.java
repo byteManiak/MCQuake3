@@ -3,16 +3,16 @@ package com.bytemaniak.mcquake3.mixin.misc;
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.registry.Q3StatusEffects;
-import com.bytemaniak.mcquake3.registry.ServerEvents;
-import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.network.s2c.PlayerAmmoUpdateTrailFixS2CPacket;
+import com.bytemaniak.mcquake3.registry.*;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -63,13 +63,13 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     // Send synced states for Railgun and Lightning Gun ammo to allow trails coming from other players to render in survival
     private void sendAmmoUpdatesWeaponTrailFix(LivingEntity entity, Operation<Void> original) {
         if (entity instanceof PlayerEntity player) {
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeUuid(player.getUuid());
-            buf.writeBoolean(player.getInventory().getSlotWithStack(new ItemStack(Weapons.LIGHTNING_CELL)) > -1);
-            buf.writeBoolean(player.getInventory().getSlotWithStack(new ItemStack(Weapons.RAILGUN_ROUND)) > -1);
+            PlayerAmmoUpdateTrailFixS2CPacket buf = new PlayerAmmoUpdateTrailFixS2CPacket(
+                    player.getUuid(),
+                    player.getInventory().getSlotWithStack(new ItemStack(Weapons.LIGHTNING_CELL)) > -1,
+                    player.getInventory().getSlotWithStack(new ItemStack(Weapons.RAILGUN_ROUND)) > -1);
 
-            ///for (ServerPlayerEntity plr : PlayerLookup.tracking(player))
-                ///ServerPlayNetworking.send(plr, Packets.PLAYER_AMMO_TRAIL_FIX, buf);
+            for (ServerPlayerEntity plr : PlayerLookup.tracking(player))
+                ServerPlayNetworking.send(plr, buf);
         }
 
         original.call(entity);

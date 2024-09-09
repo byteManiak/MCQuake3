@@ -1,6 +1,9 @@
 package com.bytemaniak.mcquake3.network.events;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
+import com.bytemaniak.mcquake3.network.s2c.FragsS2CPacket;
+import com.bytemaniak.mcquake3.network.s2c.PlayAnnouncerSoundS2CPacket;
+import com.bytemaniak.mcquake3.network.s2c.ScrollToSlotS2CPacket;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
@@ -8,6 +11,7 @@ import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -62,10 +66,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     highestFrags = frags;
                 }
 
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeInt(frags);
-                buf.writeInt(highestFrags);
-                ///ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
+                FragsS2CPacket buf = new FragsS2CPacket(frags, highestFrags);
+                ServerPlayNetworking.send(attackerPlayer, buf);
             }
 
             stats.get(player.getName().getString()).deaths++;
@@ -86,9 +88,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             player.getInventory().insertStack(Weapons.MACHINEGUN.slot, new ItemStack(Weapons.MACHINEGUN));
             MiscUtils.insertInNonHotbarInventory(new ItemStack(Weapons.BULLET, Weapons.MACHINEGUN.startingAmmo), player.getInventory());
 
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeByte(Weapons.MACHINEGUN.slot);
-            ///ServerPlayNetworking.send(player, Packets.SCROLL_TO_SLOT, buf);
+            ScrollToSlotS2CPacket buf = new ScrollToSlotS2CPacket((byte)Weapons.MACHINEGUN.slot);
+            ServerPlayNetworking.send(player, buf);
         }
 
         player.setHealth(player.getMaxHealth());
@@ -124,9 +125,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     }
 
     private void sendSound(ServerPlayerEntity player, SoundEvent sound) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeIdentifier(sound.getId());
-        ///ServerPlayNetworking.send(player, Packets.PLAY_ANNOUNCER_SOUND, buf);
+        PlayAnnouncerSoundS2CPacket buf = new PlayAnnouncerSoundS2CPacket(sound.getId());
+        ServerPlayNetworking.send(player, buf);
     }
 
     private void sendGlobalSound(SoundEvent sound) {
@@ -179,10 +179,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     winner = "";
 
                     for (ServerPlayerEntity player : quakePlayers) {
-                        PacketByteBuf buf = PacketByteBufs.create();
-                        buf.writeInt(0);
-                        buf.writeInt(0);
-                        ///ServerPlayNetworking.send(player, Packets.FRAGS, buf);
+                        FragsS2CPacket buf = new FragsS2CPacket(0, 0);
+                        ServerPlayNetworking.send(player, buf);
                     }
                 }
 

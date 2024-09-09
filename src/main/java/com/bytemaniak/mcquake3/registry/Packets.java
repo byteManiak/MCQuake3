@@ -1,5 +1,10 @@
 package com.bytemaniak.mcquake3.registry;
 
+import com.bytemaniak.mcquake3.network.c2s.*;
+import com.bytemaniak.mcquake3.network.s2c.*;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.util.Identifier;
 
 public class Packets {
@@ -16,7 +21,6 @@ public class Packets {
     public static final Identifier JUMPPAD_UPDATE_POWER = Identifier.of("mcquake3:jumppad_update_power");
     public static final Identifier WEAPON_REFIRE_UPDATE = Identifier.of("mcquake3:weapon_refire_update");
     public static final Identifier PLAYER_CLASS_UPDATE = Identifier.of("mcquake3:player_class_update");
-    public static final Identifier FULL_ARSENAL_REQUEST = Identifier.of("mcquake3:full_arsenal_request");
     public static final Identifier PLAYER_TAUNT = Identifier.of("mcquake3:player_taunt");
     public static final Identifier ADD_MEDAL = Identifier.of("mcquake3:add_medal");
     public static final Identifier JUMPPAD_SOUND = Identifier.of("mcquake3:jumppad_sound");
@@ -25,27 +29,46 @@ public class Packets {
     public static final Identifier GET_ARENA_NAMES = Identifier.of("mcquake3:get_arena_names");
 
     public static void registerClientPackets() {
-        /*ClientPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATED_POWER, JumppadPowerS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(DEALT_DAMAGE, DealtDamageS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(KILLED_PLAYER, KilledPlayerS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(AMMO_BOX_UPDATE, PickupVisibilityS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(PLAYER_AMMO_TRAIL_FIX, PlayerAmmoUpdateTrailFixS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(SCROLL_TO_SLOT, ScrollToSlotS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(PLAY_ANNOUNCER_SOUND, PlayAnnouncerSoundS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(SEND_ARENA_NAMES, SendArenaNamesS2CPacket::receive);
-        ClientPlayNetworking.registerGlobalReceiver(FRAGS, FragsS2CPacket::receive);*/
+        ClientPlayNetworking.registerGlobalReceiver(JumppadPowerS2CPacket.ID, JumppadPowerS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(DealtDamageS2CPacket.ID, DealtDamageS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(KilledPlayerS2CPacket.ID, KilledPlayerS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PickupVisibilityS2CPacket.ID, PickupVisibilityS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PlayerAmmoUpdateTrailFixS2CPacket.ID, PlayerAmmoUpdateTrailFixS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(ScrollToSlotS2CPacket.ID, ScrollToSlotS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PlayAnnouncerSoundS2CPacket.ID, PlayAnnouncerSoundS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(SendArenaNamesS2CPacket.ID, SendArenaNamesS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(FragsS2CPacket.ID, FragsS2CPacket::receive);
     }
 
-    public static void registerServerPackets() {
-        /*ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_UPDATE_POWER, JumppadPowerC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(WEAPON_REFIRE_UPDATE, WeaponRefireUpdateC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(PLAYER_CLASS_UPDATE, PlayerClassUpdateC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(FULL_ARSENAL_REQUEST, FullArsenalC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(PLAYER_TAUNT, PlayerTauntC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ADD_MEDAL, AddMedalC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(JUMPPAD_SOUND, JumppadSoundC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(JOIN_LEAVE_MATCH, JoinLeaveMatchS2CPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ARENA_SELECT_DELETE, ArenaSelectDeleteC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(GET_ARENA_NAMES, GetArenaNamesC2SPacket::receive);*/
+    public static void registerPackets() {
+        PayloadTypeRegistry.playS2C().register(JumppadPowerS2CPacket.ID, JumppadPowerS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(DealtDamageS2CPacket.ID, DealtDamageS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(KilledPlayerS2CPacket.ID, KilledPlayerS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PickupVisibilityS2CPacket.ID, PickupVisibilityS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PlayerAmmoUpdateTrailFixS2CPacket.ID, PlayerAmmoUpdateTrailFixS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(ScrollToSlotS2CPacket.ID, ScrollToSlotS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PlayAnnouncerSoundS2CPacket.ID, PlayAnnouncerSoundS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(SendArenaNamesS2CPacket.ID, SendArenaNamesS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(FragsS2CPacket.ID, FragsS2CPacket.CODEC);
+
+        PayloadTypeRegistry.playC2S().register(JumppadPowerC2SPacket.ID, JumppadPowerC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(WeaponRefireUpdateC2SPacket.ID, WeaponRefireUpdateC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(PlayerClassUpdateC2SPacket.ID, PlayerClassUpdateC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(PlayerTauntC2SPacket.ID, PlayerTauntC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(AddMedalC2SPacket.ID, AddMedalC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(JumppadSoundC2SPacket.ID, JumppadSoundC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(JoinLeaveMatchS2CPacket.ID, JoinLeaveMatchS2CPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ArenaSelectDeleteC2SPacket.ID, ArenaSelectDeleteC2SPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(GetArenaNamesC2SPacket.ID, GetArenaNamesC2SPacket.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(JumppadPowerC2SPacket.ID, JumppadPowerC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(WeaponRefireUpdateC2SPacket.ID, WeaponRefireUpdateC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(PlayerClassUpdateC2SPacket.ID, PlayerClassUpdateC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(PlayerTauntC2SPacket.ID, PlayerTauntC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(AddMedalC2SPacket.ID, AddMedalC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(JumppadSoundC2SPacket.ID, JumppadSoundC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(JoinLeaveMatchS2CPacket.ID, JoinLeaveMatchS2CPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(ArenaSelectDeleteC2SPacket.ID, ArenaSelectDeleteC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(GetArenaNamesC2SPacket.ID, GetArenaNamesC2SPacket::receive);
     }
 }

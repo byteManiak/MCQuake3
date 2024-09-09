@@ -1,15 +1,15 @@
 package com.bytemaniak.mcquake3.gui;
 
+import com.bytemaniak.mcquake3.network.c2s.AddMedalC2SPacket;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
 import com.bytemaniak.mcquake3.util.MiscUtils;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.Window;
-import net.minecraft.network.PacketByteBuf;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -45,9 +45,8 @@ public class FeedbackManager implements HudRenderCallback {
 
     private void addMedal(MedalType medal, int value, int ch) {
         medals.add(new Medal(medal, value, ch));
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeByte(medal.value);
-        ///ClientPlayNetworking.send(Packets.ADD_MEDAL, buf);
+        AddMedalC2SPacket buf = new AddMedalC2SPacket(medal.value);
+        ClientPlayNetworking.send(buf);
     }
 
     public void pushEvent(Event ev, boolean arg) {

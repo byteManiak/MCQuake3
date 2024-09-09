@@ -1,8 +1,9 @@
 package com.bytemaniak.mcquake3.screen;
 
 import com.bytemaniak.mcquake3.gui.SliderWidgetSettable;
+import com.bytemaniak.mcquake3.network.c2s.JumppadPowerC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -10,7 +11,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -68,9 +68,8 @@ public class JumppadScreen extends HandledScreen<JumppadScreenHandler> {
 
         ButtonWidget updatePower = ButtonWidget.builder(Text.of("Apply"), (button) -> {
             // Request the server to update the jump pad's stats when pressing the apply button
-            PacketByteBuf msg = PacketByteBufs.create();
-            msg.writeByte(power);
-            ///ClientPlayNetworking.send(Packets.JUMPPAD_UPDATE_POWER, msg);
+            JumppadPowerC2SPacket msg = new JumppadPowerC2SPacket(power);
+            ClientPlayNetworking.send(msg);
         }).dimensions(baseX + 6, baseY + 52, 40, 20).build();
 
         ButtonWidget increment = ButtonWidget.builder(Text.of("+"), (button) -> {

@@ -1,12 +1,15 @@
 package com.bytemaniak.mcquake3.screen;
 
+import com.bytemaniak.mcquake3.network.c2s.JoinLeaveMatchS2CPacket;
+import com.bytemaniak.mcquake3.network.c2s.PlayerClassUpdateC2SPacket;
+import com.bytemaniak.mcquake3.network.c2s.WeaponRefireUpdateC2SPacket;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.SoundUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,7 +19,6 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import org.joml.Quaternionf;
@@ -82,9 +84,8 @@ public class PlayerSettingsScreen extends Screen {
             public boolean mouseClicked(double mouseX, double mouseY, int button) {
                 if (button == 0) {
                     onPressed();
-                    PacketByteBuf buf = PacketByteBufs.create();
-                    buf.writeString(playerSounds.playerClass);
-                    ///ClientPlayNetworking.send(Packets.PLAYER_CLASS_UPDATE, buf);
+                    PlayerClassUpdateC2SPacket buf = new PlayerClassUpdateC2SPacket(playerSounds.playerClass);
+                    ClientPlayNetworking.send(buf);
                     return true;
                 }
                 return false;
@@ -126,7 +127,7 @@ public class PlayerSettingsScreen extends Screen {
             else newButtonText += "3";
 
             toggleRefireRates.setMessage(Text.of(newButtonText));
-            ///ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
+            ClientPlayNetworking.send(new WeaponRefireUpdateC2SPacket());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
         String joinLeaveText = user.inQuakeArena() ? "Leave Quake match" : "Join Quake match";
@@ -134,9 +135,8 @@ public class PlayerSettingsScreen extends Screen {
                 ButtonWidget.builder(
                                 Text.of(joinLeaveText),
                                 (button -> {
-                                    PacketByteBuf buf = PacketByteBufs.create();
-                                    buf.writeBoolean(user.inQuakeArena());
-                                    ///ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
+                                    JoinLeaveMatchS2CPacket buf = new JoinLeaveMatchS2CPacket(user.inQuakeArena());
+                                    ClientPlayNetworking.send(buf);
                                     PlayerSettingsScreen.this.close();
                                 }))
                         .dimensions(width - 150, height - 24, 130, 20).build();
@@ -150,9 +150,8 @@ public class PlayerSettingsScreen extends Screen {
         if (player.getWorld().getDimensionEntry().matchesKey(Blocks.Q3_DIMENSION_TYPE) &&
                 (player.isCreative() || player.isSpectator())) {
             ButtonWidget leaveQuakeDimension = ButtonWidget.builder(Text.of("Leave Quake dimension"), (button -> {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeBoolean(true);
-                ///ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
+                JoinLeaveMatchS2CPacket buf = new JoinLeaveMatchS2CPacket(true);
+                ClientPlayNetworking.send(buf);
                 PlayerSettingsScreen.this.close();
             })).dimensions(width - 150, height - 72, 130, 20).build();
 

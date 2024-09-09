@@ -1,8 +1,10 @@
 package com.bytemaniak.mcquake3.registry.client;
 
+import com.bytemaniak.mcquake3.network.c2s.PlayerTauntC2SPacket;
 import com.bytemaniak.mcquake3.screen.PlayerSettingsScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -28,8 +30,8 @@ public class Keybindings {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            ///if (playerTaunt.wasPressed())
-                ///ClientPlayNetworking.send(Packets.PLAYER_TAUNT, PacketByteBufs.empty());
+            if (playerTaunt.wasPressed())
+                ClientPlayNetworking.send(new PlayerTauntC2SPacket());
         });
     }
 }

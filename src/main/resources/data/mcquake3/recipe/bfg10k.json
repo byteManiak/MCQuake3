@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"er ",
+		"ger",
+		"er "
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"e": {
+			"item": "mcquake3:energy_chamber"
+		},
+		"r": {
+			"item": "mcquake3:reinforced_barrel"
+		}
+	},
+	"result": {
+		"id": "mcquake3:bfg10k",
+		"count": 1
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ccc",
+		"rrr",
+		"ccc"
+	],
+	"key":{
+		"c": {
+			"item": "minecraft:copper_ingot"
+		},
+		"r": {
+			"item": "minecraft:redstone"
+		}
+	},
+	"result": {
+		"id": "mcquake3:rotating_shaft",
+		"count": 1
+	}
+}

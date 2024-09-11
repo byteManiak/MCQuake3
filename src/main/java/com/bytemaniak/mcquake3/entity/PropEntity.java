@@ -49,7 +49,6 @@ public abstract class PropEntity extends Entity implements GeoEntity {
         if (isInvulnerableTo(source)) return false;
 
         ItemStack itemStack = new ItemStack(droppedItem);
-        ///if (hasCustomName()) itemStack.setCustomName(this.getCustomName());
         dropStack(itemStack);
         kill();
         return true;

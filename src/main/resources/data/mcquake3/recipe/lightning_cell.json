@@ -1,0 +1,22 @@
+{
+	"type": "mcquake3:plasma_inducer",
+	"category": "minecraft:combat",
+	"ingredients": [
+		{
+			"item": "minecraft:iron_nugget"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:redstone"
+		}
+	],
+	"output": {
+		"id": "mcquake3:lightning_cell"
+	},
+	"cookingtime": 10
+}

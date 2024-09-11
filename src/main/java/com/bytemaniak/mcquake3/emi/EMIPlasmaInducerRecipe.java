@@ -23,7 +23,7 @@ public class EMIPlasmaInducerRecipe implements EmiRecipe {
     private final Identifier TEXTURE = Identifier.of("mcquake3:textures/gui/plasma_inducer.png");
 
     public EMIPlasmaInducerRecipe(PlasmaInducerRecipe recipe) {
-        id = Registries.ITEM.getId(recipe.output.getItem());
+        id = Registries.ITEM.getId(recipe.output().getItem());
         DefaultedList<Ingredient> ingredients = recipe.getIngredients();
         items = List.of(
                 EmiIngredient.of(ingredients.get(0)), EmiIngredient.of(ingredients.get(1)),

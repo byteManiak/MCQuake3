@@ -1,20 +1,26 @@
 package com.bytemaniak.mcquake3.blocks;
 
 import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipe;
+import com.bytemaniak.mcquake3.recipes.PlasmaInducerRecipeInput;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.screen.PlasmaInducerScreenHandler;
+import net.minecraft.block.AbstractFurnaceBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -50,13 +56,13 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     }
 
     private static boolean canAcceptRecipeOutput(DynamicRegistryManager registryManager, PlasmaInducerRecipe recipe, DefaultedList<ItemStack> slots) {
-        if (slots.get(0).isEmpty() || slots.get(3).isEmpty() || slots.get(4).isEmpty() || slots.get(5).isEmpty() || recipe == null)
+        if (slots.get(0).isEmpty() || slots.get(1).isEmpty() || slots.get(2).isEmpty() || slots.get(3).isEmpty() || recipe == null)
             return false;
 
         ItemStack itemStack = recipe.getResult(registryManager);
         if (itemStack.isEmpty()) return false;
 
-        ItemStack outputStack = slots.get(2);
+        ItemStack outputStack = slots.get(5);
         if (outputStack.isEmpty()) return true;
 
         if (!ItemStack.areItemsEqual(outputStack, itemStack)) return false;
@@ -71,14 +77,14 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
         if (recipe == null || !canAcceptRecipeOutput(registryManager, recipe, slots)) return false;
 
         ItemStack itemStack = slots.get(0);
-        ItemStack itemStack2 = slots.get(3);
-        ItemStack itemStack3 = slots.get(4);
-        ItemStack itemStack4 = slots.get(5);
+        ItemStack itemStack2 = slots.get(1);
+        ItemStack itemStack3 = slots.get(2);
+        ItemStack itemStack4 = slots.get(3);
 
-        ItemStack outputSlot = slots.get(2);
+        ItemStack outputSlot = slots.get(5);
         ItemStack output = recipe.getResult(registryManager);
 
-        if (outputSlot.isEmpty()) slots.set(2, output.copy());
+        if (outputSlot.isEmpty()) slots.set(5, output.copy());
         else if (outputSlot.isOf(output.getItem())) outputSlot.increment(1);
 
         itemStack.decrement(1);
@@ -90,7 +96,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PlasmaInducerEntity blockEntity) {
-        /*RecipeManager.MatchGetter<RecipeInput, PlasmaInducerRecipe> getter =
+        RecipeManager.MatchGetter<PlasmaInducerRecipeInput, PlasmaInducerRecipe> getter =
                 RecipeManager.createCachedMatchGetter(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE);
         int burnTime = blockEntity.propertyDelegate.get(BURN_TIME_PROPERTY_INDEX);
         boolean isBurning = burnTime > 0;
@@ -98,19 +104,22 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
 
         if (isBurning) blockEntity.propertyDelegate.set(BURN_TIME_PROPERTY_INDEX, burnTime-1);
 
-        ItemStack itemStack = blockEntity.inventory.get(1);
+        ItemStack itemStack = blockEntity.inventory.get(4);
         boolean hasFuel = itemStack.isOf(Items.LAVA_BUCKET);
         boolean hasIngredients =
-                !blockEntity.inventory.get(0).isEmpty() && !blockEntity.inventory.get(3).isEmpty() &&
-                !blockEntity.inventory.get(4).isEmpty() && !blockEntity.inventory.get(5).isEmpty();
+                !blockEntity.inventory.get(0).isEmpty() && !blockEntity.inventory.get(1).isEmpty() &&
+                !blockEntity.inventory.get(2).isEmpty() && !blockEntity.inventory.get(3).isEmpty();
 
         if (isBurning || (hasFuel && hasIngredients)) {
-            RecipeEntry<PlasmaInducerRecipe> recipeEntry = getter.getFirstMatch(blockEntity, world).orElse(null);
+            PlasmaInducerRecipeInput input = new PlasmaInducerRecipeInput(
+                    blockEntity.inventory.get(0), blockEntity.inventory.get(1),
+                    blockEntity.inventory.get(2), blockEntity.inventory.get(3));
+            RecipeEntry<PlasmaInducerRecipe> recipeEntry = getter.getFirstMatch(input, world).orElse(null);
             PlasmaInducerRecipe recipe = null;
             if (recipeEntry != null) recipe = recipeEntry.value();
 
             if (canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory))
-                blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, recipe.cookingTime);
+                blockEntity.propertyDelegate.set(COOK_TIME_TOTAL_PROPERTY_INDEX, recipe.cookingTime());
 
             if (!isBurning && canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory)) {
                 blockEntity.propertyDelegate.set(BURN_TIME_PROPERTY_INDEX, blockEntity.getFuelTime(itemStack));
@@ -118,10 +127,10 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
                 dirty = true;
 
                 Item item = itemStack.getItem();
-                itemStack.decrement(1);
+                itemStack.decrement(4);
                 if (itemStack.isEmpty()) {
                     Item item2 = item.getRecipeRemainder();
-                    blockEntity.inventory.set(1, item2 == null ? ItemStack.EMPTY : new ItemStack(item2));
+                    blockEntity.inventory.set(4, item2 == null ? ItemStack.EMPTY : new ItemStack(item2));
                 }
             }
             if (isBurning && canAcceptRecipeOutput(world.getRegistryManager(), recipe, blockEntity.inventory)) {
@@ -147,7 +156,7 @@ public class PlasmaInducerEntity extends AbstractFurnaceBlockEntity {
             world.setBlockState(pos, state, Block.NOTIFY_ALL);
         }
 
-        if (dirty) AbstractFurnaceBlockEntity.markDirty(world, pos, state);*/
+        if (dirty) AbstractFurnaceBlockEntity.markDirty(world, pos, state);
     }
 
     @Override

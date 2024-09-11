@@ -13,6 +13,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 	@Override
 	public void onInitialize() {
 		RecipeTypes.registerRecipeTypes();
+		Components.registerComponents();
 		Weapons.loadItems();
 		CraftingItems.loadCraftingItems();
 		Blocks.loadBlocks();

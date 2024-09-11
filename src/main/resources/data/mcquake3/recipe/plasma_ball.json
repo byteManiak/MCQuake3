@@ -1,0 +1,22 @@
+{
+	"type": "mcquake3:plasma_inducer",
+	"category": "minecraft:combat",
+	"ingredients": [
+		{
+			"item": "minecraft:iron_ingot"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		}
+	],
+	"output": {
+		"id": "mcquake3:plasma_ball"
+	},
+	"cookingtime": 30
+}

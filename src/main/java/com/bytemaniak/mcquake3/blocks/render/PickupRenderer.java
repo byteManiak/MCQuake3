@@ -26,7 +26,7 @@ public class PickupRenderer<T extends PickupEntity> extends GeoBlockRenderer<T> 
             poseStack.scale(1.5f, 1.5f, 1.5f);
             poseStack.translate(-0.15f, -0.025f, -0.15f);
         }
-        ///if (!animatable.lastShouldRender) alpha = 0.105f;
+        if (!animatable.lastShouldRender) colour = (colour & 0xFFFFFF) | (27 << 24);
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
     }
 }

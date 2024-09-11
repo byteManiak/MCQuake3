@@ -12,7 +12,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.PlayState;
 
@@ -24,8 +23,6 @@ public class GrenadeLauncher extends Weapon {
     public GrenadeLauncher() {
         super(Identifier.of("mcquake3:grenade_launcher"), GRENADE_REFIRE_RATE_Q3, GRENADE_REFIRE_RATE_QL,
                 true, Sounds.GRENADE_FIRE, false, Weapons.GRENADE, 10, 5, 3);
-
-        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override

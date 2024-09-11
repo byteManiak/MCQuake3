@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.network.c2s.JumppadSoundC2SPacket;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityType;
@@ -43,7 +44,8 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return null;///new JumppadScreenHandler(syncId, inv, this);
+        JumppadData data = new JumppadData(getPower(), getId());
+        return new JumppadScreenHandler(syncId, inv, data);
     }
 
     @Override
@@ -64,15 +66,12 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
         nbt.putByte("facing", dataTracker.get(FACING));
     }
 
-    @Override
-    public Object getScreenOpeningData(ServerPlayerEntity player) {
-        return null;
-    }
+    public record JumppadData(byte power, int id) {}
 
-    ///@Override
-    ///public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-    ///    buf.writeByte(dataTracker.get(POWER));
-    ///}
+    @Override
+    public JumppadData getScreenOpeningData(ServerPlayerEntity player) {
+        return new JumppadData(getPower(), getId());
+    }
 
     public List<VoxelShape> getColliders() {
         List<VoxelShape> colliders = new ArrayList<>();

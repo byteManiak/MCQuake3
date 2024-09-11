@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"gGg",
+		"GeG",
+		"gGg"
+	],
+	"key":{
+		"g": {
+			"item": "minecraft:glass"
+		},
+		"G": {
+			"item": "minecraft:glowstone_dust"
+		},
+		"e": {
+			"item": "minecraft:ender_pearl"
+		}
+	},
+	"result": {
+		"id": "mcquake3:energy_chamber",
+		"count": 1
+	}
+}

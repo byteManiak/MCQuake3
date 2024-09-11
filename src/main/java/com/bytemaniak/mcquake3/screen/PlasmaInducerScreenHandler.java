@@ -25,11 +25,11 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
         previousTrackedStacks.clear();
 
         addSlot(new Slot(inventory, 0, 65, 47));
-        addSlot(new FurnaceFuelSlot(this, inventory, 1, 65, 83));
-        addSlot(new FurnaceOutputSlot(playerInventory.player, inventory, 2, 125, 65));
-        addSlot(new Slot(inventory, 3, 37, 30));
-        addSlot(new Slot(inventory, 4, 65, 18));
-        addSlot(new Slot(inventory, 5, 93, 30));
+        addSlot(new Slot(inventory, 1, 37, 30));
+        addSlot(new Slot(inventory, 2, 65, 18));
+        addSlot(new Slot(inventory, 3, 93, 30));
+        addSlot(new FurnaceFuelSlot(this, inventory, 4, 65, 83));
+        addSlot(new FurnaceOutputSlot(playerInventory.player, inventory, 5, 125, 65));
 
         for (int i = 0; i < 3; ++i)
             for (int j = 0; j < 9; ++j)
@@ -45,7 +45,7 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     @Override
     protected boolean isSmeltable(ItemStack itemStack) {
         return true;
-        ///return this.world.getRecipeManager().getFirstMatch(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE, new SimpleInventory(itemStack), this.world).isPresent();
+        //return this.world.getRecipeManager().getFirstMatch(PlasmaInducerRecipe.PlasmaInducerType.INSTANCE, new SingleStackRecipeInput(itemStack), this.world).isPresent();
     }
 
     @Override
@@ -57,12 +57,12 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
             itemStack = itemStack2.copy();
             if (slot < 6) {
                 if (!this.insertItem(itemStack2, 6, 42, true)) return ItemStack.EMPTY;
-                if (slot == 2) slot2.onQuickTransfer(itemStack2, itemStack);
+                if (slot == 5) slot2.onQuickTransfer(itemStack2, itemStack);
             } else if (isSmeltable(itemStack2)) {
-                if (!insertItem(itemStack2, 0, 1, false) && !insertItem(itemStack2, 3, 6, false))
+                if (!insertItem(itemStack2, 0, 4, false))
                     return ItemStack.EMPTY;
             } else if (isFuel(itemStack2)) {
-                if (!insertItem(itemStack2, 1, 2, false)) return ItemStack.EMPTY;
+                if (!insertItem(itemStack2, 4, 5, false)) return ItemStack.EMPTY;
             } else if (slot < 33) {
                 if (!insertItem(itemStack2, 33, 42, false)) return ItemStack.EMPTY;
             } else if (slot < 42) {
@@ -86,9 +86,9 @@ public class PlasmaInducerScreenHandler extends AbstractFurnaceScreenHandler {
     @Override
     public void clearCraftingSlots() {
         this.getSlot(0).setStackNoCallbacks(ItemStack.EMPTY);
+        this.getSlot(1).setStackNoCallbacks(ItemStack.EMPTY);
         this.getSlot(2).setStackNoCallbacks(ItemStack.EMPTY);
         this.getSlot(3).setStackNoCallbacks(ItemStack.EMPTY);
         this.getSlot(4).setStackNoCallbacks(ItemStack.EMPTY);
-        this.getSlot(5).setStackNoCallbacks(ItemStack.EMPTY);
     }
 }

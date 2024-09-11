@@ -1,0 +1,10 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "minecraft:iron_nugget"
+	},
+	"result": {
+		"id": "mcquake3:bullet"
+	},
+	"cookingtime": 20
+}

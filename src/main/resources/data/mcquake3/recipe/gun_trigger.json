@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" r",
+		"rr"
+	],
+	"key":{
+		"r": {
+			"item": "mcquake3:iron_rod"
+		}
+	},
+	"result": {
+		"id": "mcquake3:gun_trigger",
+		"count": 1
+	}
+}

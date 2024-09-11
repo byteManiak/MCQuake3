@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" c",
+		"c "
+	],
+	"key":{
+		"c": {
+			"item": "minecraft:copper_ingot"
+		}
+	},
+	"result": {
+		"id": "mcquake3:gun_handle",
+		"count": 1
+	}
+}

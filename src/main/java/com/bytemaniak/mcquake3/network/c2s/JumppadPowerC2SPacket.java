@@ -7,10 +7,12 @@ import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 
 public record JumppadPowerC2SPacket(byte power) implements CustomPayload {
     public static final CustomPayload.Id<JumppadPowerC2SPacket> ID = new Id<>(Packets.JUMPPAD_UPDATE_POWER);
@@ -21,14 +23,18 @@ public record JumppadPowerC2SPacket(byte power) implements CustomPayload {
 
     public static void receive(JumppadPowerC2SPacket payload, ServerPlayNetworking.Context context) {
         context.server().execute(() -> {
-            if (context.player().currentScreenHandler instanceof JumppadScreenHandler) {
+            ServerPlayerEntity player = context.player();
+            if (player.currentScreenHandler instanceof JumppadScreenHandler) {
                 // Update the jump pad stats with the ones received from the GUI user
                 // and broadcast back to all players
-                JumppadEntity entity = ((JumppadScreenHandler) context.player().currentScreenHandler).entity;
-                entity.updatePower(payload.power);
-                JumppadPowerS2CPacket retBuf = new JumppadPowerS2CPacket(entity.getId(), entity.getPower());
-                for (ServerPlayerEntity plr : PlayerLookup.world(context.player().getServerWorld()))
-                    ServerPlayNetworking.send(plr, retBuf);
+                ServerWorld world = player.getServerWorld();
+                Entity entity = world.getEntityById(((JumppadScreenHandler) player.currentScreenHandler).id);
+                if (entity instanceof JumppadEntity jumppad) {
+                    jumppad.updatePower(payload.power);
+                    JumppadPowerS2CPacket retBuf = new JumppadPowerS2CPacket(jumppad.getId(), jumppad.getPower());
+                    for (ServerPlayerEntity plr : PlayerLookup.world(context.player().getServerWorld()))
+                        ServerPlayNetworking.send(plr, retBuf);
+                }
             }
         });
     }

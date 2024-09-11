@@ -4,7 +4,6 @@ import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
-import net.minecraft.entity.AnimationState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -26,6 +25,7 @@ import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.constant.dataticket.SerializableDataTicket;
@@ -171,11 +171,11 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem, Animat
         });
     }
 
-    protected PlayState handle(AnimationState state) { return null; }
+    public PlayState handle(AnimationState<Weapon> state) { return null; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", this)
+        controllers.add(new AnimationController<>(this, "controller", this::handle)
                 .triggerableAnim("shoot", DefaultAnimations.ATTACK_SHOOT)
                 .triggerableAnim("idle", DefaultAnimations.IDLE));
     }

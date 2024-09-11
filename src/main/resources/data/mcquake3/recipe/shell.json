@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"c",
+		"c",
+		"i"
+	],
+	"key":{
+		"c": {
+			"item": "mcquake3:copper_nugget"
+		},
+		"i": {
+			"item": "minecraft:iron_nugget"
+		}
+	},
+	"result": {
+		"id": "mcquake3:shell",
+		"count": 1
+	}
+}

@@ -7,8 +7,8 @@ import net.minecraft.util.Identifier;
 
 public class RecipeTypes {
     public static void registerRecipeTypes() {
-        ///Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of("mcquake3:plasma_inducer"),
-        ///        PlasmaInducerRecipe.PlasmaInducerRecipeSerializer.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of("mcquake3:plasma_inducer"),
+                PlasmaInducerRecipe.PlasmaInducerRecipeSerializer.INSTANCE);
         Registry.register(Registries.RECIPE_TYPE, Identifier.of("mcquake3:plasma_inducer"),
                 PlasmaInducerRecipe.PlasmaInducerType.INSTANCE);
     }

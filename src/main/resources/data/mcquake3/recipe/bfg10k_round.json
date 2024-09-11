@@ -1,0 +1,22 @@
+{
+	"type": "mcquake3:plasma_inducer",
+	"category": "minecraft:combat",
+	"ingredients": [
+		{
+			"item": "minecraft:blaze_rod"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		},
+		{
+			"item": "minecraft:lapis_lazuli"
+		}
+	],
+	"output": {
+		"id": "mcquake3:bfg10k_round"
+	},
+	"cookingtime": 50
+}

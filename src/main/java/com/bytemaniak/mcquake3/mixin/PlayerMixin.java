@@ -4,6 +4,7 @@ import com.bytemaniak.mcquake3.entity.PortalEntity;
 import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.Components;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -161,8 +162,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
     private ItemStack stopWeaponAnimation(ItemStack stack) {
-        ///if (stack.getItem() instanceof Weapon)
-            ///stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
+        if (stack.getItem() instanceof Weapon)
+            stack.set(Components.FIRING_SPEED, 0.0);
         return stack;
     }
 

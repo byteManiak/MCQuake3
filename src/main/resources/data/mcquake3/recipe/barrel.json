@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"iii",
+		"   ",
+		"iii"
+	],
+	"key":{
+		"i": {
+			"item": "minecraft:iron_ingot"
+		}
+	},
+	"result": {
+		"id": "mcquake3:barrel",
+		"count": 1
+	}
+}

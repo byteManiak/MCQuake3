@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" c ",
+		"iti",
+		" f "
+	],
+	"key":{
+		"c": {
+			"item": "minecraft:copper_ingot"
+		},
+		"i": {
+			"item": "minecraft:iron_ingot"
+		},
+		"t": {
+			"item": "minecraft:tnt"
+		},
+		"f": {
+			"item": "firework_rocket"
+		}
+	},
+	"result": {
+		"id": "mcquake3:rocket",
+		"count": 1
+	}
+}

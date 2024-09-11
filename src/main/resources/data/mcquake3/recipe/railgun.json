@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"l  ",
+		"ger",
+		"l  "
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"l": {
+			"item": "minecraft:lime_dye"
+		},
+		"e": {
+			"item": "mcquake3:energy_chamber"
+		},
+		"r": {
+			"item": "mcquake3:reinforced_barrel"
+		}
+	},
+	"result": {
+		"id": "mcquake3:railgun",
+		"count": 1
+	}
+}

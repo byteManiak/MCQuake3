@@ -6,7 +6,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -21,7 +25,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TrailRenderer implements WorldRenderEvents.End {
     private static final Identifier TEXTURE = Identifier.of("minecraft", "textures/misc/white.png");
     private static final RenderLayer LAYER = RenderLayer.getEntityTranslucentEmissive(TEXTURE);
-    ///private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferBuilder(64));
+    private static final VertexConsumerProvider.Immediate vertexConsumerProvider = VertexConsumerProvider.immediate(new BufferAllocator(64));
     private final static long RAILGUN_TRAIL_LIFETIME = 20;
     private final static long LIGHTNING_GUN_TRAIL_LIFETIME = 3;
 
@@ -89,14 +93,15 @@ public class TrailRenderer implements WorldRenderEvents.End {
         long worldTime = context.world().getTime();
         trailList.removeIf(trail -> (worldTime - trail.startTick > trail.lifetime));
 
-        Vec3d cameraPos = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
+        Vec3d cameraPos = context.camera().getPos();
 
         MatrixStack matrices = context.matrixStack();
         matrices.push();
         matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-        Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
+
         Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        /*VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
+        Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
 
         for (TrailData trail : trailList) {
             long currentTick = worldTime - trail.startTick;
@@ -117,10 +122,10 @@ public class TrailRenderer implements WorldRenderEvents.End {
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v2, trail.v3, trail.v7, trail.v6, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v3, trail.v4, trail.v8, trail.v7, trail.color, alpha);
             genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v4, trail.v1, trail.v5, trail.v8, trail.color, alpha);
-        }*/
+        }
 
         matrices.pop();
-        ///vertexConsumerProvider.draw();
+        vertexConsumerProvider.draw();
     }
 
     public void addTrail(Vec3d v1, Vec3d v2, Vec3d upVec, UUID playerId, int type) {

@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"c i",
+		"ger",
+		"c i"
+	],
+	"key":{
+		"g": {
+			"item": "mcquake3:gun_base"
+		},
+		"c": {
+			"item": "minecraft:cyan_dye"
+		},
+		"e": {
+			"item": "mcquake3:energy_chamber"
+		},
+		"r": {
+			"item": "mcquake3:reinforced_barrel"
+		},
+		"i": {
+			"item": "minecraft:iron_ingot"
+		}
+	},
+	"result": {
+		"id": "mcquake3:lightning_gun",
+		"count": 1
+	}
+}

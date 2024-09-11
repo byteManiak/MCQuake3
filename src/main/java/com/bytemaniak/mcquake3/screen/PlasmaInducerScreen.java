@@ -20,10 +20,10 @@ public class PlasmaInducerScreen extends AbstractFurnaceScreen<PlasmaInducerScre
         RenderSystem.setShaderTexture(0, TEXTURE);
         context.drawTexture(TEXTURE, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
         if (handler.isBurning()) {
-            k = (int)handler.getFuelProgress();
+            k = (int)(handler.getFuelProgress() * 11);
             context.drawTexture(TEXTURE, x + 65, y + 66 + 12 - k, 176, 12 - k, 14, k + 1);
         }
-        k = (int)handler.getCookProgress();
+        k = (int)(handler.getCookProgress() * 22);
         context.drawTexture(TEXTURE, x + 88, y + 64, 176, 14, k + 1, 16);
     }
 

@@ -13,16 +13,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class MusicDiscs {
-    private static int comparatorOutput = 0;
-
     private static final Identifier KOJINSMOKIN_IDENT = Identifier.of("mcquake3:disc_kojinsmokin");
-    public static final SoundEvent KOJINSMOKIN = SoundEvent.of(KOJINSMOKIN_IDENT, 16);
+    public static final SoundEvent KOJINSMOKIN = SoundEvent.of(KOJINSMOKIN_IDENT);
     private static final Identifier NINESIX_IDENT = Identifier.of("mcquake3:disc_ninesix");
-    public static final SoundEvent NINESIX = SoundEvent.of(NINESIX_IDENT, 16);
+    public static final SoundEvent NINESIX = SoundEvent.of(NINESIX_IDENT);
     private static final Identifier SIXTYFOUR_IDENT = Identifier.of("mcquake3:disc_sixtyfour");
-    public static final SoundEvent SIXTYFOUR = SoundEvent.of(SIXTYFOUR_IDENT, 16);
+    public static final SoundEvent SIXTYFOUR = SoundEvent.of(SIXTYFOUR_IDENT);
     private static final Identifier STAIRS_IDENT = Identifier.of("mcquake3:disc_stairs");
-    public static final SoundEvent STAIRS = SoundEvent.of(STAIRS_IDENT, 16);
+    public static final SoundEvent STAIRS = SoundEvent.of(STAIRS_IDENT);
 
     private static void loadDisc(Identifier id, SoundEvent sound) {
         RegistryKey<JukeboxSong> key = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, id);

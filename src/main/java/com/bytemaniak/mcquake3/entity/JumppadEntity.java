@@ -5,6 +5,7 @@ import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
+import com.bytemaniak.mcquake3.util.MultiCollidable;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityType;
@@ -31,7 +32,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory {
+public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScreenHandlerFactory, MultiCollidable {
     private final static TrackedData<Byte> POWER = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
     private final static TrackedData<Byte> FACING = DataTracker.registerData(JumppadEntity.class, TrackedDataHandlerRegistry.BYTE);
 
@@ -73,6 +74,7 @@ public class JumppadEntity extends PropEntity implements GeoEntity, ExtendedScre
         return new JumppadData(getPower(), getId());
     }
 
+    @Override
     public List<VoxelShape> getColliders() {
         List<VoxelShape> colliders = new ArrayList<>();
         BlockPos pos = getBlockPos();

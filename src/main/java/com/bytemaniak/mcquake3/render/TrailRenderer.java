@@ -6,15 +6,10 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.BufferAllocator;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.util.Optional;
@@ -74,18 +69,18 @@ public class TrailRenderer implements WorldRenderEvents.End {
 
     private final CopyOnWriteArrayList<TrailData> trailList = new CopyOnWriteArrayList<>();
 
-    private void genVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d vec, Vec3d col, float alpha) {
-        float x = (float)vec.x;
-        float y = (float)vec.y;
-        float z = (float)vec.z;
+    private void genVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Vec3d camera, Vec3d vec, Vec3d col, float alpha) {
+        float x = (float)(vec.x - camera.x);
+        float y = (float)(vec.y - camera.y);
+        float z = (float)(vec.z - camera.z);
         vertexConsumer.vertex(positionMatrix, x, y, z).color((float)col.x, (float)col.y, (float)col.z, 1-alpha).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(1).normal(0, 1, 0);
     }
 
-    private void genQuad(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, Vec3d color, float alpha) {
-        genVertex(vertexConsumer, positionMatrix, normalMatrix, v1, color, alpha);
-        genVertex(vertexConsumer, positionMatrix, normalMatrix, v2, color, alpha);
-        genVertex(vertexConsumer, positionMatrix, normalMatrix, v3, color, alpha);
-        genVertex(vertexConsumer, positionMatrix, normalMatrix, v4, color, alpha);
+    private void genQuad(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Vec3d camera, Vec3d v1, Vec3d v2, Vec3d v3, Vec3d v4, Vec3d color, float alpha) {
+        genVertex(vertexConsumer, positionMatrix, camera, v1, color, alpha);
+        genVertex(vertexConsumer, positionMatrix, camera, v2, color, alpha);
+        genVertex(vertexConsumer, positionMatrix, camera, v3, color, alpha);
+        genVertex(vertexConsumer, positionMatrix, camera, v4, color, alpha);
     }
 
     @Override
@@ -93,14 +88,10 @@ public class TrailRenderer implements WorldRenderEvents.End {
         long worldTime = context.world().getTime();
         trailList.removeIf(trail -> (worldTime - trail.startTick > trail.lifetime));
 
+        if (trailList.isEmpty()) return;
+
+        Matrix4f positionMatrix = context.positionMatrix();
         Vec3d cameraPos = context.camera().getPos();
-
-        MatrixStack matrices = context.matrixStack();
-        matrices.push();
-        matrices.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-
-        Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        Matrix3f normalMatrix = matrices.peek().getNormalMatrix();
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
 
         for (TrailData trail : trailList) {
@@ -116,15 +107,14 @@ public class TrailRenderer implements WorldRenderEvents.End {
             trail.v7 = trail.v7.lerp(trail._v7, alpha);
             trail.v8 = trail.v8.lerp(trail._v8, alpha);
 
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v1, trail.v2, trail.v3, trail.v4, trail.color, alpha);
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v5, trail.v6, trail.v7, trail.v8, trail.color, alpha);
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v1, trail.v2, trail.v6, trail.v5, trail.color, alpha);
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v2, trail.v3, trail.v7, trail.v6, trail.color, alpha);
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v3, trail.v4, trail.v8, trail.v7, trail.color, alpha);
-            genQuad(vertexConsumer, positionMatrix, normalMatrix, trail.v4, trail.v1, trail.v5, trail.v8, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v1, trail.v2, trail.v3, trail.v4, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v5, trail.v6, trail.v7, trail.v8, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v1, trail.v2, trail.v6, trail.v5, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v2, trail.v3, trail.v7, trail.v6, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v3, trail.v4, trail.v8, trail.v7, trail.color, alpha);
+            genQuad(vertexConsumer, positionMatrix, cameraPos, trail.v4, trail.v1, trail.v5, trail.v8, trail.color, alpha);
         }
 
-        matrices.pop();
         vertexConsumerProvider.draw();
     }
 

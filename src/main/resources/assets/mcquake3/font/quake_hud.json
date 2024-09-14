@@ -3,14 +3,14 @@
 		{
 			"type": "ttf",
 			"file": "mcquake3:bebasneue.ttf",
-			"shift": [0, 0],
-			"size": 24.0,
+			"shift": [0, -1],
+			"size": 20.0,
 			"oversample": 2.0
 		},
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/health.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF0"
@@ -19,7 +19,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/machinegun.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF1"
@@ -28,7 +28,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/shotgun.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF2"
@@ -37,7 +37,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/grenade.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF3"
@@ -46,7 +46,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/rocket.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF4"
@@ -55,7 +55,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/lightning_gun.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF5"
@@ -64,7 +64,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/railgun.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF6"
@@ -73,7 +73,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/plasmagun.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF7"
@@ -82,7 +82,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/bfg10k.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF8"
@@ -91,7 +91,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/shield.png",
-			"ascent": -10,
+			"ascent": 0,
 			"height": 14,
 			"chars": [
 				"\uFFF9"
@@ -100,7 +100,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/excellent.png",
-			"ascent": -16,
+			"ascent": 0,
 			"height": 32,
 			"chars": [
 				"\uFFFA"
@@ -109,7 +109,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/impressive.png",
-			"ascent": -16,
+			"ascent": 0,
 			"height": 32,
 			"chars": [
 				"\uFFFB"
@@ -118,7 +118,7 @@
 		{
 			"type": "bitmap",
 			"file": "mcquake3:font/gauntlet.png",
-			"ascent": -16,
+			"ascent": 0,
 			"height": 32,
 			"chars": [
 				"\uFFFC"

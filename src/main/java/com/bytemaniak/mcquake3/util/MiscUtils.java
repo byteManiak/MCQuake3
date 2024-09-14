@@ -24,7 +24,7 @@ public class MiscUtils {
     public static void drawText(DrawContext context, String str, int x, int y, int color) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         MutableText text = Text.literal(str).setStyle(Style.EMPTY.withFont(QUAKE_FONT));
-        context.drawTextWithShadow(textRenderer, text, x, y - textRenderer.fontHeight, color);
+        context.drawTextWithShadow(textRenderer, text, x, y, color);
     }
 
     public static void insertInNonHotbarInventory(ItemStack stack, PlayerInventory inventory) {

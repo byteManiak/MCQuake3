@@ -5,6 +5,7 @@ import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
+import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -22,21 +22,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
@@ -54,83 +50,11 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Unique private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     @Unique private final long[] weaponTicks = new long[9];
 
-    @Unique private final static long TIME_BETWEEN_HURTS = 9;
-    @Unique private long lastHurtTick = 0;
-
     @Unique private int portalToLink = -1;
 
     @Unique private String currentlyEditingArena = "";
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
-
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
-    public void playWeaponSwitchSound(PlayerEntity playerEntity, Operation<Void> original) {
-        if (!getWorld().isClient && playerEntity.getMainHandStack().getItem() instanceof Weapon)
-            getWorld().playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
-        original.call(playerEntity);
-    }
-
-    @WrapOperation(method = "addExhaustion", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;isClient:Z"))
-    private boolean cancelExhaustionInQuakeArena(World world, Operation<Boolean> original) {
-        if (world.getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) return true;
-
-        return original.call(world);
-    }
-
-    @ModifyVariable(method = "handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z",
-            at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    public float reduceFallDistance(float fallDistance) {
-        return Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
-    }
-
-    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-    private void cancelMobInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (getMainHandStack().getItem() instanceof Weapon)
-            cir.setReturnValue(ActionResult.PASS);
-    }
-
-    @Inject(method = "jump", at = @At("HEAD"))
-    private void playQuakeJumpSound(CallbackInfo ci) {
-        if (quakePlayerSoundsEnabled()) {
-            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
-        }
-    }
-
-    @Override
-    public SoundEvent getHurtSound(DamageSource source) {
-        if (quakePlayerSoundsEnabled()) {
-            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
-            else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
-            else {
-                long currentTick = getWorld().getTime();
-                if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
-                    lastHurtTick = currentTick;
-                    if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
-                    else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
-                    else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
-                    else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
-                    else return SoundEvent.of(playerSounds.HURT25);
-                } else return null;
-            }
-        }
-        return super.getHurtSound(source);
-    }
-
-    @Override
-    public SoundEvent getDeathSound() {
-        if (quakePlayerSoundsEnabled()) {
-            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
-            return SoundEvent.of(playerSounds.DEATH);
-        }
-        return super.getDeathSound();
-    }
-
-    @Override
-    public SoundEvent getPlayerDeathSound() {
-        return this.getDeathSound();
-    }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
@@ -155,28 +79,94 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.startTracking(HAS_QL_REFIRE_RATE, false);
     }
 
-    @Inject(method = "dropInventory", at = @At("HEAD"), cancellable = true)
-    private void noDropInventoryInQuakeArena(CallbackInfo ci) {
-        if (inQuakeArena()) ci.cancel();
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"))
+    public void playWeaponSwitchSound(PlayerEntity playerEntity, Operation<Void> original) {
+        if (!getWorld().isClient && playerEntity.getMainHandStack().getItem() instanceof Weapon)
+            getWorld().playSoundFromEntity(null, this, Sounds.WEAPON_CHANGE, SoundCategory.NEUTRAL, 1, 1);
+
+        original.call(playerEntity);
     }
 
-    @ModifyVariable(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"), ordinal = 0, argsOnly = true)
-    private ItemStack stopWeaponAnimation(ItemStack stack) {
+    @WrapOperation(method = "addExhaustion", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;isClient:Z"))
+    private boolean cancelExhaustionInQuakeArena(World world, Operation<Boolean> original) {
+        if (world.getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) return true;
+
+        return original.call(world);
+    }
+
+    @WrapOperation(method = "handleFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"))
+    public boolean reduceFallDistanceInQuakeArena(PlayerEntity player, float fallDistance, float damageMultiplier, DamageSource damageSource, Operation<Boolean> original) {
+        if (inQuakeArena())
+            fallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
+
+        return original.call(player, fallDistance, damageMultiplier, damageSource);
+    }
+
+    @WrapOperation(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isSpectator()Z"))
+    private boolean cancelMobInteract(PlayerEntity player, Operation<Boolean> original) {
+        if (getMainHandStack().getItem() instanceof Weapon) return true;
+
+        return original.call(player);
+    }
+
+    @WrapOperation(method = "jump", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;jump()V"))
+    private void playQuakeJumpSound(PlayerEntity player, Operation<Void> original) {
+        if (quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
+            getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
+        }
+
+        original.call(player);
+    }
+
+    @WrapOperation(method = "dropInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameRules;getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
+    private boolean noDropInventoryInQuakeArena(GameRules rules, GameRules.Key<GameRules.BooleanRule> rule, Operation<Boolean> original) {
+        if (inQuakeArena()) return true;
+
+        return original.call(rules, rule);
+    }
+
+    @WrapOperation(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"))
+    private boolean stopWeaponAnimation(ItemStack stack, Operation<Boolean> original) {
         if (stack.getItem() instanceof Weapon)
             stack.getOrCreateNbt().putDouble("firing_speed", 0.0);
-        return stack;
+
+        return original.call(stack);
+    }
+
+    @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageSource;isScaledWithDifficulty()Z"))
+    private boolean normalizeDamageInQuakeArena(DamageSource source, Operation<Boolean> original) {
+        if (inQuakeArena()) return false;
+
+        return original.call(source);
+    }
+
+    @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
+    private boolean absorbDamageToEnergyShieldInQuakeArena(PlayerEntity player, DamageSource source, float amount, Operation<Boolean> original) {
+        if (inQuakeArena()) {
+            int energyShield = getEnergyShield();
+            float damage = MiscUtils.fromMCDamage(amount);
+            if (energyShield > damage * 0.66f) {
+                energyShield -= (int) (damage * 0.66f);
+                damage *= 0.33f;
+            } else {
+                damage -= energyShield;
+                energyShield = 0;
+            }
+
+            if (!getWorld().isClient) setEnergyShield(energyShield);
+            amount = MiscUtils.toMCDamage(damage);
+        }
+
+        return original.call(player, source, amount);
     }
 
     public boolean inQuakeArena() {
         return getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE && !isCreative() && !isSpectator();
     }
 
-    public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
-
     public long getWeaponTick(int id) { return weaponTicks[id]; }
-    public void setWeaponTick(int id, long tick) {
-        weaponTicks[id] = tick;
-    }
+    public void setWeaponTick(int id, long tick) { weaponTicks[id] = tick; }
     public boolean hasQLRefireRate() { return dataTracker.get(HAS_QL_REFIRE_RATE); }
     public void setQLRefireRate(boolean hasQLRefire) { dataTracker.set(HAS_QL_REFIRE_RATE, hasQLRefire); }
 
@@ -218,6 +208,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.set(QUAKE_ARMOR, currentShield);
     }
 
+    public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
+    public SoundEvent getPlayerDeathSound() { return this.getDeathSound(); }
     public String getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
     public void setPlayerVoice(String soundsSet) {
         dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
@@ -230,7 +222,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    @Override
     public void setPortalToLink(PortalEntity entity) {
         int x = entity.getBlockX();
         int y = entity.getBlockY();
@@ -239,7 +230,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         portalToLink = entity.getId();
     }
 
-    @Override
     public void setLinkedPortalCoords() {
         if (portalToLink == -1) return;
 
@@ -260,9 +250,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    @Override
     public void setCurrentlyEditingArena(String arenaName) { currentlyEditingArena = arenaName; }
-
-    @Override
     public String getCurrentlyEditingArena() { return currentlyEditingArena; }
 }

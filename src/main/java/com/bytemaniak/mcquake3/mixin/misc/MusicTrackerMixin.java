@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MusicTracker.class)
-public abstract class MusicTrackerMixin {
+public class MusicTrackerMixin {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getMusicType()Lnet/minecraft/sound/MusicSound;"))
     private MusicSound playQuakeMusic(MinecraftClient instance, Operation<MusicSound> original) {
         QuakePlayer player = (QuakePlayer) instance.player;

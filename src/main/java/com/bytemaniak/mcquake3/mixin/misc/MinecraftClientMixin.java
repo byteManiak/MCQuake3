@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MinecraftClient.class)
-public abstract class MinecraftClientMixin {
+public class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;doAttack()Z"))
     // Replace the attack action with the use action when firing Quake weapons
     private boolean doQuakeWeaponAttack(MinecraftClient instance, Operation<Boolean> original) {

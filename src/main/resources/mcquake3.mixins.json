@@ -5,12 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "PlayerMixin",
-    "ServerPlayerMixin",
     "misc.DimensionArgumentTypeMixin",
     "misc.EntityMixin",
     "misc.ItemEntityMixin",
     "misc.KillCommandMixin",
-    "misc.LivingEntityMixin"
+    "misc.LivingEntityMixin",
+    "misc.PlayerManagerMixin"
   ],
   "client": [
     "misc.ClientPlayerMixin",

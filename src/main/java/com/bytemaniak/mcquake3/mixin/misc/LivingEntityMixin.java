@@ -40,9 +40,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public abstract boolean damage(DamageSource source, float amount);
 
-    public LivingEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
-    }
+    public LivingEntityMixin(EntityType<?> type, World world) { super(type, world); }
 
     private static final TrackedData<Boolean> QUAD_DAMAGE_VISIBLE = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
 

@@ -13,7 +13,6 @@
     "misc.LivingEntityMixin"
   ],
   "client": [
-    "misc.ClientPlayerInteractionManagerMixin",
     "misc.ClientPlayerMixin",
     "misc.EntityRenderDispatcherMixin",
     "misc.EntityRendererMixin",

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin {
+public class EntityMixin {
     @WrapOperation(method = "adjustMovementForCollisions(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEntityCollisions(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;)Ljava/util/List;"))
     private List<VoxelShape> addEntityColliders(World world, Entity entity, Box box, Operation<List<VoxelShape>> original) {

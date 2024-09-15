@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,5 +24,13 @@ public class InGameHudMixin {
         if (((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena()) return;
 
         original.call(hud, matrices, x);
+    }
+
+    @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;hasStatusBars()Z"))
+    private boolean hideStatusBarsInQuakeArena(ClientPlayerInteractionManager instance, Operation<Boolean> original) {
+        QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
+        if (player.inQuakeArena()) return false;
+
+        return original.call(instance);
     }
 }

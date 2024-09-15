@@ -7,6 +7,8 @@ import com.bytemaniak.mcquake3.sound.LightningActive;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
 import com.bytemaniak.mcquake3.sound.WeaponSounds;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -19,8 +21,6 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSounds {
@@ -33,15 +33,17 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
 
     protected WeaponSoundsMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
-    @Inject(method = "tick", at = @At(value = "RETURN"))
-    private void handleLoopingWeaponSounds(CallbackInfo ci) {
-        if (getWorld().isClient) {
-            ItemStack handStack = getMainHandStack();
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tick()V"))
+    private void handleLoopingWeaponSounds(PlayerEntity player, Operation<Void> original) {
+        original.call(player);
+
+        if (player.getWorld().isClient) {
+            ItemStack handStack = player.getMainHandStack();
             if (handStack.getItem() instanceof Weapon weapon) {
                 if (handStack.isOf(Weapons.GAUNTLET)) {
                     if (!isHoldingGauntlet) {
                         isHoldingGauntlet = true;
-                        playHum(weapon.slot);
+                        playHum(player, weapon.slot);
 
                         isHoldingLightning = false;
                         isHoldingRailgun = false;
@@ -49,7 +51,7 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
                 } else if (handStack.isOf(Weapons.LIGHTNING_GUN)) {
                     if (!isHoldingLightning) {
                         isHoldingLightning = true;
-                        playHum(weapon.slot);
+                        playHum(player, weapon.slot);
 
                         isHoldingGauntlet = false;
                         isHoldingRailgun = false;
@@ -57,7 +59,7 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
                 } else if (handStack.isOf(Weapons.RAILGUN)) {
                     if (!isHoldingRailgun) {
                         isHoldingRailgun = true;
-                        playHum(weapon.slot);
+                        playHum(player, weapon.slot);
 
                         isHoldingGauntlet = false;
                         isHoldingLightning = false;
@@ -70,10 +72,10 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
                 }
 
                 if (weapon.hasActiveLoopSound) {
-                    if (!isUsingItem() && playingAttackSound) {
-                        playHum(weapon.slot);
-                    } else if (isUsingItem() && !playingAttackSound) {
-                        playAttackSound(weapon.slot);
+                    if (!player.isUsingItem() && playingAttackSound) {
+                        playHum(player, weapon.slot);
+                    } else if (player.isUsingItem() && !playingAttackSound) {
+                        playAttackSound(player, weapon.slot);
                     }
                 }
             } else if (playingHumSound || playingAttackSound) {
@@ -86,16 +88,16 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
     }
 
     @Environment(EnvType.CLIENT)
-    public void playHum(int id) {
+    @Unique public void playHum(PlayerEntity player, int id) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
         WeaponHum humSound = null;
 
         if (id == Weapons.GAUNTLET.slot)
-            humSound = new WeaponHum(this, Sounds.GAUNTLET_HUM, id);
+            humSound = new WeaponHum(player, Sounds.GAUNTLET_HUM, id);
         else if (id == Weapons.RAILGUN.slot)
-            humSound = new WeaponHum(this, Sounds.RAILGUN_HUM, id);
+            humSound = new WeaponHum(player, Sounds.RAILGUN_HUM, id);
 
         if (humSound != null) {
             manager.play(humSound);
@@ -104,19 +106,19 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
     }
 
     @Environment(EnvType.CLIENT)
-    public void stopHum() { playingHumSound = false; }
+    @Unique public void stopHum() { playingHumSound = false; }
 
     @Environment(EnvType.CLIENT)
-    public void playAttackSound(int id) {
+    @Unique public void playAttackSound(PlayerEntity player, int id) {
         stopSounds();
 
         SoundManager manager = MinecraftClient.getInstance().getSoundManager();
         WeaponActive attackSound = null;
 
         if (id == Weapons.GAUNTLET.slot)
-            attackSound = new WeaponActive(this, Sounds.GAUNTLET_ACTIVE, id);
+            attackSound = new WeaponActive(player, Sounds.GAUNTLET_ACTIVE, id);
         else if (id == Weapons.LIGHTNING_GUN.slot)
-            attackSound = new LightningActive(this, id);
+            attackSound = new LightningActive(player, id);
 
         if (attackSound != null) {
             manager.play(attackSound);
@@ -125,17 +127,17 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSo
     }
 
     @Environment(EnvType.CLIENT)
-    public void stopAttackSound() { playingAttackSound = false; }
+    @Unique public void stopAttackSound() { playingAttackSound = false; }
 
     @Environment(EnvType.CLIENT)
-    private void stopSounds() {
+    @Unique private void stopSounds() {
         stopHum();
         stopAttackSound();
     }
 
     @Environment(EnvType.CLIENT)
-    public boolean isPlayingHum() { return playingHumSound; }
+    @Unique public boolean isPlayingHum() { return playingHumSound; }
 
     @Environment(EnvType.CLIENT)
-    public boolean isPlayingAttack() { return playingAttackSound; }
+    @Unique public boolean isPlayingAttack() { return playingAttackSound; }
 }

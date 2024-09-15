@@ -35,12 +35,21 @@ public abstract class MinecraftClientMixin {
     }
 
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z"))
-    private boolean cancelOpenInventoryInQuakeArena(KeyBinding key, Operation<Boolean> original) {
+    private boolean cancelVanillaControlsInQuakeArena(KeyBinding key, Operation<Boolean> original) {
         MinecraftClient instance = MinecraftClient.getInstance();
-        if (key.equals(instance.options.inventoryKey) && ((QuakePlayer)instance.player).inQuakeArena()) {
+        if (!((QuakePlayer)instance.player).inQuakeArena())
+            return original.call(key);
+
+        boolean disallowedKeyPressed = key.equals(instance.options.inventoryKey) ||
+                key.equals(instance.options.dropKey) ||
+                key.equals(instance.options.swapHandsKey) ||
+                key.equals(instance.options.pickItemKey);
+
+        if (disallowedKeyPressed) {
             key.wasPressed();
             return false;
         }
+
         return original.call(key);
     }
 }

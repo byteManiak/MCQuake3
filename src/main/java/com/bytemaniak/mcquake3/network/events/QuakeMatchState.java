@@ -107,8 +107,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         // First establish if there are any new players
         for (String name : playerNames) {
             if (stats.get(name) == null) {
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(name+" has joined the arena"));
+                sendGlobalMessage(Text.of(name+" has joined the arena"), false);
 
                 stats.put(name, new PlayerStat());
             }
@@ -118,8 +117,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         stats.entrySet().removeIf(plr -> {
             boolean remove = playerNames.stream().noneMatch(name -> name.equals(plr.getKey()));
             if (remove)
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(plr.getKey()+" has left the arena"));
+                sendGlobalMessage(Text.of(plr.getKey()+" has left the arena"), false);
             return remove;
         });
 
@@ -172,8 +170,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         // No point getting out of warmup state if there aren't at least 2 players
         if (quakePlayers.size() < 2) {
-            for (ServerPlayerEntity player : quakePlayers)
-                player.sendMessage(Text.of("Waiting for more players..."), true);
+            sendGlobalMessage(Text.of("Waiting for more players..."), true);
 
             matchState = MatchState.WARMUP_STATE;
             return;
@@ -185,7 +182,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 if (highestFrags > 0) {
                     // Reset player stats for match start
-                    stats.replaceAll((k, v) -> v = new PlayerStat());
+                    stats.replaceAll((k, v) -> new PlayerStat());
                     highestFrags = 0;
                     winner = "";
 

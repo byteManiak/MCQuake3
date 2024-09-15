@@ -9,7 +9,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 
 public class ItemEntityGotoNonHotbar extends ItemEntity {
-    private int maxAmountInInventory;
+    private final int maxAmountInInventory;
 
     public ItemEntityGotoNonHotbar(ServerWorld world, double x, double y, double z, ItemStack stack, int maxAmountInInventory) {
         super(world, x, y, z, stack);

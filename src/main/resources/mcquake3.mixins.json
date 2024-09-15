@@ -8,6 +8,7 @@
     "ServerPlayerMixin",
     "misc.DimensionArgumentTypeMixin",
     "misc.EntityMixin",
+    "misc.ItemEntityMixin",
     "misc.KillCommandMixin",
     "misc.LivingEntityMixin"
   ],

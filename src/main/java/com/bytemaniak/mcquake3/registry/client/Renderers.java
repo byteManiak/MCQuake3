@@ -6,11 +6,15 @@ import com.bytemaniak.mcquake3.entity.PortalRenderer;
 import com.bytemaniak.mcquake3.entity.projectile.render.*;
 import com.bytemaniak.mcquake3.gui.FeedbackManager;
 import com.bytemaniak.mcquake3.gui.MCQuake3GuiRenderer;
+import com.bytemaniak.mcquake3.particle.PlasmaSparkParticleFactory;
+import com.bytemaniak.mcquake3.particle.RocketTrailParticleFactory;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Particles;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.render.TrailRenderer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -29,6 +33,9 @@ public class Renderers {
         EntityRendererRegistry.register(Entities.BFG10K_PROJECTILE, BFG10KProjectileRenderer::new);
         EntityRendererRegistry.register(Blocks.JUMPPAD_ENTITY, JumppadRenderer::new);
         EntityRendererRegistry.register(Blocks.PORTAL_ENTITY, PortalRenderer::new);
+
+        ParticleFactoryRegistry.getInstance().register(Particles.PLASMA_SPARK, PlasmaSparkParticleFactory::new);
+        ParticleFactoryRegistry.getInstance().register(Particles.ROCKET_TRAIL, RocketTrailParticleFactory::new);
     }
 
     private static void registerBlockRenderers() {

@@ -17,6 +17,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +67,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(frags);
-                buf.writeInt(highestFrags);
                 ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
+
+                buf = PacketByteBufs.create();
+                buf.writeInt(highestFrags);
+                sendGlobalPacket(Packets.HIGHEST_FRAGS, buf);
             }
 
             stats.get(player.getName().getString()).deaths++;
@@ -141,6 +145,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             player.sendMessage(message, overlay);
     }
 
+    private void sendGlobalPacket(Identifier id, PacketByteBuf buf) {
+        for (ServerPlayerEntity player : quakePlayers)
+            ServerPlayNetworking.send(player, id, buf);
+    }
+
     private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
         sendGlobalMessage(Text.of(message), true);
         sendGlobalSound(sound);
@@ -180,12 +189,10 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     highestFrags = 0;
                     winner = "";
 
-                    for (ServerPlayerEntity player : quakePlayers) {
-                        PacketByteBuf buf = PacketByteBufs.create();
-                        buf.writeInt(0);
-                        buf.writeInt(0);
-                        ServerPlayNetworking.send(player, Packets.FRAGS, buf);
-                    }
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    buf.writeInt(0);
+                    sendGlobalPacket(Packets.FRAGS, buf);
+                    sendGlobalPacket(Packets.HIGHEST_FRAGS, buf);
                 }
 
                 ticksLeft = MiscUtils.toTicks(11);

@@ -6,8 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 
-public class FragsS2CPacket {
+public class HighestFragsS2CPacket {
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        Renderers.hudRenderer.frags = buf.readInt();
+        Renderers.hudRenderer.highestFrags = buf.readInt();
     }
 }

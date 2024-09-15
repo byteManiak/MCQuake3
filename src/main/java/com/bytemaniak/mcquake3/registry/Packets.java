@@ -16,6 +16,7 @@ public class Packets {
     public static final Identifier PLAY_ANNOUNCER_SOUND = new Identifier("mcquake3:announcer_sound");
     public static final Identifier SEND_ARENA_NAMES = new Identifier("mcquake3:send_arena_names");
     public static final Identifier FRAGS = new Identifier("mcquake3:frags");
+    public static final Identifier HIGHEST_FRAGS = new Identifier("mcquake3:highest_frags");
 
     public static final Identifier JUMPPAD_UPDATE_POWER = new Identifier("mcquake3:jumppad_update_power");
     public static final Identifier WEAPON_REFIRE_UPDATE = new Identifier("mcquake3:weapon_refire_update");
@@ -38,6 +39,7 @@ public class Packets {
         ClientPlayNetworking.registerGlobalReceiver(PLAY_ANNOUNCER_SOUND, PlayAnnouncerSoundS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(SEND_ARENA_NAMES, SendArenaNamesS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(FRAGS, FragsS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(HIGHEST_FRAGS, HighestFragsS2CPacket::receive);
     }
 
     public static void registerServerPackets() {

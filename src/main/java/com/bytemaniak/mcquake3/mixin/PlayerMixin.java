@@ -31,6 +31,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -44,21 +45,21 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Shadow public abstract boolean isCreative();
     @Shadow public abstract boolean isSpectator();
 
-    private static final float FALL_DISTANCE_MODIFIER = 4;
+    @Unique private static final float FALL_DISTANCE_MODIFIER = 4;
 
-    private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
+    @Unique private static final TrackedData<String> QUAKE_PLAYER_SOUNDS = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.STRING);
 
-    private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique private final static TrackedData<Integer> QUAKE_ARMOR = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
-    private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private final long[] weaponTicks = new long[9];
+    @Unique private final static TrackedData<Boolean> HAS_QL_REFIRE_RATE = DataTracker.registerData(PlayerMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique private final long[] weaponTicks = new long[9];
 
-    private final static long TIME_BETWEEN_HURTS = 9;
-    private long lastHurtTick = 0;
+    @Unique private final static long TIME_BETWEEN_HURTS = 9;
+    @Unique private long lastHurtTick = 0;
 
-    private int portalToLink = -1;
+    @Unique private int portalToLink = -1;
 
-    private String currentlyEditingArena = "";
+    @Unique private String currentlyEditingArena = "";
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 

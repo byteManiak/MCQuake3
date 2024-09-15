@@ -17,18 +17,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSounds {
-    private boolean isHoldingGauntlet = false;
-    private boolean isHoldingLightning = false;
-    private boolean isHoldingRailgun = false;
+    @Unique private boolean isHoldingGauntlet = false;
+    @Unique private boolean isHoldingLightning = false;
+    @Unique private boolean isHoldingRailgun = false;
 
-    private boolean playingHumSound = false;
-    private boolean playingAttackSound = false;
+    @Unique private boolean playingHumSound = false;
+    @Unique private boolean playingAttackSound = false;
 
     protected WeaponSoundsMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 

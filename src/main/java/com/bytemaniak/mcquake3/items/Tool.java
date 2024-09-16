@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

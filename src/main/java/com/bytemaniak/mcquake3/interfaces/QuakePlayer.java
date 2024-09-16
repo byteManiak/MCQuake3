@@ -1,10 +1,9 @@
-package com.bytemaniak.mcquake3.util;
+package com.bytemaniak.mcquake3.interfaces;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
-import com.bytemaniak.mcquake3.sound.WeaponSounds;
 import net.minecraft.sound.SoundEvent;
 
-public interface QuakePlayer extends WeaponSounds {
+public interface QuakePlayer {
     boolean inQuakeArena();
 
     int getEnergyShield();
@@ -32,4 +31,7 @@ public interface QuakePlayer extends WeaponSounds {
 
     void setCurrentlyEditingArena(String arenaName);
     String getCurrentlyEditingArena();
+
+    boolean isPlayingHum();
+    boolean isPlayingAttack();
 }

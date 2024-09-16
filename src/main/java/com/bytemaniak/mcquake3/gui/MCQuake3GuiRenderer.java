@@ -3,7 +3,7 @@ package com.bytemaniak.mcquake3.gui;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.network.events.QuakeMatchState;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;

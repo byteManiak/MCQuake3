@@ -3,7 +3,7 @@ package com.bytemaniak.mcquake3.items;
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.screen.ArenaBrowserScreen;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

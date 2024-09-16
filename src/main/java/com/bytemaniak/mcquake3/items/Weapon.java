@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

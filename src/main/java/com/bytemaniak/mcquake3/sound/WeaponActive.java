@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.sound;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.SoundEvent;
 

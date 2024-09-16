@@ -5,7 +5,7 @@ import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;

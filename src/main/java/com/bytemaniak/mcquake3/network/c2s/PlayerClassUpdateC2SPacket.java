@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;

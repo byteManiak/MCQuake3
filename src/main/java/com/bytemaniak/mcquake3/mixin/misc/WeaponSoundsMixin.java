@@ -1,12 +1,12 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.sound.LightningActive;
 import com.bytemaniak.mcquake3.sound.WeaponActive;
 import com.bytemaniak.mcquake3.sound.WeaponHum;
-import com.bytemaniak.mcquake3.sound.WeaponSounds;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(PlayerEntity.class)
-public abstract class WeaponSoundsMixin extends LivingEntity implements WeaponSounds {
+public abstract class WeaponSoundsMixin extends LivingEntity implements QuakePlayer {
     @Unique private boolean isHoldingGauntlet = false;
     @Unique private boolean isHoldingLightning = false;
     @Unique private boolean isHoldingRailgun = false;

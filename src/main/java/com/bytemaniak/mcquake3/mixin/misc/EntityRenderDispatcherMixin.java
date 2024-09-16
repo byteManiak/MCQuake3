@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.util.MultiCollidable;
+import com.bytemaniak.mcquake3.interfaces.MultiCollidable;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.render.VertexConsumer;

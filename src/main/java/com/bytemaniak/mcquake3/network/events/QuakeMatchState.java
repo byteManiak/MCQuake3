@@ -6,7 +6,7 @@ import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,6 +17,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private List<ServerPlayerEntity> quakePlayers;
 
     private List<ServerPlayerEntity> getQuakePlayers(ServerWorld world) {
-        return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
+        return world.getPlayers(player -> ((QuakePlayer)player).mcquake3$inQuakeArena());
     }
 
     public void recordDeath(ServerPlayerEntity player, DamageSource damageSource) {
@@ -66,8 +67,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(frags);
-                buf.writeInt(highestFrags);
                 ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
+
+                buf = PacketByteBufs.create();
+                buf.writeInt(highestFrags);
+                sendGlobalPacket(Packets.HIGHEST_FRAGS, buf);
             }
 
             stats.get(player.getName().getString()).deaths++;
@@ -81,7 +85,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         if (!player.isInTeleportationState()) {
             QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint =
                     arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
-            player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
+            player.networkHandler.requestTeleport(spawnpoint.position().x, spawnpoint.position().y, spawnpoint.position().z, spawnpoint.yaw(), 0);
 
             player.getInventory().clear();
             player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
@@ -103,8 +107,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         // First establish if there are any new players
         for (String name : playerNames) {
             if (stats.get(name) == null) {
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(name+" has joined the arena"));
+                sendGlobalMessage(Text.of(name+" has joined the arena"), false);
 
                 stats.put(name, new PlayerStat());
             }
@@ -114,8 +117,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         stats.entrySet().removeIf(plr -> {
             boolean remove = playerNames.stream().noneMatch(name -> name.equals(plr.getKey()));
             if (remove)
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(plr.getKey()+" has left the arena"));
+                sendGlobalMessage(Text.of(plr.getKey()+" has left the arena"), false);
             return remove;
         });
 
@@ -141,6 +143,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             player.sendMessage(message, overlay);
     }
 
+    private void sendGlobalPacket(Identifier id, PacketByteBuf buf) {
+        for (ServerPlayerEntity player : quakePlayers)
+            ServerPlayNetworking.send(player, id, buf);
+    }
+
     private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
         sendGlobalMessage(Text.of(message), true);
         sendGlobalSound(sound);
@@ -163,8 +170,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         // No point getting out of warmup state if there aren't at least 2 players
         if (quakePlayers.size() < 2) {
-            for (ServerPlayerEntity player : quakePlayers)
-                player.sendMessage(Text.of("Waiting for more players..."), true);
+            sendGlobalMessage(Text.of("Waiting for more players..."), true);
 
             matchState = MatchState.WARMUP_STATE;
             return;
@@ -176,16 +182,14 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 if (highestFrags > 0) {
                     // Reset player stats for match start
-                    stats.replaceAll((k, v) -> v = new PlayerStat());
+                    stats.replaceAll((k, v) -> new PlayerStat());
                     highestFrags = 0;
                     winner = "";
 
-                    for (ServerPlayerEntity player : quakePlayers) {
-                        PacketByteBuf buf = PacketByteBufs.create();
-                        buf.writeInt(0);
-                        buf.writeInt(0);
-                        ServerPlayNetworking.send(player, Packets.FRAGS, buf);
-                    }
+                    PacketByteBuf buf = PacketByteBufs.create();
+                    buf.writeInt(0);
+                    sendGlobalPacket(Packets.FRAGS, buf);
+                    sendGlobalPacket(Packets.HIGHEST_FRAGS, buf);
                 }
 
                 ticksLeft = MiscUtils.toTicks(11);

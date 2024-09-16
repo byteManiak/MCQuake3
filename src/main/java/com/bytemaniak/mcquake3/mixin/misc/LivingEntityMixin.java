@@ -1,12 +1,11 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
-import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
+import com.bytemaniak.mcquake3.entity.ItemEntityGotoNonHotbar;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.*;
-import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -16,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -24,27 +24,32 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements QuadDamageGlintRenderer.QuadDamageVisibility {
+public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public abstract boolean damage(DamageSource source, float amount);
+    @Shadow public abstract float getHealth();
 
-    public LivingEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
-    }
+    @Unique private final static long TIME_BETWEEN_HURTS = 9;
+    @Unique private long lastHurtTick = 0;
 
-    private static final TrackedData<Boolean> QUAD_DAMAGE_VISIBLE = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique private static final TrackedData<Boolean> QUAD_DAMAGE_VISIBLE = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    public LivingEntityMixin(EntityType<?> type, World world) { super(type, world); }
 
     @WrapOperation(method = "onDamaged", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;hurtTime:I", opcode = Opcodes.PUTFIELD))
     // Don't show the vanilla damage hurt tilt when damaged by Quake weapons as some of them fire multiple times per second
@@ -81,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;onDeath(Lnet/minecraft/entity/damage/DamageSource;)V"))
     // Respawn player to a custom arena spawnpoint if playing in Quake dimension instead of killing them
     private void respawnQuakePlayer(LivingEntity entity, DamageSource damageSource, Operation<Void> original) {
-        if (entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).inQuakeArena() &&
+        if (entity instanceof ServerPlayerEntity player && ((QuakePlayer)player).mcquake3$inQuakeArena() &&
                 player.getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE &&
                 !player.isCreative() && !player.isSpectator()) {
             ServerWorld world = player.getServerWorld();
@@ -102,7 +107,7 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
                 }
             }
 
-            world.playSound(null, player.getBlockPos(), ((QuakePlayer)player).getPlayerDeathSound(), SoundCategory.PLAYERS);
+            world.playSound(null, player.getBlockPos(), ((QuakePlayer)player).mcquake3$getPlayerDeathSound(), SoundCategory.PLAYERS);
 
             ServerEvents.QUAKE_MATCH_STATE.spawnQuakePlayer(player, arena);
             ServerEvents.QUAKE_MATCH_STATE.recordDeath(player, damageSource);
@@ -113,12 +118,66 @@ public abstract class LivingEntityMixin extends Entity implements QuadDamageGlin
         original.call(entity, damageSource);
     }
 
+    @Unique private SoundEvent getQuakePlayerHurtSound(QuakePlayer player, DamageSource source) {
+        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(player.mcquake3$getPlayerVoice());
+        if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
+        else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
+        else {
+            long currentTick = getWorld().getTime();
+            if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
+                lastHurtTick = currentTick;
+                if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
+                else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+                else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
+                else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
+                else return SoundEvent.of(playerSounds.HURT25);
+            } else return null;
+        }
+    }
+
+    @Unique private SoundEvent getQuakePlayerDeathSound(QuakePlayer player) {
+        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(player.mcquake3$getPlayerVoice());
+        return SoundEvent.of(playerSounds.DEATH);
+    }
+
+    @WrapOperation(method = "playHurtSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
+    private SoundEvent playQuakePlayerHurtSound(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
+        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
+            return getQuakePlayerHurtSound(player, source);
+
+        return original.call(entity, source);
+    }
+
+    @WrapOperation(method = "onDamaged", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
+    private SoundEvent playQuakePlayerHurtSound2(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
+        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
+            return getQuakePlayerHurtSound(player, source);
+
+        return original.call(entity, source);
+    }
+
+    @WrapOperation(method = "handleStatus", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
+    private SoundEvent playQuakePlayerDeathSound(LivingEntity entity, Operation<SoundEvent> original) {
+        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
+            return getQuakePlayerDeathSound(player);
+
+        return original.call(entity);
+    }
+
+    @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
+    private SoundEvent playQuakePlayerDeathSound2(LivingEntity entity, Operation<SoundEvent> original) {
+        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
+            return getQuakePlayerDeathSound(player);
+
+        return original.call(entity);
+    }
+
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void initQuadDamageTracker(CallbackInfo ci) {
         dataTracker.startTracking(QUAD_DAMAGE_VISIBLE, false);
     }
 
-    public boolean hasQuadDamage() {
+    public boolean mcquake3$hasQuadDamage() {
         return dataTracker.get(QUAD_DAMAGE_VISIBLE);
     }
 }

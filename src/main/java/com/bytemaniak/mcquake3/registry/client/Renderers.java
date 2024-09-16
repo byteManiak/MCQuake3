@@ -21,9 +21,9 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 
 public class Renderers {
-    public static MCQuake3GuiRenderer hudRenderer = new MCQuake3GuiRenderer();
-    public static FeedbackManager feedbacks = new FeedbackManager();
-    public static TrailRenderer trailRenderer;
+    public static final MCQuake3GuiRenderer hudRenderer = new MCQuake3GuiRenderer();
+    public static final FeedbackManager feedbacks = new FeedbackManager();
+    public static final TrailRenderer trailRenderer = new TrailRenderer();
 
     private static void registerEntityRenderers() {
         EntityRendererRegistry.register(Entities.PLASMA_BALL, PlasmaBallRenderer::new);
@@ -115,10 +115,8 @@ public class Renderers {
         registerBlockRenderers();
         registerFeatureRenderers();
 
-        trailRenderer = new TrailRenderer();
-        WorldRenderEvents.END.register(trailRenderer);
-
         HudRenderCallback.EVENT.register(hudRenderer);
         HudRenderCallback.EVENT.register(feedbacks);
+        WorldRenderEvents.END.register(trailRenderer);
     }
 }

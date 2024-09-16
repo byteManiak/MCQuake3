@@ -1,6 +1,5 @@
 package com.bytemaniak.mcquake3.data;
 
-import com.bytemaniak.mcquake3.MCQuake3;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
 import net.minecraft.nbt.NbtCompound;
@@ -19,8 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class QuakeArenasParameters extends PersistentState {
     public static class ArenaData {
         public static class Spawnpoint {
-            public Vec3d position;
-            public float yaw;
+            public final Vec3d position;
+            public final float yaw;
 
             public Spawnpoint(Vec3d position, float yaw) {
                 this.position = position;
@@ -29,10 +28,10 @@ public class QuakeArenasParameters extends PersistentState {
         }
 
         public String arenaName;
-        public List<Spawnpoint> spawnpoints = new ArrayList<>();
+        public final List<Spawnpoint> spawnpoints = new ArrayList<>();
     }
 
-    public List<ArenaData> arenas = new ArrayList<>();
+    public final List<ArenaData> arenas = new ArrayList<>();
     public int activeArena = 0;
 
     @Override

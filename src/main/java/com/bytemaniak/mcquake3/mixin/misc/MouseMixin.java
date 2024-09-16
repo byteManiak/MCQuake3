@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
@@ -21,7 +21,7 @@ public class MouseMixin {
                 break;
             }
 
-        if (hotbarEmpty || !qPlayer.inQuakeArena()) original.call(inventory, scrollAmount);
+        if (hotbarEmpty || !qPlayer.mcquake3$inQuakeArena()) original.call(inventory, scrollAmount);
         else {
             int i = (int) Math.signum(scrollAmount);
             int slot = inventory.selectedSlot - i;

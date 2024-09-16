@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.Entity;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class KillCommandMixin {
     @WrapOperation(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;kill()V"))
     private static void cancelKillCommandInQuakeArena(Entity entity, Operation<Void> original) {
-        if (entity instanceof QuakePlayer qPlayer && qPlayer.inQuakeArena()) {
+        if (entity instanceof QuakePlayer qPlayer && qPlayer.mcquake3$inQuakeArena()) {
             PlayerEntity player = (PlayerEntity)entity;
             entity.damage(entity.getDamageSources().outOfWorld(), player.getMaxHealth());
         } else original.call(entity);

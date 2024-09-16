@@ -5,7 +5,7 @@ import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
@@ -27,7 +27,7 @@ public abstract class WeaponPickup extends Pickup {
             PickupEntity weaponPickup = (PickupEntity) world.getBlockEntity(pos);
             if (entity instanceof ServerPlayerEntity player && weaponPickup.use()) {
                 if (!player.getInventory().containsAny(t -> t.isOf(weapon))) {
-                    if (((QuakePlayer) player).inQuakeArena()) {
+                    if (((QuakePlayer) player).mcquake3$inQuakeArena()) {
                         player.getInventory().insertStack(weapon.slot, new ItemStack(weapon));
 
                         PacketByteBuf buf = PacketByteBufs.create();

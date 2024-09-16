@@ -3,7 +3,7 @@ package com.bytemaniak.mcquake3.entity;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
@@ -97,7 +97,7 @@ public class PortalEntity extends PropEntity implements GeoEntity {
                 Direction facing = Direction.byId(dataTracker.get(FACING));
                 facing = facing.rotateYClockwise();
                 setFacing(facing);
-            } else ((QuakePlayer)player).setPortalToLink(this);
+            } else ((QuakePlayer)player).mcquake3$setPortalToLink(this);
             return ActionResult.SUCCESS;
         }
     }

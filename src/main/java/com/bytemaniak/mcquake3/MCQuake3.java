@@ -17,6 +17,7 @@ public class MCQuake3 implements ModInitializer, PreLaunchEntrypoint {
 
 		RecipeTypes.registerRecipeTypes();
 		Weapons.loadItems();
+		Particles.registerParticles();
 		CraftingItems.loadCraftingItems();
 		Blocks.loadBlocks();
 		Entities.loadEntities();

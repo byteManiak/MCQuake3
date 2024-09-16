@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MusicTracker.class)
-public abstract class MusicTrackerMixin {
+public class MusicTrackerMixin {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getMusicType()Lnet/minecraft/sound/MusicSound;"))
     private MusicSound playQuakeMusic(MinecraftClient instance, Operation<MusicSound> original) {
         QuakePlayer player = (QuakePlayer) instance.player;
-        if (player != null && player.inQuakeArena()) return Sounds.Q3_MUSIC;
+        if (player != null && player.mcquake3$inQuakeArena()) return Sounds.Q3_MUSIC;
 
         return original.call(instance);
     }

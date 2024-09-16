@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Particles;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.TrackedSound;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -57,5 +57,5 @@ public class PlasmaBall extends SimpleProjectile {
     }
 
     @Override
-    protected ParticleEffect getParticleType() { return ParticleTypes.ELECTRIC_SPARK; }
+    protected ParticleEffect getParticleType() { return Particles.PLASMA_SPARK; }
 }

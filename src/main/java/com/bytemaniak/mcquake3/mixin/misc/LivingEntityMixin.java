@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
-import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
+import com.bytemaniak.mcquake3.entity.ItemEntityGotoNonHotbar;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.*;
 import com.bytemaniak.mcquake3.render.QuadDamageGlintRenderer;

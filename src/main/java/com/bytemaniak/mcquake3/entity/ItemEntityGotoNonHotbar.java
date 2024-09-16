@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.items;
+package com.bytemaniak.mcquake3.entity;
 
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import net.minecraft.entity.ItemEntity;

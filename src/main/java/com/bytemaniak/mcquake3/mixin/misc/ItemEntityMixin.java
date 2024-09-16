@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.mixin.misc;
 
-import com.bytemaniak.mcquake3.items.ItemEntityGotoNonHotbar;
+import com.bytemaniak.mcquake3.entity.ItemEntityGotoNonHotbar;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

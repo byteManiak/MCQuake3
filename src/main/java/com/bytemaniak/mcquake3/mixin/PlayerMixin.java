@@ -58,9 +58,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void writeQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putString("quake_player_sounds", getPlayerVoice());
-        nbt.putInt("quake_energy_shield", getEnergyShield());
-        nbt.putBoolean("has_ql_refire_rate", hasQLRefireRate());
+        nbt.putString("quake_player_sounds", mcquake3$getPlayerVoice());
+        nbt.putInt("quake_energy_shield", mcquake3$getEnergyShield());
+        nbt.putBoolean("has_ql_refire_rate", mcquake3$hasQLRefireRate());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -69,7 +69,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         dataTracker.set(HAS_QL_REFIRE_RATE, nbt.getBoolean("has_ql_refire_rate"));
 
         String quakePlayerSounds = nbt.getString("quake_player_sounds");
-        setPlayerVoice(quakePlayerSounds);
+        mcquake3$setPlayerVoice(quakePlayerSounds);
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -96,7 +96,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @WrapOperation(method = "handleFallDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"))
     public boolean reduceFallDistanceInQuakeArena(PlayerEntity player, float fallDistance, float damageMultiplier, DamageSource damageSource, Operation<Boolean> original) {
-        if (inQuakeArena())
+        if (mcquake3$inQuakeArena())
             fallDistance = Float.max(0.f, fallDistance - FALL_DISTANCE_MODIFIER);
 
         return original.call(player, fallDistance, damageMultiplier, damageSource);
@@ -111,8 +111,8 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @WrapOperation(method = "jump", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;jump()V"))
     private void playQuakeJumpSound(PlayerEntity player, Operation<Void> original) {
-        if (quakePlayerSoundsEnabled()) {
-            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
+        if (mcquake3$quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(mcquake3$getPlayerVoice());
             getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.JUMP), SoundCategory.PLAYERS, 1, 1);
         }
 
@@ -121,7 +121,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @WrapOperation(method = "dropInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameRules;getBoolean(Lnet/minecraft/world/GameRules$Key;)Z"))
     private boolean noDropInventoryInQuakeArena(GameRules rules, GameRules.Key<GameRules.BooleanRule> rule, Operation<Boolean> original) {
-        if (inQuakeArena()) return true;
+        if (mcquake3$inQuakeArena()) return true;
 
         return original.call(rules, rule);
     }
@@ -136,15 +136,15 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageSource;isScaledWithDifficulty()Z"))
     private boolean normalizeDamageInQuakeArena(DamageSource source, Operation<Boolean> original) {
-        if (inQuakeArena()) return false;
+        if (mcquake3$inQuakeArena()) return false;
 
         return original.call(source);
     }
 
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
     private boolean absorbDamageToEnergyShieldInQuakeArena(PlayerEntity player, DamageSource source, float amount, Operation<Boolean> original) {
-        if (inQuakeArena()) {
-            int energyShield = getEnergyShield();
+        if (mcquake3$inQuakeArena()) {
+            int energyShield = mcquake3$getEnergyShield();
             float damage = MiscUtils.fromMCDamage(amount);
             if (energyShield > damage * 0.66f) {
                 energyShield -= (int) (damage * 0.66f);
@@ -154,25 +154,25 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
                 energyShield = 0;
             }
 
-            if (!getWorld().isClient) setEnergyShield(energyShield);
+            if (!getWorld().isClient) mcquake3$setEnergyShield(energyShield);
             amount = MiscUtils.toMCDamage(damage);
         }
 
         return original.call(player, source, amount);
     }
 
-    public boolean inQuakeArena() {
+    public boolean mcquake3$inQuakeArena() {
         return getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE && !isCreative() && !isSpectator();
     }
 
-    public long getWeaponTick(int id) { return weaponTicks[id]; }
-    public void setWeaponTick(int id, long tick) { weaponTicks[id] = tick; }
-    public boolean hasQLRefireRate() { return dataTracker.get(HAS_QL_REFIRE_RATE); }
-    public void setQLRefireRate(boolean hasQLRefire) { dataTracker.set(HAS_QL_REFIRE_RATE, hasQLRefire); }
+    public long mcquake3$getWeaponTick(int id) { return weaponTicks[id]; }
+    public void mcquake3$setWeaponTick(int id, long tick) { weaponTicks[id] = tick; }
+    public boolean mcquake3$hasQLRefireRate() { return dataTracker.get(HAS_QL_REFIRE_RATE); }
+    public void mcquake3$setQLRefireRate(boolean hasQLRefire) { dataTracker.set(HAS_QL_REFIRE_RATE, hasQLRefire); }
 
     // Scroll to the next available slot in the hotbar in case
     // the currently held weapon has run out of ammo
-    public void scrollToNextSuitableSlot() {
+    public void mcquake3$scrollToNextSuitableSlot() {
         PlayerInventory inv = getInventory();
         int slot = inv.selectedSlot;
         int nextSlot = slot;
@@ -193,36 +193,36 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         } while (nextSlot != slot);
     }
 
-    public int getCurrentQuakeWeaponId() {
+    public int mcquake3$getCurrentQuakeWeaponId() {
         if (getMainHandStack().getItem() instanceof Weapon weapon) return weapon.slot;
         return -1;
     }
 
-    public int getEnergyShield() { return dataTracker.get(QUAKE_ARMOR); }
-    public void setEnergyShield(int amount) {
+    public int mcquake3$getEnergyShield() { return dataTracker.get(QUAKE_ARMOR); }
+    public void mcquake3$setEnergyShield(int amount) {
         dataTracker.set(QUAKE_ARMOR, amount);
     }
-    public void addEnergyShield(int amount) {
+    public void mcquake3$addEnergyShield(int amount) {
         int currentShield = dataTracker.get(QUAKE_ARMOR);
         currentShield += amount; if (currentShield > 200) currentShield = 200;
         dataTracker.set(QUAKE_ARMOR, currentShield);
     }
 
-    public boolean quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
-    public SoundEvent getPlayerDeathSound() { return this.getDeathSound(); }
-    public String getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
-    public void setPlayerVoice(String soundsSet) {
+    public boolean mcquake3$quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
+    public SoundEvent mcquake3$getPlayerDeathSound() { return this.getDeathSound(); }
+    public String mcquake3$getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
+    public void mcquake3$setPlayerVoice(String soundsSet) {
         dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
     }
 
-    public void taunt() {
-        if (quakePlayerSoundsEnabled()) {
-            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(getPlayerVoice());
+    public void mcquake3$taunt() {
+        if (mcquake3$quakePlayerSoundsEnabled()) {
+            Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(mcquake3$getPlayerVoice());
             getWorld().playSoundFromEntity(null, this, SoundEvent.of(playerSounds.TAUNT), SoundCategory.NEUTRAL, 1, 1);
         }
     }
 
-    public void setPortalToLink(PortalEntity entity) {
+    public void mcquake3$setPortalToLink(PortalEntity entity) {
         int x = entity.getBlockX();
         int y = entity.getBlockY();
         int z = entity.getBlockZ();
@@ -230,7 +230,7 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         portalToLink = entity.getId();
     }
 
-    public void setLinkedPortalCoords() {
+    public void mcquake3$setLinkedPortalCoords() {
         if (portalToLink == -1) return;
 
         Entity entity = getWorld().getEntityById(portalToLink);
@@ -250,6 +250,6 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         }
     }
 
-    public void setCurrentlyEditingArena(String arenaName) { currentlyEditingArena = arenaName; }
-    public String getCurrentlyEditingArena() { return currentlyEditingArena; }
+    public void mcquake3$setCurrentlyEditingArena(String arenaName) { currentlyEditingArena = arenaName; }
+    public String mcquake3$getCurrentlyEditingArena() { return currentlyEditingArena; }
 }

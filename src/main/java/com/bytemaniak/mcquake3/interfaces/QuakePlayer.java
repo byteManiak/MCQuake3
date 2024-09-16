@@ -4,34 +4,36 @@ import com.bytemaniak.mcquake3.entity.PortalEntity;
 import net.minecraft.sound.SoundEvent;
 
 public interface QuakePlayer {
-    boolean inQuakeArena();
+    boolean mcquake3$inQuakeArena();
 
-    int getEnergyShield();
-    void setEnergyShield(int amount);
-    void addEnergyShield(int amount);
+    int mcquake3$getEnergyShield();
+    void mcquake3$setEnergyShield(int amount);
+    void mcquake3$addEnergyShield(int amount);
 
-    int getCurrentQuakeWeaponId();
+    int mcquake3$getCurrentQuakeWeaponId();
 
-    long getWeaponTick(int id);
-    void setWeaponTick(int id, long tick);
-    boolean hasQLRefireRate();
-    void setQLRefireRate(boolean hasQLRefire);
-    void scrollToNextSuitableSlot();
+    long mcquake3$getWeaponTick(int id);
+    void mcquake3$setWeaponTick(int id, long tick);
+    boolean mcquake3$hasQLRefireRate();
+    void mcquake3$setQLRefireRate(boolean hasQLRefire);
+    void mcquake3$scrollToNextSuitableSlot();
 
-    boolean quakePlayerSoundsEnabled();
+    boolean mcquake3$quakePlayerSoundsEnabled();
 
-    String getPlayerVoice();
-    void setPlayerVoice(String soundsSet);
-    SoundEvent getPlayerDeathSound();
+    String mcquake3$getPlayerVoice();
+    void mcquake3$setPlayerVoice(String soundsSet);
+    SoundEvent mcquake3$getPlayerDeathSound();
 
-    void taunt();
+    void mcquake3$taunt();
 
-    void setPortalToLink(PortalEntity entity);
-    void setLinkedPortalCoords();
+    void mcquake3$setPortalToLink(PortalEntity entity);
+    void mcquake3$setLinkedPortalCoords();
 
-    void setCurrentlyEditingArena(String arenaName);
-    String getCurrentlyEditingArena();
+    void mcquake3$setCurrentlyEditingArena(String arenaName);
+    String mcquake3$getCurrentlyEditingArena();
 
-    boolean isPlayingHum();
-    boolean isPlayingAttack();
+    boolean mcquake3$isPlayingHum();
+    boolean mcquake3$isPlayingAttack();
+
+    boolean mcquake3$hasQuadDamage();
 }

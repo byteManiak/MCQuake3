@@ -47,7 +47,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private List<ServerPlayerEntity> quakePlayers;
 
     private List<ServerPlayerEntity> getQuakePlayers(ServerWorld world) {
-        return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
+        return world.getPlayers(player -> ((QuakePlayer)player).mcquake3$inQuakeArena());
     }
 
     public void recordDeath(ServerPlayerEntity player, DamageSource damageSource) {
@@ -85,7 +85,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         if (!player.isInTeleportationState()) {
             QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint =
                     arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
-            player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
+            player.networkHandler.requestTeleport(spawnpoint.position().x, spawnpoint.position().y, spawnpoint.position().z, spawnpoint.yaw(), 0);
 
             player.getInventory().clear();
             player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));

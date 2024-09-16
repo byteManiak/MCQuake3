@@ -29,7 +29,7 @@ public class Tool extends Item{
         if (world.isClient) return TypedActionResult.pass(user.getStackInHand(hand));
 
         QuakePlayer player = (QuakePlayer) user;
-        player.setLinkedPortalCoords();
+        player.mcquake3$setLinkedPortalCoords();
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 }

@@ -37,7 +37,7 @@ public class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z"))
     private boolean cancelVanillaControlsInQuakeArena(KeyBinding key, Operation<Boolean> original) {
         MinecraftClient instance = MinecraftClient.getInstance();
-        if (!((QuakePlayer)instance.player).inQuakeArena())
+        if (!((QuakePlayer)instance.player).mcquake3$inQuakeArena())
             return original.call(key);
 
         boolean disallowedKeyPressed = key.equals(instance.options.inventoryKey) ||

@@ -22,9 +22,9 @@ public abstract class EnergyShield extends Pickup {
 
             if (entity instanceof PlayerEntity player) {
                 QuakePlayer quakePlayer = (QuakePlayer) player;
-                if (quakePlayer.getEnergyShield() == 200) return;
+                if (quakePlayer.mcquake3$getEnergyShield() == 200) return;
 
-                quakePlayer.addEnergyShield(armorValue);
+                quakePlayer.mcquake3$addEnergyShield(armorValue);
                 armorPickup.use();
                 world.markDirty(pos);
             }

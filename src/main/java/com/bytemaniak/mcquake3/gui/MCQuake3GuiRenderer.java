@@ -25,14 +25,14 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
 
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
 
-        if (player.inQuakeArena()) {
+        if (player.mcquake3$inQuakeArena()) {
             Window window = MinecraftClient.getInstance().getWindow();
             int x = window.getScaledWidth()/2;
             int y = window.getScaledHeight() - 10;
             int w = window.getScaledWidth() - 32;
-            int id = player.getCurrentQuakeWeaponId();
+            int id = player.mcquake3$getCurrentQuakeWeaponId();
             if (id > 0) {
-                int slotChar = '\uFFF0'+player.getCurrentQuakeWeaponId();
+                int slotChar = '\uFFF0'+player.mcquake3$getCurrentQuakeWeaponId();
                 MiscUtils.drawText(matrixStack, Character.toString((char)slotChar), x - 150, y - 16, 0x00FFFFFF);
                 if (plr.getMainHandStack().getItem() instanceof Weapon weapon) {
                     int weaponAmmo = 0;
@@ -56,7 +56,7 @@ public class MCQuake3GuiRenderer implements HudRenderCallback {
             RenderSystem.setShaderTexture(0, plr.getSkinTexture());
             PlayerSkinDrawer.draw(matrixStack, x - 50, y-9, 16, false, false);
 
-            int playerArmor = player.getEnergyShield();
+            int playerArmor = player.mcquake3$getEnergyShield();
             int armorColor = (playerArmor < 100) ?
                     (((int)(0xFF * (100-playerArmor)/100.f)  << 16) + ((int)(0xFF * playerArmor/100.f) << 8)) :
                     (((int)(0xFF * (200-playerArmor)/100.f)) << 8)  + ((int)(0xFF * (playerArmor-100)/100.f));

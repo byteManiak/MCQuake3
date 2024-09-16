@@ -9,6 +9,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PlayerClassUpdateC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
-        ((QuakePlayer)player).setPlayerVoice(buf.readString());
+        ((QuakePlayer)player).mcquake3$setPlayerVoice(buf.readString());
     }
 }

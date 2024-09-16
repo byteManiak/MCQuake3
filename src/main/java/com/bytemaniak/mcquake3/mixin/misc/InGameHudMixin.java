@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.At;
 public class InGameHudMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHotbar(FLnet/minecraft/client/util/math/MatrixStack;)V"))
     private void cancelRenderHotbarInQuakeArena(InGameHud hud, float tickDelta, MatrixStack matrices, Operation<Void> original) {
-        if (((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena()) return;
+        if (((QuakePlayer)MinecraftClient.getInstance().player).mcquake3$inQuakeArena()) return;
 
         original.call(hud, tickDelta, matrices);
     }
 
     @WrapOperation(method = "render", at =@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderExperienceBar(Lnet/minecraft/client/util/math/MatrixStack;I)V"))
     private void cancelExperienceBarInQuakeArena(InGameHud hud, MatrixStack matrices, int x, Operation<Void> original) {
-        if (((QuakePlayer)MinecraftClient.getInstance().player).inQuakeArena()) return;
+        if (((QuakePlayer)MinecraftClient.getInstance().player).mcquake3$inQuakeArena()) return;
 
         original.call(hud, matrices, x);
     }
@@ -29,7 +29,7 @@ public class InGameHudMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;hasStatusBars()Z"))
     private boolean hideStatusBarsInQuakeArena(ClientPlayerInteractionManager instance, Operation<Boolean> original) {
         QuakePlayer player = (QuakePlayer) MinecraftClient.getInstance().player;
-        if (player.inQuakeArena()) return false;
+        if (player.mcquake3$inQuakeArena()) return false;
 
         return original.call(instance);
     }

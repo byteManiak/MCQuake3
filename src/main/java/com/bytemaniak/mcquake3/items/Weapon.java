@@ -105,7 +105,7 @@ public abstract class Weapon extends Item implements GeoItem {
 
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
-        long refireRate = player.hasQLRefireRate() ? refireRateQL : refireRateQ3;
+        long refireRate = player.mcquake3$hasQLRefireRate() ? refireRateQL : refireRateQ3;
 
         StatusEffectInstance playerHaste = user.getStatusEffect(StatusEffects.HASTE);
         float refireModifier = 1;
@@ -113,7 +113,7 @@ public abstract class Weapon extends Item implements GeoItem {
         if (playerHaste != null)
             refireModifier = playerHaste.getAmplifier() > 3 ? 0.7f : (1-playerHaste.getAmplifier()*0.1f);
 
-        if (currentTick - player.getWeaponTick(slot) >= (long)((float)refireRate * refireModifier)) {
+        if (currentTick - player.mcquake3$getWeaponTick(slot) >= (long)((float)refireRate * refireModifier)) {
             PlayerEntity p = (PlayerEntity) user;
             boolean hasAmmo = false;
 
@@ -143,11 +143,11 @@ public abstract class Weapon extends Item implements GeoItem {
                 if (world.isClient)
                     // Scroll to the next available slot in the hotbar in case
                     // the currently held weapon has run out of ammo
-                    player.scrollToNextSuitableSlot();
+                    player.mcquake3$scrollToNextSuitableSlot();
                 world.playSoundFromEntity(null, user, Sounds.NO_AMMO, SoundCategory.PLAYERS, 1, 1);
             }
 
-            player.setWeaponTick(slot, currentTick);
+            player.mcquake3$setWeaponTick(slot, currentTick);
         }
     }
 

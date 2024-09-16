@@ -10,6 +10,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class WeaponRefireUpdateC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         QuakePlayer qPlayer = (QuakePlayer) player;
-        qPlayer.setQLRefireRate(!qPlayer.hasQLRefireRate());
+        qPlayer.mcquake3$setQLRefireRate(!qPlayer.mcquake3$hasQLRefireRate());
     }
 }

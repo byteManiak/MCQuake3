@@ -46,8 +46,8 @@ public class JoinLeaveMatchS2CPacket {
                 player.changeGameMode(GameMode.ADVENTURE);
 
                 QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint = arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
-                Vec3d position = spawnpoint.position;
-                player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
+                Vec3d position = spawnpoint.position();
+                player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw(), 0);
                 player.getInventory().clear();
                 player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
                 player.getInventory().insertStack(Weapons.MACHINEGUN.slot, new ItemStack(Weapons.MACHINEGUN));

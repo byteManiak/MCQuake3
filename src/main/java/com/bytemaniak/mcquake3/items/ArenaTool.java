@@ -59,7 +59,7 @@ public class ArenaTool extends Item {
         }
 
         QuakePlayer player = (QuakePlayer)user;
-        String arenaName = player.getCurrentlyEditingArena();
+        String arenaName = player.mcquake3$getCurrentlyEditingArena();
 
         if (user.isSneaking()) {
             if (arenaName.isEmpty()) {

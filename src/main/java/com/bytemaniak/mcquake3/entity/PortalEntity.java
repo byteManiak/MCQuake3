@@ -97,7 +97,7 @@ public class PortalEntity extends PropEntity implements GeoEntity {
                 Direction facing = Direction.byId(dataTracker.get(FACING));
                 facing = facing.rotateYClockwise();
                 setFacing(facing);
-            } else ((QuakePlayer)player).setPortalToLink(this);
+            } else ((QuakePlayer)player).mcquake3$setPortalToLink(this);
             return ActionResult.SUCCESS;
         }
     }

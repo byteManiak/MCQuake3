@@ -1,5 +1,6 @@
 package com.bytemaniak.mcquake3.render;
 
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -20,10 +21,6 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity>
     private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
     private final PlayerEntityModel<T> model;
 
-    public interface QuadDamageVisibility {
-        boolean hasQuadDamage();
-    }
-
     public QuadDamageGlintRenderer(
             FeatureRendererContext<T, PlayerEntityModel<T>> featureRendererContext,
             EntityModelLoader loader) {
@@ -41,7 +38,7 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity>
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if (!((QuadDamageVisibility)entity).hasQuadDamage()) return;
+        if (!((QuakePlayer)entity).mcquake3$hasQuadDamage()) return;
 
         float f = (float)entity.age + tickDelta;
         EntityModel<T> entityModel = this.getEnergySwirlModel();

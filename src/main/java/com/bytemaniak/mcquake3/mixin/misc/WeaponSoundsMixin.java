@@ -136,8 +136,8 @@ public abstract class WeaponSoundsMixin extends LivingEntity implements QuakePla
     }
 
     @Environment(EnvType.CLIENT)
-    @Unique public boolean isPlayingHum() { return playingHumSound; }
+    @Unique public boolean mcquake3$isPlayingHum() { return playingHumSound; }
 
     @Environment(EnvType.CLIENT)
-    @Unique public boolean isPlayingAttack() { return playingAttackSound; }
+    @Unique public boolean mcquake3$isPlayingAttack() { return playingAttackSound; }
 }

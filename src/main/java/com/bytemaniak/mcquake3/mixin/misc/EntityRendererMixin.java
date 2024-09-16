@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class EntityRendererMixin {
     @WrapOperation(method = "renderLabelIfPresent", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSneaky()Z"))
     private boolean hidePlayerNamesInQuakeArena(Entity entity, Operation<Boolean> original) {
-        boolean isInQuakeArena = (entity instanceof QuakePlayer player && player.inQuakeArena());
+        boolean isInQuakeArena = (entity instanceof QuakePlayer player && player.mcquake3$inQuakeArena());
         if (isInQuakeArena) return true;
 
         return original.call(entity);

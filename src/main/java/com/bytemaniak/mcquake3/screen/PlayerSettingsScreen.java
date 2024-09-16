@@ -113,32 +113,32 @@ public class PlayerSettingsScreen extends Screen {
         ButtonWidget voiceSelectionText = ButtonWidget.builder(Text.of("Player voice"), (button -> {}))
                 .dimensions(20, 20, (int)(width/6.5f), 20).build();
 
-        String playerVoice = ((QuakePlayer)MinecraftClient.getInstance().player).getPlayerVoice();
+        String playerVoice = ((QuakePlayer)MinecraftClient.getInstance().player).mcquake3$getPlayerVoice();
 
         PlayerVoiceList voiceList = new PlayerVoiceList(client, 20, 45, (int) (width / 6.5f), height - 65, 18);
         voiceList.setSelected(voiceList.children().stream()
                 .filter(e -> e.playerSounds.playerClass.equals(playerVoice))
                 .findFirst().orElse(voiceList.getFirst()));
 
-        String refireRateButtonText = user.hasQLRefireRate() ? "Refire rates: Quake Live" : "Refire rates: Quake 3";
+        String refireRateButtonText = user.mcquake3$hasQLRefireRate() ? "Refire rates: Quake Live" : "Refire rates: Quake 3";
         toggleRefireRates = ButtonWidget.builder(Text.of(refireRateButtonText), (button) -> {
-            user.setQLRefireRate(!user.hasQLRefireRate());
+            user.mcquake3$setQLRefireRate(!user.mcquake3$hasQLRefireRate());
 
             String newButtonText = "Refire rates: Quake ";
-            if (user.hasQLRefireRate()) newButtonText += "Live";
+            if (user.mcquake3$hasQLRefireRate()) newButtonText += "Live";
             else newButtonText += "3";
 
             toggleRefireRates.setMessage(Text.of(newButtonText));
             ClientPlayNetworking.send(Packets.WEAPON_REFIRE_UPDATE, PacketByteBufs.empty());
         }).dimensions(width - 150, height - 48, 130, 20).build();
 
-        String joinLeaveText = user.inQuakeArena() ? "Leave Quake match" : "Join Quake match";
+        String joinLeaveText = user.mcquake3$inQuakeArena() ? "Leave Quake match" : "Join Quake match";
         ButtonWidget joinLeaveMatch =
                 ButtonWidget.builder(
                                 Text.of(joinLeaveText),
                                 (button -> {
                                     PacketByteBuf buf = PacketByteBufs.create();
-                                    buf.writeBoolean(user.inQuakeArena());
+                                    buf.writeBoolean(user.mcquake3$inQuakeArena());
                                     ClientPlayNetworking.send(Packets.JOIN_LEAVE_MATCH, buf);
                                     PlayerSettingsScreen.this.close();
                                 }))

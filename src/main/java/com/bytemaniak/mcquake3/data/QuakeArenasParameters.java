@@ -17,15 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuakeArenasParameters extends PersistentState {
     public static class ArenaData {
-        public static class Spawnpoint {
-            public final Vec3d position;
-            public final float yaw;
-
-            public Spawnpoint(Vec3d position, float yaw) {
-                this.position = position;
-                this.yaw = yaw;
-            }
-        }
+        public record Spawnpoint(Vec3d position, float yaw) {}
 
         public String arenaName;
         public final List<Spawnpoint> spawnpoints = new ArrayList<>();

@@ -10,6 +10,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class PlayerTauntC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         QuakePlayer qPlayer = (QuakePlayer) player;
-        qPlayer.taunt();
+        qPlayer.mcquake3$taunt();
     }
 }

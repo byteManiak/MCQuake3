@@ -14,7 +14,7 @@ public class PlayerManagerMixin {
     private void copyFromQuakePlayer(ServerPlayerEntity newPlayer, ServerPlayerEntity oldPlayer, boolean alive, Operation<Void> original) {
         QuakePlayer newQuakePlayer = (QuakePlayer) newPlayer;
         QuakePlayer oldQuakePlayer = (QuakePlayer) oldPlayer;
-        newQuakePlayer.setPlayerVoice(oldQuakePlayer.getPlayerVoice());
+        newQuakePlayer.mcquake3$setPlayerVoice(oldQuakePlayer.mcquake3$getPlayerVoice());
 
         original.call(newPlayer, oldPlayer, alive);
     }

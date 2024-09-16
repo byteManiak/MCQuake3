@@ -5,6 +5,7 @@ import com.bytemaniak.mcquake3.network.s2c.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
 public class Packets {
@@ -17,6 +18,7 @@ public class Packets {
     public static final Identifier PLAY_ANNOUNCER_SOUND = Identifier.of("mcquake3:announcer_sound");
     public static final Identifier SEND_ARENA_NAMES = Identifier.of("mcquake3:send_arena_names");
     public static final Identifier FRAGS = Identifier.of("mcquake3:frags");
+    public static final Identifier HIGHEST_FRAGS = Identifier.of("mcquake3:highest_frags");
 
     public static final Identifier JUMPPAD_UPDATE_POWER = Identifier.of("mcquake3:jumppad_update_power");
     public static final Identifier WEAPON_REFIRE_UPDATE = Identifier.of("mcquake3:weapon_refire_update");
@@ -38,6 +40,7 @@ public class Packets {
         ClientPlayNetworking.registerGlobalReceiver(PlayAnnouncerSoundS2CPacket.ID, PlayAnnouncerSoundS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(SendArenaNamesS2CPacket.ID, SendArenaNamesS2CPacket::receive);
         ClientPlayNetworking.registerGlobalReceiver(FragsS2CPacket.ID, FragsS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(HighestFragsS2CPacket.ID, HighestFragsS2CPacket::receive);
     }
 
     public static void registerPackets() {
@@ -50,6 +53,7 @@ public class Packets {
         PayloadTypeRegistry.playS2C().register(PlayAnnouncerSoundS2CPacket.ID, PlayAnnouncerSoundS2CPacket.CODEC);
         PayloadTypeRegistry.playS2C().register(SendArenaNamesS2CPacket.ID, SendArenaNamesS2CPacket.CODEC);
         PayloadTypeRegistry.playS2C().register(FragsS2CPacket.ID, FragsS2CPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(HighestFragsS2CPacket.ID, HighestFragsS2CPacket.CODEC);
 
         PayloadTypeRegistry.playC2S().register(JumppadPowerC2SPacket.ID, JumppadPowerC2SPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(WeaponRefireUpdateC2SPacket.ID, WeaponRefireUpdateC2SPacket.CODEC);

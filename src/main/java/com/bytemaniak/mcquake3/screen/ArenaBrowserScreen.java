@@ -75,7 +75,7 @@ public class ArenaBrowserScreen extends Screen {
         ButtonWidget arenasText = ButtonWidget.builder(Text.of("Arenas on server"), (button -> {}))
                 .dimensions(20, height/7 - 28, (int)(width/3), 20).build();
 
-        arenaList = new ArenaList(client, (int)(width/3), (int)(height*2/3), height / 7, 18, 20);
+        arenaList = new ArenaList(client, width/3, height*2/3, height / 7, 18, 20);
         ClientPlayNetworking.send(new GetArenaNamesC2SPacket());
 
         ButtonWidget selectArena = ButtonWidget.builder(Text.of("Select"), (button) -> {

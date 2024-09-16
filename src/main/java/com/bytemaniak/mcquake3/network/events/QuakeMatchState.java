@@ -2,23 +2,27 @@ package com.bytemaniak.mcquake3.network.events;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
 import com.bytemaniak.mcquake3.network.s2c.FragsS2CPacket;
+import com.bytemaniak.mcquake3.network.s2c.HighestFragsS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.PlayAnnouncerSoundS2CPacket;
 import com.bytemaniak.mcquake3.network.s2c.ScrollToSlotS2CPacket;
 import com.bytemaniak.mcquake3.registry.Blocks;
+import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +52,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
     private List<ServerPlayerEntity> quakePlayers;
 
     private List<ServerPlayerEntity> getQuakePlayers(ServerWorld world) {
-        return world.getPlayers(player -> ((QuakePlayer)player).inQuakeArena());
+        return world.getPlayers(player -> ((QuakePlayer)player).mcquake3$inQuakeArena());
     }
 
     public void recordDeath(ServerPlayerEntity player, DamageSource damageSource) {
@@ -66,8 +70,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                     highestFrags = frags;
                 }
 
-                FragsS2CPacket buf = new FragsS2CPacket(frags, highestFrags);
+                FragsS2CPacket buf = new FragsS2CPacket(frags);
                 ServerPlayNetworking.send(attackerPlayer, buf);
+
+                HighestFragsS2CPacket buf2 = new HighestFragsS2CPacket(highestFrags);
+                sendGlobalPacket(buf2);
             }
 
             stats.get(player.getName().getString()).deaths++;
@@ -81,7 +88,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         if (!player.isInTeleportationState()) {
             QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint =
                     arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
-            player.networkHandler.requestTeleport(spawnpoint.position.x, spawnpoint.position.y, spawnpoint.position.z, spawnpoint.yaw, 0);
+            player.networkHandler.requestTeleport(spawnpoint.position().x, spawnpoint.position().y, spawnpoint.position().z, spawnpoint.yaw(), 0);
 
             player.getInventory().clear();
             player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
@@ -102,8 +109,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         // First establish if there are any new players
         for (String name : playerNames) {
             if (stats.get(name) == null) {
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(name+" has joined the arena"));
+                sendGlobalMessage(Text.of(name+" has joined the arena"), false);
 
                 stats.put(name, new PlayerStat());
             }
@@ -113,8 +119,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
         stats.entrySet().removeIf(plr -> {
             boolean remove = playerNames.stream().noneMatch(name -> name.equals(plr.getKey()));
             if (remove)
-                for (ServerPlayerEntity player : quakePlayers)
-                    player.sendMessage(Text.of(plr.getKey()+" has left the arena"));
+                sendGlobalMessage(Text.of(plr.getKey()+" has left the arena"), false);
             return remove;
         });
 
@@ -139,6 +144,11 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             player.sendMessage(message, overlay);
     }
 
+    private void sendGlobalPacket(CustomPayload buf) {
+        for (ServerPlayerEntity player : quakePlayers)
+            ServerPlayNetworking.send(player, buf);
+    }
+
     private void sendGlobalMessageWithSound(String message, SoundEvent sound) {
         sendGlobalMessage(Text.of(message), true);
         sendGlobalSound(sound);
@@ -161,8 +171,7 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
         // No point getting out of warmup state if there aren't at least 2 players
         if (quakePlayers.size() < 2) {
-            for (ServerPlayerEntity player : quakePlayers)
-                player.sendMessage(Text.of("Waiting for more players..."), true);
+            sendGlobalMessage(Text.of("Waiting for more players..."), true);
 
             matchState = MatchState.WARMUP_STATE;
             return;
@@ -174,14 +183,12 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
 
                 if (highestFrags > 0) {
                     // Reset player stats for match start
-                    stats.replaceAll((k, v) -> v = new PlayerStat());
+                    stats.replaceAll((k, v) -> new PlayerStat());
                     highestFrags = 0;
                     winner = "";
 
-                    for (ServerPlayerEntity player : quakePlayers) {
-                        FragsS2CPacket buf = new FragsS2CPacket(0, 0);
-                        ServerPlayNetworking.send(player, buf);
-                    }
+                    sendGlobalPacket(new FragsS2CPacket(0));
+                    sendGlobalPacket(new HighestFragsS2CPacket(0));
                 }
 
                 ticksLeft = MiscUtils.toTicks(11);

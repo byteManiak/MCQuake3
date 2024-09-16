@@ -4,17 +4,14 @@ import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.network.s2c.ScrollToSlotS2CPacket;
-import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,7 +30,7 @@ public abstract class WeaponPickup extends Pickup {
             PickupEntity weaponPickup = (PickupEntity) world.getBlockEntity(pos);
             if (entity instanceof ServerPlayerEntity player && weaponPickup.use()) {
                 if (!player.getInventory().containsAny(t -> t.isOf(weapon))) {
-                    if (((QuakePlayer) player).inQuakeArena()) {
+                    if (((QuakePlayer) player).mcquake3$inQuakeArena()) {
                         player.getInventory().insertStack(weapon.slot, new ItemStack(weapon));
 
                         ScrollToSlotS2CPacket buf = new ScrollToSlotS2CPacket((byte)weapon.slot);

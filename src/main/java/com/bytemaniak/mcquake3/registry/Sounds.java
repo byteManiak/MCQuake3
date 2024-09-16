@@ -145,18 +145,18 @@ public class Sounds {
     public static MusicSound Q3_MUSIC;
 
     public static class PlayerSounds {
-        public Identifier DEATH;
-        public Identifier DROWN;
-        public Identifier FALL;
-        public Identifier GASP;
-        public Identifier JUMP;
-        public Identifier HURT100;
-        public Identifier HURT75;
-        public Identifier HURT50;
-        public Identifier HURT25;
-        public Identifier TAUNT;
+        public final Identifier DEATH;
+        public final Identifier DROWN;
+        public final Identifier FALL;
+        public final Identifier GASP;
+        public final Identifier JUMP;
+        public final Identifier HURT100;
+        public final Identifier HURT75;
+        public final Identifier HURT50;
+        public final Identifier HURT25;
+        public final Identifier TAUNT;
 
-        public String playerClass;
+        public final String playerClass;
 
         public PlayerSounds(String playerClass) {
             this.playerClass = playerClass;
@@ -174,25 +174,25 @@ public class Sounds {
         }
     }
 
-    public static PlayerSounds NONE = new PlayerSounds("Vanilla");
-    public static PlayerSounds ANGELYSS = new PlayerSounds("Angelyss");
-    public static PlayerSounds ARACHNA = new PlayerSounds("Arachna");
-    public static PlayerSounds ASSASSIN = new PlayerSounds("Assassin");
-    public static PlayerSounds AYUMI = new PlayerSounds("Ayumi");
-    public static PlayerSounds BERET = new PlayerSounds("Beret");
-    public static PlayerSounds GARGOYLE = new PlayerSounds("Gargoyle");
-    public static PlayerSounds KYONSHI = new PlayerSounds("Kyonshi");
-    public static PlayerSounds LIZ = new PlayerSounds("Liz");
-    public static PlayerSounds MAJOR = new PlayerSounds("Major");
-    public static PlayerSounds MERMAN = new PlayerSounds("Merman");
-    public static PlayerSounds NEKO = new PlayerSounds("Neko");
-    public static PlayerSounds PENGUIN = new PlayerSounds("Penguin");
-    public static PlayerSounds SARGE = new PlayerSounds("Sarge");
-    public static PlayerSounds SERGEI = new PlayerSounds("Sergei");
-    public static PlayerSounds SKELEBOT = new PlayerSounds("Skelebot");
-    public static PlayerSounds SMARINE = new PlayerSounds("Smarine");
-    public static PlayerSounds SORCERESS = new PlayerSounds("Sorceress");
-    public static PlayerSounds TONY = new PlayerSounds("Tony");
+    public static final PlayerSounds NONE = new PlayerSounds("Vanilla");
+    public static final PlayerSounds ANGELYSS = new PlayerSounds("Angelyss");
+    public static final PlayerSounds ARACHNA = new PlayerSounds("Arachna");
+    public static final PlayerSounds ASSASSIN = new PlayerSounds("Assassin");
+    public static final PlayerSounds AYUMI = new PlayerSounds("Ayumi");
+    public static final PlayerSounds BERET = new PlayerSounds("Beret");
+    public static final PlayerSounds GARGOYLE = new PlayerSounds("Gargoyle");
+    public static final PlayerSounds KYONSHI = new PlayerSounds("Kyonshi");
+    public static final PlayerSounds LIZ = new PlayerSounds("Liz");
+    public static final PlayerSounds MAJOR = new PlayerSounds("Major");
+    public static final PlayerSounds MERMAN = new PlayerSounds("Merman");
+    public static final PlayerSounds NEKO = new PlayerSounds("Neko");
+    public static final PlayerSounds PENGUIN = new PlayerSounds("Penguin");
+    public static final PlayerSounds SARGE = new PlayerSounds("Sarge");
+    public static final PlayerSounds SERGEI = new PlayerSounds("Sergei");
+    public static final PlayerSounds SKELEBOT = new PlayerSounds("Skelebot");
+    public static final PlayerSounds SMARINE = new PlayerSounds("Smarine");
+    public static final PlayerSounds SORCERESS = new PlayerSounds("Sorceress");
+    public static final PlayerSounds TONY = new PlayerSounds("Tony");
 
     private static void loadPlayerSounds(PlayerSounds playerSounds) {
         Registry.register(Registries.SOUND_EVENT, playerSounds.DEATH, SoundEvent.of(playerSounds.DEATH));

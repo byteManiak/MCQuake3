@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Packets;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.codec.PacketCodec;
@@ -16,7 +16,7 @@ public record PlayerClassUpdateC2SPacket(String playerClass) implements CustomPa
     );
 
     public static void receive(PlayerClassUpdateC2SPacket payload, ServerPlayNetworking.Context context) {
-        context.server().execute(() -> ((QuakePlayer)context.player()).setPlayerVoice(payload.playerClass));
+        context.server().execute(() -> ((QuakePlayer)context.player()).mcquake3$setPlayerVoice(payload.playerClass));
     }
 
     @Override

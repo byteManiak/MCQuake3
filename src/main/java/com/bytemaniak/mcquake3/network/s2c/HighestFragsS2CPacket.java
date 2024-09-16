@@ -10,17 +10,17 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 
-public record FragsS2CPacket(int frags) implements CustomPayload {
-    public static final CustomPayload.Id<FragsS2CPacket> ID = new CustomPayload.Id<>(Packets.FRAGS);
-    public static final PacketCodec<ByteBuf, FragsS2CPacket> CODEC = PacketCodec.tuple(
-            PacketCodecs.INTEGER, FragsS2CPacket::frags,
-            FragsS2CPacket::new
+public record HighestFragsS2CPacket(int highestFrags) implements CustomPayload {
+    public static final CustomPayload.Id<HighestFragsS2CPacket> ID = new CustomPayload.Id<>(Packets.HIGHEST_FRAGS);
+    public static final PacketCodec<ByteBuf, HighestFragsS2CPacket> CODEC = PacketCodec.tuple(
+            PacketCodecs.INTEGER, HighestFragsS2CPacket::highestFrags,
+            HighestFragsS2CPacket::new
     );
 
     @Environment(EnvType.CLIENT)
-    public static void receive(FragsS2CPacket payload, ClientPlayNetworking.Context context) {
+    public static void receive(HighestFragsS2CPacket payload, ClientPlayNetworking.Context context) {
         context.client().execute(() -> {
-            Renderers.hudRenderer.frags = payload.frags;
+            Renderers.hudRenderer.frags = payload.highestFrags;
         });
     }
 

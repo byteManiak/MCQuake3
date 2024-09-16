@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.util;
+package com.bytemaniak.mcquake3.interfaces;
 
 import net.minecraft.util.shape.VoxelShape;
 

@@ -2,7 +2,7 @@ package com.bytemaniak.mcquake3.blocks.shield;
 
 import com.bytemaniak.mcquake3.blocks.Pickup;
 import com.bytemaniak.mcquake3.blocks.PickupEntity;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,9 +22,9 @@ public abstract class EnergyShield extends Pickup {
 
             if (entity instanceof PlayerEntity player) {
                 QuakePlayer quakePlayer = (QuakePlayer) player;
-                if (quakePlayer.getEnergyShield() == 200) return;
+                if (quakePlayer.mcquake3$getEnergyShield() == 200) return;
 
-                quakePlayer.addEnergyShield(armorValue);
+                quakePlayer.mcquake3$addEnergyShield(armorValue);
                 armorPickup.use();
                 world.markDirty(pos);
             }

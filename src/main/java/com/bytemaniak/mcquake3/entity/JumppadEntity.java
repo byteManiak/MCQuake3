@@ -5,7 +5,7 @@ import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.registry.Weapons;
 import com.bytemaniak.mcquake3.screen.JumppadScreenHandler;
-import com.bytemaniak.mcquake3.util.MultiCollidable;
+import com.bytemaniak.mcquake3.interfaces.MultiCollidable;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityType;

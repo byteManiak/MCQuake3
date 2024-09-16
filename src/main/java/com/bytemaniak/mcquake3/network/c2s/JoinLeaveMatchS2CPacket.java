@@ -57,8 +57,8 @@ public record JoinLeaveMatchS2CPacket(boolean leave) implements CustomPayload {
                     player.changeGameMode(GameMode.ADVENTURE);
 
                     QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint = arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));
-                    Vec3d position = spawnpoint.position;
-                    player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw, 0);
+                    Vec3d position = spawnpoint.position();
+                    player.teleport(server.getWorld(Blocks.Q3_DIMENSION), position.x, position.y, position.z, spawnpoint.yaw(), 0);
                     player.getInventory().clear();
                     player.getInventory().insertStack(Weapons.GAUNTLET.slot, new ItemStack(Weapons.GAUNTLET));
                     player.getInventory().insertStack(Weapons.MACHINEGUN.slot, new ItemStack(Weapons.MACHINEGUN));
@@ -67,7 +67,7 @@ public record JoinLeaveMatchS2CPacket(boolean leave) implements CustomPayload {
                     ScrollToSlotS2CPacket replyBuf = new ScrollToSlotS2CPacket((byte)Weapons.MACHINEGUN.slot);
                     ServerPlayNetworking.send(player, replyBuf);
 
-                    FragsS2CPacket replyBuf2 = new FragsS2CPacket(0, 0);
+                    FragsS2CPacket replyBuf2 = new FragsS2CPacket(0);
                     ServerPlayNetworking.send(player, replyBuf2);
                 } else player.sendMessage(Text.of("Arena " + arena.arenaName + " has no spawnpoints"), true);
             }

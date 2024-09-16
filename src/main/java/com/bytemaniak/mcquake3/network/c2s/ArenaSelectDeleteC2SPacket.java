@@ -1,8 +1,8 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Packets;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.codec.PacketCodec;
@@ -34,7 +34,7 @@ public record ArenaSelectDeleteC2SPacket(String arenaName, boolean delete, boole
                 boolean startEditing = payload.startEditing;
                 state.createInitialArenaData(arenaName);
                 if (startEditing) {
-                    ((QuakePlayer) player).setCurrentlyEditingArena(arenaName);
+                    ((QuakePlayer) player).mcquake3$setCurrentlyEditingArena(arenaName);
                     player.sendMessage(Text.of("Selected arena " + arenaName + " to add spawnpoints to"), true);
                 }
             }

@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3.items;
 
 import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.LivingEntity;
@@ -106,7 +106,7 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem, Animat
 
         long currentTick = world.getTime();
         QuakePlayer player = (QuakePlayer) user;
-        long refireRate = player.hasQLRefireRate() ? refireRateQL : refireRateQ3;
+        long refireRate = player.mcquake3$hasQLRefireRate() ? refireRateQL : refireRateQ3;
 
         StatusEffectInstance playerHaste = user.getStatusEffect(StatusEffects.HASTE);
         float refireModifier = 1;
@@ -114,7 +114,7 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem, Animat
         if (playerHaste != null)
             refireModifier = playerHaste.getAmplifier() > 3 ? 0.7f : (1-playerHaste.getAmplifier()*0.1f);
 
-        if (currentTick - player.getWeaponTick(slot) >= (long)((float)refireRate * refireModifier)) {
+        if (currentTick - player.mcquake3$getWeaponTick(slot) >= (long)((float)refireRate * refireModifier)) {
             PlayerEntity p = (PlayerEntity) user;
             boolean hasAmmo = false;
 
@@ -144,11 +144,11 @@ public abstract class Weapon extends Item implements GeoItem, FabricItem, Animat
                 if (world.isClient)
                     // Scroll to the next available slot in the hotbar in case
                     // the currently held weapon has run out of ammo
-                    player.scrollToNextSuitableSlot();
+                    player.mcquake3$scrollToNextSuitableSlot();
                 world.playSoundFromEntity(null, user, Sounds.NO_AMMO, SoundCategory.PLAYERS, 1, 1);
             }
 
-            player.setWeaponTick(slot, currentTick);
+            player.mcquake3$setWeaponTick(slot, currentTick);
         }
     }
 

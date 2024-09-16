@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.items;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ public class Tool extends Item{
         if (world.isClient) return TypedActionResult.pass(user.getStackInHand(hand));
 
         QuakePlayer player = (QuakePlayer) user;
-        player.setLinkedPortalCoords();
+        player.mcquake3$setLinkedPortalCoords();
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 }

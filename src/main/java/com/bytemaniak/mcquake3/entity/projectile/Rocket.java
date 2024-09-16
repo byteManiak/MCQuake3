@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.entity.projectile;
 
 import com.bytemaniak.mcquake3.registry.Entities;
+import com.bytemaniak.mcquake3.registry.Particles;
 import com.bytemaniak.mcquake3.registry.Q3DamageSources;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.sound.TrackedSound;
@@ -11,7 +12,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -58,7 +58,7 @@ public class Rocket extends SimpleProjectile implements GeoEntity {
 
     @Override
     protected ParticleEffect getParticleType() {
-        return ParticleTypes.POOF;
+        return Particles.ROCKET_TRAIL;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.bytemaniak.mcquake3.sound;
 
-import com.bytemaniak.mcquake3.util.QuakePlayer;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.SoundEvent;
 
@@ -15,8 +15,8 @@ public class WeaponHum extends TrackedSound {
     @Override
     public void tick() {
         QuakePlayer player = (QuakePlayer) owner;
-        int id = player.getCurrentQuakeWeaponId();
-        if (id != this.id || !player.isPlayingHum())
+        int id = player.mcquake3$getCurrentQuakeWeaponId();
+        if (id != this.id || !player.mcquake3$isPlayingHum())
             stopSound();
         super.tick();
     }

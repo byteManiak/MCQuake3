@@ -15,17 +15,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 // Code for the quad damage effect was adapted from the EnergySwirlOverlayFeatureRenderer class
-public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M extends PlayerEntityModel<T>>
-        extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity>
+        extends FeatureRenderer<T, PlayerEntityModel<T>> {
     private static final Identifier OVERLAY = new Identifier("textures/entity/creeper/creeper_armor.png");
-    private final PlayerEntityModel<AbstractClientPlayerEntity> model;
+    private final PlayerEntityModel<T> model;
 
     public interface QuadDamageVisibility {
         boolean hasQuadDamage();
     }
 
     public QuadDamageGlintRenderer(
-            FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext,
+            FeatureRendererContext<T, PlayerEntityModel<T>> featureRendererContext,
             EntityModelLoader loader) {
         super(featureRendererContext);
         this.model = new PlayerEntityModel<>(loader.getModelPart(EntityModelLayers.PLAYER), false);
@@ -35,16 +35,16 @@ public class QuadDamageGlintRenderer<T extends AbstractClientPlayerEntity, M ext
         return partialAge * 0.01f;
     }
 
-    protected EntityModel<AbstractClientPlayerEntity> getEnergySwirlModel() {
+    protected EntityModel<T> getEnergySwirlModel() {
         return this.model;
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         if (!((QuadDamageVisibility)entity).hasQuadDamage()) return;
 
         float f = (float)entity.age + tickDelta;
-        EntityModel<AbstractClientPlayerEntity> entityModel = this.getEnergySwirlModel();
+        EntityModel<T> entityModel = this.getEnergySwirlModel();
         entityModel.animateModel(entity, limbAngle, limbDistance, tickDelta);
         this.getContextModel().copyStateTo(entityModel);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEnergySwirl(OVERLAY, this.getEnergySwirlX(f) % 1.0f, f * 0.01f % 1.0f));

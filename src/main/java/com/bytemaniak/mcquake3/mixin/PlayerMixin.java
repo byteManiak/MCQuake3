@@ -1,18 +1,19 @@
 package com.bytemaniak.mcquake3.mixin;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.items.Gauntlet;
 import com.bytemaniak.mcquake3.items.Weapon;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Sounds;
 import com.bytemaniak.mcquake3.util.MiscUtils;
-import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -22,6 +23,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -51,6 +53,9 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     @Unique private final long[] weaponTicks = new long[9];
 
     @Unique private int portalToLink = -1;
+
+    @Unique private final static long TIME_BETWEEN_HURTS = 9;
+    @Unique private long lastHurtTick = 0;
 
     @Unique private String currentlyEditingArena = "";
 
@@ -209,10 +214,31 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     }
 
     public boolean mcquake3$quakePlayerSoundsEnabled() { return !dataTracker.get(QUAKE_PLAYER_SOUNDS).equals("Vanilla"); }
-    public SoundEvent mcquake3$getPlayerDeathSound() { return this.getDeathSound(); }
     public String mcquake3$getPlayerVoice() { return dataTracker.get(QUAKE_PLAYER_SOUNDS); }
     public void mcquake3$setPlayerVoice(String soundsSet) {
         dataTracker.set(QUAKE_PLAYER_SOUNDS, soundsSet);
+    }
+
+    public SoundEvent mcquake3$getPlayerHurtSound(DamageSource source) {
+        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(mcquake3$getPlayerVoice());
+        if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
+        else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
+        else {
+            long currentTick = getWorld().getTime();
+            if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
+                lastHurtTick = currentTick;
+                if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
+                else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
+                else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
+                else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
+                else return SoundEvent.of(playerSounds.HURT25);
+            } else return null;
+        }
+    }
+
+    public SoundEvent mcquake3$getPlayerDeathSound() {
+        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(mcquake3$getPlayerVoice());
+        return SoundEvent.of(playerSounds.DEATH);
     }
 
     public void mcquake3$taunt() {

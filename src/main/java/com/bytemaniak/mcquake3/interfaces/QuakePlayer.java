@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.interfaces;
 
 import com.bytemaniak.mcquake3.entity.PortalEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.sound.SoundEvent;
 
 public interface QuakePlayer {
@@ -23,6 +24,7 @@ public interface QuakePlayer {
     String mcquake3$getPlayerVoice();
     void mcquake3$setPlayerVoice(String soundsSet);
     SoundEvent mcquake3$getPlayerDeathSound();
+    SoundEvent mcquake3$getPlayerHurtSound(DamageSource source);
 
     void mcquake3$taunt();
 

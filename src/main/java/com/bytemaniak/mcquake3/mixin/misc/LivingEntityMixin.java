@@ -15,7 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -24,7 +23,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -39,13 +37,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
+public abstract class LivingEntityMixin extends Entity {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public abstract boolean damage(DamageSource source, float amount);
     @Shadow public abstract float getHealth();
-
-    @Unique private final static long TIME_BETWEEN_HURTS = 9;
-    @Unique private long lastHurtTick = 0;
 
     @Unique private static final TrackedData<Boolean> QUAD_DAMAGE_VISIBLE = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -118,32 +113,10 @@ public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
         original.call(entity, damageSource);
     }
 
-    @Unique private SoundEvent getQuakePlayerHurtSound(QuakePlayer player, DamageSource source) {
-        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(player.mcquake3$getPlayerVoice());
-        if (source.isOf(DamageTypes.FALL)) return SoundEvent.of(playerSounds.FALL);
-        else if (source.isOf(DamageTypes.DROWN)) return SoundEvent.of(playerSounds.DROWN);
-        else {
-            long currentTick = getWorld().getTime();
-            if (currentTick - lastHurtTick >= TIME_BETWEEN_HURTS) {
-                lastHurtTick = currentTick;
-                if (isSubmergedIn(FluidTags.WATER)) return SoundEvent.of(playerSounds.DROWN);
-                else if (getHealth() >= 15) return SoundEvent.of(playerSounds.HURT100);
-                else if (getHealth() >= 10) return SoundEvent.of(playerSounds.HURT75);
-                else if (getHealth() >= 5) return SoundEvent.of(playerSounds.HURT50);
-                else return SoundEvent.of(playerSounds.HURT25);
-            } else return null;
-        }
-    }
-
-    @Unique private SoundEvent getQuakePlayerDeathSound(QuakePlayer player) {
-        Sounds.PlayerSounds playerSounds = new Sounds.PlayerSounds(player.mcquake3$getPlayerVoice());
-        return SoundEvent.of(playerSounds.DEATH);
-    }
-
     @WrapOperation(method = "playHurtSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerHurtSound(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
         if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return getQuakePlayerHurtSound(player, source);
+            return player.mcquake3$getPlayerHurtSound(source);
 
         return original.call(entity, source);
     }
@@ -151,7 +124,7 @@ public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
     @WrapOperation(method = "onDamaged", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerHurtSound2(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
         if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return getQuakePlayerHurtSound(player, source);
+            return player.mcquake3$getPlayerHurtSound(source);
 
         return original.call(entity, source);
     }
@@ -159,7 +132,7 @@ public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
     @WrapOperation(method = "handleStatus", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerDeathSound(LivingEntity entity, Operation<SoundEvent> original) {
         if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return getQuakePlayerDeathSound(player);
+            return player.mcquake3$getPlayerDeathSound();
 
         return original.call(entity);
     }
@@ -167,7 +140,7 @@ public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerDeathSound2(LivingEntity entity, Operation<SoundEvent> original) {
         if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return getQuakePlayerDeathSound(player);
+            return player.mcquake3$getPlayerDeathSound();
 
         return original.call(entity);
     }

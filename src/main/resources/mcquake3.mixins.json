@@ -9,8 +9,7 @@
     "misc.EntityMixin",
     "misc.ItemEntityMixin",
     "misc.KillCommandMixin",
-    "misc.LivingEntityMixin",
-    "misc.PlayerManagerMixin"
+    "misc.LivingEntityMixin"
   ],
   "client": [
     "misc.ClientPlayerMixin",

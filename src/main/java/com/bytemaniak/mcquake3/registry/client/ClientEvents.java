@@ -1,4 +1,4 @@
-package com.bytemaniak.mcquake3.registry;
+package com.bytemaniak.mcquake3.registry.client;
 
 import com.bytemaniak.mcquake3.network.events.MessageDing;
 import net.fabricmc.api.EnvType;

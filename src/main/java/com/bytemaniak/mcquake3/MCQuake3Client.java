@@ -1,7 +1,7 @@
 package com.bytemaniak.mcquake3;
 
 import com.bytemaniak.mcquake3.items.Weapon;
-import com.bytemaniak.mcquake3.registry.ClientEvents;
+import com.bytemaniak.mcquake3.registry.client.ClientEvents;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.Screens;
 import com.bytemaniak.mcquake3.registry.client.Keybindings;

@@ -1,6 +1,7 @@
 package com.bytemaniak.mcquake3.network.c2s;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
+import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import com.bytemaniak.mcquake3.registry.Blocks;
 import com.bytemaniak.mcquake3.registry.Packets;
 import com.bytemaniak.mcquake3.registry.ServerEvents;
@@ -27,13 +28,19 @@ import java.util.concurrent.ThreadLocalRandom;
 public class JoinLeaveMatchS2CPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender sender) {
         boolean leave = buf.readBoolean();
+        QuakePlayer quakePlayer = (QuakePlayer) player;
 
         if (leave) {
+            QuakePlayer.LastVanillaData data = quakePlayer.mcquake3$getLastVanillaData();
             RegistryKey<World> dimension = player.getSpawnPointDimension();
             ServerWorld world = server.getWorld(dimension);
-            BlockPos spawnPos = player.getSpawnPointPosition();
-            if (spawnPos == null) spawnPos = world.getSpawnPos();
+            BlockPos spawnPos = data.pos();
 
+            player.getInventory().clone(data.inventory());
+            player.getInventory().selectedSlot = data.selectedSlot();
+            player.getInventory().markDirty();
+            player.setHealth(data.health());
+            player.changeGameMode(data.gameMode());
             player.teleport(world, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0, 0);
         } else {
             QuakeArenasParameters.ArenaData arena = ServerEvents.QUAKE_MATCH_STATE.arena;
@@ -43,6 +50,7 @@ public class JoinLeaveMatchS2CPacket {
             }
 
             if (!arena.spawnpoints.isEmpty()) {
+                quakePlayer.mcquake3$sampleLastVanillaData();
                 player.changeGameMode(GameMode.ADVENTURE);
 
                 QuakeArenasParameters.ArenaData.Spawnpoint spawnpoint = arena.spawnpoints.get(ThreadLocalRandom.current().nextInt(arena.spawnpoints.size()));

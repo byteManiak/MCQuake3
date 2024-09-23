@@ -23,10 +23,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -59,6 +64,12 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Unique private String currentlyEditingArena = "";
 
+    @Unique private final PlayerInventory lastInventory = new PlayerInventory((PlayerEntity)(Object)this);
+    @Unique private int lastSelectedSlot = 0;
+    @Unique private BlockPos lastBlockPos = new BlockPos(0, 0, 0);
+    @Unique private GameMode lastGameMode = GameMode.DEFAULT;
+    @Unique private float lastHealth = 0;
+
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
@@ -66,10 +77,24 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         nbt.putString("quake_player_sounds", mcquake3$getPlayerVoice());
         nbt.putInt("quake_energy_shield", mcquake3$getEnergyShield());
         nbt.putBoolean("has_ql_refire_rate", mcquake3$hasQLRefireRate());
+
+        nbt.put("q3_last_inventory", lastInventory.writeNbt(new NbtList()));
+        nbt.putInt("q3_last_selected_slot", lastSelectedSlot);
+        nbt.putInt("q3_last_x", lastBlockPos.getX());
+        nbt.putInt("q3_last_y", lastBlockPos.getY());
+        nbt.putInt("q3_last_z", lastBlockPos.getZ());
+        nbt.putInt("q3_last_gamemode", lastGameMode.getId());
+        nbt.putFloat("q3_last_health", lastHealth);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void readQuakeNbtData(NbtCompound nbt, CallbackInfo ci) {
+        lastInventory.readNbt(nbt.getList("q3_last_inventory", NbtElement.COMPOUND_TYPE));
+        lastSelectedSlot = nbt.getInt("q3_last_selected_slot");
+        lastBlockPos = new BlockPos(nbt.getInt("q3_last_x"), nbt.getInt("q3_last_y"), nbt.getInt("q3_last_z"));
+        lastGameMode = GameMode.byId(nbt.getInt("q3_last_gamemode"));
+        lastHealth = nbt.getFloat("q3_last_health");
+
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
         dataTracker.set(HAS_QL_REFIRE_RATE, nbt.getBoolean("has_ql_refire_rate"));
 
@@ -278,4 +303,16 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     public void mcquake3$setCurrentlyEditingArena(String arenaName) { currentlyEditingArena = arenaName; }
     public String mcquake3$getCurrentlyEditingArena() { return currentlyEditingArena; }
+
+    public void mcquake3$sampleLastVanillaData() {
+        lastInventory.clone(getInventory());
+        lastSelectedSlot = getInventory().selectedSlot;
+        lastBlockPos = getBlockPos();
+        lastHealth = getHealth();
+        lastGameMode = ((ServerPlayerEntity)(Object)this).interactionManager.getGameMode();
+    }
+
+    public LastVanillaData mcquake3$getLastVanillaData() {
+        return new LastVanillaData(lastInventory, lastSelectedSlot, lastBlockPos, lastGameMode, lastHealth);
+    }
 }

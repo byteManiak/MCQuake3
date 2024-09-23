@@ -37,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public abstract boolean damage(DamageSource source, float amount);
     @Shadow public abstract float getHealth();

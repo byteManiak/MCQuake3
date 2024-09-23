@@ -10,11 +10,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.DynamicGeoEntityRenderer;
 
 @Environment(EnvType.CLIENT)
-public class PortalRenderer extends GeoEntityRenderer<PortalEntity> {
+public class PortalRenderer extends DynamicGeoEntityRenderer<PortalEntity> {
     public PortalRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new DefaultedEntityGeoModel<>(new Identifier("mcquake3:portal"), true));
     }
@@ -22,6 +23,14 @@ public class PortalRenderer extends GeoEntityRenderer<PortalEntity> {
     @Override
     public RenderLayer getRenderType(PortalEntity animatable, Identifier texture, VertexConsumerProvider bufferSource, float partialTick) {
         return RenderLayer.getEntityTranslucentCull(texture);
+    }
+
+    @Override
+    protected RenderLayer getRenderTypeOverrideForBone(GeoBone bone, PortalEntity animatable, Identifier texturePath, VertexConsumerProvider bufferSource, float partialTick) {
+        if (bone.getName().equals("bb_main"))
+            return RenderLayer.getEndPortal();
+
+        return super.getRenderTypeOverrideForBone(bone, animatable, texturePath, bufferSource, partialTick);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class EntityRendererMixin {
     @WrapOperation(method = "renderLabelIfPresent", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSneaky()Z"))
     private boolean hidePlayerNamesInQuakeArena(Entity entity, Operation<Boolean> original) {
-        boolean isInQuakeArena = (entity instanceof QuakePlayer player && player.mcquake3$inQuakeArena());
+        boolean isInQuakeArena = (entity instanceof PlayerEntity player && ((QuakePlayer)player).mcquake3$inQuakeArena());
         if (isInQuakeArena) return true;
 
         return original.call(entity);

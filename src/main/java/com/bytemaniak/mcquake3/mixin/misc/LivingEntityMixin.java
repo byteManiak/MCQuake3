@@ -115,32 +115,32 @@ public abstract class LivingEntityMixin extends Entity implements QuakePlayer {
 
     @WrapOperation(method = "playHurtSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerHurtSound(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
-        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return player.mcquake3$getPlayerHurtSound(source);
+        if (entity instanceof PlayerEntity player && ((QuakePlayer)player).mcquake3$quakePlayerSoundsEnabled())
+            return ((QuakePlayer)player).mcquake3$getPlayerHurtSound(source);
 
         return original.call(entity, source);
     }
 
     @WrapOperation(method = "onDamaged", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerHurtSound2(LivingEntity entity, DamageSource source, Operation<SoundEvent> original) {
-        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return player.mcquake3$getPlayerHurtSound(source);
+        if (entity instanceof PlayerEntity player && ((QuakePlayer)player).mcquake3$quakePlayerSoundsEnabled())
+            return ((QuakePlayer)player).mcquake3$getPlayerHurtSound(source);
 
         return original.call(entity, source);
     }
 
     @WrapOperation(method = "handleStatus", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerDeathSound(LivingEntity entity, Operation<SoundEvent> original) {
-        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return player.mcquake3$getPlayerDeathSound();
+        if (entity instanceof PlayerEntity player && ((QuakePlayer)player).mcquake3$quakePlayerSoundsEnabled())
+            return ((QuakePlayer)player).mcquake3$getPlayerDeathSound();
 
         return original.call(entity);
     }
 
     @WrapOperation(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDeathSound()Lnet/minecraft/sound/SoundEvent;"))
     private SoundEvent playQuakePlayerDeathSound2(LivingEntity entity, Operation<SoundEvent> original) {
-        if (entity instanceof QuakePlayer player && player.mcquake3$quakePlayerSoundsEnabled())
-            return player.mcquake3$getPlayerDeathSound();
+        if (entity instanceof PlayerEntity player && ((QuakePlayer)player).mcquake3$quakePlayerSoundsEnabled())
+            return ((QuakePlayer)player).mcquake3$getPlayerDeathSound();
 
         return original.call(entity);
     }

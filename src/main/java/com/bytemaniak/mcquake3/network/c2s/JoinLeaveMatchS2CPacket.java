@@ -32,9 +32,11 @@ public class JoinLeaveMatchS2CPacket {
 
         if (leave) {
             QuakePlayer.LastVanillaData data = quakePlayer.mcquake3$getLastVanillaData();
-            RegistryKey<World> dimension = player.getSpawnPointDimension();
+            RegistryKey<World> dimension = data.dimension();
             ServerWorld world = server.getWorld(dimension);
             BlockPos spawnPos = data.pos();
+            if (spawnPos == null)
+                spawnPos = world.getSpawnPos();
 
             player.getInventory().clone(data.inventory());
             player.getInventory().selectedSlot = data.selectedSlot();

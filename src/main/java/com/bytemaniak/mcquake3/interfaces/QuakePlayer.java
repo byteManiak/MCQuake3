@@ -3,9 +3,11 @@ package com.bytemaniak.mcquake3.interfaces;
 import com.bytemaniak.mcquake3.entity.PortalEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
+import net.minecraft.world.World;
 
 public interface QuakePlayer {
     boolean mcquake3$inQuakeArena();
@@ -45,5 +47,6 @@ public interface QuakePlayer {
     void mcquake3$sampleLastVanillaData();
     LastVanillaData mcquake3$getLastVanillaData();
 
-    record LastVanillaData(PlayerInventory inventory, int selectedSlot, BlockPos pos, GameMode gameMode, float health) {}
+    record LastVanillaData(PlayerInventory inventory, int selectedSlot, BlockPos pos,
+                           GameMode gameMode, float health, RegistryKey<World> dimension) {}
 }

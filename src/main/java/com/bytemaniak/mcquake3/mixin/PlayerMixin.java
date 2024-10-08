@@ -25,11 +25,14 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
@@ -66,9 +69,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
     @Unique private final PlayerInventory lastInventory = new PlayerInventory((PlayerEntity)(Object)this);
     @Unique private int lastSelectedSlot = 0;
-    @Unique private BlockPos lastBlockPos = new BlockPos(0, 0, 0);
+    @Unique private BlockPos lastBlockPos = null;
     @Unique private GameMode lastGameMode = GameMode.DEFAULT;
     @Unique private float lastHealth = 0;
+    @Unique private RegistryKey<World> lastDimension = null;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, World world) { super(entityType, world); }
 
@@ -80,11 +84,14 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
 
         nbt.put("q3_last_inventory", lastInventory.writeNbt(new NbtList()));
         nbt.putInt("q3_last_selected_slot", lastSelectedSlot);
-        nbt.putInt("q3_last_x", lastBlockPos.getX());
-        nbt.putInt("q3_last_y", lastBlockPos.getY());
-        nbt.putInt("q3_last_z", lastBlockPos.getZ());
+        if (lastBlockPos != null) {
+            nbt.putInt("q3_last_x", lastBlockPos.getX());
+            nbt.putInt("q3_last_y", lastBlockPos.getY());
+            nbt.putInt("q3_last_z", lastBlockPos.getZ());
+        }
         nbt.putInt("q3_last_gamemode", lastGameMode.getId());
         nbt.putFloat("q3_last_health", lastHealth);
+        if (lastDimension != null) nbt.putString("q3_last_dimension", lastDimension.getValue().toString());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -94,6 +101,10 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
         lastBlockPos = new BlockPos(nbt.getInt("q3_last_x"), nbt.getInt("q3_last_y"), nbt.getInt("q3_last_z"));
         lastGameMode = GameMode.byId(nbt.getInt("q3_last_gamemode"));
         lastHealth = nbt.getFloat("q3_last_health");
+
+        String lastDimensionKey = nbt.getString("q3_last_dimension");
+        if (!lastDimensionKey.isEmpty())
+            lastDimension = RegistryKey.of(RegistryKeys.WORLD, new Identifier(lastDimensionKey));
 
         dataTracker.set(QUAKE_ARMOR, nbt.getInt("quake_energy_shield"));
         dataTracker.set(HAS_QL_REFIRE_RATE, nbt.getBoolean("has_ql_refire_rate"));
@@ -305,14 +316,21 @@ public abstract class PlayerMixin extends LivingEntity implements QuakePlayer {
     public String mcquake3$getCurrentlyEditingArena() { return currentlyEditingArena; }
 
     public void mcquake3$sampleLastVanillaData() {
+        ServerPlayerEntity thisPlayer = ((ServerPlayerEntity)(Object)this);
         lastInventory.clone(getInventory());
         lastSelectedSlot = getInventory().selectedSlot;
-        lastBlockPos = getBlockPos();
         lastHealth = getHealth();
-        lastGameMode = ((ServerPlayerEntity)(Object)this).interactionManager.getGameMode();
+        lastGameMode = thisPlayer.interactionManager.getGameMode();
+        if (getWorld().getDimensionKey() == Blocks.Q3_DIMENSION_TYPE) {
+            lastDimension = thisPlayer.getSpawnPointDimension();
+            lastBlockPos = thisPlayer.getSpawnPointPosition();
+        } else {
+            lastDimension = getWorld().getRegistryKey();
+            lastBlockPos = getBlockPos();
+        }
     }
 
     public LastVanillaData mcquake3$getLastVanillaData() {
-        return new LastVanillaData(lastInventory, lastSelectedSlot, lastBlockPos, lastGameMode, lastHealth);
+        return new LastVanillaData(lastInventory, lastSelectedSlot, lastBlockPos, lastGameMode, lastHealth, lastDimension);
     }
 }

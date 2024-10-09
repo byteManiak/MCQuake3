@@ -99,6 +99,9 @@
   "key.mcquake3.playermenu": "MCQuake3 Player Settings",
   "key.mcquake3.playertaunt": "Taunt",
   "stat.mcquake3.excellent_medals": "Excellent Medals",
+  "stat.mcquake3.gauntlet_medals": "Gauntlet Kills",
   "stat.mcquake3.impressive_medals": "Impressive Medals",
-  "stat.mcquake3.gauntlet_medals": "Gauntlet Kills"
+  "stat.mcquake3.q3_match_frags": "Quake Arena frags",
+  "stat.mcquake3.q3_matches_lost": "Quake Arenas lost",
+  "stat.mcquake3.q3_matches_won": "Quake Arenas won"
 }

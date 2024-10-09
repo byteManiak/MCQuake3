@@ -1,10 +1,7 @@
 package com.bytemaniak.mcquake3.network.events;
 
 import com.bytemaniak.mcquake3.data.QuakeArenasParameters;
-import com.bytemaniak.mcquake3.registry.Blocks;
-import com.bytemaniak.mcquake3.registry.Packets;
-import com.bytemaniak.mcquake3.registry.Sounds;
-import com.bytemaniak.mcquake3.registry.Weapons;
+import com.bytemaniak.mcquake3.registry.*;
 import com.bytemaniak.mcquake3.util.MiscUtils;
 import com.bytemaniak.mcquake3.interfaces.QuakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -13,6 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -68,6 +66,8 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(frags);
                 ServerPlayNetworking.send(attackerPlayer, Packets.FRAGS, buf);
+                attackerPlayer.incrementStat(Statistics.Q3_MATCH_FRAGS_IDENT);
+                attackerPlayer.getScoreboard().forEachScore(Statistics.Q3_MATCH_FRAGS_CRITERIA, attackerPlayer.getEntityName(), ScoreboardPlayerScore::incrementScore);
 
                 buf = PacketByteBufs.create();
                 buf.writeInt(highestFrags);
@@ -219,9 +219,13 @@ public class QuakeMatchState implements ServerTickEvents.StartWorldTick {
             case IN_PROGRESS_STATE -> {
                 if (highestFrags >= FRAG_LIMIT || ticksLeft == 0) {
                     for (ServerPlayerEntity player : getQuakePlayers(world)) {
-                        if (player.getName().getString().equals(winner))
+                        if (player.getName().getString().equals(winner)) {
                             sendSound(player, Sounds.MATCH_WIN);
-                        else sendSound(player, Sounds.MATCH_LOSS);
+                            player.incrementStat(Statistics.Q3_MATCHES_WON_IDENT);
+                        } else {
+                            sendSound(player, Sounds.MATCH_LOSS);
+                            player.incrementStat(Statistics.Q3_MATCHES_LOST_IDENT);
+                        }
                     }
 
                     // Allow 10 seconds before transition to next map
